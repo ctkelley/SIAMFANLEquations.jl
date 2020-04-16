@@ -1,5 +1,5 @@
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/stable)
-[![Build Status](https://travis-ci.com/ctkelley/SIAMFANLEquations.jl.svg?branch=stable)](https://travis-ci.com/ctkelley/SIAMFANLEquations.jl)
+[![Build Status](https://travis-ci.com/ctkelley/SIAMFANLEquations.jl.svg?branch=master)](https://travis-ci.com/ctkelley/SIAMFANLEquations.jl)
 [![codecov](https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl/branch/stable/graph/badge.svg)](https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl)
 # SIAMFANLEquations
 This the start to the package for the book. It is not ready yet so ...
