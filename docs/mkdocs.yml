@@ -1,6 +1,6 @@
 site_name:        SIAMFANLEquations.jl
 repo_url:         https://github.com/ctkelley/SIAMFANLEquations.jl/tree/dev
-site_description: Nonlinear Equations solvers
+site_description: Nonlinear Equation solvers
 site_author:      ctkelley
 
 theme: scalar equations
