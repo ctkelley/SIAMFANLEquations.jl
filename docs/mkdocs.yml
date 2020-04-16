@@ -1,6 +1,6 @@
-site_name:        ScalarEquations.jl
-repo_url:         https://github.com/ctkelley/ScalarEquations.jl/tree/dev
-site_description: Scalar Equations solver
+site_name:        SIAMFANLEquations.jl
+repo_url:         https://github.com/ctkelley/SIAMFANLEquations.jl/tree/dev
+site_description: Nonlinear Equations solvers
 site_author:      ctkelley
 
 theme: scalar equations
