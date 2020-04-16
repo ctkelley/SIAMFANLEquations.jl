@@ -4,7 +4,7 @@ os:
   - osx
 
 env:
-  CODECOV_TOKEN="1840a284-a797-4681-9397-545dc7c157e2"
+  CODECOV_TOKEN="b2c21562-0860-4b9a-9971-bd287afb499f"
 
 codecov: true
 
