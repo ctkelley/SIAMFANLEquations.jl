@@ -1,0 +1,36 @@
+language: julia
+
+os:
+  - osx
+
+env:
+  CODECOV_TOKEN="1840a284-a797-4681-9397-545dc7c157e2"
+
+codecov: true
+
+julia:
+  - 1.0
+  - 1.4
+  - nightly
+
+
+notifications:
+   email:
+     - ctk@ncsu.edu
+
+after_success:
+   - julia -e 'cd(Pkg.dir("SIAMFANLEquations.jl")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+
+jobs:
+  allow_failures:
+    - julia: nightly
+  include:
+    - stage: "Documentation"
+      julia: 1.4
+      os: osx 
+      script:
+        - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
+                                               Pkg.instantiate()'
+        - julia --project=docs/ docs/make.jl
+      after_success: skip
+      
