@@ -1,5 +1,5 @@
 site_name:        SIAMFANLEquations.jl
-repo_url:         https://github.com/ctkelley/SIAMFANLEquations.jl/tree/dev
+repo_url:         https://github.com/ctkelley/SIAMFANLEquations.jl
 site_description: Nonlinear Equation solvers
 site_author:      ctkelley
 
