@@ -1,4 +1,5 @@
 using SIAMFANLEquations
+using SIAMFANLEquations.TestProblems
 using Test
 using LinearAlgebra
 include("nsolsc_solution_test.jl")

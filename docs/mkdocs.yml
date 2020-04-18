@@ -3,7 +3,7 @@ repo_url:         https://github.com/ctkelley/SIAMFANLEquations.jl
 site_description: Nonlinear Equation solvers
 site_author:      ctkelley
 
-theme: scalar equations
+theme: nonlinear equations
 
 extra_css:
   - assets/Documenter.css
