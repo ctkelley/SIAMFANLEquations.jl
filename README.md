@@ -24,8 +24,9 @@ The new book with have a different algorithm mix and the solvers and examples wi
    
 ## Readme Contents:
 
-- [Core References](#Core-References-and-Documentation)
+- [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
+- [Support](#Support)
 
 
 ## Core References and Documentation
@@ -60,6 +61,8 @@ The references I use for theory of pseudo-transient continuation and Anderson ac
 ## Algorithms and Solvers
 
 The solvers are designed to be stand-alone codes. The reason for this is the education mission of the project. I want the codes to be as easy to understand as possible. I have deliberately sacrificed a lot of abstraction and some performance in this effort. The reward for the reader is that the algorithmic parameters are completely exposed so  you can play with them. At the end I plan to write a wrapper for all this that hides the parameters, but the stand-alone, keyword-infested codes are what you need if you want to really understand how these methods work. My students became experts in this field by fiddling with the Matlab version of these solvers.
+
+The linear solvers are tuned to communicate well with nonlinear solvers. My old Matlab codes are a good illustration of this idea. My [new Mablab codes](https://ctk.math.ncsu.edu/knl.html) were designed in response to the need to do this better than I had been. In particular, the linear solver and the matrix-vector/preconditioner-vector product function need information on the nonlinear iteration and any precomputed data. While I could use global variables and put these things in a module to simplify the interface, I won't. Global varaibles break parallelism and I like to avoid them. I have had to use globals a couple times and am trying to get rid of them.
 
 The algorithms, listed by book chapter will be
 
