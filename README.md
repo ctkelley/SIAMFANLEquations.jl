@@ -73,3 +73,17 @@ The algorithms, listed by book chapter will be
    - Chapter 5: Broyden's method: brsol.jl
    - Chapter 6: Linear solver(s): klgmres.jl and maybe klbicgstab.jl
    
+## Support
+
+This project was partially supported by
+1. Army Research Office grant W911NF-16-1-0504 and
+2. National Science Foundation Grants
+   1. OAC-1740309
+   2. DMS-1745654
+   3. DMS-1906446
+   
+Any opinions, findings, and conclusions or
+recommendations expressed in this material are those of the author and
+do not necessarily reflect the views of the National
+Science Foundation
+or the Army Research Office.
