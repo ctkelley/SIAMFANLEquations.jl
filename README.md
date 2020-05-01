@@ -19,12 +19,12 @@ The new book with have a different algorithm mix and the solvers and examples wi
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source)
    3. This package (MIT License)
    
-##Readme Contents:
+## Readme Contents:
 
 
 [Algorithms and Solvers](#Algorithms-and-Solvers)
 
-#Algorithms
+## Algorithms
 
 The algorithms, listed by book chapter will be
 
