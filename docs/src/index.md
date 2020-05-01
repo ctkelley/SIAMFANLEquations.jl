@@ -1,6 +1,6 @@
-# Solvers and Test Problems for<br>
-Solving Nonlinear Equations with Iterative Methods: <br> 
-Solvers and Examples in Julia
+# Solvers and Test Problems for
+__Solving Nonlinear Equations with Iterative Methods:__
+__Solvers and Examples in Julia__
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
