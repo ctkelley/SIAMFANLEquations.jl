@@ -31,12 +31,32 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Core References and Documentation
 
-The best documentation for this pacakge will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL). It will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve you problems. 
+The best documentation for this pacakge will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL). It will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve you problems. The notebook will be built in parallel project with the print book and the content will be roughly the same.
 
 I've also used [documenter.jl[(https://github.com/JuliaDocs/Documenter.jl) with this package. Click the badge
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/dev)
-to get the headers for the solvers and some of the test problems. I continue to work on the docs. 
+to get the headers for the solvers and some of the test problems. I continue to work on the docs and they will get better, but will never be as good as the notebook.
 
+This book will not cover theory. My two books on nonlinear equations
+
+(Kel95) [***Iterative Methods for Linear and Nonlinear Equations***](https://my.siam.org/Store/Product/viewproduct/?ProductId=862) , Frontiers in Applied Mathematics 16,  SIAM 1995
+
+and
+
+(Kel03) [***Solving Nonlinear Equations with Newton's Method***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003
+
+describe the Newton and Broyden algoirthms. CTK95 has the theory. This project is a sequal to CTK03. CTK03 is Matlab-centric
+and will remain in print.
+
+A recent Acta Numerica paper has everything
+
+(Kel18) C. T. Kelley, ***Numerical Methods for Nonlinear Equations***, Acta Numerica 27 (2018), pp 207--287. https://doi.org/10.1017/S0962492917000113
+
+The references I use for theory of pseudo-transient continuation and Anderson acceleration are
+
+(KK98) C. T. Kelley and D. E. Keyes, ***Convergence Analysis of Pseudo-Transient Continuation***, SIAM Journal on Numerical Analysis 35 (1998), pp 508-523. https://doi.org/10.1137/S0036142996304796
+
+(TK15) A. Toth and C. T. Kelley, ***Convergence Analysis for Anderson Acceleration***, SIAM Journal on Numerical Analysis 53, (2015), pp 805-819. https://doi.org/10.1137/130919398
 
 ## Algorithms and Solvers
 
