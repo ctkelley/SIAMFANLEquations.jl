@@ -14,5 +14,5 @@ pages = Any[
 ]
 )
 deploydocs(
-     repo="github.com/ctkelley/SIAMFANLEquations.jl/tree/dev"
+     repo="github.com/ctkelley/SIAMFANLEquations.jl/tree/dev.git"
 )
