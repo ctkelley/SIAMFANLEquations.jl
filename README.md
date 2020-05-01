@@ -19,7 +19,8 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
    1. A print book (details coming sooner or later)
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source)
-   3. This package (MIT License)
+   3. This package (MIT License)<br>
+      I will register this package when Chabper 2 of the notebook and the solvers/test problems it needs are done.
    
 ## Readme Contents:
 
@@ -30,7 +31,11 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Core References and Documentation
 
-I've used [documenter.jl[(https://github.com/JuliaDocs/Documenter.jl) with this package. Click the 
+The best documentation for this pacakge will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL). It will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve you problems. 
+
+I've also used [documenter.jl[(https://github.com/JuliaDocs/Documenter.jl) with this package. Click the badge
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/dev)
+to get the headers for the solvers and some of the test problems. I continue to work on the docs. 
 
 
 ## Algorithms and Solvers
