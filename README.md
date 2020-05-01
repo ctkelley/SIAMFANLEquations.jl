@@ -15,7 +15,19 @@ This will be a sequal to my book
 
 The new book with have a different algorithm mix and the solvers and examples will bein Juila. The project will have three parts.
 
-   1. A print book (not open source)
+   1. A print book (details coming sooner or later)
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source)
    3. This package (MIT License)
    
+##Readme Contents:
+
+
+[Algorithms and Solvers](#Algorithms-and-Solvers)
+
+#Algorithms
+
+The algorithms, listed by book chapter will be
+
+   - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsc.jl
+   - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
+   - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptci.jl
