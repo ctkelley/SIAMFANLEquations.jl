@@ -2,6 +2,15 @@
 [![Build Status](https://travis-ci.com/ctkelley/SIAMFANLEquations.jl.svg?branch=master)](https://travis-ci.com/ctkelley/SIAMFANLEquations.jl)
 [![codecov](https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl)
 # SIAMFANLEquations
+
+This is the package with the solvers and test problems for 
+
+# Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia
+
+## [C. T. Kelley](https://ctk.math.ncsu.edu)
+
+
+
 This the start to the package for the book. It is not ready yet so ...
 
 Please stop reading and go away.
