@@ -1,4 +1,10 @@
-# Scalar Equations: Algorithms
+# Solvers and Test Problems for<br>
+Solving Nonlinear Equations with Iterative Methods: <br> 
+Solvers and Examples in Julia
+
+[C. T. Kelley](https://ctk.math.ncsu.edu)
+
+## Scalar Equations: Algorithms
 The examples in the first chapter are scalar equations that illustrate
 many of the important ideas in nonlinear solvers. 
 
@@ -7,7 +13,7 @@ many of the important ideas in nonlinear solvers.
 2. line searches
 3. pseudo-transient continuation
 
-## Overview of the Codes
+### Overview of the Codes
 
 There are two codes for the methods in this chapter
 
