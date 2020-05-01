@@ -16,6 +16,6 @@ This will be a sequal to my book
 The new book with have a different algorithm mix and the solvers and examples will bein Juila. The project will have three parts.
 
    1. A print book (not open source)
-   2. [An IJulia notebook]( (open source)
+   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source)
    3. This package (MIT License)
    
