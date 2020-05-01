@@ -9,28 +9,13 @@ This is the package with the solvers and test problems for
 
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
 
+This will be a sequal to my book 
 
+(Kel03) [***Solving Nonlinear Equations with Newton's Method***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003
 
-This the start to the package for the book. It is not ready yet so ...
+The new book with have a different algorithm mix and the solvers and examples will bein Juila. The project will have three parts.
 
-Please stop reading and go away.
-
-If you're me, here are the notes
-
-1. The github address for the package is https://github.com/ctkelley/SIAMFANLEquations.jl
-   1. The way to install it is to type
+   1. A print book (not open source)
+   2. [An IJulia notebook]( (open source)
+   3. This package (MIT License)
    
-      add https://github.com/ctkelley/SIAMFANLEquations.jl
-      
-      at the pkg prompt.
-      
-   2. The way to make changes and get them back on github is 
-         1. Start Julia in the package directory with 
-         
-            Julia --project==.
-            
-            This makes "using SIAMFANLEquations" point to the directory rather than the version in .julia/packages
-         2. Make the changes and push them to the repo
-         3. quit Julia
-         4. restart Julia and update the package with pkg
-         
