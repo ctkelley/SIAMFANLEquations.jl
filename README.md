@@ -31,7 +31,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Core References and Documentation
 
-The best documentation for this pacakge will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL). It will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve you problems. The notebook will be built in parallel project with the print book and the content will be roughly the same.
+The best documentation for this pacakge will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL). It will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook will be built in parallel project with the print book and the content will be roughly the same.
 
 I've also used [documenter.jl[(https://github.com/JuliaDocs/Documenter.jl) with this package. Click the badge
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/dev)
