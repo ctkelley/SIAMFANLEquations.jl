@@ -4,7 +4,9 @@ __Solvers and Examples in Julia__
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
-## Scalar Equations: Algorithms
+## Scalar Equations: Chapter 1
+
+### Algorithms
 The examples in the first chapter are scalar equations that illustrate
 many of the important ideas in nonlinear solvers. 
 
@@ -15,6 +17,7 @@ many of the important ideas in nonlinear solvers.
 
 ### Overview of the Codes
 
+### Scalar Equations: Chapter 1
 There are two codes for the methods in this chapter
 
 1. nsolsc.jl is all variations of Newton's method __except__ 
@@ -26,3 +29,7 @@ There are two codes for the methods in this chapter
    - You have the option to do an Armijo line search for all the methods.
 
 2. ptcsc.jl is pseudo-transient continuation. 
+
+## Nonlinear systems with direct linear solvers: Chapter 2
+
+## Nonlinear systems with iterative linear solvers: Chapter 3
