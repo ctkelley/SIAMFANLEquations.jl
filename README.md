@@ -30,7 +30,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Core References and Documentation
 
-I've used documenter.jl with this package. Click the 
+I've used [documenter.jl[(https://github.com/JuliaDocs/Documenter.jl) with this package. Click the 
 
 
 ## Algorithms and Solvers
