@@ -1,8 +1,12 @@
-# Solvers and Test Problems for
-__Solving Nonlinear Equations with Iterative Methods:__
-__Solvers and Examples in Julia__
+# SIAMFANLEquations.jl
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
+
+[SIAMFANLEquations.jl](https://github.com/ctkelley/SIAMFANLEquations.jl) is the package of solves and test problems
+for the book
+
+__Solving Nonlinear Equations with Iterative Methods:__
+__Solvers and Examples in Julia__
 
 ## Scalar Equations: Chapter 1
 
@@ -15,7 +19,7 @@ many of the important ideas in nonlinear solvers.
 2. line searches
 3. pseudo-transient continuation
 
-### Overview of the Codes
+## Overview of the Codes
 
 ### Scalar Equations: Chapter 1
 There are two codes for the methods in this chapter
