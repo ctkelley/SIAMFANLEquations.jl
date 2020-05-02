@@ -2,7 +2,7 @@
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
-[SIAMFANLEquations.jl](https://github.com/ctkelley/SIAMFANLEquations.jl) is the package of solves and test problems
+[SIAMFANLEquations.jl](https://github.com/ctkelley/SIAMFANLEquations.jl) is the package of solvers and test problems
 for the book
 
 __Solving Nonlinear Equations with Iterative Methods:__
