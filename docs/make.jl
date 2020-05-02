@@ -7,7 +7,7 @@ format = Documenter.HTML(
            ),
 pages = Any[
      "Home" => "index.md",
-     "Scalar Equation Solvers: Chapter 1" => Any[
+     "Scalar Equations" => Any[
        "functions/nsolsc.md",
        "functions/ptcsc.md",
       ]
