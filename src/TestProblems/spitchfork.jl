@@ -16,7 +16,8 @@ end
 
 function sptest(u)
 lambda=.5
-return spitchfork(u,lambda)
+spt=spitchfork(u,lambda)
+return spt
 end
 
 function spitchp(u,lambda)
@@ -26,5 +27,6 @@ end
 
 function sptestp(u)
 lambda=.5
-return spitchp(u,lambda)
+sptp=spitchp(u,lambda)
+return sptp
 end
