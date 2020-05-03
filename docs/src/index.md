@@ -8,6 +8,8 @@ for the book
 __Solving Nonlinear Equations with Iterative Methods:__
 __Solvers and Examples in Julia__
 
+This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
+
 ## Scalar Equations: Chapter 1
 
 ### Algorithms
@@ -18,6 +20,15 @@ many of the important ideas in nonlinear solvers.
 2. secant equation approximation of the derivative
 2. line searches
 3. pseudo-transient continuation
+
+## Nonlinear systems with direct linear solvers: Chapter 2
+The ideas from Chapter 1 remain important here. For systems the Newton step is the solution of the linear system
+
+``F'(x) = - F(x)``
+
+This chapter is about solving the equation for the Newton step with Gaussian eliminatino, 
+
+## Nonlinear systems with iterative linear solvers: Chapter 3
 
 ## Overview of the Codes
 
@@ -34,6 +45,6 @@ There are two codes for the methods in this chapter
 
 2. ptcsc.jl is pseudo-transient continuation. 
 
-## Nonlinear systems with direct linear solvers: Chapter 2
+### Nonlinear systems with direct linear solvers: Chapter 2
 
-## Nonlinear systems with iterative linear solvers: Chapter 3
+### Nonlinear systems with iterative linear solvers: Chapter 3
