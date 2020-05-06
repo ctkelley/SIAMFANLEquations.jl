@@ -33,7 +33,7 @@ end
 #
 # Global convergence
 #
-sdatag=nsolsc(10.0, atan)
+sdatag=nsolsc(10.0, atan; maxit=11)
 solok=(abs(sdatag.solution) < 1.e-8)
 funok=(abs(sdatag.functionval) < 1.e-8)
 hs=size(sdatag.history)
@@ -90,11 +90,14 @@ end
 # Test residual failure mode and no history.
 #
 resok=false
-resfail=nsolsc(10.0, atan; maxit=2, keepsolhist=false)
+resfail=nsolsc(10.0, atan; maxit=3, keepsolhist=false)
 if resfail.idid==false
    resok=true
+   println("Residual failure test passed.")
 end
 #
+println(locok, globok, secantok, analyticok, zecok,
+         shamfastok, afok, resok)
 return locok && globok && secantok && analyticok && zecok && 
        shamfastok && afok && resok
 end
