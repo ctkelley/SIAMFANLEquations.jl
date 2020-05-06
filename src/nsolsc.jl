@@ -104,7 +104,7 @@ if keepsolhist
 end
     tol = rtol * resid + atol
     residratio = 1
-    while (resid > tol) && (itc <= maxit)
+    while (resid > tol) && (itc < maxit)
         if solver == "secant"
             df = (fc - fm) / (x - xm)
         else
