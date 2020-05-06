@@ -19,8 +19,8 @@ Your best bet is to put f and fp in the same file. See the atan
 example.
 
 solver:\n
-Your choices are Newton or Secant. However, you have sham
-at your disposal only if you chose Newton.\n
+Your choices are "newton"(default) or "secant". However, you have sham
+at your disposal only if you chose newton.\n
 
 If you use secant and your initial iterate is poor, you have made
 a mistake. I will help you by driving the line search with a finite
@@ -31,7 +31,8 @@ This is the Shamanskii method. If sham=1, you have Newton.
 The iteration updates the derivative every sham iterations.
 The covergence rate has local q-order sham+1 if you only count
 iteratons where you update the derivative. You need not
-provide your own derivative function to use this option.\n
+provide your own derivative function to use this option. sham=Inf
+is chord only if chord is converging well.\n
 
 I only turn Shamanskii on if the residuals are decreasing
 rapidly, at least a factor of 10, and the line search is quiescent.\n  
@@ -99,9 +100,9 @@ function nsolsc(
     resid = abs(fc)
     iarm = 0
     ithist = [itc fc iarm]
-if keepsolhist
-   solhist=[x]
-end
+    if keepsolhist
+       solhist=[x]
+    end
     tol = rtol * resid + atol
     residratio = 1
     while (resid > tol) && (itc < maxit)
