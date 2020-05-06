@@ -20,7 +20,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
    1. A print book (details coming sooner or later)
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source)
    3. This package (MIT License)<br>
-      I will register this package when Chabper 2 of the notebook and the solvers/test problems it needs are done.
+      I will register this package when Chapter 2 of the notebook and the solvers/test problems it needs are done.
    
 ## Readme Contents:
 
