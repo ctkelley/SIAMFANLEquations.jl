@@ -96,6 +96,19 @@ if resfail.idid==false
    println("Residual failure test passed.")
 end
 #
+# Test stagnation mode
+#
+stagdatan=nsolsc(4.5,ftanx; fp=ftanxp, rtol=1.e-17, atol=1.e-17, maxit=14)
+fvals=stagdatan.history[:,2]
+avals=stagdatan.history[:,3]
+stagl=(length(fvals)==15)
+stagf=(fvals[5] < 1.e-15)
+staga=(avals[15]==5)
+stagok=stagl && staga && stagf
+if stagok
+   println("Stagnation test passed")
+end
+#
 println(locok, globok, secantok, analyticok, zecok,
          shamfastok, afok, resok)
 return locok && globok && secantok && analyticok && zecok && 
