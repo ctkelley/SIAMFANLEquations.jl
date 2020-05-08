@@ -26,6 +26,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
+- [About the test problems](#Test-Problems]
 - [Support](#Support)
 
 
@@ -72,6 +73,12 @@ The algorithms, listed by book chapter will be
    - Chapter 4: Anderson acceleration: anderson.jl
    - Chapter 5: Broyden's method: brsol.jl
    - Chapter 6: Linear solver(s): klgmres.jl and maybe klbicgstab.jl
+   
+## Test Problems
+
+You'll need the TestProblems submodule to run the notebook. To get it type __using SIAMFANLEquations.TestProblems__ in the repl or the notebook.
+
+There are two kinds of test problems. The ones you care about are the ones that I use in the print book and notebook to demonstrate the algorithms. The "inside baseball" problems are the ones I use for CI. They only appear in the /test directory. If you don't know or care what CI is, be happy.
    
 ## Support
 
