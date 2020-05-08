@@ -1,6 +1,7 @@
 """
 nsolsc(x,f; rtol=1.e-6, atol=1.e-12, maxit=10,
-        fp=difffp, solver="newton", sham=1, armmax=10, keepsolhist=true)
+        fp=difffp, solver="newton", sham=1, armmax=10, armrule="constant",
+        keepsolhist=true)
 
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs.
@@ -45,18 +46,23 @@ sham: update Jacobian every sham iteraitons. sham=1 --> Newton
 
 armmax: upper bound on stepsize reductions in linesearch
 
-keepsolhist: if true you get the history of the iteration in the output
+armrule:\n
+The default is a parabolic line search. Use it unless you are doing
+experiments for research.
+
+keepsolhist:\n
+Set this to true to get the history of the iteration in the output
 tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
-Output: A tuple (solution, functionval, history) where
-(iteration counter, f(x), dt)
+Output:\n
+A tuple (solution, functionval, history, idid, solhist) where
+history is a tuple (iteration counter, f(x), iarm) with the history
+of the entire iteration. iarm is the counter for steplength reductions.
 
 idid=true if the iteration succeeded and false if not.
 
 solhist=entire history of the iteration if keepsolhist=true
-
-
 """
 function nsolsc(
     x,
@@ -68,6 +74,7 @@ function nsolsc(
     solver = "newton",
     sham = 1,
     armmax = 5,
+    armrule="constant",
     keepsolhist=true
 )
     itc = 0
@@ -75,8 +82,9 @@ function nsolsc(
     iline=true
     h = 1.e-7
     #
-    # If you like the secant method, I will do a difference Jacobian
+    # If you like the secant or chord methods, I will do a difference Jacobian
     # anyhow if the line search kicks in. You will thank me for this.
+    # Even if you don't thank me, I will do it anyhow.
     #
     if solver == "secant"
         xm = x * 1.0001
