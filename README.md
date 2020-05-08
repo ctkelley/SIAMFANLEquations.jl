@@ -26,7 +26,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
-- [About the test problems](#Test-Problems]
+- [About the test problems](#Test-Problems)
 - [Support](#Support)
 
 
