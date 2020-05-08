@@ -23,12 +23,15 @@ fpatan,
 spitchfork,
 linatan,
 sptestp,
-sptest
+sptest,
+ftanx,
+ftanxp
 
 include("TestProblems/fcos.jl")
 include("TestProblems/fpatan.jl")
 include("TestProblems/spitchfork.jl")
 include("TestProblems/linatan.jl")
+include("TestProblems/ftanx.jl")
 end
 
 
