@@ -82,7 +82,7 @@ The algorithms, listed by book chapter will be
 
 You'll need the TestProblems submodule to run the notebook. To get it type __using SIAMFANLEquations.TestProblems__ in the repl or the notebook.
 
-There are two kinds of test problems. The ones you care about are the ones that I use in the print book and notebook to demonstrate the algorithms. The "inside baseball" problems are the ones I use for CI. They only appear in the /test directory. If you don't know or care what CI is, be happy.
+There are two kinds of test problems. The ones you care about are the ones that I use in the print book and notebook to demonstrate the algorithms. The "inside baseball" problems are the ones I __only__ use for CI. They only appear in the /test directory. If you don't know or care what CI is, be happy.
    
 ## Support
 
