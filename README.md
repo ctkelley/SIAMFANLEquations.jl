@@ -35,7 +35,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 This is the dev version of v0.10.1. I will tag this version when Chapter 1 of the notebook is finished. The plan is
 
--- v0.x0.1 goes live when the codes and notebook for Chapter x are finished. the exception is if x=6, which may be part of the v0.30.1 release. 
+-- v0.x0.1 goes live when the codes and notebook for Chapter x are finished. x=6 may be an exception. Chapter 6 may be part of the v0.30.1 release because Chapter 3 needs it.
 
 -- v1.10.0 goes out when the print book is published. This means that the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
