@@ -25,12 +25,11 @@ The new book with have a different algorithm mix and the solvers and examples wi
 ## Readme Contents:
 
 - [Meaning of Version Numbers](#Meaning-of-version-numbers)
-- [Pull Requests](#Pull-Requests)
+- [__Please__ No Pull Requests](#Pull-Requests)
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
-- [Support](#Support)
-
+- [Support](#Support) 
 
 ## Meaning of version numbers
 
