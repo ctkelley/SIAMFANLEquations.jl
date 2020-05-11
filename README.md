@@ -42,7 +42,7 @@ I've also used [documenter.jl[(https://github.com/JuliaDocs/Documenter.jl) with 
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/dev)
 to get the headers for the solvers and some of the test problems. I continue to work on the docs and they will get better, but will never be as good as the notebook.
 
-This book will not cover theory. My two books on nonlinear equations
+This book will not cover theory in detail (ie no proofs). My two books on nonlinear equations
 
 (Kel95) C. T. Kelley, [***Iterative Methods for Linear and Nonlinear Equations***](https://my.siam.org/Store/Product/viewproduct/?ProductId=862) , Frontiers in Applied Mathematics 16,  SIAM 1995
 
