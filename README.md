@@ -47,7 +47,7 @@ __Please, please__, do not send me PRs. If you find a bug or error in the docume
 
 The best documentation for this pacakge will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and the print book. They will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook will be built in parallel with the print book and the content will be __roughly__ the same.
 
-I've also used [documenter.jl[(https://github.com/JuliaDocs/Documenter.jl) with this package. Click the badge
+I've also used [documenter.jl](https://github.com/JuliaDocs/Documenter.jl) with this package. Click the badge
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/dev)
 to get the headers for the solvers and some of the test problems. I continue to work on the docs and they will get better, but will never be as good as the notebook.
 
