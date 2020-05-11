@@ -32,7 +32,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Pull Requests
 
-__Please, please__, do not send me PRs. If you find a bug or error in the documentation, please tell me the old fashioned way with email to tim_kelley@ncsu.edu. This is a book project and I need to put all changes in by hand so I'll have muscle memory about what's going on. If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algoirthm mix pretty carefully and, believe it or not, know this field fairly well.
+__Please, please__, do not send me PRs. If you find a bug or error in the documentation, please tell me the old fashioned way with email to tim_kelley@ncsu.edu. This is a book project and I need to put all changes in by hand so I'll have muscle memory about what's going on. If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully and, believe it or not, understand this field fairly well.
 
 ## Core References and Documentation
 
