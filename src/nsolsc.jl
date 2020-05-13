@@ -143,10 +143,10 @@ function nsolsc(
         residratio = abs(fc) / abs(fm)
         itc = itc + 1
         newhist = [itc fc iarm]
-    if keepsolhist
-       newsol=[x]
-       solhist=[solhist' newsol']'
-    end
+        if keepsolhist
+           newsol=[x]
+           solhist=[solhist' newsol']'
+        end
         ithist = [ithist' newhist']'
     end
     solution = x
