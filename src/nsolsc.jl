@@ -8,8 +8,7 @@ code for systems of equations needs.
 
 Input:\n 
 x: initial iterate\n
-f: function\n
-
+f: function\n 
 Options:\n
 fp: derivative. If your derivative function is fp, you give me
 its name. For example fp=foobar tells me that foobar is your
@@ -204,7 +203,6 @@ function armijo(fc, d, xm, fm, f, h, fp, armmax, derivative_is_old)
 #
     jflag=false
     liarm=-1
-    if derivative_is_old
     while armfail && iarm < armmax
         #
         # If I have an old derivative I will not tolerate a failure in
@@ -229,6 +227,7 @@ function armijo(fc, d, xm, fm, f, h, fp, armmax, derivative_is_old)
         fc = f(x)
         iarm += 1
         liarm += 1
+        armfail=abs(fc) > (1 - alpha * lambda) * abs(fm)
     end
     if iarm >= armmax
        idid=false
