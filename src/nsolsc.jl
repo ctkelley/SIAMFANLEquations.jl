@@ -196,38 +196,37 @@ function armijo(fc, d, xm, fm, f, h, fp, armmax, derivative_is_old)
     lamc=lambda
     lamm=lamc
     armfail=abs(fc) > (1 - alpha * lambda) * abs(fm)
-    
 #
-#   jflag tells me that I had to refresh the derivative
-#   liarm is the counter that = iarm unless I refresh the Jacobian
+# If I have an old derivative I will not tolerate a failure in
+# the line search. 
+#
+# jflag tells me that I had to refresh the derivative
+# liarm is the counter that = iarm unless I refresh the Jacobian
 #
     jflag=false
     liarm=-1
     while armfail && iarm < armmax
         #
-        # If I have an old derivative I will not tolerate a failure in
-        # the line search. 
-        #
-        if iarm == 0 && derivative_is_old
-            df = fpeval_newton(xm, f, fm, fp, h)
-            dfold = df
-            d = -fm / df
-            lambda = 1.0
-            derivative_is_old = false
-            jflag=true
-            liarm=-1
-        else
-            lambda = lambda * .5
-        end
-        #
-        #   If fp = f'(xm) then it's time to be serious about the line
-        #   search.
+        #   At this point fp = f'(xm) then it's time to be serious 
+        #   about the line  search.
         #
         x = xm + lambda * d
         fc = f(x)
         iarm += 1
         liarm += 1
         armfail=abs(fc) > (1 - alpha * lambda) * abs(fm)
+        if armfail && derivative_is_old
+        df = fpeval_newton(xm, f, fm, fp, h)
+        dfold = df
+        d = -fm / df
+        x = xm + lambda * d
+        fc = f(x)
+        armfail=abs(fc) > (1 - alpha * lambda) * abs(fm)
+        derivative_is_old = false
+        lambda=1.0
+        else
+        lambda = lambda * .5
+        end
     end
     if iarm >= armmax
        idid=false
