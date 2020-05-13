@@ -1,6 +1,6 @@
 """
 nsolsc(x,f; rtol=1.e-6, atol=1.e-12, maxit=10,
-        fp=difffp, solver="newton", sham=1, armmax=10, armrule="constant",
+        fp=difffp, solver="newton", sham=1, armmax=10, armfix=false,
         keepsolhist=true)
 
 Newton's method for scalar equations. Has most of the features a
@@ -46,8 +46,9 @@ sham: update Jacobian every sham iteraitons. sham=1 --> Newton
 
 armmax: upper bound on stepsize reductions in linesearch
 
-armrule:\n
-The default is a parabolic line search. Use it unless you are doing
+armfix:\n
+The default is a parabolic line search (ie false). Set to true and
+the stepsize will be fixed at .5. Don't do this unless you are doing
 experiments for research.
 
 keepsolhist:\n
@@ -192,7 +193,19 @@ function armijo(fc, d, xm, fm, f, h, fp, armmax, derivative_is_old)
     iarm = -1
     lambda = 1.0
     x = xm
-    while abs(fc) > (1 - alpha * lambda) * abs(fm) && iarm < armmax
+    lam0=0.0
+    lamc=lambda
+    lamm=lamc
+    armfail=abs(fc) > (1 - alpha * lambda) * abs(fm)
+    
+#
+#   jflag tells me that I had to refresh the derivative
+#   liarm is the counter that = iarm unless I refresh the Jacobian
+#
+    jflag=false
+    liarm=-1
+    if derivative_is_old
+    while armfail && iarm < armmax
         #
         # If I have an old derivative I will not tolerate a failure in
         # the line search. 
@@ -203,6 +216,10 @@ function armijo(fc, d, xm, fm, f, h, fp, armmax, derivative_is_old)
             d = -fm / df
             lambda = 1.0
             derivative_is_old = false
+            jflag=true
+            liarm=-1
+        else
+            lambda = lambda * .5
         end
         #
         #   If fp = f'(xm) then it's time to be serious about the line
@@ -211,7 +228,7 @@ function armijo(fc, d, xm, fm, f, h, fp, armmax, derivative_is_old)
         x = xm + lambda * d
         fc = f(x)
         iarm += 1
-        lambda = lambda * .5
+        liarm += 1
     end
     if iarm >= armmax
        idid=false
