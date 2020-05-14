@@ -15,6 +15,9 @@ its name. For example fp=foobar tells me that foobar is your
 function for the derivative. The default is a forward difference
 Jacobian that I provide.\n
 
+Your best bet is to put f and fp in the same file. See the atan
+example.
+
 solver:\n
 Your choices are "newton"(default) or "secant". However, you have sham
 at your disposal only if you chose newton.\n
@@ -59,10 +62,7 @@ of the entire iteration. iarm is the counter for steplength reductions.
 
 idid=true if the iteration succeeded and false if not.
 
-solhist:\n
-This is the entire history of the iteration if you've set
-keepsolhist=true
-
+solhist=entire history of the iteration if keepsolhist=true
 """
 function nsolsc(
     x,
@@ -74,7 +74,7 @@ function nsolsc(
     solver = "newton",
     sham = 1,
     armmax = 5,
-    armfix=false,
+    armrule="constant",
     keepsolhist=true
 )
     itc = 0
@@ -130,8 +130,7 @@ function nsolsc(
         fm = fc
         d = -fc / df
         iarm = -1
-        AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix, 
-                      derivative_is_old)
+        AOUT = armijo(fc, d, xm, fm, f, h, fp, armmax, derivative_is_old)
         if AOUT.idid == false
             iline=false
         end
@@ -172,3 +171,68 @@ if keepsolhist
     return (solution=solution, functionval=fval, history=ithist, idid=idid)
 end
 end
+
+#function fpeval_newton(x, f, fc, fp, h)
+#    if fp == difffp
+#        df = difffp(x, f, fc, h)
+#    else
+#        df = fp(x)
+#    end
+#    return df
+#end
+
+#function difffp(x, f, fc, h)
+#    df = (f(x + h) - fc) / h
+#    return df
+#end
+
+function armijo(fc, d, xm, fm, f, h, fp, armmax, derivative_is_old)
+    idid=true
+    alpha = 1.e-4
+    iarm = -1
+    lambda = 1.0
+    x = xm
+    lam0=0.0
+    lamc=lambda
+    lamm=lamc
+    armfail=abs(fc) > (1 - alpha * lambda) * abs(fm)
+    
+#
+#   jflag tells me that I had to refresh the derivative
+#   liarm is the counter that = iarm unless I refresh the Jacobian
+#
+    jflag=false
+    liarm=-1
+    while armfail && iarm < armmax
+        #
+        # If I have an old derivative I will not tolerate a failure in
+        # the line search. 
+        #
+        if iarm == 0 && derivative_is_old
+            df = fpeval_newton(xm, f, fm, fp, h)
+            dfold = df
+            d = -fm / df
+            lambda = 1.0
+            derivative_is_old = false
+            jflag=true
+            liarm=-1
+        end
+        #
+        #   If fp = f'(xm) then it's time to be serious about the line
+        #   search.
+        #
+        x = xm + lambda * d
+        fc = f(x)
+        iarm += 1
+        liarm += 1
+        armfail=abs(fc) > (1 - alpha * lambda) * abs(fm)
+        lambda = lambda * .5
+    end
+    if iarm >= armmax
+       idid=false
+       println("Linesearch failure")
+    end
+    return (ax = x, afc = fc, aiarm = iarm, adfo = derivative_is_old, ad = d,
+            idid=idid)
+end
+

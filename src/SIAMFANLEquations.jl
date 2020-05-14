@@ -5,6 +5,7 @@ module SIAMFANLEquations
 
 export nsolsc
 export armijo
+export parab3p
 export difffp
 export fpeval_newton
 export ptcsc
@@ -14,6 +15,7 @@ include("Tools/fpeval_newton.jl")
 include("nsolsc.jl")
 include("ptcsc.jl")
 include("armijo.jl")
+include("parab3p.jl")
 
 module TestProblems
 using LinearAlgebra
