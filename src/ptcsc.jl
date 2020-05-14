@@ -48,47 +48,60 @@ If the iteration it's time to play with the tolerances, dt0, and maxit.
 You are certian to fail if there is no solution to the equation.
 
 """
-function ptcsc(u, f; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6,
-          maxit=100, keepsolhist=true)
-itc=0
-idid=true
-fval=f(u)
-tol=atol+rtol*abs(fval)
-h=1.e-7
-dt=dt0
-ithist=[itc fval dt]
-if keepsolhist
-   solhist=[u]
-end
-while itc < maxit+1 && abs(fval) > tol
-    df=fpeval_newton(u, f, fval, fp, h)
-    idt=1.0/dt
-    step=-fval/(idt+df)
-    u=u+step
-    fvalm=fval
-    fval=f(u)
-# SER 
-    dt=dt*abs(fvalm)/abs(fval)
-    itc=itc+1
-    newhist=[itc fval dt]
+function ptcsc(
+    u,
+    f;
+    rtol = 1.e-6,
+    atol = 1.e-12,
+    fp = difffp,
+    dt0 = 1.e-6,
+    maxit = 100,
+    keepsolhist = true,
+)
+    itc = 0
+    idid = true
+    fval = f(u)
+    tol = atol + rtol * abs(fval)
+    h = 1.e-7
+    dt = dt0
+    ithist = [itc fval dt]
     if keepsolhist
-       newsol=[u]
-       solhist=[solhist' newsol']'
+        solhist = [u]
     end
-    ithist=[ithist' newhist']'
-end
-#
-if abs(fval) > tol
-    println("PTC failure; increase maxit and/or dt0")
-    println("Current values: maxit  =  ",maxit,",  dt0 = ",dt0)
-    println("Give the history array a look to see what's happening.")
-    println("  ")
-    idid=false
-end
+    while itc < maxit + 1 && abs(fval) > tol
+        df = fpeval_newton(u, f, fval, fp, h)
+        idt = 1.0 / dt
+        step = -fval / (idt + df)
+        u = u + step
+        fvalm = fval
+        fval = f(u)
+        # SER 
+        dt = dt * abs(fvalm) / abs(fval)
+        itc = itc + 1
+        newhist = [itc fval dt]
+        if keepsolhist
+            newsol = [u]
+            solhist = [solhist' newsol']'
+        end
+        ithist = [ithist' newhist']'
+    end
+    #
+    if abs(fval) > tol
+        println("PTC failure; increase maxit and/or dt0")
+        println("Current values: maxit  =  ", maxit, ",  dt0 = ", dt0)
+        println("Give the history array a look to see what's happening.")
+        println("  ")
+        idid = false
+    end
     if keepsolhist
-return (solution=u, functionval=fval, history=ithist, idid=idid, 
-        solhist=solhist)
+        return (
+            solution = u,
+            functionval = fval,
+            history = ithist,
+            idid = idid,
+            solhist = solhist,
+        )
     else
-return (solution=u, functionval=fval, history=ithist, idid=idid)
+        return (solution = u, functionval = fval, history = ithist, idid = idid)
     end
 end

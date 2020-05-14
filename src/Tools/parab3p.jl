@@ -43,28 +43,28 @@ for negative curvature, which I don't want to see.
 """
 
 function parab3p(lambdac, lambdam, ff0, ffc, ffm)
-#
-# internal parameters
-#
-sigma0=.1; sigma1=.5;
-#
-c2 = lambdam*(ffc-ff0)-lambdac*(ffm-ff0)
-if c2 >=0
-#
-# Sanity check for negative curvature
-#
-   lambdap = sigma0*lambdac
-else
-#
-# It's a convex parabola, so use calculus!
-#
-   c1=lambdac*lambdac*(ffm-ff0)-lambdam*lambdam*(ffc-ff0);
-   lambdap=-c1*.5/c2
-#
-   lambdaup=sigma1*lambdac
-   lambdadown=sigma0*lambdac
-   lambdap = max(lambdadown,min(lambdaup,lambdap))
+    #
+    # internal parameters
+    #
+    sigma0 = 0.1
+    sigma1 = 0.5
+    #
+    c2 = lambdam * (ffc - ff0) - lambdac * (ffm - ff0)
+    if c2 >= 0
+        #
+        # Sanity check for negative curvature
+        #
+        lambdap = sigma0 * lambdac
+    else
+        #
+        # It's a convex parabola, so use calculus!
+        #
+        c1 = lambdac * lambdac * (ffm - ff0) - lambdam * lambdam * (ffc - ff0)
+        lambdap = -c1 * 0.5 / c2
+        #
+        lambdaup = sigma1 * lambdac
+        lambdadown = sigma0 * lambdac
+        lambdap = max(lambdadown, min(lambdaup, lambdap))
+    end
+    return lambdap
 end
-return lambdap
-end
-

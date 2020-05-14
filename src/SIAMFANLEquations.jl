@@ -12,10 +12,10 @@ export ptcsc
 
 include("Tools/difffp.jl")
 include("Tools/fpeval_newton.jl")
+include("Tools/parab3p.jl")
 include("nsolsc.jl")
 include("ptcsc.jl")
 include("armijosc.jl")
-include("parab3p.jl")
 
 module TestProblems
 using LinearAlgebra

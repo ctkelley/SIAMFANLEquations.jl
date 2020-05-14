@@ -74,12 +74,12 @@ function nsolsc(
     solver = "newton",
     sham = 1,
     armmax = 5,
-    armfix=false,
-    keepsolhist=true
+    armfix = false,
+    keepsolhist = true,
 )
     itc = 0
-    idid=true
-    iline=true
+    idid = true
+    iline = true
     h = 1.e-7
     #
     # If you like the secant or chord methods, I will do a difference Jacobian
@@ -89,7 +89,7 @@ function nsolsc(
     if solver == "secant"
         xm = x * 1.0001
         if xm == 0
-            xm = .0001
+            xm = 0.0001
         end
         fm = f(xm)
         sham = 1
@@ -109,7 +109,7 @@ function nsolsc(
     iarm = 0
     ithist = [itc fc iarm]
     if keepsolhist
-       solhist=[x]
+        solhist = [x]
     end
     tol = rtol * resid + atol
     residratio = 1
@@ -117,7 +117,7 @@ function nsolsc(
         if solver == "secant"
             df = (fc - fm) / (x - xm)
         else
-            if itc % sham == 0 || iarm > 0 || residratio > .1
+            if itc % sham == 0 || iarm > 0 || residratio > 0.1
                 df = fpeval_newton(x, f, fc, fp, h)
                 dfold = df
                 derivative_is_old = false
@@ -130,10 +130,9 @@ function nsolsc(
         fm = fc
         d = -fc / df
         iarm = -1
-        AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix, 
-                      derivative_is_old)
+        AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix, derivative_is_old)
         if AOUT.idid == false
-            iline=false
+            iline = false
         end
         fc = AOUT.afc
         x = AOUT.ax
@@ -145,30 +144,35 @@ function nsolsc(
         itc = itc + 1
         newhist = [itc fc iarm]
         if keepsolhist
-           newsol=[x]
-           solhist=[solhist' newsol']'
+            newsol = [x]
+            solhist = [solhist' newsol']'
         end
         ithist = [ithist' newhist']'
     end
     solution = x
     fval = fc
-if abs(fval) > tol || iline==false
-    idid=false
-end
-if idid==false
-    println("Newton failure; maybe increase maxit and/or armmax")
-    if iline==false
-       println("The line search failed at least once.")
+    if abs(fval) > tol || iline == false
+        idid = false
     end
-    println("Current values: maxit  =  ",maxit,", armmax = ",armmax)
-    println("Give the history array a look to see what's happening.")
-    println("  ")
-    idid=false
-end
-if keepsolhist
-    return (solution=solution, functionval=fval, history=ithist, idid=idid,
-        solhist=solhist)
+    if idid == false
+        println("Newton failure; maybe increase maxit and/or armmax")
+        if iline == false
+            println("The line search failed at least once.")
+        end
+        println("Current values: maxit  =  ", maxit, ", armmax = ", armmax)
+        println("Give the history array a look to see what's happening.")
+        println("  ")
+        idid = false
+    end
+    if keepsolhist
+        return (
+            solution = solution,
+            functionval = fval,
+            history = ithist,
+            idid = idid,
+            solhist = solhist,
+        )
     else
-    return (solution=solution, functionval=fval, history=ithist, idid=idid)
-end
+        return (solution = solution, functionval = fval, history = ithist, idid = idid)
+    end
 end
