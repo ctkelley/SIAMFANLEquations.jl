@@ -43,6 +43,19 @@ if globok
    println("global FD ok")
 end
 #
+# Global convergence with parab3p
+#
+sdatap3p=nsolsc(10.0, atan)
+solok=(abs(sdatap3p.solution) < 1.e-8)
+funok=(abs(sdatap3p.functionval) < 1.e-8)
+hs=size(sdatap3p.history)
+histok=(hs[1]==6)
+p3pok = funok && solok && histok
+if p3pok
+   println("parab3p ok")
+end
+
+#
 # Local convergence with secant method
 #
 sdatas=nsolsc(1.0, atan; solver="secant")
@@ -110,8 +123,8 @@ if stagok
    println("Stagnation test passed")
 end
 #
-println(locok, globok, secantok, analyticok, zecok,
+println(locok, globok, p3pok, secantok, analyticok, zecok,
          shamfastok, afok, resok)
 return locok && globok && secantok && analyticok && zecok && 
-       shamfastok && afok && resok
+       shamfastok && afok && resok && p3pok
 end
