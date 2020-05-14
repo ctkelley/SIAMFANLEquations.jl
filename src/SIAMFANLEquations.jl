@@ -4,6 +4,7 @@ module SIAMFANLEquations
 #using LaTeXStrings
 
 export nsolsc
+export armijo
 export difffp
 export fpeval_newton
 export ptcsc
@@ -12,6 +13,7 @@ include("Tools/difffp.jl")
 include("Tools/fpeval_newton.jl")
 include("nsolsc.jl")
 include("ptcsc.jl")
+include("armijo.jl")
 
 module TestProblems
 using LinearAlgebra
