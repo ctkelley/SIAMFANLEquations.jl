@@ -33,7 +33,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Meaning of version numbers
 
-This is the dev version of v0.10.1. I will tag this version when the codes can duplicate the examples in Chapter 1 of (Kel03), make all the new examples, and I have started on Chaper 1 of the notebook and print book. The plan is
+This is version of v0.10.1. The codes can now duplicate the examples in Chapter 1 of (Kel03), make all the new examples, and I have started on Chaper 1 of the notebook and print book. The plan is
 
 -- v0.x0.1 goes live when the codes can duplicate the examples in Chapter x of (Kel03) and make the new examples. Version v0.x0.5 goes out when the codes and notebook for Chapter x are finished. x=6 may be an exception. Chapter 6 may be part of the v0.30.1 release because Chapter 3 needs it.
 
