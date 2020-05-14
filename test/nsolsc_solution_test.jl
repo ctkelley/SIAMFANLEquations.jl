@@ -28,12 +28,12 @@ analyticok = funok && solok && histok
 if analyticok
    println("analytic derivative ok")
 else
-   println(sdatta)
+   println(sdataa)
 end
 #
 # Global convergence
 #
-sdatag=nsolsc(10.0, atan; maxit=11)
+sdatag=nsolsc(10.0, atan; maxit=11, armfix=true)
 solok=(abs(sdatag.solution) < 1.e-8)
 funok=(abs(sdatag.functionval) < 1.e-8)
 hs=size(sdatag.history)
@@ -67,7 +67,7 @@ zecok = funok && solok && histok
 if zecok
    println("local FD at zero ok")
 end
-sdatal=nsolsc(200.0, linatan; sham=5,maxit=20,armmax=10,rtol=1.e-9)
+sdatal=nsolsc(200.0, linatan; sham=5,maxit=20,armmax=10,armfix=true, rtol=1.e-9)
 solution=-100
 solok=(abs(sdatal.solution-solution) < 1.e-8)
 funok=(abs(sdatal.functionval) < 1.e-8)
@@ -80,7 +80,7 @@ end
 #
 # Test linesearch failure complaints.
 #
-armfail=nsolsc(10.0,atan; armmax=1)
+armfail=nsolsc(10.0,atan; armmax=1, armfix=true)
 afok=false
 if armfail.idid==false
    afok=true
@@ -90,7 +90,7 @@ end
 # Test residual failure mode and no history.
 #
 resok=false
-resfail=nsolsc(10.0, atan; maxit=3, keepsolhist=false)
+resfail=nsolsc(10.0, atan; maxit=3, armfix=true, keepsolhist=false)
 if resfail.idid==false
    resok=true
    println("Residual failure test passed.")
@@ -98,7 +98,8 @@ end
 #
 # Test stagnation mode
 #
-stagdatan=nsolsc(4.5,ftanx; fp=ftanxp, rtol=1.e-17, atol=1.e-17, maxit=14)
+stagdatan=nsolsc(4.5,ftanx; fp=ftanxp, rtol=1.e-17, atol=1.e-17, 
+         armfix=true, maxit=14)
 fvals=stagdatan.history[:,2]
 avals=stagdatan.history[:,3]
 stagl=(length(fvals)==15)
