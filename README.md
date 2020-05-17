@@ -34,6 +34,8 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Meaning of version numbers
 
+If __log(versionnumbrer) < 0__ there's trouble!
+
 This is the dev version of v0.1.5.
 
 I have released version v0.1.1. The codes can now duplicate the examples in Chapter 1 of (Kel03), make all the new examples, and I have started on Chaper 1 of the notebook and print book. The plan is
