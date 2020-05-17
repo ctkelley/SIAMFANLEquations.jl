@@ -34,7 +34,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Meaning of version numbers
 
-If __log(versionnumbrer) < 0__ there's trouble!
+If __log(version_number) < 0__ there's trouble!
 
 This is the dev version of v0.1.5.
 
