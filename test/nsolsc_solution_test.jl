@@ -45,11 +45,11 @@ end
 #
 # Global convergence with parab3p
 #
-sdatap3p=nsolsc(10.0, atan)
+sdatap3p=nsolsc(10.0, atan; rtol=1.e-10)
 solok=(abs(sdatap3p.solution) < 1.e-8)
 funok=(abs(sdatap3p.functionval) < 1.e-8)
 hs=size(sdatap3p.history)
-histok=(hs[1]==6)
+histok=(hs[1]==8)
 p3pok = funok && solok && histok
 if p3pok
    println("parab3p ok")

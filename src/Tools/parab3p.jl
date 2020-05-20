@@ -37,7 +37,8 @@ for negative curvature, which I don't want to see.
  matlab code because I did it wrong. I have sinced fixed it.
 
  So (Students, listen up!) if c2 < 0 then all we gotta do is minimize
- c1 lambda + c2 lambda^2 over [.1* lambdac, .5*lambdac]
+ (c1 lambda + c2 lambda^2)/d1 over [.1* lambdac, .5*lambdac]
+ This means to MAXIMIZE c1 lambda + c2 lambda^2 becase d1 < 0.
  So I find the zero of the derivative and check the endpoints.
 
 """
@@ -66,5 +67,4 @@ function parab3p(lambdac, lambdam, ff0, ffc, ffm)
         lambdadown = sigma0 * lambdac
         lambdap = max(lambdadown, min(lambdaup, lambdap))
     end
-    return lambdap
 end

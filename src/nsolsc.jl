@@ -16,8 +16,11 @@ function for the derivative. The default is a forward difference
 Jacobian that I provide.\n
 
 solver:\n
-Your choices are "newton"(default) or "secant". However, you have sham
-at your disposal only if you chose newton.\n
+Your choices are "newton"(default), "secant", or "chord". However, 
+you have sham at your disposal only if you chose newton. "chord"
+will keep using the initial derivative until the iterate converges,
+uses the iteration budget, or the line search fails. It is not the
+same as sham=Inf, which is smarter.\n
 
 If you use secant and your initial iterate is poor, you have made
 a mistake. I will help you by driving the line search with a finite
@@ -54,7 +57,7 @@ Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 Output:\n
 A tuple (solution, functionval, history, idid, solhist) where
-history is a tuple (iteration counter, f(x), iarm) with the history
+history is a tuple (iteration counter, |f(x)|, iarm) with the history
 of the entire iteration. iarm is the counter for steplength reductions.
 
 idid=true if the iteration succeeded and false if not.
@@ -82,9 +85,14 @@ function nsolsc(
     iline = true
     h = 1.e-7
     #
-    # If you like the secant or chord methods, I will do a difference Jacobian
-    # anyhow if the line search kicks in. You will thank me for this.
+    # If you like the secant or sham=large methods, I will do a 
+    # difference Jacobian anyhow if the line search kicks in. 
+    # You will thank me for this.
     # Even if you don't thank me, I will do it anyhow.
+    #
+    # If you insist, solver=chord will ignore poor convergence and let
+    # things go south with no interference. Please don't do that as
+    # standard procedure.
     #
     if solver == "secant"
         xm = x * 1.0001
@@ -107,15 +115,21 @@ function nsolsc(
     derivative_is_old = false
     resid = abs(fc)
     iarm = 0
-    ithist = [itc fc iarm]
+    ithist = [itc abs(fc) iarm]
     if keepsolhist
         solhist = [x]
     end
     tol = rtol * resid + atol
     residratio = 1
+    df=0.0
     while (resid > tol) && (itc < maxit)
         if solver == "secant"
             df = (fc - fm) / (x - xm)
+        elseif solver == "chord"
+            if itc==0
+                df = fpeval_newton(x, f, fc, fp, h)
+            end
+            derivative_is_old = false
         else
             if itc % sham == 0 || iarm > 0 || residratio > 0.1
                 df = fpeval_newton(x, f, fc, fp, h)
@@ -130,7 +144,8 @@ function nsolsc(
         fm = fc
         d = -fc / df
         iarm = -1
-        AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix, derivative_is_old)
+        AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, 
+                        armfix, derivative_is_old)
         if AOUT.idid == false
             iline = false
         end
@@ -142,7 +157,7 @@ function nsolsc(
         resid = abs(fc)
         residratio = abs(fc) / abs(fm)
         itc = itc + 1
-        newhist = [itc fc iarm]
+        newhist = [itc abs(fc) iarm]
         if keepsolhist
             newsol = [x]
             solhist = [solhist' newsol']'
@@ -235,6 +250,8 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix, derivative_is_old)
         if iarm == 0 || armfix == true
             lambda = lambda * 0.5
         else
+            lamm=lamc
+            lamc=lambda
             lambda = parab3p(lamc, lamm, ff0, ffc, ffm)
         end
         x = xm + lambda * d
