@@ -123,8 +123,22 @@ if stagok
    println("Stagnation test passed")
 end
 #
+#
+# Test chord method
+#
+lttest=nsolsc(.5,atan;solver="chord");
+fvals=lttest.history[:,2];
+chordl=(length(fvals)==11)
+ratl=fvals[11]/fvals[10]
+chordr=(abs(ratl-.25) < 1.e-7)
+solok=(fvals[11] < 1.e-6)
+chordok=chordl && chordr && solok
+if chordok
+   println("Chord test passed")
+end
+#
 println(locok, globok, p3pok, secantok, analyticok, zecok,
-         shamfastok, afok, resok)
+         shamfastok, afok, resok, chordok)
 return locok && globok && secantok && analyticok && zecok && 
-       shamfastok && afok && resok && p3pok
+       shamfastok && afok && resok && p3pok && chordok
 end
