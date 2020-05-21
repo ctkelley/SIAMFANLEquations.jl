@@ -40,7 +40,7 @@ This is the dev version of v0.1.5.
 
 I have released version v0.1.1. The codes can now duplicate the examples in Chapter 1 of (Kel03), make all the new examples, and I have started on Chaper 1 of the notebook and print book. The plan is
 
--- v0.x.1 goes live when the codes can duplicate the examples in Chapter x of (Kel03) and make the new examples. Version v0.x.5 goes out when the codes and notebook for Chapter x are finished. x=6 may be an exception. Chapter 6 may be part of the v0.3.1 release because Chapter 3 needs it.
+-- v0.x.1 goes live when the codes can duplicate the examples in Chapter x of (Kel03) and make the new examples. Version v0.x.5 goes out when the codes and notebook for Chapter x are finished. 
 
 -- v1.0.0 goes out when the print book is published. This means that the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
