@@ -1,4 +1,7 @@
 module SIAMFANLEquations
+using LinearAlgebra
+using SparseArrays
+using SuiteSparse
 
 #using PyPlot
 #using LaTeXStrings
@@ -19,6 +22,8 @@ module TestProblems
 using LinearAlgebra
 using SparseArrays
 using SuiteSparse
+using AbstractFFTs
+using FFTW
 
 export
 #Functions
