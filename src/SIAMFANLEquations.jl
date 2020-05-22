@@ -17,6 +17,8 @@ include("ptcsc.jl")
 
 module TestProblems
 using LinearAlgebra
+using SparseArraus
+using SuiteSparse
 
 export
 #Functions
