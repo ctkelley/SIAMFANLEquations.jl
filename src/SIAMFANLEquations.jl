@@ -23,7 +23,6 @@ using LinearAlgebra
 using SparseArrays
 using SuiteSparse
 using AbstractFFTs
-using FFTW
 
 export
 #Functions
