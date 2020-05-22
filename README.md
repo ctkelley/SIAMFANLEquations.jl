@@ -10,7 +10,7 @@ This is the package with the solvers and test problems for
 
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
 
-This will be a sequal to my book 
+This will be a sequel to my book 
 
 (Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003.
 
@@ -31,6 +31,13 @@ The new book with have a different algorithm mix and the solvers and examples wi
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
 - [Support](#Support) 
+
+## Installation
+
+```
+[ pkg add https://github.com/ctkelley/SIAMFANLEquations.jl
+```
+
 
 ## Meaning of version numbers
 
