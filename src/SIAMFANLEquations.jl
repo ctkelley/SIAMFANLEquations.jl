@@ -3,9 +3,6 @@ using LinearAlgebra
 using SparseArrays
 using SuiteSparse
 
-#using PyPlot
-#using LaTeXStrings
-
 export nsolsc
 export parab3p
 export difffp
@@ -23,6 +20,7 @@ using LinearAlgebra
 using SparseArrays
 using SuiteSparse
 using AbstractFFTs
+using FFTW
 
 export
 #Functions
