@@ -25,12 +25,13 @@ The new book with have a different algorithm mix and the solvers and examples wi
    
 ## Readme Contents:
 
+- [Installation](#Installation)
 - [Meaning of Version Numbers](#Meaning-of-version-numbers)
 - [__Please__ No Pull Requests](#Pull-Requests)
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
-- [Support](#Support) 
+- [Funding](#Funding) 
 
 ## Installation
 
@@ -121,7 +122,7 @@ You'll need the TestProblems submodule to run the notebook. To get it type __usi
 
 There are two kinds of test problems. The ones you care about are the ones that I use in the print book and notebook to demonstrate the algorithms. The "inside baseball" problems are the ones I __only__ use for CI. They only appear in the /test directory. If you don't know or care what CI is, be happy.
    
-## Support
+## Funding
 
 This project was partially supported by
 1. Army Research Office grant W911NF-16-1-0504 and
