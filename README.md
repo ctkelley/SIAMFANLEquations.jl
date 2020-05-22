@@ -34,9 +34,24 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Installation
 
+This package has been tested on Julia 1.0, ..., 1.4
+
+Type this in the REPL to install
+
 ```
 [ pkg add https://github.com/ctkelley/SIAMFANLEquations.jl
 ```
+
+then, as usual
+```
+using SIAMFANLequations
+```
+enables you to use the codes. You'll need
+```
+using SIAMFANLEquations.TestProblems
+```
+to run the test problems.
+
 
 
 ## Meaning of version numbers
