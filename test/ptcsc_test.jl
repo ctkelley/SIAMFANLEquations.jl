@@ -19,8 +19,8 @@ uunstable=0.0
 #
 # Convergence to the right solution
 #
-ptcdata1=ptcsc(u0,sptest; dt0=1.0, rtol=1.e-12, fp=sptestp)
-ptcdata2=ptcsc(u0,sptest; dt0=1.0, rtol=1.e-12, keepsolhist=false)
+ptcdata1=ptcsc(sptest,u0; dt0=1.0, rtol=1.e-12, fp=sptestp)
+ptcdata2=ptcsc(sptest,u0; dt0=1.0, rtol=1.e-12, keepsolhist=false)
 dh=ptcdata1.history-ptcdata2.history
 ndh=norm(dh[:,2],Inf)
 fdok=(ndh < 1.e-7)
@@ -31,7 +31,7 @@ pival=ptcdata1.history[:,1]
 solok=(abs(ptcdata1.solution-ustable) < 1.e-10)
 funok=(abs(ptcdata1.functionval) < 1.e-12)
 histok=(length(pival)==18)
-ptcdataf=ptcsc(u0,sptest; dt0=.1, rtol=1.e-12)
+ptcdataf=ptcsc(sptest,u0; dt0=.1, rtol=1.e-12)
 failok=~ptcdataf.idid
 ptcok=fdok && solok && funok && histok && failok
 if ptcok

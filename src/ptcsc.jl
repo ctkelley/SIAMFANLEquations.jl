@@ -1,5 +1,5 @@
 """
-ptcsc(u, f; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6, maxit=100,
+ptcsc(f, u; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6, maxit=100,
            keepsolhist=true)
 
 Scalar pseudo-transient continuation solver. PTC is designed to find
@@ -10,8 +10,8 @@ du/dt = - f(u)
 It is ABSOLUTELY NOT a general purpose nonlinear solver.
 
 Input:\n
-x: initial iterate\n
 f: function\n
+u: initial iterate/data\n
 
 Options:\n
 
@@ -38,7 +38,7 @@ Only turn it on if you have use for the data, which can get REALLY LARGE.
 Output: A tuple (solution, functionval, history, idid, solhist) where
 History is a three column array
 
-(iteration counter, f(x), dt)
+(iteration counter, |f(x)|, dt)
 
 idid=true if the iteration succeeded and false if not.
 
@@ -49,8 +49,8 @@ You are certian to fail if there is no solution to the equation.
 
 """
 function ptcsc(
-    u,
-    f;
+    f,
+    u;
     rtol = 1.e-6,
     atol = 1.e-12,
     fp = difffp,
@@ -64,7 +64,7 @@ function ptcsc(
     tol = atol + rtol * abs(fval)
     h = 1.e-7
     dt = dt0
-    ithist = [itc fval dt]
+    ithist = [itc abs(fval) dt]
     if keepsolhist
         solhist = [u]
     end
@@ -78,7 +78,7 @@ function ptcsc(
         # SER 
         dt = dt * abs(fvalm) / abs(fval)
         itc = itc + 1
-        newhist = [itc fval dt]
+        newhist = [itc abs(fval) dt]
         if keepsolhist
             newsol = [u]
             solhist = [solhist' newsol']'

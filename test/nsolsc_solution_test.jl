@@ -7,7 +7,7 @@ function nsolsc_solution_test()
 # 
 # Local convergence with forward difference derivative
 #
-sdatal=nsolsc(1.0, atan)
+sdatal=nsolsc(atan,1.0)
 solok=(abs(sdatal.solution) < 1.e-8)
 funok=(abs(sdatal.functionval) < 1.e-8)
 hs=size(sdatal.history)
@@ -19,7 +19,7 @@ end
 #
 # Local convergence with analytic derivative
 #
-sdataa=nsolsc(1.0, atan; fp=fpatan)
+sdataa=nsolsc(atan, 1.0; fp=fpatan)
 solok=(abs(sdataa.solution) < 1.e-8)
 funok=(abs(sdataa.functionval) < 1.e-8)
 hs=size(sdataa.history)
@@ -33,7 +33,7 @@ end
 #
 # Global convergence
 #
-sdatag=nsolsc(10.0, atan; maxit=11, armfix=true)
+sdatag=nsolsc(atan,10.0; maxit=11, armfix=true)
 solok=(abs(sdatag.solution) < 1.e-8)
 funok=(abs(sdatag.functionval) < 1.e-8)
 hs=size(sdatag.history)
@@ -45,7 +45,7 @@ end
 #
 # Global convergence with parab3p
 #
-sdatap3p=nsolsc(30.0, atan; rtol=1.e-10,maxit=11)
+sdatap3p=nsolsc(atan,30.0; rtol=1.e-10,maxit=11)
 solok=(abs(sdatap3p.solution) < 1.e-8)
 funok=(abs(sdatap3p.functionval) < 1.e-8)
 hs=size(sdatap3p.history)
@@ -58,7 +58,7 @@ end
 #
 # Local convergence with secant method
 #
-sdatas=nsolsc(1.0, atan; solver="secant")
+sdatas=nsolsc(atan,1.0; solver="secant")
 solok=(abs(sdatas.solution) < 1.e-10)
 funok=(abs(sdatas.functionval) < 1.e-10)
 hs=size(sdatas.history)
@@ -70,7 +70,7 @@ end
 #
 # Initialize secant method when x0=0
 #
-zedata=nsolsc(0.0,fcos;solver="secant",rtol=1.e-9)
+zedata=nsolsc(fcos,0.0;solver="secant",rtol=1.e-9)
 solution=7.390851333858823e-01
 solok=(abs(zedata.solution-solution) < 1.e-9)
 funok=(abs(zedata.functionval) < 1.e-9)
@@ -80,7 +80,7 @@ zecok = funok && solok && histok
 if zecok
    println("local FD at zero ok")
 end
-sdatal=nsolsc(200.0, linatan; sham=5,maxit=20,armmax=10,armfix=true, rtol=1.e-9)
+sdatal=nsolsc(linatan,200.0; sham=5,maxit=20,armmax=10,armfix=true, rtol=1.e-9)
 solution=-100
 solok=(abs(sdatal.solution-solution) < 1.e-8)
 funok=(abs(sdatal.functionval) < 1.e-8)
@@ -93,7 +93,7 @@ end
 #
 # Test linesearch failure complaints.
 #
-armfail=nsolsc(10.0,atan; armmax=1, armfix=true)
+armfail=nsolsc(atan,10.0; armmax=1, armfix=true)
 afok=false
 if armfail.idid==false
    afok=true
@@ -103,7 +103,7 @@ end
 # Test residual failure mode and no history.
 #
 resok=false
-resfail=nsolsc(10.0, atan; maxit=3, armfix=true, keepsolhist=false)
+resfail=nsolsc(atan,10.0; maxit=3, armfix=true, keepsolhist=false)
 if resfail.idid==false
    resok=true
    println("Residual failure test passed.")
@@ -111,7 +111,7 @@ end
 #
 # Test stagnation mode
 #
-stagdatan=nsolsc(4.5,ftanx; fp=ftanxp, rtol=1.e-17, atol=1.e-17, 
+stagdatan=nsolsc(ftanx,4.5; fp=ftanxp, rtol=1.e-17, atol=1.e-17, 
          armfix=true, maxit=14)
 fvals=stagdatan.history[:,2]
 avals=stagdatan.history[:,3]
@@ -126,7 +126,7 @@ end
 #
 # Test chord method
 #
-lttest=nsolsc(.5,atan;solver="chord");
+lttest=nsolsc(atan,.5;solver="chord");
 fvals=lttest.history[:,2];
 chordl=(length(fvals)==11)
 ratl=fvals[11]/fvals[10]
