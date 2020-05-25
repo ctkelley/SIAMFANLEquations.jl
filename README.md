@@ -59,7 +59,10 @@ to run the test problems.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is the dev version of v0.1.5.
+This is the dev version of v0.1.5. 
+
+__I have changed the user interface and the calling sequence of the solvers
+since v0.1.1 and will continue to do things like that until v1.0.0 goes out the door.__
 
 I have released version v0.1.1. The codes can now duplicate the examples in Chapter 1 of (Kel03), make all the new examples, and I have started on Chaper 1 of the notebook and print book. The plan is
 
