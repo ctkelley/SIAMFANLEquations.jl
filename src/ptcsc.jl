@@ -36,9 +36,9 @@ tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 Output: A tuple (solution, functionval, history, idid, solhist) where
-History is a three column array
+history is a three column array
 
-(iteration counter, f(x), dt)
+(iteration counter, abs(f(x)), dt)
 
 idid=true if the iteration succeeded and false if not.
 
@@ -56,7 +56,7 @@ fval=f(u)
 tol=atol+rtol*abs(fval)
 h=1.e-7
 dt=dt0
-ithist=[itc fval dt]
+ithist=[itc abs(fval) dt]
 if keepsolhist
    solhist=[u]
 end
@@ -70,7 +70,7 @@ while itc < maxit+1 && abs(fval) > tol
 # SER 
     dt=dt*abs(fvalm)/abs(fval)
     itc=itc+1
-    newhist=[itc fval dt]
+    newhist=[itc abs(fval) dt]
     if keepsolhist
        newsol=[u]
        solhist=[solhist' newsol']'
