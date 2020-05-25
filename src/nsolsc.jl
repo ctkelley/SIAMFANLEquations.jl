@@ -57,8 +57,11 @@ Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 Output:\n
 A tuple (solution, functionval, history, idid, solhist) where
-history is a tuple (|f(x)|, iarm) with the history
-of the entire iteration. iarm is the counter for steplength reductions.
+history is the vector of residual norms (|f(x)|) for the iteration
+and stats is a tuple of the history of (ifun, ijac, iarm), the number
+of functions/derivatives/steplength reductions at each iteration.
+
+-->> WARNING: this is not finished and I only have iarm in there for now.
 
 idid=true if the iteration succeeded and false if not.
 
@@ -114,8 +117,9 @@ function nsolsc(
     dfold = 0.0
     derivative_is_old = false
     resid = abs(fc)
-    iarm = 0
-    ithist = [abs(fc) iarm]
+    newiarm=-1
+    iarm=[0]
+    ithist = [abs(fc)] 
     if keepsolhist
         solhist = [x]
     end
@@ -131,7 +135,7 @@ function nsolsc(
             end
             derivative_is_old = false
         else
-            if itc % sham == 0 || iarm > 0 || residratio > 0.1
+            if itc % sham == 0 || newiarm > 0 || residratio > 0.1
                 df = fpeval_newton(x, f, fc, fp, h)
                 dfold = df
                 derivative_is_old = false
@@ -143,7 +147,6 @@ function nsolsc(
         xm = x
         fm = fc
         d = -fc / df
-        iarm = -1
         AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, 
                         armfix, derivative_is_old)
         if AOUT.idid == false
@@ -151,17 +154,18 @@ function nsolsc(
         end
         fc = AOUT.afc
         x = AOUT.ax
-        iarm = AOUT.aiarm
+        newiarm = AOUT.aiarm
         derivative_is_old = AOUT.adfo
         d = AOUT.ad
         resid = abs(fc)
         residratio = abs(fc) / abs(fm)
         itc = itc + 1
-        newhist = [abs(fc) iarm]
+        newhist = [abs(fc)]
         if keepsolhist
             newsol = [x]
             solhist = [solhist' newsol']'
         end
+        iarm = [iarm' newiarm']'
         ithist = [ithist' newhist']'
     end
     solution = x
@@ -184,11 +188,13 @@ function nsolsc(
             solution = solution,
             functionval = fval,
             history = ithist,
+            iarm = iarm,
             idid = idid,
             solhist = solhist,
         )
     else
-        return (solution = solution, functionval = fval, history = ithist, idid = idid)
+        return (solution = solution, functionval = fval, 
+        history = ithist, iarm=iarm, idid = idid)
     end
 end
 

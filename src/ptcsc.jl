@@ -38,13 +38,16 @@ Only turn it on if you have use for the data, which can get REALLY LARGE.
 Output: A tuple (solution, functionval, history, idid, solhist) where
 history is a two column array
 
-(|f(x)|, dt)
+(|f(u)|, dt)
+
+of residual norms and time steps. Unless something has gone badly wrong,
+dt approx |f(u_0)|/|f(u)|.
 
 idid=true if the iteration succeeded and false if not.
 
 solhist=entire history of the iteration if keepsolhist=true
 
-If the iteration it's time to play with the tolerances, dt0, and maxit.
+If the iteration fails it's time to play with the tolerances, dt0, and maxit.
 You are certian to fail if there is no solution to the equation.
 
 """
