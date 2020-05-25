@@ -36,9 +36,9 @@ tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 Output: A tuple (solution, functionval, history, idid, solhist) where
-history is a three column array
+history is a two column array
 
-(iteration counter, |f(x)|, dt)
+(|f(x)|, dt)
 
 idid=true if the iteration succeeded and false if not.
 
@@ -64,7 +64,7 @@ function ptcsc(
     tol = atol + rtol * abs(fval)
     h = 1.e-7
     dt = dt0
-    ithist = [itc abs(fval) dt]
+    ithist = [abs(fval) dt]
     if keepsolhist
         solhist = [u]
     end
@@ -78,7 +78,7 @@ function ptcsc(
         # SER 
         dt = dt * abs(fvalm) / abs(fval)
         itc = itc + 1
-        newhist = [itc abs(fval) dt]
+        newhist = [abs(fval) dt]
         if keepsolhist
             newsol = [u]
             solhist = [solhist' newsol']'

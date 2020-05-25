@@ -57,7 +57,7 @@ Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 Output:\n
 A tuple (solution, functionval, history, idid, solhist) where
-history is a tuple (iteration counter, |f(x)|, iarm) with the history
+history is a tuple (|f(x)|, iarm) with the history
 of the entire iteration. iarm is the counter for steplength reductions.
 
 idid=true if the iteration succeeded and false if not.
@@ -115,7 +115,7 @@ function nsolsc(
     derivative_is_old = false
     resid = abs(fc)
     iarm = 0
-    ithist = [itc abs(fc) iarm]
+    ithist = [abs(fc) iarm]
     if keepsolhist
         solhist = [x]
     end
@@ -157,7 +157,7 @@ function nsolsc(
         resid = abs(fc)
         residratio = abs(fc) / abs(fm)
         itc = itc + 1
-        newhist = [itc abs(fc) iarm]
+        newhist = [abs(fc) iarm]
         if keepsolhist
             newsol = [x]
             solhist = [solhist' newsol']'

@@ -113,8 +113,8 @@ end
 #
 stagdatan=nsolsc(ftanx,4.5; fp=ftanxp, rtol=1.e-17, atol=1.e-17, 
          armfix=true, maxit=14)
-fvals=stagdatan.history[:,2]
-avals=stagdatan.history[:,3]
+fvals=stagdatan.history[:,1]
+avals=stagdatan.history[:,2]
 stagl=(length(fvals)==15)
 stagf=(fvals[5] < 1.e-15)
 staga=(avals[15]==5)
@@ -127,7 +127,7 @@ end
 # Test chord method
 #
 lttest=nsolsc(atan,.5;solver="chord");
-fvals=lttest.history[:,2];
+fvals=lttest.history[:,1];
 chordl=(length(fvals)==11)
 ratl=fvals[11]/fvals[10]
 chordr=(abs(ratl-.25) < 1.e-7)
