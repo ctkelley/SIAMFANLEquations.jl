@@ -38,11 +38,7 @@ Only turn it on if you have use for the data, which can get REALLY LARGE.
 Output: A tuple (solution, functionval, history, idid, solhist) where
 history is a three column array
 
-<<<<<<< HEAD
-(iteration counter, abs(f(x)), dt)
-=======
 (iteration counter, |f(x)|, dt)
->>>>>>> 9463cf71ab8797184de9a07b234f01db5beac316
 
 idid=true if the iteration succeeded and false if not.
 
@@ -52,31 +48,6 @@ If the iteration it's time to play with the tolerances, dt0, and maxit.
 You are certian to fail if there is no solution to the equation.
 
 """
-<<<<<<< HEAD
-function ptcsc(u, f; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6,
-          maxit=100, keepsolhist=true)
-itc=0
-idid=true
-fval=f(u)
-tol=atol+rtol*abs(fval)
-h=1.e-7
-dt=dt0
-ithist=[itc abs(fval) dt]
-if keepsolhist
-   solhist=[u]
-end
-while itc < maxit+1 && abs(fval) > tol
-    df=fpeval_newton(u, f, fval, fp, h)
-    idt=1.0/dt
-    step=-fval/(idt+df)
-    u=u+step
-    fvalm=fval
-    fval=f(u)
-# SER 
-    dt=dt*abs(fvalm)/abs(fval)
-    itc=itc+1
-    newhist=[itc abs(fval) dt]
-=======
 function ptcsc(
     f,
     u;
@@ -94,7 +65,6 @@ function ptcsc(
     h = 1.e-7
     dt = dt0
     ithist = [itc abs(fval) dt]
->>>>>>> 9463cf71ab8797184de9a07b234f01db5beac316
     if keepsolhist
         solhist = [u]
     end
