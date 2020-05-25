@@ -1,5 +1,6 @@
 """
  Simple cosine test problem. Nothing to see here, move along.
+ Only used in CI.
 """
 function fcos(x)
    return cos(x) - x

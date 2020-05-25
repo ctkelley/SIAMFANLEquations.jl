@@ -1,8 +1,14 @@
-# Solvers and Test Problems for
+# SIAMFANLEquations.jl
+
+[C. T. Kelley](https://ctk.math.ncsu.edu)
+
+[SIAMFANLEquations.jl](https://github.com/ctkelley/SIAMFANLEquations.jl) is the package of solvers and test problems
+for the book
+
 __Solving Nonlinear Equations with Iterative Methods:__
 __Solvers and Examples in Julia__
 
-[C. T. Kelley](https://ctk.math.ncsu.edu)
+This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
 ## Scalar Equations: Chapter 1
 
@@ -15,7 +21,18 @@ many of the important ideas in nonlinear solvers.
 2. line searches
 3. pseudo-transient continuation
 
-### Overview of the Codes
+## Nonlinear systems with direct linear solvers: Chapter 2
+The ideas from Chapter 1 remain important here. For systems the Newton step is the solution of the linear system
+
+``F'(x) = - F(x)``
+
+This chapter is about solving the equation for the Newton step with Gaussian elimination. Infrequent reevaluation of ``F'``means that we also factor ``F'`` infrequenly, so the impact of this idea is greater. Even better, there is typically no loss in the nonlinear iteration if we do that factorization in single precision. You an make that happen by giving nsold and ptcd the single precision storage for the Jacobian. Half precision is also possible, but is a very, very bad idea. 
+
+Bottom line: __single precision can cut the linear algebra cost in half with no loss in the quality of the solution or the number of nonlinear iterations it taks to get there__.
+
+## Nonlinear systems with iterative linear solvers: Chapter 3
+
+## Overview of the Codes
 
 ### Scalar Equations: Chapter 1
 There are two codes for the methods in this chapter
@@ -30,6 +47,6 @@ There are two codes for the methods in this chapter
 
 2. ptcsc.jl is pseudo-transient continuation. 
 
-## Nonlinear systems with direct linear solvers: Chapter 2
+### Nonlinear systems with direct linear solvers: Chapter 2
 
-## Nonlinear systems with iterative linear solvers: Chapter 3
+### Nonlinear systems with iterative linear solvers: Chapter 3

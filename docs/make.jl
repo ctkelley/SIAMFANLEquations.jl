@@ -7,12 +7,12 @@ format = Documenter.HTML(
            ),
 pages = Any[
      "Home" => "index.md",
-     "Scalar Equation Solvers" => Any[
+     "Scalar Equations" => Any[
        "functions/nsolsc.md",
        "functions/ptcsc.md",
       ]
 ]
 )
 deploydocs(
-     repo="github.com/ctkelley/SIAMFANLEquations.jl/tree/dev.git"
+     repo="github.com/ctkelley/SIAMFANLEquations.jl.git"
 )

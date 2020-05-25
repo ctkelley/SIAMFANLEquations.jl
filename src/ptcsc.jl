@@ -1,5 +1,5 @@
 """
-ptcsc(u, f; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6, maxit=100,
+ptcsc(f, u; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6, maxit=100,
            keepsolhist=true)
 
 Scalar pseudo-transient continuation solver. PTC is designed to find
@@ -10,8 +10,8 @@ du/dt = - f(u)
 It is ABSOLUTELY NOT a general purpose nonlinear solver.
 
 Input:\n
-x: initial iterate\n
 f: function\n
+u: initial iterate/data\n
 
 Options:\n
 
@@ -38,7 +38,11 @@ Only turn it on if you have use for the data, which can get REALLY LARGE.
 Output: A tuple (solution, functionval, history, idid, solhist) where
 history is a three column array
 
+<<<<<<< HEAD
 (iteration counter, abs(f(x)), dt)
+=======
+(iteration counter, |f(x)|, dt)
+>>>>>>> 9463cf71ab8797184de9a07b234f01db5beac316
 
 idid=true if the iteration succeeded and false if not.
 
@@ -48,6 +52,7 @@ If the iteration it's time to play with the tolerances, dt0, and maxit.
 You are certian to fail if there is no solution to the equation.
 
 """
+<<<<<<< HEAD
 function ptcsc(u, f; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6,
           maxit=100, keepsolhist=true)
 itc=0
@@ -71,24 +76,62 @@ while itc < maxit+1 && abs(fval) > tol
     dt=dt*abs(fvalm)/abs(fval)
     itc=itc+1
     newhist=[itc abs(fval) dt]
+=======
+function ptcsc(
+    f,
+    u;
+    rtol = 1.e-6,
+    atol = 1.e-12,
+    fp = difffp,
+    dt0 = 1.e-6,
+    maxit = 100,
+    keepsolhist = true,
+)
+    itc = 0
+    idid = true
+    fval = f(u)
+    tol = atol + rtol * abs(fval)
+    h = 1.e-7
+    dt = dt0
+    ithist = [itc abs(fval) dt]
+>>>>>>> 9463cf71ab8797184de9a07b234f01db5beac316
     if keepsolhist
-       newsol=[u]
-       solhist=[solhist' newsol']'
+        solhist = [u]
     end
-    ithist=[ithist' newhist']'
-end
-#
-if abs(fval) > tol
-    println("PTC failure; increase maxit and/or dt0")
-    println("Current values: maxit  =  ",maxit,",  dt0 = ",dt0)
-    println("Give the history array a look to see what's happening.")
-    println("  ")
-    idid=false
-end
+    while itc < maxit + 1 && abs(fval) > tol
+        df = fpeval_newton(u, f, fval, fp, h)
+        idt = 1.0 / dt
+        step = -fval / (idt + df)
+        u = u + step
+        fvalm = fval
+        fval = f(u)
+        # SER 
+        dt = dt * abs(fvalm) / abs(fval)
+        itc = itc + 1
+        newhist = [itc abs(fval) dt]
+        if keepsolhist
+            newsol = [u]
+            solhist = [solhist' newsol']'
+        end
+        ithist = [ithist' newhist']'
+    end
+    #
+    if abs(fval) > tol
+        println("PTC failure; increase maxit and/or dt0")
+        println("Current values: maxit  =  ", maxit, ",  dt0 = ", dt0)
+        println("Give the history array a look to see what's happening.")
+        println("  ")
+        idid = false
+    end
     if keepsolhist
-return (solution=u, functionval=fval, history=ithist, idid=idid, 
-        solhist=solhist)
+        return (
+            solution = u,
+            functionval = fval,
+            history = ithist,
+            idid = idid,
+            solhist = solhist,
+        )
     else
-return (solution=u, functionval=fval, history=ithist, idid=idid)
+        return (solution = u, functionval = fval, history = ithist, idid = idid)
     end
 end
