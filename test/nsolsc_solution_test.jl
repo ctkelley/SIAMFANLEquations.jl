@@ -123,7 +123,7 @@ end
 stagdatan=nsolsc(ftanx,4.5; fp=ftanxp, rtol=1.e-17, atol=1.e-17, 
          armfix=true, maxit=14)
 fvals=stagdatan.history
-avals=stagdatan.iarm
+avals=stagdatan.stats.iarm
 stagl=(length(fvals)==15)
 stagf=(fvals[5] < 1.e-15)
 staga=(avals[15]==5)
