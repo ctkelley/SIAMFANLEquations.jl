@@ -36,15 +36,18 @@ tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 Output: A tuple (solution, functionval, history, idid, solhist) where
-History is a three column array
+history is a two column array
 
-(iteration counter, |f(x)|, dt)
+(|f(u)|, dt)
+
+of residual norms and time steps. Unless something has gone badly wrong,
+dt approx |f(u_0)|/|f(u)|.
 
 idid=true if the iteration succeeded and false if not.
 
 solhist=entire history of the iteration if keepsolhist=true
 
-If the iteration it's time to play with the tolerances, dt0, and maxit.
+If the iteration fails it's time to play with the tolerances, dt0, and maxit.
 You are certian to fail if there is no solution to the equation.
 
 """
@@ -64,7 +67,7 @@ function ptcsc(
     tol = atol + rtol * abs(fval)
     h = 1.e-7
     dt = dt0
-    ithist = [itc abs(fval) dt]
+    ithist = [abs(fval) dt]
     if keepsolhist
         solhist = [u]
     end
@@ -78,7 +81,7 @@ function ptcsc(
         # SER 
         dt = dt * abs(fvalm) / abs(fval)
         itc = itc + 1
-        newhist = [itc abs(fval) dt]
+        newhist = [abs(fval) dt]
         if keepsolhist
             newsol = [u]
             solhist = [solhist' newsol']'

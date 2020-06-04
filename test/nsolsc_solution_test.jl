@@ -80,6 +80,9 @@ zecok = funok && solok && histok
 if zecok
    println("local FD at zero ok")
 end
+#
+# Tricky line search problem
+#
 sdatal=nsolsc(linatan,200.0; sham=5,maxit=20,armmax=10,armfix=true, rtol=1.e-9)
 solution=-100
 solok=(abs(sdatal.solution-solution) < 1.e-8)
@@ -89,6 +92,8 @@ histok=(hs[1]==4)
 shamfastok = funok && solok && histok
 if shamfastok
    println("Fast Shamanskii response ok")
+else
+   println("Fast Shamanskii response FAILURE")
 end
 #
 # Test linesearch failure complaints.
@@ -98,6 +103,8 @@ afok=false
 if armfail.idid==false
    afok=true
    println("Armijo failure test passed.")
+else
+   println("Armijo failure test FAILED.")
 end
 #
 # Test residual failure mode and no history.
@@ -107,27 +114,33 @@ resfail=nsolsc(atan,10.0; maxit=3, armfix=true, keepsolhist=false)
 if resfail.idid==false
    resok=true
    println("Residual failure test passed.")
+else
+   println("Residual failure test FAILED.")
 end
 #
 # Test stagnation mode
 #
 stagdatan=nsolsc(ftanx,4.5; fp=ftanxp, rtol=1.e-17, atol=1.e-17, 
          armfix=true, maxit=14)
-fvals=stagdatan.history[:,2]
-avals=stagdatan.history[:,3]
+fvals=stagdatan.history
+avals=stagdatan.stats.iarm
+fvals=stagdatan.stats.ifun
+jvals=stagdatan.stats.ijac
 stagl=(length(fvals)==15)
 stagf=(fvals[5] < 1.e-15)
-staga=(avals[15]==5)
-stagok=stagl && staga && stagf
+stags=(avals[15]==5) && (fvals[15]==6) &&  (jvals[15]==1)
+stagok=stagl && stags && stagf
 if stagok
    println("Stagnation test passed")
+else
+   println("Stagnation test FAILED")
 end
 #
 #
 # Test chord method
 #
 lttest=nsolsc(atan,.5;solver="chord");
-fvals=lttest.history[:,2];
+fvals=lttest.history
 chordl=(length(fvals)==11)
 ratl=fvals[11]/fvals[10]
 chordr=(abs(ratl-.25) < 1.e-7)

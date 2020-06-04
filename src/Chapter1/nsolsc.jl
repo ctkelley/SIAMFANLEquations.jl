@@ -1,7 +1,7 @@
 """
 nsolsc(f,x; rtol=1.e-6, atol=1.e-12, maxit=10,
-        fp=difffp, solver="newton", sham=1, armmax=10, armfix=false,
-        keepsolhist=true)
+        fp=difffp, solver="newton", sham=1, armmax=10, resdec=.1,
+        armfix=false, keepsolhist=true)
 
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs.
@@ -34,9 +34,6 @@ iteratons where you update the derivative. You need not
 provide your own derivative function to use this option. sham=Inf
 is chord only if chord is converging well.\n
 
-I only turn Shamanskii on if the residuals are decreasing
-rapidly, at least a factor of 10, and the line search is quiescent.\n  
-
 rtol, atol: real and absolute error tolerances\n
 
 maxit: upper bound on number of nonlinear iterations\n
@@ -44,6 +41,15 @@ maxit: upper bound on number of nonlinear iterations\n
 sham: update Jacobian every sham iteraitons. sham=1 --> Newton
 
 armmax: upper bound on stepsize reductions in linesearch
+
+resdec: target value for residual reduction. \n
+
+The default value is .1. In the old MATLAB codes it was .5.
+
+I only turn Shamanskii on if the residuals are decreasing
+rapidly, at least a factor of resdec, and the line search is quiescent.
+If you want to eliminate resdec from the method ( you don't ) then set
+resdec = 1.0 and you will never hear from it again.  
 
 armfix:\n
 The default is a parabolic line search (ie false). Set to true and
@@ -56,9 +62,14 @@ tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 Output:\n
-A tuple (solution, functionval, history, idid, solhist) where
-history is a tuple (iteration counter, |f(x)|, iarm) with the history
-of the entire iteration. iarm is the counter for steplength reductions.
+A tuple (solution, functionval, history, stats, idid, solhist) where
+history is the vector of residual norms (|f(x)|) for the iteration
+and stats is a tuple of the history of (ifun, ijac, iarm), the number
+of functions/derivatives/steplength reductions at each iteration.
+
+I do not count the function values for a finite-difference derivative
+because they count toward a Jacobian evaluation. I do count them for
+the secant method model.
 
 idid=true if the iteration succeeded and false if not.
 
@@ -77,6 +88,7 @@ function nsolsc(
     solver = "newton",
     sham = 1,
     armmax = 5,
+    resdec = .1,
     armfix = false,
     keepsolhist = true,
 )
@@ -114,8 +126,11 @@ function nsolsc(
     dfold = 0.0
     derivative_is_old = false
     resid = abs(fc)
-    iarm = 0
-    ithist = [itc abs(fc) iarm]
+    newiarm=-1
+    iarm=[0]
+    ifun=[1]
+    ijac=[0]
+    ithist = [abs(fc)] 
     if keepsolhist
         solhist = [x]
     end
@@ -123,16 +138,21 @@ function nsolsc(
     residratio = 1
     df=0.0
     while (resid > tol) && (itc < maxit)
+        newjac=0
+        newfun=0
         if solver == "secant"
             df = (fc - fm) / (x - xm)
+            newfun=newfun+1
         elseif solver == "chord"
             if itc==0
                 df = fpeval_newton(x, f, fc, fp, h)
+                newjac=newjac+1
             end
             derivative_is_old = false
         else
-            if itc % sham == 0 || iarm > 0 || residratio > 0.1
+            if itc % sham == 0 || newiarm > 0 || residratio > resdec
                 df = fpeval_newton(x, f, fc, fp, h)
+                newjac=newjac+1
                 dfold = df
                 derivative_is_old = false
             else
@@ -143,7 +163,6 @@ function nsolsc(
         xm = x
         fm = fc
         d = -fc / df
-        iarm = -1
         AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, 
                         armfix, derivative_is_old)
         if AOUT.idid == false
@@ -151,17 +170,21 @@ function nsolsc(
         end
         fc = AOUT.afc
         x = AOUT.ax
-        iarm = AOUT.aiarm
+        newiarm = AOUT.aiarm
+        newfun=newfun+newiarm+1
         derivative_is_old = AOUT.adfo
         d = AOUT.ad
         resid = abs(fc)
         residratio = abs(fc) / abs(fm)
         itc = itc + 1
-        newhist = [itc abs(fc) iarm]
+        newhist = [abs(fc)]
         if keepsolhist
             newsol = [x]
             solhist = [solhist' newsol']'
         end
+        iarm = [iarm' newiarm']'
+        ifun = [ifun' newfun']'
+        ijac = [ijac' newjac']'
         ithist = [ithist' newhist']'
     end
     solution = x
@@ -179,16 +202,20 @@ function nsolsc(
         println("  ")
         idid = false
     end
+    stats = (ifun=ifun, ijac=ijac, iarm=iarm)
     if keepsolhist
         return (
             solution = solution,
             functionval = fval,
             history = ithist,
+            stats = stats,
+            iarm = iarm,
             idid = idid,
             solhist = solhist,
         )
     else
-        return (solution = solution, functionval = fval, history = ithist, idid = idid)
+        return (solution = solution, functionval = fval, 
+        history = ithist, stats=stats, idid = idid)
     end
 end
 

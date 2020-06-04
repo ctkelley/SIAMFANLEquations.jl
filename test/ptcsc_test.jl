@@ -22,21 +22,21 @@ uunstable=0.0
 ptcdata1=ptcsc(sptest,u0; dt0=1.0, rtol=1.e-12, fp=sptestp)
 ptcdata2=ptcsc(sptest,u0; dt0=1.0, rtol=1.e-12, keepsolhist=false)
 dh=ptcdata1.history-ptcdata2.history
-ndh=norm(dh[:,2],Inf)
+ndh=norm(dh[:,1],Inf)
 fdok=(ndh < 1.e-7)
 ptcerr=ptcdata1.solhist.-ustable
-ptcfun=ptcdata1.history[:,2]
-ptcdt=ptcdata1.history[:,3]
-pival=ptcdata1.history[:,1]
+ptcfun=ptcdata1.history[:,1]
+ptcdt=ptcdata1.history[:,2]
 solok=(abs(ptcdata1.solution-ustable) < 1.e-10)
 funok=(abs(ptcdata1.functionval) < 1.e-12)
-histok=(length(pival)==18)
+histok=(length(ptcfun)==18)
 ptcdataf=ptcsc(sptest,u0; dt0=.1, rtol=1.e-12)
 failok=~ptcdataf.idid
 ptcok=fdok && solok && funok && histok && failok
 if ptcok
    println("Scalar PTC does the job")
 else
+   println("Failure in Scalar PTC")
    println(ptcdata1)
 end
 return ptcok
