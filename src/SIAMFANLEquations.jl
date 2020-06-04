@@ -12,8 +12,8 @@ export ptcsc
 include("Tools/difffp.jl")
 include("Tools/fpeval_newton.jl")
 include("Tools/parab3p.jl")
-include("ScalarSolvers/nsolsc.jl")
-include("ScalarSolvers/ptcsc.jl")
+include("Chapter1/nsolsc.jl")
+include("Chapter1/ptcsc.jl")
 
 module TestProblems
 using LinearAlgebra
