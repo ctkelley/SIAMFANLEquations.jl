@@ -1,7 +1,7 @@
 """
 nsolsc(f,x; rtol=1.e-6, atol=1.e-12, maxit=10,
-        fp=difffp, solver="newton", sham=1, armmax=10, armfix=false,
-        keepsolhist=true)
+        fp=difffp, solver="newton", sham=1, armmax=10, resdec=.1,
+        armfix=false, keepsolhist=true)
 
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs.
@@ -34,9 +34,6 @@ iteratons where you update the derivative. You need not
 provide your own derivative function to use this option. sham=Inf
 is chord only if chord is converging well.\n
 
-I only turn Shamanskii on if the residuals are decreasing
-rapidly, at least a factor of 10, and the line search is quiescent.\n  
-
 rtol, atol: real and absolute error tolerances\n
 
 maxit: upper bound on number of nonlinear iterations\n
@@ -44,6 +41,15 @@ maxit: upper bound on number of nonlinear iterations\n
 sham: update Jacobian every sham iteraitons. sham=1 --> Newton
 
 armmax: upper bound on stepsize reductions in linesearch
+
+resdec: target value for residual reduction. \n
+
+The default value is .1. In the old MATLAB codes it was .5.
+
+I only turn Shamanskii on if the residuals are decreasing
+rapidly, at least a factor of resdec, and the line search is quiescent.
+If you want to eliminate resdec from the method ( you don't ) then set
+resdec = 1.0 and you will never hear from it again.  
 
 armfix:\n
 The default is a parabolic line search (ie false). Set to true and
@@ -82,6 +88,7 @@ function nsolsc(
     solver = "newton",
     sham = 1,
     armmax = 5,
+    resdec = .1,
     armfix = false,
     keepsolhist = true,
 )
@@ -143,7 +150,7 @@ function nsolsc(
             end
             derivative_is_old = false
         else
-            if itc % sham == 0 || newiarm > 0 || residratio > 0.1
+            if itc % sham == 0 || newiarm > 0 || residratio > resdec
                 df = fpeval_newton(x, f, fc, fp, h)
                 newjac=newjac+1
                 dfold = df
