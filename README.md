@@ -90,7 +90,7 @@ and
 
 (Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003
 
-describe the Newton and Broyden algoirthms. Kel95 has the theory. This project is a sequal to Kel03. Kel03 is Matlab-centric
+describe the Newton and Broyden algorithms. Kel95 has the theory. This project is a sequal to Kel03. Kel03 is Matlab-centric
 and will remain in print.
 
 A recent Acta Numerica paper has everything
