@@ -24,7 +24,6 @@ The new book with have a different algorithm mix and the solvers and examples wi
       I will register this package no earlier that the release of v0.1.5 and no later than the release of v0.2.5 (when Chapter 2 of the notebook and the solvers/test problems for that chapter are closer to done than they are now). 
    
 ## Readme Contents:
-
 - [Installation](#Installation)
 - [Meaning of Version Numbers](#Meaning-of-version-numbers)
 - [__Please__ No Pull Requests](#Pull-Requests)
@@ -32,6 +31,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
 - [Funding](#Funding) 
+
 
 ## Installation
 
@@ -112,7 +112,9 @@ The linear solvers are tuned to communicate well with nonlinear solvers. My old 
 The algorithms, listed by book chapter will be
 
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsc.jl
+        - Codes: __Done!__, Notebook: __Close to done__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
+        -- Codes: __In progress__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptci.jl
        - Linear solver(s): klgmres.jl and maybe klbicgstab.jl
    - Chapter 4: Anderson acceleration: anderson.jl
