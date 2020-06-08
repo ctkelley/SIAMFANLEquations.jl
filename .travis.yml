@@ -9,10 +9,7 @@ env:
 codecov: true
 
 julia:
-  - 1.0
   - 1.4
-  - 1.5
-  - nightly
 
 
 notifications:
