@@ -8,12 +8,14 @@ export parab3p
 export difffp
 export fpeval_newton
 export ptcsc
+export printhist
 
 include("Tools/difffp.jl")
 include("Tools/fpeval_newton.jl")
 include("Tools/parab3p.jl")
 include("Chapter1/nsolsc.jl")
 include("Chapter1/ptcsc.jl")
+include("PlotsTables/printhist.jl")
 
 module TestProblems
 using LinearAlgebra
@@ -31,7 +33,7 @@ linatan,
 sptestp,
 sptest,
 ftanx,
-ftanxp
+ftanxp,
 
 include("TestProblems/Scalars/fcos.jl")
 include("TestProblems/Scalars/fpatan.jl")
