@@ -1,7 +1,7 @@
 """
 nsolsc(f,x; rtol=1.e-6, atol=1.e-12, maxit=10,
         fp=difffp, solver="newton", sham=1, armmax=10, resdec=.1,
-        armfix=false, keepsolhist=true)
+        armfix=false, printerr=true, keepsolhist=true)
 
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs.
@@ -56,6 +56,10 @@ The default is a parabolic line search (ie false). Set to true and
 the stepsize will be fixed at .5. Don't do this unless you are doing
 experiments for research.
 
+printerr:\n
+I print a helpful message when the solver fails. To supress that
+message set printerr to false.
+
 keepsolhist:\n
 Set this to true to get the history of the iteration in the output
 tuple. This is on by default for scalar equations and off for systems.
@@ -90,7 +94,8 @@ function nsolsc(
     armmax = 5,
     resdec = .1,
     armfix = false,
-    keepsolhist = true,
+    printerr = true,
+    keepsolhist = true
 )
     itc = 0
     idid = true
@@ -164,7 +169,7 @@ function nsolsc(
         fm = fc
         d = -fc / df
         AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, 
-                        armfix, derivative_is_old)
+                        armfix, derivative_is_old, printerr)
         if AOUT.idid == false
             iline = false
         end
@@ -192,7 +197,7 @@ function nsolsc(
     if abs(fval) > tol || iline == false
         idid = false
     end
-    if idid == false
+    if idid == false && printerr
         println("Newton failure; maybe increase maxit and/or armmax")
         if iline == false
             println("The line search failed at least once.")
@@ -227,7 +232,8 @@ Line search for scalar equations. Read the notebook or print book
 for the explanation. This is an internal function and I did not
 design it to be hackable by the novice.
 """
-function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix, derivative_is_old)
+function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
+               derivative_is_old, printerr)
     idid = true
     alpha = 1.e-4
     iarm = -1
@@ -289,9 +295,11 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix, derivative_is_old)
         liarm += 1
         armfail = abs(fc) > (1 - alpha * lambda) * abs(fm)
     end
-    if iarm >= armmax
+    if iarm >= armmax 
         idid = false
+        if printerr
         println("Linesearch failure")
+        end
     end
     return (ax = x, afc = fc, aiarm = iarm, adfo = derivative_is_old, ad = d, idid = idid)
 end
