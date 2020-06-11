@@ -2,6 +2,7 @@ module SIAMFANLEquations
 using LinearAlgebra
 using SparseArrays
 using SuiteSparse
+using Printf
 
 export nsolsc
 export parab3p
@@ -33,7 +34,7 @@ linatan,
 sptestp,
 sptest,
 ftanx,
-ftanxp,
+ftanxp
 
 include("TestProblems/Scalars/fcos.jl")
 include("TestProblems/Scalars/fpatan.jl")
