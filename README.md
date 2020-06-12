@@ -21,7 +21,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
    1. A print book (details coming sooner or later)
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source)
    3. This package (MIT License)<br>
-      I will register this package no earlier that the release of v0.1.5 and no later than the release of v0.2.5 (when Chapter 2 of the notebook and the solvers/test problems for that chapter are closer to done than they are now). 
+      I will register this package no earlier that the release of v0.1.2 and no later than the release of v0.2.2 (when Chapter 2 of the notebook and the solvers/test problems for that chapter are closer to done than they are now). 
    
 ## Readme Contents:
 - [Installation](#Installation)
