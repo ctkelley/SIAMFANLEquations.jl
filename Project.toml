@@ -3,6 +3,9 @@ uuid = "084e46ad-d928-497d-ad5e-07fa361a48c4"
 authors = ["C. T. (Tim) Kelley <tim_kelley@ncsu.edu>"]
 version = "0.1.2"
 
+[compat]
+julia = "1.0"
+
 [deps]
 AbstractFFTs = "621f4979-c628-5d54-868e-fcf4e3e8185c"
 FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
