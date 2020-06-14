@@ -124,11 +124,11 @@ stagdatan=nsolsc(ftanx,4.5; fp=ftanxp, rtol=1.e-17, atol=1.e-17,
          armfix=true, maxit=14)
 fvals=stagdatan.history
 avals=stagdatan.stats.iarm
-fvals=stagdatan.stats.ifun
+ifvals=stagdatan.stats.ifun
 jvals=stagdatan.stats.ijac
 stagl=(length(fvals)==15)
 stagf=(fvals[5] < 1.e-15)
-stags=(avals[15]==5) && (fvals[15]==6) &&  (jvals[15]==1)
+stags=(avals[15]==5) && (ifvals[15]==6) &&  (jvals[15]==1)
 stagok=stagl && stags && stagf
 if stagok
    println("Stagnation test passed")
