@@ -1,3 +1,7 @@
+| **Documentation**                                                               | **Build Status**                                                                                |
+|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
+| [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][travis-img]][travis-url] [![][codecov-img]][codecov-url] |
+
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/stable)
 [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/dev)
 [![Build Status](https://travis-ci.com/ctkelley/SIAMFANLEquations.jl.svg?branch=master)](https://travis-ci.com/ctkelley/SIAMFANLEquations.jl)
@@ -146,3 +150,15 @@ recommendations expressed in this material are those of the author and
 do not necessarily reflect the views of the National
 Science Foundation
 or the Army Research Office.
+
+[docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
+[docs-dev-url]: https://ctkelley.github.io/SIAMFANLEquations.jl/dev
+
+[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-url]: https://ctkelley.github.io/SIAMFANLEquations.jl/stable
+
+[travis-img]: https://travis-ci.org/JuliaDocs/SIAMFAEquations.jl.svg?branch=master
+[travis-url]: https://travis-ci.com/ctkelley/SIAMFANLEquations.jl
+
+[codecov-img]: https://codecov.io/gh/JuliaDocs/SIAMFAEquations.jl/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl
