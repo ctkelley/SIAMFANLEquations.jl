@@ -157,8 +157,8 @@ or the Army Research Office.
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://ctkelley.github.io/SIAMFANLEquations.jl/stable
 
-[travis-img]: https://travis-ci.org/JuliaDocs/SIAMFAEquations.jl.svg?branch=master
+[travis-img]: https://travis-ci.com/ctkelley/SIAMFANLEquations.jl.svg?branch=master
 [travis-url]: https://travis-ci.com/ctkelley/SIAMFANLEquations.jl
 
-[codecov-img]: https://codecov.io/gh/JuliaDocs/SIAMFAEquations.jl/branch/master/graph/badge.svg
+[codecov-img]: https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl
