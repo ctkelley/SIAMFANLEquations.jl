@@ -42,9 +42,7 @@ is chord only if chord is converging well.\n
 armmax: upper bound on stepsize reductions in linesearch
 
 resdec: target value for residual reduction. \n
-
 The default value is .1. In the old MATLAB codes it was .5.
-
 I only turn Shamanskii on if the residuals are decreasing
 rapidly, at least a factor of resdec, and the line search is quiescent.
 If you want to eliminate resdec from the method ( you don't ) then set
