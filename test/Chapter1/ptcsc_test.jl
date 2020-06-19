@@ -25,8 +25,7 @@ dh=ptcdata1.history-ptcdata2.history
 ndh=norm(dh[:,1],Inf)
 fdok=(ndh < 1.e-7)
 ptcerr=ptcdata1.solhist.-ustable
-ptcfun=ptcdata1.history[:,1]
-ptcdt=ptcdata1.history[:,2]
+ptcfun=ptcdata1.history
 solok=(abs(ptcdata1.solution-ustable) < 1.e-10)
 funok=(abs(ptcdata1.functionval) < 1.e-12)
 histok=(length(ptcfun)==18)

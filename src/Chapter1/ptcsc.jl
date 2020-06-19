@@ -36,10 +36,7 @@ tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 Output: A tuple (solution, functionval, history, idid, solhist) where
-history is a two column array
-
-(|f(u)|, dt)
-
+history is the array of absolute function values |f(u)|
 of residual norms and time steps. Unless something has gone badly wrong,
 dt approx |f(u_0)|/|f(u)|.
 
@@ -67,7 +64,7 @@ function ptcsc(
     tol = atol + rtol * abs(fval)
     h = 1.e-7
     dt = dt0
-    ithist = [abs(fval) dt]
+    ithist = [abs(fval)]
     if keepsolhist
         solhist = [u]
     end
@@ -81,7 +78,7 @@ function ptcsc(
         # SER 
         dt = dt * abs(fvalm) / abs(fval)
         itc = itc + 1
-        newhist = [abs(fval) dt]
+        newhist = [abs(fval)]
         if keepsolhist
             newsol = [u]
             solhist = [solhist' newsol']'
