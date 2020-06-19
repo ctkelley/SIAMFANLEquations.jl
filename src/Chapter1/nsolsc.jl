@@ -9,7 +9,12 @@ code for systems of equations needs.
 Input:\n 
 f: function\n 
 x: initial iterate\n
+
 Options:\n
+rtol, atol: real and absolute error tolerances\n
+
+maxit: upper bound on number of nonlinear iterations\n
+
 fp: derivative. If your derivative function is fp, you give me
 its name. For example fp=foobar tells me that foobar is your
 function for the derivative. The default is a forward difference
@@ -33,12 +38,6 @@ The covergence rate has local q-order sham+1 if you only count
 iteratons where you update the derivative. You need not
 provide your own derivative function to use this option. sham=Inf
 is chord only if chord is converging well.\n
-
-rtol, atol: real and absolute error tolerances\n
-
-maxit: upper bound on number of nonlinear iterations\n
-
-sham: update Jacobian every sham iteraitons. sham=1 --> Newton
 
 armmax: upper bound on stepsize reductions in linesearch
 

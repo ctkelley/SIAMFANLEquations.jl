@@ -14,7 +14,6 @@ f: function\n
 u: initial iterate/data\n
 
 Options:\n
-
 rtol, atol: real and absolute error tolerances\n
 
 fp: derivative. If your derivative function is fp, you give me
