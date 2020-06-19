@@ -1,17 +1,17 @@
 """
-ptcsc(f, u; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6, maxit=100,
+ptcsc(f, x; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6, maxit=100,
            keepsolhist=true)
 
 Scalar pseudo-transient continuation solver. PTC is designed to find
 stable steady state solutions of 
 
-du/dt = - f(u)
+dx/dt = - f(x)
 
 It is ABSOLUTELY NOT a general purpose nonlinear solver.
 
 Input:\n
 f: function\n
-u: initial iterate/data\n
+x: initial iterate/data\n
 
 Options:\n
 rtol, atol: real and absolute error tolerances\n
@@ -21,7 +21,7 @@ its name. For example fp=foobar tells me that foobar is your
 function for the derivative. The default is a forward difference
 Jacobian that I provide.\n
 
-dt0: initial time step. The default value of 1.e-6 is a bit conservative 
+dt0: initial time step. The default value of 1.e-3 is a bit conservative 
 and is one option you really should play with. Look at the example
 where I set it to 1.0!\n
 
@@ -35,9 +35,9 @@ tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 Output: A tuple (solution, functionval, history, idid, solhist) where
-history is the array of absolute function values |f(u)|
+history is the array of absolute function values |f(x)|
 of residual norms and time steps. Unless something has gone badly wrong,
-dt approx |f(u_0)|/|f(u)|.
+dt approx |f(x_0)|/|f(x)|.
 
 idid=true if the iteration succeeded and false if not.
 
@@ -49,37 +49,37 @@ You are certian to fail if there is no stable solution to the equation.
 """
 function ptcsc(
     f,
-    u;
+    x;
     rtol = 1.e-6,
     atol = 1.e-12,
     fp = difffp,
-    dt0 = 1.e-6,
+    dt0 = 1.e-3,
     maxit = 100,
     keepsolhist = true,
 )
     itc = 0
     idid = true
-    fval = f(u)
+    fval = f(x)
     tol = atol + rtol * abs(fval)
     h = 1.e-7
     dt = dt0
     ithist = [abs(fval)]
     if keepsolhist
-        solhist = [u]
+        solhist = [x]
     end
     while itc < maxit + 1 && abs(fval) > tol
-        df = fpeval_newton(u, f, fval, fp, h)
+        df = fpeval_newton(x, f, fval, fp, h)
         idt = 1.0 / dt
         step = -fval / (idt + df)
-        u = u + step
+        x = x + step
         fvalm = fval
-        fval = f(u)
+        fval = f(x)
         # SER 
         dt = dt * abs(fvalm) / abs(fval)
         itc = itc + 1
         newhist = [abs(fval)]
         if keepsolhist
-            newsol = [u]
+            newsol = [x]
             solhist = [solhist' newsol']'
         end
         ithist = [ithist' newhist']'
@@ -94,13 +94,13 @@ function ptcsc(
     end
     if keepsolhist
         return (
-            solution = u,
+            solution = x,
             functionval = fval,
             history = ithist,
             idid = idid,
             solhist = solhist,
         )
     else
-        return (solution = u, functionval = fval, history = ithist, idid = idid)
+        return (solution = x, functionval = fval, history = ithist, idid = idid)
     end
 end
