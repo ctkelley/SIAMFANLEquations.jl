@@ -77,12 +77,13 @@ function ptcsc(
         # SER 
         dt = dt * abs(fvalm) / abs(fval)
         itc = itc + 1
-        newhist = [abs(fval)]
+        newhist = abs(fval)
+#        newhist = [abs(fval)]
         if keepsolhist
-            newsol = [x]
-            solhist = [solhist' newsol']'
+            newsol = x
+            append!(solhist,newsol)
         end
-        ithist = [ithist' newhist']'
+         append!(ithist,newhist)
     end
     #
     if abs(fval) > tol
