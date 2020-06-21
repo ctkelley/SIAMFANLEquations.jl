@@ -69,6 +69,8 @@ I have released version v0.1.1. The codes can now duplicate the examples (at lea
 
 -- v0.x.1 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 
 
+-- I will formally register the package no earlier than version 0.2.1 and no later than version 0.2.2. 
+
 -- v1.0.0 goes out when the print book is published. This means that the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
 ## Pull Requests
@@ -82,7 +84,7 @@ This is a book project and I need to put all changes in by hand so I'll have mus
 
 ## Core References and Documentation
 
-The best documentation for this pacakge will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and the print book. They will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook will be built in parallel with the print book and the content will be __roughly__ the same.
+The best documentation for this package will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and the print book. They will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook will be built in parallel with the print book and the content will be __roughly__ the same.
 
 I've also used [documenter.jl](https://github.com/JuliaDocs/Documenter.jl) with this package. Click the badge
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/stable)
