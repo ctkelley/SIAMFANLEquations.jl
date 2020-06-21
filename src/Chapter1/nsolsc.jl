@@ -179,15 +179,15 @@ function nsolsc(
         resid = abs(fc)
         residratio = abs(fc) / abs(fm)
         itc = itc + 1
-        newhist = [abs(fc)]
+        newhist = abs(fc)
         if keepsolhist
-            newsol = [x]
-            solhist = [solhist' newsol']'
+            newsol = x
+            append!(solhist,newsol)
         end
-        iarm = [iarm' newiarm']'
-        ifun = [ifun' newfun']'
-        ijac = [ijac' newjac']'
-        ithist = [ithist' newhist']'
+        append!(iarm,newiarm)
+        append!(ifun,newfun)
+        append!(ijac,newjac)
+        append!(ithist,newhist)
     end
     solution = x
     fval = fc
