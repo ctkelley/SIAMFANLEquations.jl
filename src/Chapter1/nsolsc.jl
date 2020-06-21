@@ -211,7 +211,6 @@ function nsolsc(
             functionval = fval,
             history = ithist,
             stats = stats,
-            iarm = iarm,
             idid = idid,
             solhist = solhist,
         )
