@@ -78,7 +78,6 @@ function ptcsc(
         dt = dt * abs(fvalm) / abs(fval)
         itc = itc + 1
         newhist = abs(fval)
-#        newhist = [abs(fval)]
         if keepsolhist
             newsol = x
             append!(solhist,newsol)
