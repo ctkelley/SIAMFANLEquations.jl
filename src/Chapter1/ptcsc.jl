@@ -75,9 +75,9 @@ function ptcsc(
         fvalm = fval
         fval = f(x)
         # SER 
+        newhist = abs(fval)
         dt = dt * abs(fvalm) / abs(fval)
         itc = itc + 1
-        newhist = abs(fval)
         if keepsolhist
             newsol = x
             append!(solhist,newsol)
