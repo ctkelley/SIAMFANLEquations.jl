@@ -1,5 +1,5 @@
 """
-ptcsc(f, x; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6, maxit=100,
+ptcsolsc(f, x; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6, maxit=100,
            keepsolhist=true)
 
 Scalar pseudo-transient continuation solver. PTC is designed to find
@@ -47,7 +47,7 @@ If the iteration fails it's time to play with the tolerances, dt0, and maxit.
 You are certian to fail if there is no stable solution to the equation.
 
 """
-function ptcsc(
+function ptcsolsc(
     f,
     x;
     rtol = 1.e-6,
