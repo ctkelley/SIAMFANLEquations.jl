@@ -4,5 +4,7 @@ using Test
 using LinearAlgebra
 include("Chapter1/nsolsc_solution_test.jl")
 include("Chapter1/ptcsc_test.jl")
-@test nsolsc_solution_test()
-@test ptcsc_test()
+@testset "Scalar Equations: Chapter 1" begin
+   @test nsolsc_solution_test()
+   @test ptcsc_test()
+end
