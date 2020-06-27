@@ -32,9 +32,7 @@ histok=(length(ptcfun)==18)
 ptcdataf=ptcsc(sptest,u0; dt0=.1, rtol=1.e-12)
 failok=~ptcdataf.idid
 ptcok=fdok && solok && funok && histok && failok
-if ptcok
-   println("Scalar PTC does the job")
-else
+if ~ptcok 
    println("Failure in Scalar PTC")
    println(ptcdata1)
 end
