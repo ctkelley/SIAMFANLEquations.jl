@@ -19,7 +19,7 @@ end
 #
 # Local convergence with analytic derivative
 #
-sdataa=nsolsc(atan, 1.0; fp=fpatan)
+sdataa=nsolsc(atan, 1.0, fpatan)
 solok=(abs(sdataa.solution) < 1.e-8)
 funok=(abs(sdataa.functionval) < 1.e-8)
 hs=size(sdataa.history)
@@ -120,7 +120,7 @@ end
 #
 # Test stagnation mode
 #
-stagdatan=nsolsc(ftanx,4.5; fp=ftanxp, rtol=1.e-17, atol=1.e-17, 
+stagdatan=nsolsc(ftanx,4.5, ftanxp; rtol=1.e-17, atol=1.e-17, 
          armfix=true, maxit=14)
 fvals=stagdatan.history
 avals=stagdatan.stats.iarm

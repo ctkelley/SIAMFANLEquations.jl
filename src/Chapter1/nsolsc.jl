@@ -1,6 +1,6 @@
 """
-nsolsc(f,x; rtol=1.e-6, atol=1.e-12, maxit=10,
-        fp=difffp, solver="newton", sham=1, armmax=10, resdec=.1,
+nsolsc(f,x, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
+        solver="newton", sham=1, armmax=10, resdec=.1,
         armfix=false, printerr=true, keepsolhist=true)
 
 Newton's method for scalar equations. Has most of the features a
@@ -9,16 +9,16 @@ code for systems of equations needs.
 Input:\n 
 f: function\n 
 x: initial iterate\n
+fp: derivative. If your derivative function is fp, you give me
+its name. For example fp=foobar tells me that foobar is your
+function for the derivative. The default is a forward difference
+Jacobian that I provide.\n
+
 
 Options:\n
 rtol, atol: real and absolute error tolerances\n
 
 maxit: upper bound on number of nonlinear iterations\n
-
-fp: derivative. If your derivative function is fp, you give me
-its name. For example fp=foobar tells me that foobar is your
-function for the derivative. The default is a forward difference
-Jacobian that I provide.\n
 
 solver:\n
 Your choices are "newton"(default), "secant", or "chord". However, 
@@ -81,11 +81,11 @@ keepsolhist=true
 """
 function nsolsc(
     f,
-    x;
+    x,
+    fp=difffp;
     rtol = 1.e-6,
     atol = 1.e-12,
     maxit = 10,
-    fp = difffp,
     solver = "newton",
     sham = 1,
     armmax = 5,
