@@ -13,8 +13,8 @@ funok=(abs(sdatal.functionval) < 1.e-8)
 hs=size(sdatal.history)
 histok=(hs[1]==5)
 locok = funok && solok && histok
-if locok 
-   println("local FD ok")
+if ~locok 
+   println("local FD fails")
 end
 #
 # Local convergence with analytic derivative
@@ -25,9 +25,8 @@ funok=(abs(sdataa.functionval) < 1.e-8)
 hs=size(sdataa.history)
 histok=(hs[1]==5)
 analyticok = funok && solok && histok
-if analyticok
-   println("analytic derivative ok")
-else
+if ~analyticok
+   println("failure with analytic derivative ")
    println(sdataa)
 end
 #
@@ -39,8 +38,8 @@ funok=(abs(sdatag.functionval) < 1.e-8)
 hs=size(sdatag.history)
 histok=(hs[1]==12)
 globok = funok && solok && histok
-if globok 
-   println("global FD ok")
+if ~globok 
+   println("global FD fails")
 end
 #
 # Global convergence with parab3p
@@ -51,8 +50,8 @@ funok=(abs(sdatap3p.functionval) < 1.e-8)
 hs=size(sdatap3p.history)
 histok=(hs[1]==12)
 p3pok = funok && solok && histok
-if p3pok
-   println("parab3p ok")
+if ~p3pok
+   println("parab3p fails")
 end
 
 #
@@ -64,8 +63,8 @@ funok=(abs(sdatas.functionval) < 1.e-10)
 hs=size(sdatas.history)
 histok=(hs[1]==6)
 secantok = funok && solok && histok
-if secantok
-   println("secant ok")
+if ~secantok
+   println("secant failure")
 end
 #
 # Initialize secant method when x0=0
@@ -77,8 +76,8 @@ funok=(abs(zedata.functionval) < 1.e-9)
 hs=size(zedata.history)
 histok=(hs[1]==7)
 zecok = funok && solok && histok
-if zecok
-   println("local FD at zero ok")
+if ~zecok
+   println("local FD fixup at zero fails")
 end
 #
 # Tricky line search problem
@@ -90,19 +89,16 @@ funok=(abs(sdatal.functionval) < 1.e-8)
 hs=size(sdatal.history)
 histok=(hs[1]==4)
 shamfastok = funok && solok && histok
-if shamfastok
-   println("Fast Shamanskii response ok")
-else
+if ~shamfastok
    println("Fast Shamanskii response FAILURE")
 end
 #
 # Test linesearch failure complaints.
 #
-armfail=nsolsc(atan,10.0; armmax=1, armfix=true)
+armfail=nsolsc(atan,10.0; armmax=1, armfix=true, printerr=false)
 afok=false
 if armfail.idid==false
    afok=true
-   println("Armijo failure test passed.")
 else
    println("Armijo failure test FAILED.")
 end
@@ -110,10 +106,10 @@ end
 # Test residual failure mode and no history.
 #
 resok=false
-resfail=nsolsc(atan,10.0; maxit=3, armfix=true, keepsolhist=false)
+resfail=nsolsc(atan,10.0; maxit=3, armfix=true, keepsolhist=false,
+            printerr=false)
 if resfail.idid==false
    resok=true
-   println("Residual failure test passed.")
 else
    println("Residual failure test FAILED.")
 end
@@ -130,9 +126,7 @@ stagl=(length(fvals)==15)
 stagf=(fvals[5] < 1.e-15)
 stags=(avals[15]==5) && (ifvals[15]==6) &&  (jvals[15]==1)
 stagok=stagl && stags && stagf
-if stagok
-   println("Stagnation test passed")
-else
+if ~stagok
    println("Stagnation test FAILED")
 end
 #
@@ -146,12 +140,12 @@ ratl=fvals[11]/fvals[10]
 chordr=(abs(ratl-.25) < 1.e-7)
 solok=(fvals[11] < 1.e-6)
 chordok=chordl && chordr && solok
-if chordok
-   println("Chord test passed")
+if ~chordok
+   println("Chord test failed")
 end
 #
-println(locok, globok, p3pok, secantok, analyticok, zecok,
-         shamfastok, afok, resok, chordok)
+#println(locok, globok, p3pok, secantok, analyticok, zecok,
+#         shamfastok, afok, resok, chordok)
 return locok && globok && secantok && analyticok && zecok && 
        shamfastok && afok && resok && p3pok && chordok
 end

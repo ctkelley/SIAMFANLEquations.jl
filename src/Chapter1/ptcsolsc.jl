@@ -1,6 +1,6 @@
 """
-ptcsolsc(f, x; rtol=1.e-6, atol=1.e-12, fp=difffp, dt0=1.e-6, maxit=100,
-           keepsolhist=true)
+ptcsolsc(f, x, fp=difffp; rtol=1.e-6, atol=1.e-12, fp=difffp, 
+        dt0=1.e-6, maxit=100, keepsolhist=true)
 
 Scalar pseudo-transient continuation solver. PTC is designed to find
 stable steady state solutions of 
@@ -12,14 +12,13 @@ It is ABSOLUTELY NOT a general purpose nonlinear solver.
 Input:\n
 f: function\n
 x: initial iterate/data\n
-
-Options:\n
-rtol, atol: real and absolute error tolerances\n
-
 fp: derivative. If your derivative function is fp, you give me
 its name. For example fp=foobar tells me that foobar is your
 function for the derivative. The default is a forward difference
 Jacobian that I provide.\n
+
+Options:\n
+rtol, atol: real and absolute error tolerances\n
 
 dt0: initial time step. The default value of 1.e-3 is a bit conservative 
 and is one option you really should play with. Look at the example
@@ -49,10 +48,10 @@ You are certian to fail if there is no stable solution to the equation.
 """
 function ptcsolsc(
     f,
-    x;
+    x,
+    fp = difffp;
     rtol = 1.e-6,
     atol = 1.e-12,
-    fp = difffp,
     dt0 = 1.e-3,
     maxit = 100,
     keepsolhist = true,

@@ -19,7 +19,7 @@ uunstable=0.0
 #
 # Convergence to the right solution
 #
-ptcdata1=ptcsolsc(sptest,u0; dt0=1.0, rtol=1.e-12, fp=sptestp)
+ptcdata1=ptcsolsc(sptest,u0,sptestp; dt0=1.0, rtol=1.e-12)
 ptcdata2=ptcsolsc(sptest,u0; dt0=1.0, rtol=1.e-12, keepsolhist=false)
 dh=ptcdata1.history-ptcdata2.history
 ndh=norm(dh[:,1],Inf)
