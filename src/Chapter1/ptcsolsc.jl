@@ -43,7 +43,7 @@ idid=true if the iteration succeeded and false if not.
 solhist=entire history of the iteration if keepsolhist=true
 
 If the iteration fails it's time to play with the tolerances, dt0, and maxit.
-You are certian to fail if there is no stable solution to the equation.
+You are certain to fail if there is no stable solution to the equation.
 
 """
 function ptcsolsc(
