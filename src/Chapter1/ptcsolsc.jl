@@ -45,6 +45,20 @@ solhist=entire history of the iteration if keepsolhist=true
 If the iteration fails it's time to play with the tolerances, dt0, and maxit.
 You are certain to fail if there is no stable solution to the equation.
 
+# Examples
+
+julia> ptcout=ptcsolsc(f,.1;dt0=3.0, rtol=1.e-3, atol=1.e-3);
+
+julia> [ptcout.solhist ptcout.history]
+7×2 Array{Float64,2}:
+  1.00000e-01  4.90000e-02
+ -2.58537e-01  1.11987e-01
+ -5.00754e-01  1.24811e-01
+ -6.14083e-01  7.54723e-02
+ -6.80014e-01  2.55555e-02
+ -7.04098e-01  2.98965e-03
+ -7.07065e-01  4.17213e-05
+
 """
 function ptcsolsc(
     f,

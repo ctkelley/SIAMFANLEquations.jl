@@ -80,29 +80,32 @@ keepsolhist=true
 
 # Examples
 ```jldoctest
-julia> nsolout=nsolsc(atan,1.0;maxit=5);
+julia> nsolout=nsolsc(atan,1.0;maxit=5,atol=1.e-12,rtol=1.e-12);
 
 julia> nsolout.history
-5-element Array{Float64,1}:
+6-element Array{Float64,1}:
  7.85398e-01
  5.18669e-01
  1.16332e-01
  1.06102e-03
  7.96200e-10
+ 2.79173e-24
 ```
 
 ```jldoctest
 julia> fs(x)=x^2-4.0; fsp(x)=2x;
 
-julia> nsolout=nsolsc(fs,1.0,fsp; maxit=5);
+julia> nsolout=nsolsc(fs,1.0,fsp; maxit=5,atol=1.e-9,rtol=1.e-9);
 
-julia> [nsolout.solhist nsolout.history]
-5×2 Array{Float64,2}:
- 1.00000e+00  3.00000e+00
- 2.50000e+00  2.25000e+00
- 2.05000e+00  2.02500e-01
- 2.00061e+00  2.43940e-03
- 2.00000e+00  3.71689e-07
+julia> [nsolout.solhist.-2 nsolout.history]
+6×2 Array{Float64,2}:
+ -1.00000e+00  3.00000e+00
+  5.00000e-01  2.25000e+00
+  5.00000e-02  2.02500e-01
+  6.09756e-04  2.43940e-03
+  9.29223e-08  3.71689e-07
+  2.22045e-15  8.88178e-15
+
 ```
 
 """
