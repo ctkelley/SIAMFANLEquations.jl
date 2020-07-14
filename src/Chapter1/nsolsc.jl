@@ -78,6 +78,33 @@ solhist:\n
 This is the entire history of the iteration if you've set
 keepsolhist=true
 
+# Examples
+```jldoctest
+julia> nsolout=nsolsc(atan,1.0;maxit=5);
+
+julia> nsolout.history
+5-element Array{Float64,1}:
+ 7.85398e-01
+ 5.18669e-01
+ 1.16332e-01
+ 1.06102e-03
+ 7.96200e-10
+```
+
+```jldoctest
+julia> fs(x)=x^2-4.0; fsp(x)=2x;
+
+julia> nsolout=nsolsc(fs,1.0,fsp; maxit=5);
+
+julia> [nsolout.solhist nsolout.history]
+5×2 Array{Float64,2}:
+ 1.00000e+00  3.00000e+00
+ 2.50000e+00  2.25000e+00
+ 2.05000e+00  2.02500e-01
+ 2.00061e+00  2.43940e-03
+ 2.00000e+00  3.71689e-07
+```
+
 """
 function nsolsc(
     f,
@@ -98,16 +125,16 @@ function nsolsc(
     idid = true
     iline = true
     h = 1.e-7
-    #
-    # If you like the secant or sham=large methods, I will do a 
-    # difference Jacobian anyhow if the line search kicks in. 
-    # You will thank me for this.
-    # Even if you don't thank me, I will do it anyhow.
-    #
-    # If you insist, solver=chord will ignore poor convergence and let
-    # things go south with no interference. Please don't do that as
-    # standard procedure.
-    #
+    #=
+     If you like the secant or sham=large methods, I will do a 
+     difference Jacobian anyhow if the line search kicks in. 
+     You will thank me for this.
+     Even if you don't thank me, I will do it anyhow.
+    
+      If you insist, solver=chord will ignore poor convergence and let
+     things go south with no interference. Please don't do that as
+     standard procedure.
+    =#
     if solver == "secant"
         xm = x * 1.0001
         if xm == 0
