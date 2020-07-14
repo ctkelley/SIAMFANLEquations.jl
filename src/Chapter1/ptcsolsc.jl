@@ -46,7 +46,7 @@ If the iteration fails it's time to play with the tolerances, dt0, and maxit.
 You are certain to fail if there is no stable solution to the equation.
 
 # Examples
-
+```jldoctest
 julia> ptcout=ptcsolsc(f,.1;dt0=3.0, rtol=1.e-3, atol=1.e-3);
 
 julia> [ptcout.solhist ptcout.history]
@@ -58,6 +58,7 @@ julia> [ptcout.solhist ptcout.history]
  -6.80014e-01  2.55555e-02
  -7.04098e-01  2.98965e-03
  -7.07065e-01  4.17213e-05
+```
 
 """
 function ptcsolsc(
