@@ -9,7 +9,7 @@ pages = Any[
      "Home" => "index.md",
      "Scalar Equations" => Any[
        "functions/nsolsc.md",
-       "functions/ptcsc.md",
+       "functions/ptcsolsc.md",
       ]
 ]
 )
