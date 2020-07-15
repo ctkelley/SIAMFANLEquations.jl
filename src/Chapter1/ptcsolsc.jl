@@ -47,17 +47,17 @@ You are certain to fail if there is no stable solution to the equation.
 
 # Examples
 ```jldoctest
-julia> ptcout=ptcsolsc(f,.1;dt0=3.0, rtol=1.e-3, atol=1.e-3);
+julia> ptcout=ptcsolsc(sptest,.2;dt0=2.0,rtol=1.e-3,atol=1.e-3);
 
 julia> [ptcout.solhist ptcout.history]
 7×2 Array{Float64,2}:
-  1.00000e-01  4.90000e-02
- -2.58537e-01  1.11987e-01
- -5.00754e-01  1.24811e-01
- -6.14083e-01  7.54723e-02
- -6.80014e-01  2.55555e-02
- -7.04098e-01  2.98965e-03
- -7.07065e-01  4.17213e-05
+ 2.00000e-01  9.20000e-02
+ 9.66666e-01  4.19962e-01
+ 8.75086e-01  2.32577e-01
+ 7.99114e-01  1.10743e-01
+ 7.44225e-01  4.00926e-02
+ 7.15163e-01  8.19395e-03
+ 7.07568e-01  4.61523e-04
 ```
 
 """
