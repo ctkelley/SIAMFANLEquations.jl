@@ -60,7 +60,7 @@ to run the test problems.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is the dev version of v0.1.2. 
+This is v0.1.2. 
 
 __I have changed the user interface and the calling sequence of the solvers
 since v0.1.1 and will continue to do things like that until v1.0.0 goes out the door.__
@@ -71,7 +71,7 @@ I have released version v0.1.1. The codes can now duplicate the examples (at lea
 
 -- I will formally register the package no earlier than version 0.2.1 and no later than version 0.2.2. 
 
--- v1.0.0 goes out when the print book is published. This means that the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
+-- v1.0.0 goes out when the print book is published. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
 ## Pull Requests
 
@@ -84,7 +84,7 @@ This is a book project and I need to put all changes in by hand so I'll have mus
 
 ## Core References and Documentation
 
-The best documentation for this package will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and the print book. They will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook will be built in parallel with the print book and the content will be __roughly__ the same.
+The best documentation for this package will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and the print book. They will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook will be built in parallel with the print book and the content will be __roughly__ the same. The differences will be to accommodate the two formats. For example, docstrings need some work after the map from notebook to print.
 
 I've also used [documenter.jl](https://github.com/JuliaDocs/Documenter.jl) with this package. Click the badge
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/stable)
@@ -120,9 +120,9 @@ The linear solvers are tuned to communicate well with nonlinear solvers. My old 
 The algorithms, listed by book chapter will be
 
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsc.jl
-        - Codes: __Done!__, Notebook: __Close to done__
+        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
-        - Codes: __In progress__
+        - Codes: __In progress. The examples with dense Jacobians work.__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptci.jl
        - Linear solver(s): klgmres.jl and maybe klbicgstab.jl
    - Chapter 4: Anderson acceleration: aasol.jl
