@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][travis-img]][travis-url] [![][codecov-img]][codecov-url] |
 
 
-# SIAMFANLEquations version 0.1.2
+# SIAMFANLEquations version 0.2.1
 
 This is the package with the solvers and test problems for 
 
@@ -36,7 +36,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Installation
 
-This package has been tested on Julia 1.0, ..., 1.4
+This package has been tested on Julia 1.0, ..., 1.5
 
 Type this in the REPL to install
 
@@ -60,14 +60,14 @@ to run the test problems.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is v0.1.2. 
+This is the dev version of v0.2.1. __Chapter 2: Systems of equations with direct linear solvers.__ 
 
 __I have changed the user interface and the calling sequence of the solvers
 since v0.1.1 and will continue to do things like that until v1.0.0 goes out the door.__
 
 I have released version v0.1.1. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapter 1 of (Kel03), make all the new examples, and I have started on Chaper 1 of the notebook and print book. The plan is, for x > 1
 
--- v0.x.0 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.1 goes out when the codes and notebook for Chapter x are finished. 0.x.y for x, y > 1 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
+-- v0.x.1 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 0.x.y for x, y > 1 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
 
 -- I will formally register the package no earlier than version 0.2.1 and no later than version 0.2.2. 
 
