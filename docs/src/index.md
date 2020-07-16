@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.1.2
+# SIAMFANLEquations.jl v0.2.1
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -10,8 +10,13 @@ __Solvers and Examples in Julia__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-This is version 0.1.2. The scalar solvers and the fist chapter of the
-notebook are done. Chapter 2 is under construction. 
+This is version 0.2.1. 
+
+The scalar solvers and the first chapter of the notebook are done as of
+v0.1.2.
+
+Chapter 2 is under construction and I'll tag this when the solvers are 
+done. I'll tag v0.2.2 when the notebook is ready.
 
 ## Scalar Equations: Chapter 1
 
