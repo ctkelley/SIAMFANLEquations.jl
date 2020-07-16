@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl
+# SIAMFANLEquations.jl v0.1.2
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -9,6 +9,9 @@ __Solving Nonlinear Equations with Iterative Methods:__
 __Solvers and Examples in Julia__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
+
+This is version 0.1.2. The scalar solvers and the fist chapter of the
+notebook are done. Chapter 2 is under construction. 
 
 ## Scalar Equations: Chapter 1
 
