@@ -34,8 +34,8 @@ difference derivative.\n
 sham:\n
 This is the Shamanskii method. If sham=1, you have Newton.
 The iteration updates the derivative every sham iterations.
-The covergence rate has local q-order sham+1 if you only count
-iteratons where you update the derivative. You need not
+The convergence rate has local q-order sham+1 if you only count
+iterations where you update the derivative. You need not
 provide your own derivative function to use this option. sham=Inf
 is chord only if chord is converging well.\n
 
