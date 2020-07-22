@@ -32,7 +32,7 @@ many of the important ideas in nonlinear solvers.
 ## Nonlinear systems with direct linear solvers: Chapter 2
 The ideas from Chapter 1 remain important here. For systems the Newton step is the solution of the linear system
 
-``F'(x) = - F(x)``
+``F'(x) s = - F(x)``
 
 This chapter is about solving the equation for the Newton step with Gaussian elimination. Infrequent reevaluation of ``F'``means that we also factor ``F'`` infrequenly, so the impact of this idea is greater. Even better, there is typically no loss in the nonlinear iteration if we do that factorization in single precision. You an make that happen by giving nsold and ptcsold the single precision storage for the Jacobian. Half precision is also possible, but is a very, very bad idea. 
 
