@@ -148,14 +148,6 @@ function nsolsc(
         fp = difffp
     end
     fc = f(x)
-    #
-    # Novices: If I don't define dfold outside the while loop
-    # I will get a bizzare error message because of Julia's 
-    # scoping rules. Don't believe me, erase that line and
-    # see for yourself.
-    # RTFM
-    #
-    dfold = 0.0
     derivative_is_old = false
     resid = abs(fc)
     newiarm=-1
@@ -185,10 +177,8 @@ function nsolsc(
             if itc % sham == 0 || newiarm > 0 || residratio > resdec
                 df = fpeval_newton(x, f, fc, fp, h)
                 newjac=newjac+1
-                dfold = df
                 derivative_is_old = false
             else
-                df = dfold
                 derivative_is_old = true
             end
         end

@@ -20,7 +20,7 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
     #
     x = xm + lambda * d
     fc = f(x)
-    armfail = abs(fc) > (1 - alpha * lambda) * abs(fm)
+    armfail = norm(fc) > (1 - alpha * lambda) * norm(fm)
     #
     # If I have an old derivative I will not tolerate a failure in
     # the line search. 
@@ -31,11 +31,10 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
     jflag = false
     if armfail && derivative_is_old
         df = fpeval_newton(xm, f, fm, fp, h)
-        dfold = df
         d = -fm / df
         x = xm + lambda * d
         fc = f(x)
-        armfail = abs(fc) > (1 - alpha * lambda) * abs(fm)
+        armfail = norm(fc) > (1 - alpha * lambda) * norm(fm)
         derivative_is_old = false
         jflag = true
     end
@@ -45,8 +44,8 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
     # At this point I've taken a full step. I'll enter the loop only if
     # that full step has failed.
     #
-    ffc = abs(fc)^2
-    ff0 = abs(fm)^2
+    ffc = norm(fc)^2
+    ff0 = norm(fm)^2
     ffm = ffc
     while armfail && iarm < armmax
         #
@@ -63,10 +62,10 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
         x = xm + lambda * d
         fc = f(x)
         ffm = ffc
-        ffc = abs(fc)^2
+        ffc = norm(fc)^2
         iarm += 1
         liarm += 1
-        armfail = abs(fc) > (1 - alpha * lambda) * abs(fm)
+        armfail = norm(fc) > (1 - alpha * lambda) * norm(fm)
     end
     if iarm >= armmax 
         idid = false
@@ -74,5 +73,6 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
         println("Linesearch failure")
         end
     end
-    return (ax = x, afc = fc, aiarm = iarm, adfo = derivative_is_old, ad = d, idid = idid)
+    return (ax = x, afc = fc, aiarm = iarm, 
+            adfo = derivative_is_old, ad = d, idid = idid)
 end
