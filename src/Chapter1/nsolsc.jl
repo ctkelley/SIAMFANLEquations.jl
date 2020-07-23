@@ -15,7 +15,7 @@ function for the derivative. The default is a forward difference
 Jacobian that I provide.\n
 
 
-Options:\n
+Keyword Arguments (kwargs):\n
 rtol, atol: real and absolute error tolerances\n
 
 maxit: upper bound on number of nonlinear iterations\n
