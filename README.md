@@ -4,7 +4,7 @@
 
 # Warning!! 0.2.1 has breaking changes 
 # If you are reviewing my book proposal and are reading this, you've found the dev branch.
-# Please go to the master branchs to get the packages and notebooks
+# Please go to the master branches to get the packages and notebooks
 
 
 # SIAMFANLEquations version 0.2.1
