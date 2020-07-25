@@ -21,8 +21,8 @@ rtol, atol: real and absolute error tolerances\n
 maxit: upper bound on number of nonlinear iterations\n
 
 solver:\n
-Your choices are :newton(default), :secant, or :chord. However, 
-you have sham at your disposal only if you chose newton. :chord
+Your choices are :newton(default), "secant", or "chord". However, 
+you have sham at your disposal only if you chose newton. "chord"
 will keep using the initial derivative until the iterate converges,
 uses the iteration budget, or the line search fails. It is not the
 same as sham=Inf, which is smarter.\n
@@ -138,7 +138,7 @@ function nsolsc(
      things go south with no interference. Please don't do that as
      standard procedure.
     =#
-    if solver == :secant
+    if solver == "secant"
         xm = x * 1.0001
         if xm == 0
             xm = 0.0001
@@ -164,10 +164,10 @@ function nsolsc(
     while (resid > tol) && (itc < maxit)
         newjac=0
         newfun=0
-        if solver == :secant
+        if solver == "secant"
             df = (fc - fm) / (x - xm)
             newfun=newfun+1
-        elseif solver == :chord
+        elseif solver == "chord"
             if itc==0
                 df = fpeval_newton(x, f, fc, fp, h)
                 newjac=newjac+1
