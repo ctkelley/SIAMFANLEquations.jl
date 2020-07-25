@@ -186,7 +186,7 @@ function nsolsc(
         fm = fc
         d = -fc / df
         AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, 
-                        armfix, derivative_is_old, printerr)
+                        armfix, derivative_is_old)
         if AOUT.idid == false
             iline = false
         end
@@ -211,18 +211,14 @@ function nsolsc(
     end
     solution = x
     fval = fc
-    if abs(fval) > tol || iline == false
+    resnorm = abs(fval)
+    resfail = (resnorm > tol) 
+    if resfail || iline == false
         idid = false
+        resnorm = norm(fval)
     end
     if idid == false && printerr
-        println("Newton failure; maybe increase maxit and/or armmax")
-        if iline == false
-            println("The line search failed at least once.")
-        end
-        println("Current values: maxit  =  ", maxit, ", armmax = ", armmax)
-        println("Give the history array a look to see what's happening.")
-        println("  ")
-        idid = false
+        NewtonError(resfail, iline, resnorm, maxit, armmax)    
     end
     stats = (ifun=ifun, ijac=ijac, iarm=iarm)
     if keepsolhist

@@ -98,13 +98,11 @@ function ptcsolsc(
         end
          append!(ithist,newhist)
     end
+    resnorm=abs(fval)
     #
-    if abs(fval) > tol
-        println("PTC failure; increase maxit and/or dt0")
-        println("Current values: maxit  =  ", maxit, ",  dt0 = ", dt0)
-        println("Give the history array a look to see what's happening.")
-        println("  ")
+    if resnorm > tol
         idid = false
+        PTCError(resnorm, maxit, dt0)
     end
     if keepsolhist
         return (

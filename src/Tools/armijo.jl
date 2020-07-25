@@ -6,7 +6,7 @@ for the explanation. This is an internal function and I did not
 design it to be hackable by the novice.
 """
 function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
-               derivative_is_old, printerr)
+               derivative_is_old)
     idid = true
     alpha = 1.e-4
     iarm = -1
@@ -69,9 +69,6 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
     end
     if iarm >= armmax 
         idid = false
-        if printerr
-        println("Linesearch failure")
-        end
     end
     return (ax = x, afc = fc, aiarm = iarm, 
             adfo = derivative_is_old, ad = d, idid = idid)

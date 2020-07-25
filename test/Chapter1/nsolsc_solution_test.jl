@@ -144,8 +144,6 @@ if ~chordok
    println("Chord test failed")
 end
 #
-#println(locok, globok, p3pok, secantok, analyticok, zecok,
-#         shamfastok, afok, resok, chordok)
 return locok && globok && secantok && analyticok && zecok && 
        shamfastok && afok && resok && p3pok && chordok
 end
