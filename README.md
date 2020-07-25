@@ -2,11 +2,6 @@
 |:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][travis-img]][travis-url] [![][codecov-img]][codecov-url] |
 
-# Warning!! 0.2.1 has breaking changes. It is no longer consistent with the review copies of the print book.
-
-# If you are reviewing my book proposal and are reading this, you've found the dev branch.
-# Please go to the master branches to get the packages and notebooks. The links you got from Elizabeth should work fine.
-
 
 # SIAMFANLEquations version 0.2.1
 
