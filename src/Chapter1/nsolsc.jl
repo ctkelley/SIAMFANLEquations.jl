@@ -144,6 +144,9 @@ function nsolsc(
      things go south with no interference. Please don't do that as
      standard procedure and, if you do, don't blame me.
     =#
+    fc = f(x)
+    fm = fc
+    xm=x
     if solver == "secant"
         xm = x * 1.0001
         if xm == 0
@@ -153,9 +156,9 @@ function nsolsc(
         sham = 1
         fp = difffp
     end
-    fc = f(x)
     derivative_is_old = false
     resid = abs(fc)
+    ItRules=ItParms(solver,sham,armmax,resid,resdec,h,f,fp) 
     newiarm=-1
     iarm=[0]
     ifun=[1]
@@ -169,26 +172,24 @@ function nsolsc(
     df=0.0
     armstop=true
     while (resid > tol) && (itc < maxit) && (armstop || stagnationok)
-        newjac=0
         newfun=0
-        if solver == "secant"
-            df = (fc - fm) / (x - xm)
-            newfun=newfun+1
-        elseif solver == "chord"
-            if itc==0
-                df = fpeval_newton(x, f, fc, fp, h)
-                newjac=newjac+1
-            end
-            derivative_is_old = false
+        newjac=0
+        chordinit=(solver=="chord") && itc==0
+        evaljacit=(itc % sham == 0 || newiarm > 0 || residratio > resdec)
+        evaljacch=(solver=="chord") && itc==0
+        evaljac= (evaljacit && solver=="newton") || evaljacch
+        itstate=(x=x,xm=xm,fc=fc,fm=fm)
+        if evaljac || solver=="secant"
+        pout=PrepareDerivative(ItRules,x,xm,fc,fm)
+        df=pout.df;
+        if solver=="secant"
+           newfun=1
         else
-         if itc % sham == 0 || newiarm > 0 || residratio > resdec 
-                df = fpeval_newton(x, f, fc, fp, h)
-                newjac=newjac+1
-                derivative_is_old = false
-            else
-                derivative_is_old = true
-            end
+           newjac=1
         end
+        end
+        derivative_is_old = ~evaljacit && (solver=="newton")
+#
         xm = x
         fm = fc
         d = -fc / df
@@ -196,14 +197,11 @@ function nsolsc(
         else
         AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, 
                         armfix, derivative_is_old)
-        armstop=true
 #
 # If the line search fails and the derivative is current, stop the iteration.
 #
-        if AOUT.idid == false
-            iline = false
-            armstop = derivative_is_old
-        end
+        armstop=AOUT.idid || derivative_is_old
+        iline=AOUT.idid
         newjac = newjac + AOUT.newjac
         fc = AOUT.afc
         x = AOUT.ax
@@ -229,11 +227,8 @@ function nsolsc(
     fval = fc
     resnorm = abs(fval)
     resfail = (resnorm > tol) 
-    if resfail || iline == false
-        idid = false
-        resnorm = norm(fval)
-    end
-    if idid == false && printerr
+    idid = ~(resfail || iline)
+    if ~idid && printerr
         NewtonError(resfail, iline, resnorm, itc, maxit, armmax)    
     end
     stats = (ifun=ifun, ijac=ijac, iarm=iarm)

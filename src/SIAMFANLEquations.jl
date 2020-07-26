@@ -11,12 +11,25 @@ export fpeval_newton
 export ptcsolsc
 export printhist
 export armijosc
+export ItStats
+
+mutable struct ItParms
+solver::String
+sham::Int
+armmax::Int
+resid::Real
+resdec::Real
+h::Real
+f
+fp
+end
 
 include("Tools/difffp.jl")
 include("Tools/fpeval_newton.jl")
 include("Tools/parab3p.jl")
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
+include("Tools/FunctionDerivativeEvals.jl")
 include("Chapter1/nsolsc.jl")
 include("Chapter1/ptcsolsc.jl")
 include("PlotsTables/printhist.jl")
