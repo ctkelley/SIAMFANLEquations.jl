@@ -1,7 +1,7 @@
 """
 nsolsc(f,x, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
-        solver=:newton, sham=1, armmax=10, resdec=.1,
-        armfix=false, printerr=true, keepsolhist=true)
+        solver="newton", sham=1, armmax=10, resdec=.1,
+        armfix=false, printerr=true, keepsolhist=true, stagnationok=false)
 
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs.
@@ -21,7 +21,7 @@ rtol, atol: real and absolute error tolerances\n
 maxit: upper bound on number of nonlinear iterations\n
 
 solver:\n
-Your choices are :newton(default), "secant", or "chord". However, 
+Your choices are "newton"(default), "secant", or "chord". However, 
 you have sham at your disposal only if you chose newton. "chord"
 will keep using the initial derivative until the iterate converges,
 uses the iteration budget, or the line search fails. It is not the
@@ -61,6 +61,11 @@ keepsolhist:\n
 Set this to true to get the history of the iteration in the output
 tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
+
+stagnationok:\n
+Set this to true if you want to disable the line search and either
+observe divergence or stagnation. This is only useful for research
+or writing a book.
 
 Output:\n
 A tuple (solution, functionval, history, stats, idid, solhist) where
@@ -116,13 +121,14 @@ function nsolsc(
     rtol = 1.e-6,
     atol = 1.e-12,
     maxit = 10,
-    solver = :newton,
+    solver = "newton",
     sham = 1,
     armmax = 5,
     resdec = .1,
     armfix = false,
     printerr = true,
-    keepsolhist = true
+    keepsolhist = true,
+    stagnationok = false
 )
     itc = 0
     idid = true
@@ -162,7 +168,7 @@ function nsolsc(
     residratio = 1
     df=0.0
     armstop=true
-    while (resid > tol) && (itc < maxit) && armstop
+    while (resid > tol) && (itc < maxit) && (armstop || stagnationok)
         newjac=0
         newfun=0
         if solver == "secant"
