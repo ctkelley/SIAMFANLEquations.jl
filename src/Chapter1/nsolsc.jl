@@ -158,7 +158,8 @@ function nsolsc(
     end
     derivative_is_old = false
     resid = abs(fc)
-    ItRules=ItParms(solver,sham,armmax,resid,resdec,h,f,fp) 
+    ItRules=(solver=solver,sham=sham,armmax=armmax,amrfix=armfix,
+            residc=resdec,h=h,f=f,fp=fp) 
     newiarm=-1
     iarm=[0]
     ifun=[1]

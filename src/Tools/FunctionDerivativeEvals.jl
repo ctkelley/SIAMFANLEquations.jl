@@ -1,4 +1,7 @@
-function PrepareDerivative(ItRules::ItParms,x,xm,fc,fm)
+"""
+PrepareDerivative(ItRules,x,xm,fc,fm)
+"""
+function PrepareDerivative(ItRules,x,xm,fc,fm)
 newjac=0
 newfun=0
 fp=ItRules.fp
