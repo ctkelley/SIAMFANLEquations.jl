@@ -134,9 +134,9 @@ function nsolsc(
      You will thank me for this.
      Even if you don't thank me, I will do it anyhow.
     
-      If you insist, solver=chord will ignore poor convergence and let
+     If you insist, solver=chord will ignore poor convergence and let
      things go south with no interference. Please don't do that as
-     standard procedure.
+     standard procedure and, if you do, don't blame me.
     =#
     if solver == "secant"
         xm = x * 1.0001
@@ -161,7 +161,8 @@ function nsolsc(
     tol = rtol * resid + atol
     residratio = 1
     df=0.0
-    while (resid > tol) && (itc < maxit)
+    armstop=true
+    while (resid > tol) && (itc < maxit) && armstop
         newjac=0
         newfun=0
         if solver == "secant"
@@ -174,7 +175,7 @@ function nsolsc(
             end
             derivative_is_old = false
         else
-            if itc % sham == 0 || newiarm > 0 || residratio > resdec
+         if itc % sham == 0 || newiarm > 0 || residratio > resdec 
                 df = fpeval_newton(x, f, fc, fp, h)
                 newjac=newjac+1
                 derivative_is_old = false
@@ -185,11 +186,19 @@ function nsolsc(
         xm = x
         fm = fc
         d = -fc / df
+        if true == false
+        else
         AOUT = armijosc(fc, d, xm, fm, f, h, fp, armmax, 
                         armfix, derivative_is_old)
+        armstop=true
+#
+# If the line search fails and the derivative is current, stop the iteration.
+#
         if AOUT.idid == false
             iline = false
+            armstop = derivative_is_old
         end
+        newjac = newjac + AOUT.newjac
         fc = AOUT.afc
         x = AOUT.ax
         newiarm = AOUT.aiarm
@@ -200,6 +209,7 @@ function nsolsc(
         residratio = abs(fc) / abs(fm)
         itc = itc + 1
         newhist = abs(fc)
+        end
         if keepsolhist
             newsol = x
             append!(solhist,newsol)

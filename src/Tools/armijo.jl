@@ -15,6 +15,7 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
     lam0 = 0.0
     lamc = lambda
     lamm = lamc
+    newjac = 0
     #
     #   Take the full step and, if happy, go home.
     #
@@ -37,6 +38,7 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
         armfail = norm(fc) > (1 - alpha * lambda) * norm(fm)
         derivative_is_old = false
         jflag = true
+        newjac = 1
     end
     liarm = 0
     iarm = 0
@@ -70,6 +72,6 @@ function armijosc(fc, d, xm, fm, f, h, fp, armmax, armfix,
     if iarm >= armmax 
         idid = false
     end
-    return (ax = x, afc = fc, aiarm = iarm, 
+    return (ax = x, afc = fc, aiarm = iarm, newjac = newjac,
             adfo = derivative_is_old, ad = d, idid = idid)
 end

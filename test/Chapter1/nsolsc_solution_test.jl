@@ -122,9 +122,9 @@ fvals=stagdatan.history
 avals=stagdatan.stats.iarm
 ifvals=stagdatan.stats.ifun
 jvals=stagdatan.stats.ijac
-stagl=(length(fvals)==15)
+stagl=(length(fvals)==6)
 stagf=(fvals[5] < 1.e-15)
-stags=(avals[15]==5) && (ifvals[15]==6) &&  (jvals[15]==1)
+stags=(avals[6]==5) && (ifvals[6]==6) &&  (jvals[6]==1)
 stagok=stagl && stags && stagf
 if ~stagok
    println("Stagnation test FAILED")
