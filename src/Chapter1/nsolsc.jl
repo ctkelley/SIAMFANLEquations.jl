@@ -228,7 +228,7 @@ function nsolsc(
         resnorm = norm(fval)
     end
     if idid == false && printerr
-        NewtonError(resfail, iline, resnorm, maxit, armmax)    
+        NewtonError(resfail, iline, resnorm, itc, maxit, armmax)    
     end
     stats = (ifun=ifun, ijac=ijac, iarm=iarm)
     if keepsolhist

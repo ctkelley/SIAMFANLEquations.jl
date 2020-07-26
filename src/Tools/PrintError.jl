@@ -1,10 +1,12 @@
 """
-NewtonError(resfail, iline, resnorm, maxit, armmax)
+NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
 """
-function NewtonError(resfail, iline, resnorm, maxit, armmax)
+function NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
+if itc >= maxit
+   println("Maximum iterations (maxit) of ", maxit, " exceeded")
+end
 if resfail
    println("Convergence failure: residual norm too large  ",resnorm)
-   println("Maximum iterations (maxit) of ", maxit, " exceeded")
    println("Try increasing maxit and checking your function and Jacobian for bugs.")
 end
 if ~iline
