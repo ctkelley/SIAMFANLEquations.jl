@@ -1,7 +1,7 @@
 name = "SIAMFANLEquations"
 uuid = "084e46ad-d928-497d-ad5e-07fa361a48c4"
 authors = ["C. T. (Tim) Kelley <tim_kelley@ncsu.edu>"]
-version = "0.2.1dev"
+version = "0.2.1-dev"
 
 [deps]
 AbstractFFTs = "621f4979-c628-5d54-868e-fcf4e3e8185c"

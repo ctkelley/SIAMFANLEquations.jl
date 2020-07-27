@@ -82,12 +82,13 @@ end
 #
 # Tricky line search problem
 #
-sdatal=nsolsc(linatan,200.0; sham=5,maxit=20,armmax=10,armfix=true, rtol=1.e-9)
-solution=-100
+sdatal=nsolsc(linatan,200.0; sham=5,maxit=20,armmax=10,armfix=true, 
+              rtol=1.e-10)
+solution=-100.0
 solok=(abs(sdatal.solution-solution) < 1.e-8)
 funok=(abs(sdatal.functionval) < 1.e-8)
 hs=size(sdatal.history)
-histok=(hs[1]==4)
+histok=(hs[1]==6)
 shamfastok = funok && solok && histok
 if ~shamfastok
    println("Fast Shamanskii response FAILURE")
@@ -122,9 +123,9 @@ fvals=stagdatan.history
 avals=stagdatan.stats.iarm
 ifvals=stagdatan.stats.ifun
 jvals=stagdatan.stats.ijac
-stagl=(length(fvals)==15)
+stagl=(length(fvals)==6)
 stagf=(fvals[5] < 1.e-15)
-stags=(avals[15]==5) && (ifvals[15]==6) &&  (jvals[15]==1)
+stags=(avals[6]==5) && (ifvals[6]==6) &&  (jvals[6]==1)
 stagok=stagl && stags && stagf
 if ~stagok
    println("Stagnation test FAILED")
@@ -144,8 +145,6 @@ if ~chordok
    println("Chord test failed")
 end
 #
-#println(locok, globok, p3pok, secantok, analyticok, zecok,
-#         shamfastok, afok, resok, chordok)
 return locok && globok && secantok && analyticok && zecok && 
        shamfastok && afok && resok && p3pok && chordok
 end
