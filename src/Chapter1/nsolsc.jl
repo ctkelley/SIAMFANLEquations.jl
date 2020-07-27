@@ -139,13 +139,14 @@ function nsolsc(
     idid = true
     iline = true
     #=
-     If you like the secant or sham=large methods, I will 
-     evaluate the derivative anyhow if the line search kicks in. 
-     You will thank me for this.
-
-     Even if you don't thank me, I will do it anyhow.
+     If you like the sham=large methods, I will evaluate the derivative 
+     anyhow if the line search kicks in. 
+ 
+     The theory does not support convergence of the secant-Armijo iteration
+     and you assume a risk when you use it. The same is true for Broyden
+     and any other quasi-Newton method.
                 
-     If you insist, solver=chord will ignore poor convergence and let
+     The chord method will ignore poor convergence and let
      things go south with no interference. Please don't do that as
      standard procedure and, if you do, don't blame me.
     =#
