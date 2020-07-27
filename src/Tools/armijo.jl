@@ -17,7 +17,7 @@ function armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
     newjac = 0
     f=ItRules.f
     fp=ItRules.fp
-    h=ItRules.h
+    dx=ItRules.dx
     armmax=ItRules.armmax
     #
     # If I have an old derivative I will not tolerate a failure in

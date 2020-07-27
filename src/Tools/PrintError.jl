@@ -4,13 +4,13 @@ NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
 function NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
 if itc >= maxit
    println("Maximum iterations (maxit) of ", maxit, " exceeded")
-end
-if resfail
    println("Convergence failure: residual norm too large  ",resnorm)
-   println("Try increasing maxit and checking your function and Jacobian for bugs.")
+   println("Try increasing maxit and checking your function and 
+            Jacobian for bugs.")
 end
-if iline
-    println("The line search failed at least once.")
+if iline 
+    println("The line search failed at iteration"," ",itc)
+    println("Termination with failure")
 println("Current values: maxit  =  ", maxit, ", armmax = ", armmax)
 end
 println("Give the history array a look to see what's happening.")

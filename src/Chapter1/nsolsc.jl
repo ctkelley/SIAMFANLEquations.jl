@@ -1,6 +1,6 @@
 """
 nsolsc(f,x, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
-        solver="newton", sham=1, armmax=10, resdec=.1,
+        solver="newton", sham=1, armmax=10, resdec=.1, dx=1.e-7,
         armfix=false, printerr=true, keepsolhist=true, stagnationok=false)
 
 Newton's method for scalar equations. Has most of the features a
@@ -47,6 +47,10 @@ I only turn Shamanskii on if the residuals are decreasing
 rapidly, at least a factor of resdec, and the line search is quiescent.
 If you want to eliminate resdec from the method ( you don't ) then set
 resdec = 1.0 and you will never hear from it again.  
+
+dx:\n
+This is the increment for forward difference, default = 1.e-7.
+dx should be roughly the square root of the noise in the function.
 
 armfix:\n
 The default is a parabolic line search (ie false). Set to true and
@@ -125,6 +129,7 @@ function nsolsc(
     sham = 1,
     armmax = 5,
     resdec = 0.1,
+    dx = 1.e-7,
     armfix = false,
     printerr = true,
     keepsolhist = true,
@@ -133,13 +138,13 @@ function nsolsc(
     itc = 0
     idid = true
     iline = true
-    h = 1.e-7
     #=
-     If you like the secant or sham=large methods, I will do a 
-     difference Jacobian anyhow if the line search kicks in. 
+     If you like the secant or sham=large methods, I will 
+     evaluate the derivative anyhow if the line search kicks in. 
      You will thank me for this.
+
      Even if you don't thank me, I will do it anyhow.
-            
+                
      If you insist, solver=chord will ignore poor convergence and let
      things go south with no interference. Please don't do that as
      standard procedure and, if you do, don't blame me.
@@ -164,11 +169,14 @@ function nsolsc(
         armmax = armmax,
         armfix = armfix,
         residc = resdec,
-        h = h,
+        dx = dx,
         f = f,
         fp = fp,
         keepsolhist = keepsolhist,
     )
+    #
+    # Initialize the iteration statistics
+    #
     newiarm = -1
     iarm = [0]
     ifun = [1]
@@ -181,53 +189,76 @@ function nsolsc(
     if keepsolhist
         solhist = [x]
     end
+    #
+    # Fix the tolerances for convergence and define the derivative df
+    # outside of the main loop for scoping.
+    #
     tol = rtol * resid + atol
     residratio = 1
     df = 0.0
     armstop = true
-    upflag = true
+    #
+    # The main loop stops on convergence, too many iterations, or a
+    # line search failure after a derivative evaluation.
+    #
     while (resid > tol) && (itc < maxit) && (armstop || stagnationok)
         newfun = 0
         newjac = 0
+        #
+        # Evaluate the derivativce if (1) you are using the secant method, 
+        # (2) you are using the chord method and it's the intial iterate, or
+        # (3) it's Newton and you are on the right part of the Shamaskii loop,
+        # or the line search failed with a stale deriviative, or the residual
+        # reduction ratio is too large.
+        #
         evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
         chordinit = (solver == "chord") && itc == 0
-        evaljac = (evaljacit && solver == "newton") || chordinit
-        if evaljac || solver == "secant"
+        evaljac = (evaljacit && solver == "newton") || chordinit ||
+            solver == "secant"
+        # 
+        #
+        #
+        if evaljac
             df = PrepareDerivative(ItRules, x, xm, fc, fm)
             newfun += solver == "secant"
             newjac += solver == "newton"
         end
         derivative_is_old = ~evaljacit && (solver == "newton")
         #
+        # Compute the Newton direction and call the line search.
+        #
         xm = x
         fm = fc
         d = -fc / df
         AOUT = armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
-            #
-            # If the line search fails and the derivative is current, 
-            # stop the iteration.
-            #
-            armstop = AOUT.idid || derivative_is_old
-            iline = AOUT.idid
-            newjac = newjac + AOUT.newjac
-            fc = AOUT.afc
-            x = AOUT.ax
-            newiarm = AOUT.aiarm
-            newfun = newfun + newiarm + 1
-            derivative_is_old = AOUT.adfo
-            resid = abs(fc)
-            residratio = abs(fc) / abs(fm)
-            itc += 1
-            newhist = abs(fc)
-            if keepsolhist
-                newsol = x
-                append!(solhist, newsol)
-            end
-            append!(iarm, newiarm)
-            append!(ifun, newfun)
-            append!(ijac, newjac)
-            append!(ithist, newhist)
-end
+        #
+        # If the line search fails and the derivative is current, 
+        # stop the iteration.
+        #
+        armstop = AOUT.idid || derivative_is_old
+        #
+        # Keep the books.
+        #
+#        iline = AOUT.idid
+        iline = ~armstop
+        newjac = newjac + AOUT.newjac
+        fc = AOUT.afc
+        x = AOUT.ax
+        newiarm = AOUT.aiarm
+        newfun = newfun + newiarm + 1
+        resid = abs(fc)
+        residratio = abs(fc) / abs(fm)
+        itc += 1
+        newhist = abs(fc)
+        if keepsolhist
+            newsol = x
+            append!(solhist, newsol)
+        end
+        append!(iarm, newiarm)
+        append!(ifun, newfun)
+        append!(ijac, newjac)
+        append!(ithist, newhist)
+    end
     solution = x
     fval = fc
     resnorm = abs(fval)
