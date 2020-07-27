@@ -1,7 +1,8 @@
 """
 nsolsc(f,x, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
-        solver="newton", sham=1, armmax=10, resdec=.1, dx=1.e-6,
-        armfix=false, printerr=true, keepsolhist=true, stagnationok=false)
+        solver="newton", sham=1, armmax=10, resdec=.1, dx=1.e-7,
+        armfix=false, 
+        printerr=true, keepsolhist=true, stagnationok=false)
 
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs.
@@ -133,7 +134,7 @@ function nsolsc(
     armfix = false,
     printerr = true,
     keepsolhist = true,
-    stagnationok = false,
+    stagnationok = false
 )
     itc = 0
     idid = true
@@ -223,6 +224,7 @@ function nsolsc(
             df = PrepareDerivative(ItRules, x, xm, fc, fm)
             newfun += solver == "secant"
             newjac += solver == "newton"
+            newjac += chordinit
         end
         derivative_is_old = ~evaljacit && (solver == "newton")
         #
