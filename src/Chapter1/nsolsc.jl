@@ -1,6 +1,6 @@
 """
 nsolsc(f,x, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
-        solver="newton", sham=1, armmax=10, resdec=.1, dx=1.e-7,
+        solver="newton", sham=1, armmax=10, resdec=.1, dx=1.e-6,
         armfix=false, printerr=true, keepsolhist=true, stagnationok=false)
 
 Newton's method for scalar equations. Has most of the features a
