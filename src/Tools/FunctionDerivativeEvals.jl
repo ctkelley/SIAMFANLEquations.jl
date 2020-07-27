@@ -15,5 +15,5 @@ else
    df = fpeval_newton(x, f, fc, fp, h)
    newjac=newjac+1
 end
-return (df=df,newjac=newjac,newfun=newfun)
+return df
 end

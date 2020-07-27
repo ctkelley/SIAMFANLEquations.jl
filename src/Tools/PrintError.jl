@@ -9,7 +9,7 @@ if resfail
    println("Convergence failure: residual norm too large  ",resnorm)
    println("Try increasing maxit and checking your function and Jacobian for bugs.")
 end
-if ~iline
+if iline
     println("The line search failed at least once.")
 println("Current values: maxit  =  ", maxit, ", armmax = ", armmax)
 end
