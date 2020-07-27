@@ -82,12 +82,13 @@ end
 #
 # Tricky line search problem
 #
-sdatal=nsolsc(linatan,200.0; sham=5,maxit=20,armmax=10,armfix=true, rtol=1.e-9)
-solution=-100
+sdatal=nsolsc(linatan,200.0; sham=5,maxit=20,armmax=10,armfix=true, 
+              rtol=1.e-10)
+solution=-100.0
 solok=(abs(sdatal.solution-solution) < 1.e-8)
 funok=(abs(sdatal.functionval) < 1.e-8)
 hs=size(sdatal.history)
-histok=(hs[1]==4)
+histok=(hs[1]==6)
 shamfastok = funok && solok && histok
 if ~shamfastok
    println("Fast Shamanskii response FAILURE")

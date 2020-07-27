@@ -202,12 +202,7 @@ function nsolsc(
         xm = x
         fm = fc
         d = -fc / df
-        upflag = true
-        if derivative_is_old
-            AOUT = armijosc(fc, d, xm, fm, ItRules, true)
-        else
-            AOUT = armijosc(fc, d, xm, fm, ItRules, false)
-        end
+        AOUT = armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
             #
             # If the line search fails and the derivative is current, 
             # stop the iteration.
@@ -224,7 +219,6 @@ function nsolsc(
             residratio = abs(fc) / abs(fm)
             itc += 1
             newhist = abs(fc)
-        if upflag
             if keepsolhist
                 newsol = x
                 append!(solhist, newsol)
@@ -233,8 +227,7 @@ function nsolsc(
             append!(ifun, newfun)
             append!(ijac, newjac)
             append!(ithist, newhist)
-        end
-    end
+end
     solution = x
     fval = fc
     resnorm = abs(fval)

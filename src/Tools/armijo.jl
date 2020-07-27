@@ -19,6 +19,13 @@ function armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
     fp=ItRules.fp
     h=ItRules.h
     armmax=ItRules.armmax
+    #
+    # If I have an old derivative I will not tolerate a failure in
+    # the line search. 
+    #
+    if derivative_is_old
+    armmax=0
+    end
     armfix=ItRules.armfix
     #
     #   Take the full step and, if happy, go home.
@@ -26,26 +33,8 @@ function armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
     x = xm + lambda * d
     fc = f(x)
     armfail = norm(fc) > (1 - alpha * lambda) * norm(fm)
+    iarm+=1
     #
-    # If I have an old derivative I will not tolerate a failure in
-    # the line search. 
-    #
-    # jflag tells me that I had to refresh the derivative
-    # liarm is the counter that = iarm unless I refresh the Jacobian
-    #
-    jflag = false
-    if armfail && derivative_is_old
-        df = fpeval_newton(xm, f, fm, fp, h)
-        d = -fm / df
-        x = xm + lambda * d
-        fc = f(x)
-        armfail = norm(fc) > (1 - alpha * lambda) * norm(fm)
-        derivative_is_old = false
-        jflag = true
-        newjac = 1
-    end
-    liarm = 0
-    iarm = 0
     #
     # At this point I've taken a full step. I'll enter the loop only if
     # that full step has failed.
@@ -70,7 +59,6 @@ function armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
         ffm = ffc
         ffc = norm(fc)^2
         iarm += 1
-        liarm += 1
         armfail = norm(fc) > (1 - alpha * lambda) * norm(fm)
     end
     if iarm >= armmax 
