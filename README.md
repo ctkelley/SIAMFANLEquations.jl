@@ -62,10 +62,12 @@ If __log(version_number) < 0__ there's trouble!
 
 This is the dev version of v0.2.1. __Chapter 2: Systems of equations with direct linear solvers.__ 
 
+I have added new keyword arguments to nsolsc.jl and make the error messages more informative. None of this should break the notebooks for Chapter 1. I will be updating the notebooks soon. 
+
 __I have changed the user interface and the calling sequence of the solvers
 since v0.1.1 and will continue to do things like that until v1.0.0 goes out the door.__
 
-I have released version v0.1.2. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapter 1 of (Kel03), make all the new examples, and I have almost finished Chaper 1 of the notebook and print book. The plan is, for x > 1
+I have released version v0.1.2. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapter 1 of (Kel03), make all the new examples, and I have finished Chaper 1 of the notebook and print book. The plan is, for x > 1
 
 -- v0.x.1 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 0.x.y for y > 2 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
 
