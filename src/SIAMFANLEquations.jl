@@ -12,12 +12,12 @@ export ptcsolsc
 export printhist
 export armijosc
 
-mutable struct ItStats
-ifun::Array{Int64,1}
-ijac::Array{Int64,1}
-iarm::Array{Int64,1}
-history::Array{T,1} where T<:Real
-end
+#mutable struct ItStats
+#ifun::Array{Int64,1}
+#ijac::Array{Int64,1}
+#iarm::Array{Int64,1}
+#history::Array{T,1} where T<:Real
+#end
 
 include("Tools/difffp.jl")
 include("Tools/fpeval_newton.jl")
