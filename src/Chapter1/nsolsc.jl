@@ -180,14 +180,10 @@ function nsolsc(
     # Initialize the iteration statistics
     #
     newiarm = -1
-    iarm = [0]
-    ifun = [1]
-    ijac = [0]
+    ItData=InitStats(resid)
     newfun = 0
     newjac = 0
-    newhist = 0.0
     newsol = x
-    ithist = [abs(fc)]
     if keepsolhist
         solhist = [x]
     end
@@ -233,34 +229,35 @@ function nsolsc(
         xm = x
         fm = fc
         d = -fc / df
-        AOUT = armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
+        AOUT = armijosc(fc, d, xm, resid, ItRules, derivative_is_old)
+#        AOUT = armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
+        #
+        # update solution/functaion value
+        #
+        x = AOUT.ax
+        fc = AOUT.afc
         #
         # If the line search fails and the derivative is current, 
         # stop the iteration.
         #
         armstop = AOUT.idid || derivative_is_old
+        iline = ~armstop
         #
         # Keep the books.
         #
-#        iline = AOUT.idid
-        iline = ~armstop
         newjac = newjac + AOUT.newjac
-        fc = AOUT.afc
-        x = AOUT.ax
         newiarm = AOUT.aiarm
         newfun = newfun + newiarm + 1
+        residm=resid
         resid = abs(fc)
-        residratio = abs(fc) / abs(fm)
+        updateStats!(ItData, newfun, newjac, newiarm, resid)
+        residratio = resid/residm
+        #
         itc += 1
-        newhist = abs(fc)
         if keepsolhist
             newsol = x
             append!(solhist, newsol)
         end
-        append!(iarm, newiarm)
-        append!(ifun, newfun)
-        append!(ijac, newjac)
-        append!(ithist, newhist)
     end
     solution = x
     fval = fc
@@ -270,12 +267,12 @@ function nsolsc(
     if ~idid && printerr
         NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
     end
-    stats = (ifun = ifun, ijac = ijac, iarm = iarm)
+    stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
     if keepsolhist
         return (
             solution = solution,
             functionval = fval,
-            history = ithist,
+            history = ItData.history,
             stats = stats,
             idid = idid,
             solhist = solhist,
@@ -284,7 +281,8 @@ function nsolsc(
         return (
             solution = solution,
             functionval = fval,
-            history = ithist,
+#            history = history,
+            history = ItData.history,
             stats = stats,
             idid = idid,
         )

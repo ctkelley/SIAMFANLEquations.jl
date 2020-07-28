@@ -11,29 +11,12 @@ export fpeval_newton
 export ptcsolsc
 export printhist
 export armijosc
-#export ItParms
-#export ItStats
 
 mutable struct ItStats
-solution
-functionval
-history
-ifun
-ijac
-iarm
-idid
-solhist
-end
-
-mutable struct ItParms
-solver::String
-sham::Int
-armmax::Int
-resid::Real
-resdec::Real
-h::Real
-f
-fp
+ifun::Array{Int64,1}
+ijac::Array{Int64,1}
+iarm::Array{Int64,1}
+history::Array{T,1} where T<:Real
 end
 
 include("Tools/difffp.jl")

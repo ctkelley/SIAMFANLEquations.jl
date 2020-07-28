@@ -1,16 +1,17 @@
-function InitStats(x, fc, resid, keepsolhist)
-solution=x
-functionval=fc
+function InitStats(resid)
 history=[resid]
 ifun=[1]
 ijac=[0]
 iarm=[0]
-idid=true
-solhist=[]
-if keepsolhist
-   solhist=[x]
-end
-NewStats=ItStats(solution, functionval, history, 
-                 ifun, ijac, iarm, idid, solhist)
+history=[resid]
+NewStats=ItStats(ifun, ijac, iarm, history)
 return NewStats
 end
+
+function updateStats!(ItData, newf, newj, newiarm, resid)
+append!(ItData.ifun,newf)
+append!(ItData.ijac,newj)
+append!(ItData.iarm,newiarm)
+append!(ItData.history,resid)
+end
+
