@@ -173,8 +173,7 @@ function nsolsc(
         residc = resdec,
         dx = dx,
         f = f,
-        fp = fp,
-        keepsolhist = keepsolhist,
+        fp = fp
     )
     #
     # Initialize the iteration statistics
