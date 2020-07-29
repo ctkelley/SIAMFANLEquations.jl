@@ -5,7 +5,6 @@ Line search for scalar equations. Read the notebook or print book
 for the explanation. This is an internal function and I did not
 design it to be hackable by the novice.
 """
-#function armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
 function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
     idid = true
     alpha = 1.e-4

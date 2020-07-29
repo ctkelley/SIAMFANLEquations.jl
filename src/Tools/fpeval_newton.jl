@@ -12,3 +12,14 @@ function fpeval_newton(x, f, fc, fp, h)
     end
     return df 
 end 
+
+
+"""
+difffp
+
+forward differencing for scalar equations
+"""
+function difffp(x, f, fc, h)
+    df = (f(x + h) - fc) / h
+    return df
+end
