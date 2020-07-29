@@ -17,3 +17,11 @@ else
 end
 return df
 end
+
+function UpdateIteration(x::T, xm, lambda, d, ItRules) where T <: Real
+f=ItRules.f
+x = xm + lambda * d
+fc = f(x)
+residc=norm(fc)
+return (x, residc, fc)
+end

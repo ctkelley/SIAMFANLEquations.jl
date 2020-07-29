@@ -30,9 +30,10 @@ function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
     #
     #   Take the full step and, if happy, go home.
     #
-    x = xm + lambda * d
-    fc = f(x)
-    residc=norm(fc)
+#    x = xm + lambda * d
+#    fc = f(x)
+#    residc=norm(fc)
+    (x, residc, fc) = UpdateIteration(x, xm, lambda, d, ItRules)
     armfail = residc > (1 - alpha * lambda) * residm
     iarm+=1
     #

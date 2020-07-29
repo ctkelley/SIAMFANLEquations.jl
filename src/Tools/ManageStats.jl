@@ -1,8 +1,8 @@
-mutable struct ItStats
+mutable struct ItStats{T <: Real}
 ifun::Array{Int64,1}
 ijac::Array{Int64,1}
 iarm::Array{Int64,1}
-history::Array{T,1} where T<:Real
+history::Array{T,1}
 end
 
 function InitStats(resid)
