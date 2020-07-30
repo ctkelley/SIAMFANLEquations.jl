@@ -179,7 +179,7 @@ function nsolsc(
     # Initialize the iteration statistics
     #
     newiarm = -1
-    ItData=InitStats(resid)
+    ItData=ItStats(history=[resid])
     newfun = 0
     newjac = 0
     newsol = x
@@ -229,9 +229,8 @@ function nsolsc(
         fm = fc
         d = -fc / df
         AOUT = armijosc(fc, d, xm, resid, ItRules, derivative_is_old)
-#        AOUT = armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
         #
-        # update solution/functaion value
+        # update solution/function value
         #
         x = AOUT.ax
         fc = AOUT.afc
@@ -244,13 +243,8 @@ function nsolsc(
         #
         # Keep the books.
         #
-        newjac = newjac + AOUT.newjac
-        newiarm = AOUT.aiarm
-        newfun = newfun + newiarm + 1
-        residm=resid
-        resid = abs(fc)
-        updateStats!(ItData, newfun, newjac, newiarm, resid)
-        residratio = resid/residm
+        residm=resid; resid=AOUT.resid; residratio = resid/residm;
+        updateStats!(ItData, newfun, newjac, AOUT)
         #
         itc += 1
         if keepsolhist
