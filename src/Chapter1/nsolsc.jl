@@ -164,7 +164,7 @@ function nsolsc(
         fp = difffp
     end
     derivative_is_old = false
-    resid = abs(fc)
+    resnorm = abs(fc)
     ItRules = (
         solver = solver,
         sham = sham,
@@ -179,7 +179,7 @@ function nsolsc(
     # Initialize the iteration statistics
     #
     newiarm = -1
-    ItData=ItStats(history=[resid])
+    ItData=ItStats(history=[resnorm])
     newfun = 0
     newjac = 0
     newsol = x
@@ -190,7 +190,7 @@ function nsolsc(
     # Fix the tolerances for convergence and define the derivative df
     # outside of the main loop for scoping.
     #
-    tol = rtol * resid + atol
+    tol = rtol * resnorm + atol
     residratio = 1
     df = 0.0
     armstop = true
@@ -198,7 +198,7 @@ function nsolsc(
     # The main loop stops on convergence, too many iterations, or a
     # line search failure after a derivative evaluation.
     #
-    while (resid > tol) && (itc < maxit) && (armstop || stagnationok)
+    while (resnorm > tol) && (itc < maxit) && (armstop || stagnationok)
         newfun = 0
         newjac = 0
         #
@@ -228,7 +228,7 @@ function nsolsc(
         xm = x
         fm = fc
         d = -fc / df
-        AOUT = armijosc(fc, d, xm, resid, ItRules, derivative_is_old)
+        AOUT = armijosc(fc, d, xm, resnorm, ItRules, derivative_is_old)
         #
         # update solution/function value
         #
@@ -243,7 +243,7 @@ function nsolsc(
         #
         # Keep the books.
         #
-        residm=resid; resid=AOUT.resid; residratio = resid/residm;
+        residm=resnorm; resnorm=AOUT.resnorm; residratio = resnorm/residm;
         updateStats!(ItData, newfun, newjac, AOUT)
         #
         itc += 1
@@ -254,7 +254,6 @@ function nsolsc(
     end
     solution = x
     fval = fc
-    resnorm = abs(fval)
     resfail = (resnorm > tol)
     idid = ~(resfail || iline)
     if ~idid && printerr
@@ -274,7 +273,6 @@ function nsolsc(
         return (
             solution = solution,
             functionval = fval,
-#            history = history,
             history = ItData.history,
             stats = stats,
             idid = idid,

@@ -23,12 +23,11 @@ append!(ItData.history,resid)
 end
 
 function updateStats!(ItData, newfun, newjac, AOUT)
-newjac = newjac + AOUT.newjac
 newiarm = AOUT.aiarm
 newfun = newfun + newiarm + 1
-resid=AOUT.resid
+resnorm=AOUT.resnorm
 append!(ItData.ifun,newfun)
 append!(ItData.ijac,newjac)
 append!(ItData.iarm,newiarm)
-append!(ItData.history,resid)
+append!(ItData.history,resnorm)
 end

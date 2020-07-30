@@ -14,7 +14,6 @@ function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
     lam0 = 0.0
     lamc = lambda
     lamm = lamc
-    newjac = 0
     f=ItRules.f
     fp=ItRules.fp
     dx=ItRules.dx
@@ -61,8 +60,7 @@ function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
     if iarm >= armmax 
         idid = false
     end
-    return (ax = x, afc = fc, resid = residc, aiarm = iarm, newjac = newjac,
-            idid = idid)
+    return (ax = x, afc = fc, resnorm = residc, aiarm = iarm, idid = idid)
 end
 
 function update_lambda(iarm, armfix, lambda, lamc, ff0, ffc, ffm)
