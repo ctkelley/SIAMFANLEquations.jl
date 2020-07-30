@@ -183,6 +183,7 @@ function nsolsc(
     newfun = 0
     newjac = 0
     newsol = x
+    xt = x
     if keepsolhist
         solhist = [x]
     end
@@ -228,7 +229,7 @@ function nsolsc(
         xm = x
         fm = fc
         d = -fc / df
-        AOUT = armijosc(fc, d, xm, resnorm, ItRules, derivative_is_old)
+        AOUT = armijosc(xt, x, fc, d, resnorm, ItRules, derivative_is_old)
         #
         # update solution/function value
         #

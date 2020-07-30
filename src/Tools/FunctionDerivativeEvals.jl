@@ -18,10 +18,10 @@ end
 return df
 end
 
-function UpdateIteration(x::T, xm, lambda, d, ItRules) where T <: Real
+function UpdateIteration(xt::T, xm, lambda, d, ItRules) where T <: Real
 f=ItRules.f
-x = xm + lambda * d
-fc = f(x)
+xt = xm + lambda * d
+fc = f(xt)
 residc=norm(fc)
-return (x, residc, fc)
+return (xt, residc, fc)
 end

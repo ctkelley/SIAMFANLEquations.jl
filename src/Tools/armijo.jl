@@ -1,16 +1,17 @@
 """
-armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
+armijosc(xt, x, fc, d, residm, ItRules, derivative_is_old)
 
 Line search for scalar equations. Read the notebook or print book
 for the explanation. This is an internal function and I did not
 design it to be hackable by the novice.
 """
-function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
+function armijosc(xt, x, fc, d, residm, ItRules, derivative_is_old)
+# function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
     idid = true
     alpha = 1.e-4
     iarm = -1
     lambda = 1.0
-    x = xm
+    xm = x
     lam0 = 0.0
     lamc = lambda
     lamm = lamc
@@ -29,10 +30,7 @@ function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
     #
     #   Take the full step and, if happy, go home.
     #
-#    x = xm + lambda * d
-#    fc = f(x)
-#    residc=norm(fc)
-    (x, residc, fc) = UpdateIteration(x, xm, lambda, d, ItRules)
+    (xt, residc, fc) = UpdateIteration(xt, xm, lambda, d, ItRules)
     armfail = residc > (1 - alpha * lambda) * residm
     iarm+=1
     #
@@ -45,13 +43,11 @@ function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
     ffm = ffc
     while armfail && iarm < armmax
         #
-        #   At this point fp = f'(xm) then it's time to be serious 
-        #   about the line  search.
+        #   At this point the full step has failed. Now it's time to be 
+        #   serious about the line search.
         #
         lambda = update_lambda(iarm, armfix, lambda, lamc, ff0, ffc, ffm)
-        x = xm + lambda * d
-        fc = f(x)
-        residc=norm(fc)
+        (xt, residc, fc) = UpdateIteration(xt, xm, lambda, d, ItRules)
         ffm = ffc
         ffc = residc^2
         iarm += 1
@@ -59,8 +55,12 @@ function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
     end
     if iarm >= armmax 
         idid = false
+#
+# Look at Fast Sham. Test failing!
+# Why should I return xt even if the line search fails?
+#        xt = x
     end
-    return (ax = x, afc = fc, resnorm = residc, aiarm = iarm, idid = idid)
+    return (ax = xt, afc = fc, resnorm = residc, aiarm = iarm, idid = idid)
 end
 
 function update_lambda(iarm, armfix, lambda, lamc, ff0, ffc, ffm)
