@@ -12,3 +12,4 @@
 *.zip
 docs/build/
 Manifest.toml
+src/Archive

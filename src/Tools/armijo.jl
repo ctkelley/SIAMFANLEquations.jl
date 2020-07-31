@@ -1,20 +1,20 @@
 """
-armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
+armijosc(xt, x, fc, d, residm, ItRules, derivative_is_old)
 
 Line search for scalar equations. Read the notebook or print book
 for the explanation. This is an internal function and I did not
 design it to be hackable by the novice.
 """
-function armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
+function armijosc(xt, x, fc, d, residm, ItRules, derivative_is_old)
     idid = true
     alpha = 1.e-4
     iarm = -1
     lambda = 1.0
-    x = xm
+    xm = x
     lam0 = 0.0
     lamc = lambda
     lamm = lamc
-    newjac = 0
+    fm=fc
     f=ItRules.f
     fp=ItRules.fp
     dx=ItRules.dx
@@ -30,40 +30,52 @@ function armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
     #
     #   Take the full step and, if happy, go home.
     #
-    x = xm + lambda * d
-    fc = f(x)
-    armfail = norm(fc) > (1 - alpha * lambda) * norm(fm)
+    (xt, residc, fc) = UpdateIteration(xt, xm, lambda, d, ItRules)
+    armfail = residc > (1 - alpha * lambda) * residm
     iarm+=1
     #
     #
     # At this point I've taken a full step. I'll enter the loop only if
     # that full step has failed.
     #
-    ffc = norm(fc)^2
-    ff0 = norm(fm)^2
+    ffc = residc^2
+    ff0 = residm^2
     ffm = ffc
     while armfail && iarm < armmax
         #
-        #   At this point fp = f'(xm) then it's time to be serious 
-        #   about the line  search.
+        #   At this point the full step has failed. Now it's time to be 
+        #   serious about the line search.
         #
-        if iarm == 0 || armfix == true
+        lambda = update_lambda(iarm, armfix, lambda, lamc, ff0, ffc, ffm)
+        (xt, residc, fc) = UpdateIteration(xt, xm, lambda, d, ItRules)
+        ffm = ffc
+        ffc = residc^2
+        iarm += 1
+        armfail = residc > (1 - alpha * lambda) * residm
+    end
+    if iarm >= armmax 
+        idid = false
+#
+#      If I'm in a shamanskii loop and the full step fails. I need to
+#      start over. So I do not update the point.
+#
+       if derivative_is_old 
+            xt = xm
+            fc = fm
+            residc=norm(fc)
+            residc=residm
+       end
+    end
+    return (ax = xt, afc = fc, resnorm = residc, aiarm = iarm, idid = idid)
+end
+
+function update_lambda(iarm, armfix, lambda, lamc, ff0, ffc, ffm)
+       if iarm == 0 || armfix == true
             lambda = lambda * 0.5
         else
             lamm=lamc
             lamc=lambda
             lambda = parab3p(lamc, lamm, ff0, ffc, ffm)
         end
-        x = xm + lambda * d
-        fc = f(x)
-        ffm = ffc
-        ffc = norm(fc)^2
-        iarm += 1
-        armfail = norm(fc) > (1 - alpha * lambda) * norm(fm)
-    end
-    if iarm >= armmax 
-        idid = false
-    end
-    return (ax = x, afc = fc, aiarm = iarm, newjac = newjac,
-            adfo = derivative_is_old, ad = d, idid = idid)
+return lambda
 end

@@ -1,7 +1,8 @@
 """
 nsolsc(f,x, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
         solver="newton", sham=1, armmax=10, resdec=.1, dx=1.e-7,
-        armfix=false, printerr=true, keepsolhist=true, stagnationok=false)
+        armfix=false, 
+        printerr=true, keepsolhist=true, stagnationok=false)
 
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs.
@@ -133,19 +134,20 @@ function nsolsc(
     armfix = false,
     printerr = true,
     keepsolhist = true,
-    stagnationok = false,
+    stagnationok = false
 )
     itc = 0
     idid = true
     iline = true
     #=
-     If you like the secant or sham=large methods, I will 
-     evaluate the derivative anyhow if the line search kicks in. 
-     You will thank me for this.
-
-     Even if you don't thank me, I will do it anyhow.
+     If you like the sham=large methods, I will evaluate the derivative 
+     anyhow if the line search kicks in. 
+ 
+     The theory does not support convergence of the secant-Armijo iteration
+     and you assume a risk when you use it. The same is true for Broyden
+     and any other quasi-Newton method.
                 
-     If you insist, solver=chord will ignore poor convergence and let
+     The chord method will ignore poor convergence and let
      things go south with no interference. Please don't do that as
      standard procedure and, if you do, don't blame me.
     =#
@@ -162,7 +164,7 @@ function nsolsc(
         fp = difffp
     end
     derivative_is_old = false
-    resid = abs(fc)
+    resnorm = abs(fc)
     ItRules = (
         solver = solver,
         sham = sham,
@@ -171,21 +173,17 @@ function nsolsc(
         residc = resdec,
         dx = dx,
         f = f,
-        fp = fp,
-        keepsolhist = keepsolhist,
+        fp = fp
     )
     #
     # Initialize the iteration statistics
     #
     newiarm = -1
-    iarm = [0]
-    ifun = [1]
-    ijac = [0]
+    ItData=ItStats(history=[resnorm])
     newfun = 0
     newjac = 0
-    newhist = 0.0
     newsol = x
-    ithist = [abs(fc)]
+    xt = x
     if keepsolhist
         solhist = [x]
     end
@@ -193,7 +191,7 @@ function nsolsc(
     # Fix the tolerances for convergence and define the derivative df
     # outside of the main loop for scoping.
     #
-    tol = rtol * resid + atol
+    tol = rtol * resnorm + atol
     residratio = 1
     df = 0.0
     armstop = true
@@ -201,7 +199,7 @@ function nsolsc(
     # The main loop stops on convergence, too many iterations, or a
     # line search failure after a derivative evaluation.
     #
-    while (resid > tol) && (itc < maxit) && (armstop || stagnationok)
+    while (resnorm > tol) && (itc < maxit) && (armstop || stagnationok)
         newfun = 0
         newjac = 0
         #
@@ -222,6 +220,7 @@ function nsolsc(
             df = PrepareDerivative(ItRules, x, xm, fc, fm)
             newfun += solver == "secant"
             newjac += solver == "newton"
+            newjac += chordinit
         end
         derivative_is_old = ~evaljacit && (solver == "newton")
         #
@@ -230,49 +229,43 @@ function nsolsc(
         xm = x
         fm = fc
         d = -fc / df
-        AOUT = armijosc(fc, d, xm, fm, ItRules, derivative_is_old)
+        AOUT = armijosc(xt, x, fc, d, resnorm, ItRules, derivative_is_old)
+        #
+        # update solution/function value
+        #
+        x = AOUT.ax
+        fc = AOUT.afc
         #
         # If the line search fails and the derivative is current, 
         # stop the iteration.
         #
         armstop = AOUT.idid || derivative_is_old
+        iline = ~armstop
         #
         # Keep the books.
         #
-#        iline = AOUT.idid
-        iline = ~armstop
-        newjac = newjac + AOUT.newjac
-        fc = AOUT.afc
-        x = AOUT.ax
-        newiarm = AOUT.aiarm
-        newfun = newfun + newiarm + 1
-        resid = abs(fc)
-        residratio = abs(fc) / abs(fm)
+        residm=resnorm; resnorm=AOUT.resnorm; residratio = resnorm/residm;
+        updateStats!(ItData, newfun, newjac, AOUT)
+        #
         itc += 1
-        newhist = abs(fc)
         if keepsolhist
             newsol = x
             append!(solhist, newsol)
         end
-        append!(iarm, newiarm)
-        append!(ifun, newfun)
-        append!(ijac, newjac)
-        append!(ithist, newhist)
     end
     solution = x
     fval = fc
-    resnorm = abs(fval)
     resfail = (resnorm > tol)
     idid = ~(resfail || iline)
     if ~idid && printerr
         NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
     end
-    stats = (ifun = ifun, ijac = ijac, iarm = iarm)
+    stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
     if keepsolhist
         return (
             solution = solution,
             functionval = fval,
-            history = ithist,
+            history = ItData.history,
             stats = stats,
             idid = idid,
             solhist = solhist,
@@ -281,7 +274,7 @@ function nsolsc(
         return (
             solution = solution,
             functionval = fval,
-            history = ithist,
+            history = ItData.history,
             stats = stats,
             idid = idid,
         )

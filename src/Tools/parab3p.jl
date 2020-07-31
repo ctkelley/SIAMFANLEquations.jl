@@ -3,17 +3,17 @@ parab3p(lambdac, lambdam, ff0, ffc, ffm)
 
 Three point parabolic line search.
 
-input:
+input:\n
        lambdac = current steplength
        lambdam = previous steplength
        ff0 = value of || F(x_c) ||^2
        ffc = value of || F(x_c + lambdac d) ||^2
        ffm = value of || F(x_c + lambdam d) ||^2
 
-output:
+output:\n
        lambdap = new value of lambda
 
-internal parameters:
+internal parameters:\n
        sigma0 = .1, sigma1=.5, safeguarding bounds for the linesearch
 
 You get here if cutting the steplength in half doesn't get you
@@ -42,7 +42,6 @@ for negative curvature, which I don't want to see.
  So I find the zero of the derivative and check the endpoints.
 
 """
-
 function parab3p(lambdac, lambdam, ff0, ffc, ffm)
     #
     # internal parameters
