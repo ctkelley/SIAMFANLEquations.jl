@@ -107,8 +107,7 @@ end
 # Test residual failure mode and no history.
 #
 resok=false
-resfail=nsolsc(atan,10.0; maxit=3, armfix=true, keepsolhist=false,
-            printerr=false)
+resfail=nsolsc(atan,10.0; maxit=3, armfix=true, keepsolhist=false)
 if resfail.idid==false
    resok=true
 else
