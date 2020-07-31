@@ -6,7 +6,6 @@ for the explanation. This is an internal function and I did not
 design it to be hackable by the novice.
 """
 function armijosc(xt, x, fc, d, residm, ItRules, derivative_is_old)
-# function armijosc(fc, d, xm, residm, ItRules, derivative_is_old)
     idid = true
     alpha = 1.e-4
     iarm = -1
@@ -15,6 +14,7 @@ function armijosc(xt, x, fc, d, residm, ItRules, derivative_is_old)
     lam0 = 0.0
     lamc = lambda
     lamm = lamc
+    fm=fc
     f=ItRules.f
     fp=ItRules.fp
     dx=ItRules.dx
@@ -56,9 +56,15 @@ function armijosc(xt, x, fc, d, residm, ItRules, derivative_is_old)
     if iarm >= armmax 
         idid = false
 #
-# Look at Fast Sham. Test failing!
-# Why should I return xt even if the line search fails?
-#        xt = x
+#      If I'm in a shamanskii loop and the full step fails. I need to
+#      start over. So I do not update the point.
+#
+       if derivative_is_old 
+            xt = xm
+            fc = fm
+            residc=norm(fc)
+            residc=residm
+       end
     end
     return (ax = xt, afc = fc, resnorm = residc, aiarm = iarm, idid = idid)
 end
