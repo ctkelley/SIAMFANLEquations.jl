@@ -15,13 +15,6 @@ end
 #return NewStats
 #end
 
-#function updateStats!(ItData, newf, newj, newiarm, resid)
-#append!(ItData.ifun,newf)
-#append!(ItData.ijac,newj)
-#append!(ItData.iarm,newiarm)
-#append!(ItData.history,resid)
-#end
-
 function updateStats!(ItData, newfun, newjac, AOUT)
 newiarm = AOUT.aiarm
 newfun = newfun + newiarm + 1
