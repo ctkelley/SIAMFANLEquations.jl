@@ -1,6 +1,5 @@
 """
 armijosc(xt, x, fc, d, residm, ItRules, derivative_is_old)
-
 Line search for scalar equations. Read the notebook or print book
 for the explanation. This is an internal function and I did not
 design it to be hackable by the novice.
