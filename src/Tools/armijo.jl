@@ -12,8 +12,6 @@ function armijosc(xt, xc, fc, d, residm, ItRules, derivative_is_old)
     lam0 = 0.0
     lamc = lambda
     lamm = lamc
-    xm = xc
-    fm=fc
     ft=fc
     f=ItRules.f
     fp=ItRules.fp
@@ -30,7 +28,7 @@ function armijosc(xt, xc, fc, d, residm, ItRules, derivative_is_old)
     #
     #   Take the full step and, if happy, go home.
     #
-    (xt, ft, residt) = UpdateIteration(xt, xm, ft, lambda, d, ItRules)
+    (xt, ft, residt) = UpdateIteration(xt, xc, ft, lambda, d, ItRules)
     armfail = residt > (1 - alpha * lambda) * residm
     iarm+=1
     #
@@ -47,7 +45,7 @@ function armijosc(xt, xc, fc, d, residm, ItRules, derivative_is_old)
         #   serious about the line search.
         #
         lambda = update_lambda(iarm, armfix, lambda, lamc, ff0, ffc, ffm)
-        (xt, ft, residt) = UpdateIteration(xt, xm, ft, lambda, d, ItRules)
+        (xt, ft, residt) = UpdateIteration(xt, xc, ft, lambda, d, ItRules)
         ffm = ffc
         ffc = residt^2
         iarm += 1
@@ -60,8 +58,7 @@ function armijosc(xt, xc, fc, d, residm, ItRules, derivative_is_old)
 #      start over. So I do not update the point.
 #
        if derivative_is_old 
-            xt = xm
-            ft = fm
+            xt = xc; ft = fc;
             residt=residm
 println("HELP")
        end
