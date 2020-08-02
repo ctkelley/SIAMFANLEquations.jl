@@ -18,12 +18,12 @@ end
 return df
 end
 
-function UpdateIteration(xt::T, xm, lambda, d, ItRules) where T <: Real
+function UpdateIteration(xt::T, xm, ft, lambda, d, ItRules) where T <: Real
 f=ItRules.f
 xt = xm + lambda * d
 fc = f(xt)
 residc=norm(fc)
-return (xt, residc, fc)
+return (xt, fc, residc)
 end
 
 
@@ -52,3 +52,15 @@ function difffp(x, f, fc, h)
     df = (f(x + h) - fc) / h
     return df
 end
+
+"""
+acopy(xout::T,xin) where T<:Real
+
+Copy points and function values in Armijo
+"""
+function acopy(xout::T,xin) where T<:Real
+xout = xin
+end
+
+
+

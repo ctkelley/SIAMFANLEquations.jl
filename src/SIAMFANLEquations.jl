@@ -10,7 +10,7 @@ export difffp
 export fpeval_newton
 export ptcsolsc
 export printhist
-export armijosc
+#export armijosc
 
 include("Tools/parab3p.jl")
 include("Tools/armijo.jl")
@@ -20,6 +20,7 @@ include("Tools/ManageStats.jl")
 include("Chapter1/nsolsc.jl")
 include("Chapter1/ptcsolsc.jl")
 include("PlotsTables/printhist.jl")
+include("Tools/test_evaljac.jl")
 
 module TestProblems
 using LinearAlgebra
