@@ -12,8 +12,6 @@ export ptcsolsc
 export printhist
 export armijosc
 
-#include("Tools/difffp.jl")
-include("Tools/fpeval_newton.jl")
 include("Tools/parab3p.jl")
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
