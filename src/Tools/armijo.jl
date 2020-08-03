@@ -12,19 +12,18 @@ function armijosc(xt, xc, fc, d, residm, ItRules, derivative_is_old)
     lam0 = 0.0
     lamc = lambda
     lamm = lamc
-    ft=fc
+#    ft=fc
+    ft=copy(fc)
     f=ItRules.f
     fp=ItRules.fp
     dx=ItRules.dx
+    ResidC = residm
     armmax=ItRules.armmax
-    #
-    # If I have an old derivative I will not tolerate a failure in
-    # the line search. 
+    armfix=ItRules.armfix
     #
     if derivative_is_old
-    armmax=0
+       armmax=0
     end
-    armfix=ItRules.armfix
     #
     #   Take the full step and, if happy, go home.
     #
@@ -50,18 +49,12 @@ function armijosc(xt, xc, fc, d, residm, ItRules, derivative_is_old)
         ffc = residt^2
         iarm += 1
         armfail = residt > (1 - alpha * lambda) * residm
+if derivative_is_old && armfail
+println("Shamanskii fails sufficient decrease")
+end
     end
     if iarm >= armmax 
         idid = false
-#
-#      If I'm in a shamanskii loop and the full step fails. I need to
-#      start over. So I do not update the point.
-#
-       if derivative_is_old 
-            xt = xc; ft = fc;
-            residt=residm
-println("HELP")
-       end
     end
     return (ax = xt, afc = ft, resnorm = residt, aiarm = iarm, idid = idid)
 end
