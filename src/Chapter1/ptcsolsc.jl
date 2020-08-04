@@ -2,6 +2,8 @@
 ptcsolsc(f, x, fp=difffp; rtol=1.e-6, atol=1.e-12, fp=difffp, 
         dt0=1.e-6, maxit=100, keepsolhist=true)
 
+C. T. Kelley, 2020
+
 Scalar pseudo-transient continuation solver. PTC is designed to find
 stable steady state solutions of 
 

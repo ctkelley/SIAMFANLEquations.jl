@@ -4,6 +4,8 @@ nsolsc(f,x, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
         armfix=false, 
         printerr=true, keepsolhist=true, stagnationok=false)
 
+C. T. Kelley, 2020
+
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs.
 
@@ -170,7 +172,7 @@ function nsolsc(
         sham = sham,
         armmax = armmax,
         armfix = armfix,
-        residc = resdec,
+        resdec = resdec,
         dx = dx,
         f = f,
         fp = fp
@@ -207,29 +209,33 @@ function nsolsc(
         # (2) you are using the chord method and it's the intial iterate, or
         # (3) it's Newton and you are on the right part of the Shamaskii loop,
         # or the line search failed with a stale deriviative, or the residual
-        # reduction ratio is too large.
+        # reduction ratio is too large. This logic is a bit tedious, so I
+        # put it in a function. See src/Tools/test_evaljac.jl
         #
-        evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
-        chordinit = (solver == "chord") && itc == 0
-        evaljac = (evaljacit && solver == "newton") || chordinit ||
-            solver == "secant"
+#        evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
+#        chordinit = (solver == "chord") && itc == 0
+#        evaljac = (evaljacit && solver == "newton") || chordinit ||
+#            solver == "secant"
+#        evaljac = test_evaljac(itc, solver, sham, newiarm, residratio, resdec)
+        evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         # 
-        #
+        # We've evaluated a derivative if the solver is Newton or we just
+        # initialized the chord method. For secant it costs an extra function.
         #
         if evaljac
             df = PrepareDerivative(ItRules, x, xm, fc, fm)
             newfun += solver == "secant"
-            newjac += solver == "newton"
-            newjac += chordinit
+            newjac += ~(solver == "secant")
         end
-        derivative_is_old = ~evaljacit && (solver == "newton")
+        derivative_is_old = (newjac == 0) && (solver == "newton")
         #
         # Compute the Newton direction and call the line search.
         #
         xm = x
         fm = fc
+        ft = fc
         d = -fc / df
-        AOUT = armijosc(xt, x, fc, d, resnorm, ItRules, derivative_is_old)
+        AOUT = armijosc(xt, x, ft, fc, d, resnorm, ItRules, derivative_is_old)
         #
         # update solution/function value
         #
@@ -240,6 +246,7 @@ function nsolsc(
         # stop the iteration.
         #
         armstop = AOUT.idid || derivative_is_old
+        newiarm=AOUT.aiarm
         iline = ~armstop
         #
         # Keep the books.
