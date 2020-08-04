@@ -1,4 +1,4 @@
 # nsold: systems of equations with direct linear solvers 
 ```@docs
-nsold(x,f)
+nsold(F!, x0, FS, FPS, J!=diffjac!)
 ```
