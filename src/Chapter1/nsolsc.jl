@@ -4,6 +4,8 @@ nsolsc(f,x, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
         armfix=false, 
         printerr=true, keepsolhist=true, stagnationok=false)
 
+C. T. Kelley, 2020
+
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs.
 
@@ -231,8 +233,9 @@ function nsolsc(
         #
         xm = x
         fm = fc
+        ft = fc
         d = -fc / df
-        AOUT = armijosc(xt, x, fc, d, resnorm, ItRules, derivative_is_old)
+        AOUT = armijosc(xt, x, ft, fc, d, resnorm, ItRules, derivative_is_old)
         #
         # update solution/function value
         #

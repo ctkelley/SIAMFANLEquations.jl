@@ -1,10 +1,10 @@
 """
-armijosc(xt, xc, fc, d, residm, ItRules, derivative_is_old)
+armijosc(xt, xc, ft, fc, d, residm, ItRules, derivative_is_old)
 Line search for scalar equations. Read the notebook or print book
 for the explanation. This is an internal function and I did not
 design it to be hackable by the novice.
 """
-function armijosc(xt, xc, fc, d, residm, ItRules, derivative_is_old)
+function armijosc(xt, xc, ft, fc, d, residm, ItRules, derivative_is_old)
     idid = true
     alpha = 1.e-4
     iarm = -1
@@ -12,8 +12,6 @@ function armijosc(xt, xc, fc, d, residm, ItRules, derivative_is_old)
     lam0 = 0.0
     lamc = lambda
     lamm = lamc
-#    ft=fc
-    ft=copy(fc)
     f=ItRules.f
     fp=ItRules.fp
     dx=ItRules.dx
