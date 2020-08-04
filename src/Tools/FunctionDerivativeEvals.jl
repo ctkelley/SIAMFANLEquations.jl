@@ -53,14 +53,3 @@ function difffp(x, f, fc, h)
     return df
 end
 
-"""
-acopy(xout::T,xin) where T<:Real
-
-Copy points and function values in Armijo
-"""
-function acopy(xout::T,xin) where T<:Real
-xout = xin
-end
-
-
-

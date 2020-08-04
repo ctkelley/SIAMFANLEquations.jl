@@ -47,9 +47,6 @@ function armijosc(xt, xc, ft, fc, d, residm, ItRules, derivative_is_old)
         ffc = residt^2
         iarm += 1
         armfail = residt > (1 - alpha * lambda) * residm
-if derivative_is_old && armfail
-println("Shamanskii fails sufficient decrease")
-end
     end
     if iarm >= armmax 
         idid = false

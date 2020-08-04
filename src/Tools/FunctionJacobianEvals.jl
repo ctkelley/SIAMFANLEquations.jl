@@ -103,12 +103,3 @@ resnorm=norm(FS)
 return(xt, FS, resnorm)
 end
 
-"""
-acopy(xout::Array{T},xin) where T<:Real
-
-Copy vectors and function values in Armijo
-"""
-function acopy(xout::Array{T},xin) where T<:Real
-xout .= xin
-end
-
