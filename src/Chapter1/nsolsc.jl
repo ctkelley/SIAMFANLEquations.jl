@@ -216,7 +216,6 @@ function nsolsc(
 #        chordinit = (solver == "chord") && itc == 0
 #        evaljac = (evaljacit && solver == "newton") || chordinit ||
 #            solver == "secant"
-#        evaljac = test_evaljac(itc, solver, sham, newiarm, residratio, resdec)
         evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         # 
         # We've evaluated a derivative if the solver is Newton or we just

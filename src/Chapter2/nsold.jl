@@ -234,7 +234,6 @@ function nsold(
         #
 #        evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
 #        chordinit = (solver == "chord") && itc == 0
-#        evaljac = (evaljacit && solver == "newton") || chordinit
 #        evaljac = test_evaljac(itc, solver, sham, newiarm, residratio, resdec)
         evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         if evaljac

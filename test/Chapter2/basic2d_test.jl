@@ -55,7 +55,24 @@ shamok=(dout1 < 1.e-10) && (dout2 < 1.e-10) && (jevals1==4) && (jevals2==3)
 if ~shamok
     println("Shamanskii test fails.")
 end
-return chordok && singleok && fdok && shamok
+#
+# Global convergence
+#
+x0a=[2, .5];
+FS=zeros(2,);
+FPS=zeros(2,2);
+FPSS=zeros(Float32,2,2);
+nouta=nsold(simple!, x0a, FS, FPS; keepsolhist=true);
+noutb=nsold(simple!, x0a, FS, FPSS, jsimple!; keepsolhist=true);
+iarm=nouta.stats.iarm
+armok = (iarm[2]==2)
+preok = (norm(noutb.solhist - nouta.solhist,Inf) < 1.e-6)
+solok = (norm(noutb.solution - nouta.solution,Inf) < 1.e-10)
+globok = armok && preok && solok
+if ~globok
+    println("Global test fails.")
+end
+return chordok && singleok && fdok && shamok && globok
 end
 
 

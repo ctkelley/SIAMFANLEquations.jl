@@ -127,7 +127,7 @@ end
 
 
 """
-setc!(cin)
+setc!(pdata, cin)
 
 If you are varying c in a computation, this function
 lets you set it.

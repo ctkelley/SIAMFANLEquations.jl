@@ -50,6 +50,7 @@ heqJ!,
 simple!,
 jsimple!,
 heqbos!,
+setc!,
 chandprint
 
 
