@@ -86,18 +86,13 @@ end
 """
 Initialize H-equation precomputed data.
 """
-function heqinit(x0, n, c, TJ)
-    T = typeof(x0)
+function heqinit(x0::Array{T,1}, c, TJ=Float64) where T<:Real
     n = length(x0)
     cval=ones(1,)
     cval[1]=c
-    if T <: Vector
-        vsize = (n,)
-        bsize = (2 * n,)
-        ssize = (2 * n - 1,)
-    else
-        error("please dimension your stuff as vectors, ie (n,) not (n,1)")
-    end
+    vsize = (n,)
+    bsize = (2 * n,)
+    ssize = (2 * n - 1,)
     FFA = plan_fft(ones(bsize))
     mu = collect(0.5:1:n-0.5)
     pmu = TJ.(mu * c)
@@ -144,18 +139,6 @@ function setc!(pdata, cin)
     pdata.cval[1]=cin
 end
 
-
-"""
-heq_hankel(b,pdata)
-Multiply an nxn Hankel matrix with seed in R^(2N-1) by a vector b
-FFA is what you get with plan_fft before you start computing
-"""
-function heq_hankel(b, pdata)
-    n = length(b)
-    br = reverse(b; dims = 1)
-    heq_toeplitz!(br, pdata)
-    return br
-end
 
 """
 heq_hankel!(b,pdata)

@@ -10,7 +10,7 @@ FS=ones(n);
 x0=ones(n);
 FPS=ones(n,n);
 FPSS=ones(Float32,n,n);
-hdata = heqinit(x0, n, c, Float64)
+hdata = heqinit(x0, c)
 nsoloutfd=nsold(heqf!, x0, FS, FPS; pdata = hdata);
 nsoloutbos=nsold(heqbos!, x0, FS, FPS; pdata = c);
 dbos=norm(nsoloutbos.solution-nsoloutfd.solution)

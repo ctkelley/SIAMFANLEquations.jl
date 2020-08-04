@@ -178,7 +178,7 @@ function nsold(
     n=length(x0)
     x.=x0
     if keepsolhist
-       solhist=zeros(n,maxit)
+       solhist=zeros(n,maxit+1)
        @views solhist[:,1].=x
     end
     EvalF!(FS, x, F!, pdata)
@@ -280,7 +280,7 @@ function nsold(
     end
     stats = (ifun=ItData.ifun, ijac=ItData.ijac, iarm=ItData.iarm)
     if keepsolhist 
-    sizehist=min(maxit,itc+1)
+    sizehist=itc+1
     return (solution = x, functionval = FS, history= ItData.history,
             stats = stats, idid=idid, solhist=solhist[:,1:sizehist])
     else
