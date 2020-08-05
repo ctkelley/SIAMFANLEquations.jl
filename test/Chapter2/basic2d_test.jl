@@ -64,8 +64,10 @@ FPS=zeros(2,2);
 FPSS=zeros(Float32,2,2);
 nouta=nsold(simple!, x0a, FS, FPS; keepsolhist=true);
 noutb=nsold(simple!, x0a, FS, FPSS, jsimple!; keepsolhist=true);
+noutc=nsold(simple!, x0a, FS, FPSS, jsimple!; armmax=0);
 iarm=nouta.stats.iarm
-armok = (iarm[2]==2)
+iarm2=noutc.idid
+armok = (iarm[2]==2) && ~iarm2
 preok = (norm(noutb.solhist - nouta.solhist,Inf) < 1.e-6)
 solok = (norm(noutb.solution - nouta.solution,Inf) < 1.e-10)
 globok = armok && preok && solok
