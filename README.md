@@ -34,9 +34,10 @@ The new book with have a different algorithm mix and the solvers and examples wi
 - [Funding](#Funding) 
 
 
-## Installation
+## Installation: Use Julia 1.5 and up with this thing!!!
 
-This package has been tested on Julia 1.0, ..., 1.5
+This package has been tested on Julia 1.4 and 1.5. __It no longer works on 1.0!__ Before mid-September __I will make changes that only 1.5 supports.__
+You have been warned. 
 
 Type this in the REPL to install
 
