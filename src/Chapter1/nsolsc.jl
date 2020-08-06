@@ -181,7 +181,8 @@ function nsolsc(
     # Initialize the iteration statistics
     #
     newiarm = -1
-    ItData=ItStats(history=[resnorm])
+    ItData=ItStats(resnorm)
+#    ItData=ItStats(history=[resnorm])
     newfun = 0
     newjac = 0
     newsol = x

@@ -200,7 +200,8 @@ function nsold(
     # Initialize the iteration statistics
     #   
     newiarm = -1
-    ItData=ItStats(history=[resnorm])
+#    ItData=ItStats(history=[resnorm])
+    ItData=ItStats(resnorm)
     newfun=0
     newjac=0
     #
