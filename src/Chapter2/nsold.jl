@@ -153,33 +153,33 @@ function nsold(
     rtol = 1.e-6,
     atol = 1.e-12,
     maxit = 20,
-    solver="newton",
+    solver = "newton",
     sham = 1,
-    armmax=10,
-    resdec=.1,
+    armmax = 10,
+    resdec = 0.1,
     dx = 1.e-7,
-    armfix=false,
+    armfix = false,
     pdata = nothing,
     jfact! = lu!,
     printerr = true,
     keepsolhist = false,
-    stagnationok = false
+    stagnationok = false,
 )
 
     itc = 0
-    idid=true
-    iline=true
+    idid = true
+    iline = true
     #=
     First evaluation of the function. I evaluate the derivative when
     Shamanskii tells me to, at the first iteration (duh!), and when
     the rate of residual reduction is below the target value of resdec.
     =#
-    x=zeros(size(x0))
-    n=length(x0)
-    x.=x0
+    x = zeros(size(x0))
+    n = length(x0)
+    x .= x0
     if keepsolhist
-       solhist=zeros(n,maxit+1)
-       @views solhist[:,1].=x
+        solhist = zeros(n, maxit + 1)
+        @views solhist[:, 1] .= x
     end
     EvalF!(FS, x, F!, pdata)
     resnorm = norm(FS)
@@ -193,38 +193,38 @@ function nsold(
         f = F!,
         fp = J!,
         pdata = pdata,
-        fact! = jfact!
+        fact! = jfact!,
     )
 
     #
     # Initialize the iteration statistics
     #   
     newiarm = -1
-#    ItData=ItStats(history=[resnorm])
-    ItData=ItStats(resnorm)
-    newfun=0
-    newjac=0
+    #    ItData=ItStats(history=[resnorm])
+    ItData = ItStats(resnorm)
+    newfun = 0
+    newjac = 0
     #
     # Fix the tolerances for convergence and define the derivative FPF
     # outside of the main loop for scoping.
     #    
     tol = rtol * resnorm + atol
-    derivative_is_old=false
-    residratio=1.0
-    FPF=[]
+    derivative_is_old = false
+    residratio = 1.0
+    FPF = []
     armstop = true
     #
     # Preallocate a few vectors for the step, trial step, trial function
     #
-    step=zeros(size(x))
-    xt=zeros(size(x))
-    FT=zeros(size(x))
+    step = zeros(size(x))
+    xt = zeros(size(x))
+    FT = zeros(size(x))
     while resnorm > tol && itc < maxit && (armstop || stagnationok)
-#   
-# Evaluate and factor the Jacobian.   
-#
-        newfun=0
-        newjac=0
+        #   
+        # Evaluate and factor the Jacobian.   
+        #
+        newfun = 0
+        newjac = 0
         #
         # Evaluate the derivativce if (1) you are using the chord method 
         # and it's the intial iterate, or
@@ -233,22 +233,21 @@ function nsold(
         # reduction ratio is too large. This leads to a tedious barrage
         # of conditionals that I have parked in a function.
         #
-#        evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
-#        chordinit = (solver == "chord") && itc == 0
-#        evaljac = test_evaljac(itc, solver, sham, newiarm, residratio, resdec)
+        #        evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
+        #        chordinit = (solver == "chord") && itc == 0
+        #        evaljac = test_evaljac(itc, solver, sham, newiarm, residratio, resdec)
         evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         if evaljac
-            FPF=PrepareJac!(FS, FPS, x, ItRules)
-            newjac+=1
+            FPF = PrepareJac!(FS, FPS, x, ItRules)
+            newjac += 1
         end
         derivative_is_old = (newjac == 0) && (solver == "newton")
-#        derivative_is_old = ~evaljacit && (solver == "newton")
+        #        derivative_is_old = ~evaljacit && (solver == "newton")
         step .= -(FPF \ FS)
         #
         # Compute the trial point, evaluate F and the residual norm.     
         #
-        AOUT = armijosc(xt, x, FT, FS, step, 
-                        resnorm, ItRules, derivative_is_old)
+        AOUT = armijosc(xt, x, FT, FS, step, resnorm, ItRules, derivative_is_old)
         #
         # update solution/function value
         #
@@ -263,28 +262,41 @@ function nsold(
         #
         # Keep the books.
         #
-        residm=resnorm; resnorm=AOUT.resnorm; residratio = resnorm/residm; 
-        updateStats!(ItData,newfun,newjac,AOUT)
-        newiarm=AOUT.aiarm
+        residm = resnorm
+        resnorm = AOUT.resnorm
+        residratio = resnorm / residm
+        updateStats!(ItData, newfun, newjac, AOUT)
+        newiarm = AOUT.aiarm
         itc += 1
         if keepsolhist
-           @views solhist[:,itc+1].=x
+            @views solhist[:, itc+1] .= x
         end
     end
-    solution=x
-    functionval=FS
+    solution = x
+    functionval = FS
     resfail = (resnorm > tol)
     idid = ~(resfail || iline)
     if ~idid && printerr
-       NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
+        NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
     end
-    stats = (ifun=ItData.ifun, ijac=ItData.ijac, iarm=ItData.iarm)
-    if keepsolhist 
-    sizehist=itc+1
-    return (solution = x, functionval = FS, history= ItData.history,
-            stats = stats, idid=idid, solhist=solhist[:,1:sizehist])
+    stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
+    if keepsolhist
+        sizehist = itc + 1
+        return (
+            solution = x,
+            functionval = FS,
+            history = ItData.history,
+            stats = stats,
+            idid = idid,
+            solhist = solhist[:, 1:sizehist],
+        )
     else
-    return (solution = x, functionval = FS, history= ItData.history,
-            stats = stats, idid=idid)
+        return (
+            solution = x,
+            functionval = FS,
+            history = ItData.history,
+            stats = stats,
+            idid = idid,
+        )
     end
 end
