@@ -104,7 +104,7 @@ or writing a book.
 
 # Using nsold.jl
 
-Here are the rules as of July 23, 2020.
+Here are the rules as of August 11, 2020.
 
 F! is the nonlinear residual. 
 J! is the Jacobian evaluation.
@@ -115,9 +115,9 @@ Module and only export the things I actually use.
 1) You allocate storage for the function and Jacobian in advance 
    --> in the calling program <-- NOT in FS and FPS
 
-FV=F!(FV,x) returns FV=F(x)
+FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
 
-FP=J!(FV,FP,x) returns FP=F'(x); 
+FP=J!(FV,FP,x) or FP=J!(FV,FP,x,pdata) returns FP=F'(x); 
     (FV,FP, x) must be the argument list, even if FP does not need FV.
     One reason for this is that the finite-difference Jacobian
     does and that is the default in the solver.
