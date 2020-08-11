@@ -1,10 +1,3 @@
-#Base.@kwdef mutable struct ItStats{T <: Real}
-#ifun::Array{Int64,1} = [1]
-#ijac::Array{Int64,1} = [0]
-#iarm::Array{Int64,1} = [0]
-#history::Array{T,1}  
-#end
-
 mutable struct ItStats{T <: Real}
 ifun::Array{Int64,1}
 ijac::Array{Int64,1}
