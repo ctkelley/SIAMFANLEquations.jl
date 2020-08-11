@@ -112,7 +112,7 @@ J! is the Jacobian evaluation.
 I like to put all my function/Jacobian/initialization stuff in a
 Module and only export the things I actually use.
 
-1) You allocate storage for the function and Jacobian in advance 
+A) You allocate storage for the function and Jacobian in advance 
    --> in the calling program <-- NOT in FS and FPS
 
 FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
@@ -138,11 +138,51 @@ Don't try to evaluate function and Jacobian all at once because
 that will cost you a extra function evaluation every time the line
 search kicks in.
 
-2) Any precomputed data for functions, Jacobians, matrix-vector products
+B) Any precomputed data for functions, Jacobians, matrix-vector products
    or preallocted storage may live in global variables within a module 
    containing F! and J!.  Don't do that if you can avoid it. 
    Use pdata instead.
 
+# Examples
+```jldoctest
+ julia> function f!(fv,x)
+       fv[1]=x[1] + sin(x[2])
+       fv[2]=cos(x[1]+x[2])
+       end
+f (generic function with 1 method)
+
+julia> x=ones(2,); fv=zeros(2,); jv=zeros(2,2);
+julia> nout=nsold(f!,x,fv,jv);
+julia> nout.history
+5-element Array{Float64,1}:
+ 1.88791e+00
+ 2.43119e-01
+ 1.19231e-02
+ 1.03266e-05
+ 1.46416e-11
+
+julia> nout.solution
+2-element Array{Float64,1}:
+ -7.39085e-01
+  2.30988e+00
+```
+
+```jldoctest
+julia> n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n);
+help?> heqinit
+search: heqinit
+
+  heqinit(x0::Array{T,1}, c, TJ=Float64) where T<:Real
+
+  Initialize H-equation precomputed data.
+
+julia> hdata=heqinit(x0, .5);
+julia> hout=nsold(heqf!,x0,FV,JV;pdata=hdata);
+julia> hout.history
+3-element Array{Float64,1}:
+ 6.17376e-01
+ 3.17810e-03
+ 6.22034e-08
 """
 function nsold(
     F!,
