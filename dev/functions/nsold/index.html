@@ -22,4 +22,19 @@ julia&gt; nout.history
 julia&gt; nout.solution
 2-element Array{Float64,1}:
  -7.39085e-01
-  2.30988e+00</code></pre><p>```jldoctest julia&gt; n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n); help?&gt; heqinit search: heqinit</p><p>heqinit(x0::Array{T,1}, c, TJ=Float64) where T&lt;:Real</p><p>Initialize H-equation precomputed data.</p><p>julia&gt; hdata=heqinit(x0, .5); julia&gt; hout=nsold(heqf!,x0,FV,JV;pdata=hdata); julia&gt; hout.history 3-element Array{Float64,1}:  6.17376e-01  3.17810e-03  6.22034e-08</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/ctkelley/SIAMFANLEquations.jl/blob/a7b3a27d8840f0ca0208541edcb647f6d777b8ad/src/Chapter2/nsold.jl#L1-L209">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../ptcsolsc/">« ptcsolsc: pseuto-transient continuation</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Tuesday 11 August 2020 20:24">Tuesday 11 August 2020</span>. Using Julia version 1.4.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+  2.30988e+00
+</code></pre><p><strong>H-equation example</strong></p><pre><code class="language-julia-repl">julia&gt; n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n);
+help?&gt; heqinit
+search: heqinit
+
+  heqinit(x0::Array{T,1}, c, TJ=Float64) where T&lt;:Real
+
+  Initialize H-equation precomputed data.
+
+julia&gt; hdata=heqinit(x0, .5);
+julia&gt; hout=nsold(heqf!,x0,FV,JV;pdata=hdata);
+julia&gt; hout.history
+3-element Array{Float64,1}:
+ 6.17376e-01
+ 3.17810e-03
+ 6.22034e-08</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/ctkelley/SIAMFANLEquations.jl/blob/429894e96e233aa40e860140635e4ec351b40379/src/Chapter2/nsold.jl#L1-L213">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../ptcsolsc/">« ptcsolsc: pseuto-transient continuation</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Friday 14 August 2020 16:59">Friday 14 August 2020</span>. Using Julia version 1.4.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
