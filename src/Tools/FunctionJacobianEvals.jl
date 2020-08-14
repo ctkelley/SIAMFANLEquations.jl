@@ -18,6 +18,23 @@ fact!(FPS)
 end
 
 """
+function PrepareJac!(FS, FPS, x, ItRules) 
+
+If we are not doing dense matrix comptations, punt and use backslash
+
+"""
+
+function PrepareJac!(FS, FPS, x, ItRules) 
+F! =ItRules.f
+J! =ItRules.fp
+dx =ItRules.dx
+pdata=ItRules.pdata
+EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
+return FPS
+end
+
+
+"""
 EvalF!(FS, x, F!, pdata)
 
 This is a wrapper for the function evaluation that figures out if
