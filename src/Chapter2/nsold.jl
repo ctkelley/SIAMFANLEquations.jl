@@ -165,7 +165,10 @@ julia> nout.solution
 2-element Array{Float64,1}:
  -7.39085e-01
   2.30988e+00
+
 ```
+
+## H-equation example
 
 ```jldoctest
 julia> n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n);
@@ -183,6 +186,7 @@ julia> hout.history
  6.17376e-01
  3.17810e-03
  6.22034e-08
+```
 """
 function nsold(
     F!,
