@@ -30,7 +30,8 @@ J! =ItRules.fp
 dx =ItRules.dx
 pdata=ItRules.pdata
 EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
-return FPS
+TF=qr(FPS)
+return TF
 end
 
 
