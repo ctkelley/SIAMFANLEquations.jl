@@ -3,6 +3,7 @@ using LinearAlgebra
 using LinearAlgebra.BLAS
 using SparseArrays
 using SuiteSparse
+using BandedMatrices
 using Printf
 
 export nsolsc
@@ -10,9 +11,6 @@ export parab3p
 export ptcsolsc
 export printhist
 export nsold
-#export difffp
-#export fpeval_newton
-#export armijosc
 
 include("Tools/parab3p.jl")
 include("Tools/armijo.jl")

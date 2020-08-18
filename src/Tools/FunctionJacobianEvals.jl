@@ -18,9 +18,29 @@ fact!(FPS)
 end
 
 """
+function PrepareJac!(FS, FPS::BandedMatrix, x, ItRules)
+
+Banded matrix: use qr! because it takes less room.
+Warn people that they have to allocate a few extra bands.
+
+"""
+
+function PrepareJac!(FS, FPS::BandedMatrix, x, ItRules)
+F! =ItRules.f
+J! =ItRules.fp
+dx =ItRules.dx
+pdata=ItRules.pdata
+EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
+TF=qr!(FPS)
+return TF
+end
+
+
+"""
 function PrepareJac!(FS, FPS, x, ItRules) 
 
-If we are not doing dense matrix comptations, punt and use backslash
+If we are not doing dense, banded, or some other kind of matrix 
+comptations I'm prepared for, punt and use backslash.
 
 """
 
@@ -30,8 +50,7 @@ J! =ItRules.fp
 dx =ItRules.dx
 pdata=ItRules.pdata
 EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
-TF=qr(FPS)
-return TF
+return FPS
 end
 
 
