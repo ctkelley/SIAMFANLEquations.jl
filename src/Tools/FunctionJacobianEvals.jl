@@ -11,10 +11,11 @@ function PrepareJac!(FS, FPS::Array{T,2}, x, ItRules) where T<:Real
 F! =ItRules.f
 J! =ItRules.fp
 dx =ItRules.dx
-fact! = ItRules.fact!
+fact = ItRules.fact
 pdata=ItRules.pdata
 EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
-fact!(FPS)
+TF=fact(FPS)
+return TF
 end
 
 """

@@ -2,7 +2,7 @@
     nsold(F!, x0, FS, FPS, J!=diffjac!; rtol=1.e-6, atol=1.e-12,
                maxit=20, solver="newton", sham=1, armmax=10, resdec=.1,
                dx = 1.e-7, armfix=false, 
-               pdata = nothing, jfact! = lu!,
+               pdata = nothing, jfact = lu!,
                printerr = true, keepsolhist = false, stagnationok=false)
 )
 
@@ -73,15 +73,15 @@ precomputed data for the function/Jacobian.
 Things will go better if you use this rather than hide the data 
 in global variables within the module for your function/Jacobian
 
-jfact!:\n
+jfact:\n
 If you have a dense Jacobian I call PrepareJac! to evaluate the
 Jacobian (using your J!) and factor it. The default is to use
 lu! to compute an LU factorization and share storage with the
 Jacobian. You may change LU to something else by, for example,
-setting jfact! = cholseky! if your Jacobian is spd. 
+setting jfact = cholseky! if your Jacobian is spd. 
 
 Please do not mess with the line that calls PrepareJac!. 
-        FPF=PrepareJac!(FS, FPS, x, F!, J!, dx, pdata; fact! = jfact!)
+        FPF=PrepareJac!(FS, FPS, x, F!, J!, dx, pdata; fact = jfact)
 FPF is not the same as FPS (the storage you allocate for the Jacobian)
 for a reason. FPF and FPS do not have the same type, even though they
 share storage. So, FPS=PrepareJac!(FS, FPS, ...) will break things.
@@ -204,7 +204,7 @@ function nsold(
     dx = 1.e-7,
     armfix = false,
     pdata = nothing,
-    jfact! = lu!,
+    jfact = lu!,
     printerr = true,
     keepsolhist = false,
     stagnationok = false,
@@ -237,7 +237,7 @@ function nsold(
         f = F!,
         fp = J!,
         pdata = pdata,
-        fact! = jfact!,
+        fact = jfact,
     )
 
     #
