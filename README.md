@@ -61,7 +61,7 @@ to run the test problems.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is the dev version of v0.2.1. __Chapter 2: Systems of equations with direct linear solvers.__ 
+This is version v0.2.1. __Chapter 2: Systems of equations with direct linear solvers.__ 
 
 I have added new keyword arguments to nsolsc.jl and make the error messages more informative. None of this should break the notebooks for Chapter 1. I will be updating the notebooks soon. 
 
@@ -116,16 +116,16 @@ The references I use for theory of pseudo-transient continuation and Anderson ac
 
 ## Algorithms and Solvers
 
-The solvers are designed to be stand-alone codes. The reason for this is the education mission of the project. I want the codes to be as easy to understand as possible. I have deliberately sacrificed a lot of abstraction and some performance in this effort. The reward for the reader is that the algorithmic parameters are completely exposed so  you can play with them. At the end I hope to write a wrapper for all this that hides the parameters, but the stand-alone, keyword-infested codes are what you need if you want to really understand how these methods work. My students became experts in this field by fiddling with the Matlab version of these solvers.
+The solvers are designed to be stand-alone codes. The reason for this is the education mission of the project. I want the codes to be as easy to understand as possible. I have deliberately sacrificed a lot of abstraction and some performance in this effort. The reward for the reader (ie you) is that the algorithmic parameters are completely exposed so  you can play with them. At the end I hope to write a wrapper for all this that hides the parameters, but the stand-alone, keyword-infested codes are what you need if you want to really understand how these methods work. My students became experts in this field by fiddling with the Matlab version of these solvers.
 
-The linear solvers are tuned to communicate well with nonlinear solvers. My old Matlab codes are a good illustration of this idea. My [new Mablab codes](https://ctk.math.ncsu.edu/knl.html) were designed in response to the need to do this better than I had been. In particular, the linear solver and the matrix-vector/preconditioner-vector product function need information on the nonlinear iteration and any precomputed data. While I could use global variables (and did in Kel95) and put these things in a module to simplify the interface, I won't do that anymore if I can avoid it. Global varaibles break parallelism and I like to avoid them. 
+The linear solvers are tuned to communicate well with nonlinear solvers. My old Matlab codes are a good illustration of this idea. My [new Mablab codes](https://ctk.math.ncsu.edu/knl.html) were designed in response to the need to do this better than I had been. In particular, the linear solver and the matrix-vector/preconditioner-vector product function need information on the nonlinear iteration and any precomputed data. While I could use global variables (and did in Kel95) and put these things in a module to simplify the interface, I won't do that anymore. Global varaibles break parallelism and I like to avoid them. 
 
 The algorithms, listed by book chapter will be
 
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsc.jl
         - Codes: __Done!__, Notebook: __Done!__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
-        - Codes: __In progress. The examples with dense Jacobians work.__
+        - Codes: __In progress. The examples with dense and banded Jacobians work.__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptci.jl
        - Linear solver(s): klgmres.jl and maybe klbicgstab.jl
    - Chapter 4: Anderson acceleration: aasol.jl
