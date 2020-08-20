@@ -28,28 +28,33 @@ module TestProblems
 using LinearAlgebra
 using SparseArrays
 using SuiteSparse
+using BandedMatrices
 using AbstractFFTs
 using FFTW
 using Printf
 
 export
-#Functions
-fcos,
-fpatan,
-spitchfork,
-linatan,
-sptestp,
-sptest,
-ftanx,
-ftanxp,
-heqinit,
-heqf!,
-heqJ!,
-simple!,
-jsimple!,
-heqbos!,
-setc!,
-chandprint
+    #Functions
+    fcos,
+    fpatan,
+    spitchfork,
+    linatan,
+    sptestp,
+    sptest,
+    ftanx,
+    ftanxp,
+    heqinit,
+    heqf!,
+    heqJ!,
+    simple!,
+    jsimple!,
+    heqbos!,
+    setc!,
+    chandprint,
+    bvpinit,
+    Fbvp!,
+    Jbvp!
+    
 
 
 include("TestProblems/Scalars/fcos.jl")
@@ -58,6 +63,7 @@ include("TestProblems/Scalars/spitchfork.jl")
 include("TestProblems/Scalars/linatan.jl")
 include("TestProblems/Scalars/ftanx.jl")
 include("TestProblems/Chapter2/simple!.jl")
+include("TestProblems/Chapter2/Fbvp!.jl")
 include("TestProblems/Heq4nsold.jl")
 
 using .Heq4nsold

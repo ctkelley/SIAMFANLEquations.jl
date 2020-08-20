@@ -96,11 +96,11 @@ function ptcsolsc(
         itc = itc + 1
         if keepsolhist
             newsol = x
-            append!(solhist,newsol)
+            append!(solhist, newsol)
         end
-         append!(ithist,newhist)
+        append!(ithist, newhist)
     end
-    resnorm=abs(fval)
+    resnorm = abs(fval)
     #
     if resnorm > tol
         idid = false

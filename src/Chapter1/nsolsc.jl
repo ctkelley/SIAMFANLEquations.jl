@@ -136,7 +136,7 @@ function nsolsc(
     armfix = false,
     printerr = true,
     keepsolhist = true,
-    stagnationok = false
+    stagnationok = false,
 )
     itc = 0
     idid = true
@@ -144,11 +144,11 @@ function nsolsc(
     #=
      If you like the sham=large methods, I will evaluate the derivative 
      anyhow if the line search kicks in. 
- 
+     
      The theory does not support convergence of the secant-Armijo iteration
      and you assume a risk when you use it. The same is true for Broyden
      and any other quasi-Newton method.
-                
+                    
      The chord method will ignore poor convergence and let
      things go south with no interference. Please don't do that as
      standard procedure and, if you do, don't blame me.
@@ -175,14 +175,14 @@ function nsolsc(
         resdec = resdec,
         dx = dx,
         f = f,
-        fp = fp
+        fp = fp,
     )
     #
     # Initialize the iteration statistics
     #
     newiarm = -1
-    ItData=ItStats(resnorm)
-#    ItData=ItStats(history=[resnorm])
+    ItData = ItStats(resnorm)
+    #    ItData=ItStats(history=[resnorm])
     newfun = 0
     newjac = 0
     newsol = x
@@ -213,10 +213,10 @@ function nsolsc(
         # reduction ratio is too large. This logic is a bit tedious, so I
         # put it in a function. See src/Tools/test_evaljac.jl
         #
-#        evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
-#        chordinit = (solver == "chord") && itc == 0
-#        evaljac = (evaljacit && solver == "newton") || chordinit ||
-#            solver == "secant"
+        #        evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
+        #        chordinit = (solver == "chord") && itc == 0
+        #        evaljac = (evaljacit && solver == "newton") || chordinit ||
+        #            solver == "secant"
         evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         # 
         # We've evaluated a derivative if the solver is Newton or we just
@@ -246,12 +246,14 @@ function nsolsc(
         # stop the iteration.
         #
         armstop = AOUT.idid || derivative_is_old
-        newiarm=AOUT.aiarm
+        newiarm = AOUT.aiarm
         iline = ~armstop
         #
         # Keep the books.
         #
-        residm=resnorm; resnorm=AOUT.resnorm; residratio = resnorm/residm;
+        residm = resnorm
+        resnorm = AOUT.resnorm
+        residratio = resnorm / residm
         updateStats!(ItData, newfun, newjac, AOUT)
         #
         itc += 1
