@@ -12,18 +12,14 @@ That aside, there is not much here that I did not explain in the book.
 """
 function Fbvp!(FV, U, bdata)
     n2 = length(U)
-    try
-        n = Int(n2 / 2)
-    catch
-        error("length of [v, vp] must be even")
-    end
     n = bdata.n
+    n2 == 2n || error("dimension error in Fbvp")
     force = bdata.force
     tv = bdata.tv
     tvdag = bdata.tvdag
     h = bdata.h
     FV[1] = U[2]
-    FV[n2] = U[n2-1]
+    FV[2n] = U[2n-1]
     v = @view U[1:2:2n-1]
     vp = @view U[2:2:2n]
     force .= Phi.(tv, tvdag, vp, v)
