@@ -74,20 +74,20 @@ function bvpinit(n, T = Float64)
     tv = collect(0:h:20.0)
     tvdag = collect(0:h:20.0)
     @views tvdag[2:n] = 1.0 ./ tv[2:n]
-    force = zeros(n)
-    D = ones(2n)
+    force = zeros(n,)
+    D = ones(T,2n)
     D[1] = 0.0
     D[2n] = 0.0
     @views D[2:2:2n-2] .= -1 .+ 4.0 * h2 * tvdag[1:n-1]
-    D1 = zeros(2n - 1)
+    D1 = zeros(T,2n - 1)
     D1[1] = 1.0
     @views D1[3:2:2n-1] .= -h2
-    Dm1 = zeros(2n - 1)
+    Dm1 = zeros(T,2n - 1)
     @views Dm1[2:2:2n-2] .= -h2
     Dm1[2n-1] = 1.0
-    Dm2 = zeros(2n - 2)
+    Dm2 = zeros(T,2n - 2)
     @views Dm2[1:2:2n-3] .= -1.0
-    D2 = zeros(2n - 2)
+    D2 = zeros(T,2n - 2)
     @views D2[2:2:2n-2] .= 1.0 .+ 4.0 * h2 * tvdag[2:n]
 #
 # The bandwidths are lu=ll=2, so my padded matrix gets lu=4.
@@ -96,7 +96,7 @@ function bvpinit(n, T = Float64)
     FVP = BandedMatrix{T}(Zeros(2n, 2n), (2, 4))
     DiagFP = (Dm2 = Dm2, Dm1 = Dm1, D = D, D1 = D1, D2 = D2)
     jacinit!(FVP, n, h2, tv, tvdag, DiagFP)
-    zdat = zeros(n)
+    zdat = zeros(T,n)
     return (
         h = h,
         tv = tv,
