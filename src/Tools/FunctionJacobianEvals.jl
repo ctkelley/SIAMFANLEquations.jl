@@ -7,7 +7,7 @@ about the Jacobian, you can tell me what factorization to use.
 For example, if your Jacobian is spd, fact!=cholesky! would work well.
 
 """
-function PrepareJac!(FS, FPS::Array{T,2}, x, ItRules) where T<:Real
+function PrepareJac!(FS, FPS, x, ItRules) 
 F! =ItRules.f
 J! =ItRules.fp
 dx =ItRules.dx
@@ -19,39 +19,23 @@ return TF
 end
 
 """
-function PrepareJac!(FS, FPS::BandedMatrix, x, ItRules)
+klfact(A)
 
-Banded matrix: use qr! because it takes less room.
-Warn people that they have to allocate a few extra bands.
+Returns the default choice for the factorization unless you tell
+me to do something else. QR is the default choice for banded because
+that works properly with Float32.
 
 """
-
-function PrepareJac!(FS, FPS::BandedMatrix, x, ItRules)
-F! =ItRules.f
-J! =ItRules.fp
-dx =ItRules.dx
-pdata=ItRules.pdata
-EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
-TF=qr!(FPS)
-return TF
+function klfact(A::Array{T,2}) where T<:Real
+TF = lu!(A)
 end
 
+function klfact(A::BandedMatrix)
+TF=qr(A)
+end
 
-"""
-function PrepareJac!(FS, FPS, x, ItRules) 
-
-If we are not doing dense, banded, or some other kind of matrix 
-comptations I'm prepared for, punt and use backslash.
-
-"""
-
-function PrepareJac!(FS, FPS, x, ItRules) 
-F! =ItRules.f
-J! =ItRules.fp
-dx =ItRules.dx
-pdata=ItRules.pdata
-EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
-return FPS
+function klfact(A)
+TF = lu(A)
 end
 
 

@@ -2,7 +2,7 @@
     nsold(F!, x0, FS, FPS, J!=diffjac!; rtol=1.e-6, atol=1.e-12,
                maxit=20, solver="newton", sham=1, armmax=10, resdec=.1,
                dx = 1.e-7, armfix=false, 
-               pdata = nothing, jfact = lu!,
+               pdata = nothing, jfact = klfact,
                printerr = true, keepsolhist = false, stagnationok=false)
 )
 
@@ -204,7 +204,7 @@ function nsold(
     dx = 1.e-7,
     armfix = false,
     pdata = nothing,
-    jfact = lu!,
+    jfact = klfact,
     printerr = true,
     keepsolhist = false,
     stagnationok = false,
