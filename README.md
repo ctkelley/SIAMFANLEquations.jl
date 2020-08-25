@@ -78,12 +78,24 @@ I have released version v0.1.2. The codes can now duplicate the examples (at lea
 
 ## Pull Requests
 
-__Please, please__, do not send me PRs. If you find a bug in the codes or an error in the documentation/notebook, please 
+__I like bug reports__, but ...
 
-- tell me the old fashioned way with email to tim_kelley@ncsu.edu
+__Please, please__, do not send me PRs. If you find a bug (programming or performance) in the codes, an factual error in the documentation/notebook, or an inconsistency in the docstrings, please 
+
+- tell me the old fashioned way with email to tim_kelley@ncsu.edu 
 - or open an issue.
 
-This is a book project and I need to put all changes in by hand so I'll have muscle memory about what's going on. If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully and understand this field fairly well.
+This is a book project and I need to put all changes in by hand so I'll have muscle memory about what's going on.
+
+So, please do not send me comments about
+
+- Typos in the notebook or the docstrings. This project is far from the final proofreading stage and I want to fix those things in peace. There are many of them
+  and I do not need 100s of emails/issues about that.
+- Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia and am on the case. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice.
+  I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. Fortran + Julia = __Foolia__
+- Organization of the repo. I'm still thinking this through. The important thing is that it make sense for the print book. I must do this with the publisher.
+- Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully and understand this field fairly well.
+- Philosophy, politics, ...
 
 ## Core References and Documentation
 
