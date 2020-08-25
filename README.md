@@ -80,7 +80,7 @@ I have released version v0.1.2. The codes can now duplicate the examples (at lea
 
 __I like bug reports__, but ...
 
-__Please, please__, do not send me PRs. If you find a bug (programming or performance) in the codes, an factual error in the documentation/notebook, or an inconsistency in the docstrings, please 
+__Please, please__, do not send me PRs. If you find a bug (programming or performance) in the codes, a factual error in the documentation/notebook, or an inconsistency in the docstrings, please 
 
 - tell me the old fashioned way with email to tim_kelley@ncsu.edu 
 - or open an issue.
@@ -93,8 +93,7 @@ I have limited bandwidth, so please do not send me comments about
   and I do not need 100s of emails/issues about that.
    - Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia and am on the case. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. There may be something more abstract coming at the end of the project, but that is far away from now.
       - I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. 
-      
-            Fortran + Julia = __Foolia__
+           -  Fortran + Julia = __Foolia__
    - Organization of the repo. I'm still thinking this through. The important thing is that it make sense for the print book. I must do this with the publisher.
    - Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully and understand this field fairly well.
    - Philosophy, politics, ...
