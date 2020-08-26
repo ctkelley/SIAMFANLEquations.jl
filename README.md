@@ -61,14 +61,16 @@ to run the test problems.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.2.1. __Chapter 2: Systems of equations with direct linear solvers.__ 
+This is version v0.2.1.
+- __New stuff__ = __Chapter 2__: Systems of equations with direct linear solvers .
+- nsold.jl is in the package with about 50% of the test problems and it works. __User interface changes frequently.__
+- ptcsold.jl is in the works. PTC is a really simple algorithm, so it won't take long once the test problem(s) are done.
+- The notebook is at least a few weeks from being finished. 
+- The scalar code, nsolsc.jl, has been stable for a while. Aside from the docstrings, I will probably leave it alone for quite a while.
 
-I have added new keyword arguments to nsolsc.jl and make the error messages more informative. None of this should break the notebooks for Chapter 1. I will be updating the notebooks soon. 
+I have released version v0.1.2. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapter 1 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. I have not stopped working on Chapter 1 and add new things all the time. 
 
-__I have changed the user interface and the calling sequence of the solvers
-since v0.1.1 and will continue to do things like that until v1.0.0 goes out the door.__
-
-I have released version v0.1.2. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapter 1 of (Kel03), make all the new examples, and I have finished Chaper 1 of the notebook and print book. The plan is, for x > 1
+The plan is, for x > 1
 
 -- v0.x.1 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 0.x.y for y > 2 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
 
