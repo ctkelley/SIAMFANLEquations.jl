@@ -84,8 +84,9 @@ __I like bug reports; I need bug reports__, but ...
 
 __Please, please__, do not send me PRs. If you find 
    - a bug (programming or performance) in the codes,
+   - confusion, lack of clarity, or errors in the installation instructions,
    - a factual error in the documentation/notebook, or 
-   - an inconsistency in the docstrings, please ...
+   - an error/inconsistency in the docstrings, please ...
   
  Do your choice of ... 
 
@@ -103,8 +104,8 @@ I have limited bandwidth, __so please do not send me email or open issues about_
            -  Fortran + Julia = __Foolia__
    - Organization of the repo. I'm still thinking this through. The important thing is that it make sense for the print book. I must do this work with the publisher.
    - Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully and understand this field fairly well.
-   - Questions like "Why doesn't SIAMFANLequations.jl look/work/smell like or use DasKapital.jl?" The reasons are that (1) I am neither Karl nor Groucho, (2) this project has a different mission, and (3) I am working hard to limit depencencies. 
-   - Philosophy, politics, invitations to debates, ...
+   - Questions like "Why doesn't SIAMFANLequations.jl look/work/smell like and/or use DasKapital.jl?" The reasons are that (1) I am neither Karl nor Groucho, (2) this project has a different mission, and (3) I am working hard to limit depencencies. 
+   - Philosophy, politics, opinions, invitations to debates, ...
    - anything else that is not bugs/facts/inconsistencies
 
 
