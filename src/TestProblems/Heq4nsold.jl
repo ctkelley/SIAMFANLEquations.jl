@@ -84,11 +84,11 @@ function HeqFix!(Gfix, x, pdata)
 end
 
 """
-heqinit(x0::Array{T,1}, c, TJ=Float64) where T<:Real
+heqinit(x0::Array{T,1}, c, TJ=Float64) where TJ<:Real
 
 Initialize H-equation precomputed data.
 """
-function heqinit(x0::Array{T,1}, c, TJ=Float64) where T<:Real
+function heqinit(x0::Array{T,1}, c, TJ=Float64) where TJ<:Real
     n = length(x0)
     cval=ones(1,)
     cval[1]=c

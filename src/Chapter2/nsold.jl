@@ -16,7 +16,7 @@ Inputs:\n
 - F!: function evaluation, the ! indicates that F! overwrites FS, your
     preallocated storage for the function.\n
 
-- x: initial iterate\n
+- x0: initial iterate\n
 
 - FS: Preallcoated storage for function. It is an N x 1 column vector\n
 
@@ -113,7 +113,7 @@ I like to put all my function/Jacobian/initialization stuff in a
 Module and only export the things I actually use.
 
 A) You allocate storage for the function and Jacobian in advance 
-   --> in the calling program <-- NOT in FS and FPS
+   --> in the calling program <-- ie. in FS and FPS
 
 FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
 
