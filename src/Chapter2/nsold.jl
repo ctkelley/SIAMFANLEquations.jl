@@ -144,6 +144,8 @@ B) Any precomputed data for functions, Jacobians, matrix-vector products
    Use pdata instead.
 
 # Examples
+## World's easiest problem example.
+
 ```jldoctest
  julia> function f!(fv,x)
        fv[1]=x[1] + sin(x[2])

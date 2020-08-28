@@ -95,7 +95,6 @@ function bvpinit(n, T = Float64)
 #
     FVP = BandedMatrix{T}(Zeros(2n, 2n), (2, 4))
     DiagFP = (Dm2 = Dm2, Dm1 = Dm1, D = D, D1 = D1, D2 = D2)
-    jacinit!(FVP, n, h2, tv, tvdag, DiagFP)
     zdat = zeros(T,n)
     return (
         h = h,
