@@ -12,11 +12,30 @@ This documentation is sketchy and designed to get you going, but the real deal i
 
 This is version 0.2.1. 
 
+** This thing is under constant revision. I think the user interfaces to
+nsolsc, ptcsolsc, and nsold are stable, but you never know.***
+
 The scalar solvers and the first chapter of the notebook are done as of
 v0.1.2.
 
 Chapter 2 is under construction and I'll tag this when the solvers are 
 done. I'll tag v0.2.2 when the notebook is ready.
+
+nsold.jl, Newton with direct linear solvers, is done. I am finishing 
+the test problems now.
+
+The notebooks for Chapter 2 are nowhere close to done. The to-do list inlcudes
+
+0. Finishing the test problems and the solvers. (75% done)
+1. Getting the print book part of Chapter 2 looking the way I want. (75% done)
+2. Making the formatting of Chapter 1 consistent with Chapter 2. (25% done)
+3. Mapping the print book part of Chapter 2 to the notebook. (0% done)
+4. Completing the notebook part of Chapter 2. (10% done)
+5. Mapping the notebook part of Chapter 2 to the printbook. (0% done)
+
+If all goes well, I should post a draft of everything by late September
+
+Once item 0 is done I will tag v0.2.1.
 
 ## Scalar Equations: Chapter 1
 
