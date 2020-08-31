@@ -1,5 +1,5 @@
 """
-PrepareJac!(FS, FPS::Array{T,2}, x, ItRules) where T<:Real
+PrepareJac!(FPS::Array{T,2}, FS, x, ItRules) where T<:Real
 
 Compute the Jacobian and perform the factorization. If know something
 about the Jacobian, you can tell me what factorization to use. 
@@ -7,7 +7,7 @@ about the Jacobian, you can tell me what factorization to use.
 For example, if your Jacobian is spd, fact!=cholesky! would work well.
 
 """
-function PrepareJac!(FS, FPS, x, ItRules) 
+function PrepareJac!(FPS, FS, x, ItRules) 
 F! =ItRules.f
 J! =ItRules.fp
 dx =ItRules.dx
@@ -34,23 +34,27 @@ function klfact(A::BandedMatrix)
 TF=qr(A)
 end
 
+function klfact(A::Tridiagonal)
+TF=A
+end
+
 function klfact(A)
 TF = lu(A)
 end
 
 
 """
-EvalF!(FS, x, F!, pdata)
+EvalF!(F!, FS, x, pdata)
 
 This is a wrapper for the function evaluation that figures out if
 you are using precomputed data or not. No reason to get excited
 about this.
 """
-function EvalF!(FS, x, F!, q::Nothing)
+function EvalF!(F!, FS, x, q::Nothing)
         F!(FS, x)
 end
 
-function EvalF!(FS, x, F!, pdata)
+function EvalF!(F!, FS, x, pdata)
         F!(FS, x, pdata)
 end
 
@@ -103,7 +107,7 @@ function diffjac!(FS, FPS::Array{T,2}, F!, x, dx, pdata) where T <: Real
     for ic = 1:n
         y .= x
         y[ic] = y[ic] + h
-        EvalF!(FY, y, F!, pdata)
+        EvalF!(F!, FY, y, pdata)
         for ir = 1:n
             FPS[ir, ic] = (FY[ir] - FS[ir]) / h
         end
@@ -120,7 +124,7 @@ F! = ItRules.f
 pdata = ItRules.pdata
 copy!(xt,x)
 BLAS.axpy!(lambda,step,xt)
-EvalF!(FS, xt, F!, pdata)
+EvalF!(F!, FS, xt, pdata)
 resnorm=norm(FS) 
 return(xt, FS, resnorm)
 end

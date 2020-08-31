@@ -81,10 +81,10 @@ Jacobian. You may change LU to something else by, for example,
 setting jfact = cholseky! if your Jacobian is spd. 
 
 Please do not mess with the line that calls PrepareJac!. 
-        FPF=PrepareJac!(FS, FPS, x, F!, J!, dx, pdata; fact = jfact)
+        FPF = PrepareJac!(FPS, FS, x, ItRules)
 FPF is not the same as FPS (the storage you allocate for the Jacobian)
 for a reason. FPF and FPS do not have the same type, even though they
-share storage. So, FPS=PrepareJac!(FS, FPS, ...) will break things.
+share storage. So, FPS=PrepareJac!(FPS, FS, ...) will break things.
 
 printerr:\n
 I print a helpful message when the solver fails. To supress that
@@ -227,7 +227,7 @@ function nsold(
         solhist = zeros(n, maxit + 1)
         @views solhist[:, 1] .= x
     end
-    EvalF!(FS, x, F!, pdata)
+    EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     ItRules = (
         solver = solver,
@@ -284,7 +284,7 @@ function nsold(
         #        evaljac = test_evaljac(itc, solver, sham, newiarm, residratio, resdec)
         evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         if evaljac
-            FPF = PrepareJac!(FS, FPS, x, ItRules)
+            FPF = PrepareJac!(FPS, FS, x, ItRules)
             newjac += 1
         end
         derivative_is_old = (newjac == 0) && (solver == "newton")
