@@ -98,7 +98,7 @@ end
 #
 armfail=nsolsc(atan,10.0; armmax=1, armfix=true, printerr=false)
 afok=false
-if armfail.idid==false
+if armfail.idid==false && armfail.errcode == 1
    afok=true
 else
    println("Armijo failure test FAILED.")
@@ -108,7 +108,7 @@ end
 #
 resok=false
 resfail=nsolsc(atan,10.0; maxit=3, armfix=true, keepsolhist=false)
-if resfail.idid==false
+if resfail.idid==false && resfail.errcode == 10
    resok=true
 else
    println("Residual failure test FAILED.")

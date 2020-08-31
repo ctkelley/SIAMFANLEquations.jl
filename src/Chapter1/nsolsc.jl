@@ -140,6 +140,7 @@ function nsolsc(
 )
     itc = 0
     idid = true
+    errcode=0
     iline = true
     #=
      If you like the sham=large methods, I will evaluate the derivative 
@@ -266,8 +267,8 @@ function nsolsc(
     fval = fc
     resfail = (resnorm > tol)
     idid = ~(resfail || iline)
-    if ~idid && printerr
-        NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
+    if ~idid 
+        errcode = NewtonError(resfail, iline, resnorm, itc, maxit, armmax,printerr)
     end
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
     if keepsolhist
@@ -277,6 +278,7 @@ function nsolsc(
             history = ItData.history,
             stats = stats,
             idid = idid,
+            errcode = errcode,
             solhist = solhist,
         )
     else
@@ -286,6 +288,7 @@ function nsolsc(
             history = ItData.history,
             stats = stats,
             idid = idid,
+            errcode = errcode
         )
     end
 end

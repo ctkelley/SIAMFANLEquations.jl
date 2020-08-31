@@ -322,8 +322,9 @@ function nsold(
     functionval = FS
     resfail = (resnorm > tol)
     idid = ~(resfail || iline)
-    if ~idid && printerr
-        NewtonError(resfail, iline, resnorm, itc, maxit, armmax)
+    errcode=0
+    if ~idid 
+        errcode= NewtonError(resfail, iline, resnorm, itc, maxit, armmax, printerr)
     end
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
     if keepsolhist
@@ -334,6 +335,7 @@ function nsold(
             history = ItData.history,
             stats = stats,
             idid = idid,
+            errcode = errcode,
             solhist = solhist[:, 1:sizehist],
         )
     else
@@ -343,6 +345,7 @@ function nsold(
             history = ItData.history,
             stats = stats,
             idid = idid,
+            errcode = errcode
         )
     end
 end
