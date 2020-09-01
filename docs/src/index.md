@@ -48,6 +48,25 @@ many of the important ideas in nonlinear solvers.
 2. line searches
 3. pseudo-transient continuation
 
+See the code overview or the notebook for details. Here are a couple 
+of simple examples.
+
+Solve ``atan(x) = 0`` with ``x_0 = 0`` as the initial iterate and a
+finite difference approximation to the derivative.
+
+```julia
+julia> nsolout=nsolsc(atan,1.0;maxit=5,atol=1.e-12,rtol=1.e-12);
+
+julia> nsolout.history
+6-element Array{Float64,1}:
+ 7.85398e-01
+ 5.18669e-01
+ 1.16332e-01
+ 1.06102e-03
+ 7.96200e-10
+ 2.79173e-24
+```
+
 ## Nonlinear systems with direct linear solvers: Chapter 2
 The ideas from Chapter 1 remain important here. For systems the Newton step is the solution of the linear system
 
