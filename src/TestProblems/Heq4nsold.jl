@@ -24,12 +24,12 @@ using LinearAlgebra
 using LinearAlgebra.BLAS
 
 """
-function heqJ!(F,FP,x,pdata)
+function heqJ!(FP,F,x,pdata)
 
 The is the Jacobian evaluation playing by nsold rules. The
 precomputed data is a big deal for this one. 
 """
-function heqJ!(F, FP::Array{T,2}, x, pdata) where T <: Real
+function heqJ!(FP::Array{T,2}, F,  x, pdata) where T <: Real
     pseed = pdata.pseed
     mu = pdata.mu
     n = length(x)

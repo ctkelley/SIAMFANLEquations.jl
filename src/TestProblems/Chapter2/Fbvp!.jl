@@ -30,7 +30,7 @@ function Fbvp!(FV, U, bdata)
     end
 end
 
-function Jbvp!(FV, FVP, x, bdata)
+function Jbvp!(FVP, FV, x, bdata)
     n = bdata.n
     tv = bdata.tv
     tvdag = bdata.tvdag

@@ -13,7 +13,7 @@ J! =ItRules.fp
 dx =ItRules.dx
 fact = ItRules.fact
 pdata=ItRules.pdata
-EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
+EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
 TF=fact(FPS)
 return TF
 end
@@ -60,37 +60,37 @@ end
 
 
 """
-JV!(FS, FPS, x, J!, pdata)
+JV!(FPS, FS, x, J!, pdata)
 
 This is a wrapper for the Jacobian evaluation that figures out if
 you are using precomputed data or not. No reason to get excited
 about this.
 """
-function JV!(FS, FPS, x, J!, pdata)
-        J!(FS, FPS, x, pdata) 
+function JV!(FPS, FS, x, J!, pdata)
+        J!(FPS, FS, x, pdata) 
 end
 
-function JV!(FS, FPS, x, J!, q::Nothing)
-        J!(FS, FPS, x) 
+function JV!(FPS, FS, x, J!, q::Nothing)
+        J!(FPS, FS, x) 
 end
 
 """
-EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
+EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
 
 evaluates the Jacobian before the factorization in PrepareJac!
 
 """
 
-function EvalJ!(FS, FPS, x, F!, J!, dx, pdata)
+function EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
     if J! != diffjac!
-        JV!(FS, FPS, x, J!, pdata)
+        JV!(FPS, FS, x, J!, pdata)
     else
-        diffjac!(FS, FPS, F!, x, dx, pdata)
+        diffjac!(FPS, FS, F!, x, dx, pdata)
     end
 end
 
 """
-   diffjac!(FS, FPS::Array{T,2}, F!, x, dx, pdata) where T <: Real
+   diffjac!(FPS::Array{T,2}, FS, F!, x, dx, pdata) where T <: Real
 
 Computes a finite-difference dense and unstructured Jacobian.
 This is not something an user wants to mess with. Look at the 
@@ -99,7 +99,7 @@ docstrings to nsold to see more details.
 
 Nothing much to see here. Move along.
 """
-function diffjac!(FS, FPS::Array{T,2}, F!, x, dx, pdata) where T <: Real
+function diffjac!(FPS::Array{T,2}, FS, F!, x, dx, pdata) where T <: Real
     h = dx * norm(x, Inf) + 1.e-8
     n = length(x)
     y = ones(size(x))

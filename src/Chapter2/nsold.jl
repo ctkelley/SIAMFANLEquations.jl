@@ -117,8 +117,8 @@ A) You allocate storage for the function and Jacobian in advance
 
 FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
 
-FP=J!(FV,FP,x) or FP=J!(FV,FP,x,pdata) returns FP=F'(x); 
-    (FV,FP, x) must be the argument list, even if FP does not need FV.
+FP=J!(FP,FV,x) or FP=J!(FP,FV,x,pdata) returns FP=F'(x); 
+    (FP,FV, x) must be the argument list, even if FP does not need FV.
     One reason for this is that the finite-difference Jacobian
     does and that is the default in the solver.
 
@@ -174,13 +174,6 @@ julia> nout.solution
 
 ```jldoctest
 julia> n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n);
-help?> heqinit
-search: heqinit
-
-  heqinit(x0::Array{T,1}, c, TJ=Float64) where T<:Real
-
-  Initialize H-equation precomputed data.
-
 julia> hdata=heqinit(x0, .5);
 julia> hout=nsold(heqf!,x0,FV,JV;pdata=hdata);
 julia> hout.history
