@@ -104,6 +104,25 @@ julia> nsolout.history
  2.79173e-24
 ```
 
+# Same problem with the secant method.
+
+```julia
+julia> secout=nsolsc(atan,1.0;maxit=6,atol=1.e-12,rtol=1.e-12, solver="secant");
+
+
+julia> secout.history
+7-element Array{Float64,1}:
+ 7.85398e-01
+ 5.18729e-01
+ 5.39030e-02
+ 4.86125e-03
+ 4.28860e-06
+ 3.37529e-11
+ 2.06924e-22
+```
+
+# If you have an analytic derivative, I will use it.
+
 ```jldoctest
 julia> fs(x)=x^2-4.0; fsp(x)=2x;
 

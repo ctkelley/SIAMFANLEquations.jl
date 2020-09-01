@@ -48,11 +48,25 @@ many of the important ideas in nonlinear solvers.
 2. line searches
 3. pseudo-transient continuation
 
+Leaving out the kwargs, the calling sequence for getting nsolsc
+to solve ``f(x) = 0`` is
+
+```julia
+nsolsc(f,x, fp=difffp)
+```
+
+Here x is the initial iterate and fp (optional) is the function
+for evaluating the derivative. If you leave fp out, nsold uses
+a forward difference aproximation.
+
 See the code overview or the notebook for details. Here are a couple 
 of simple examples.
 
 Solve ``atan(x) = 0`` with ``x_0 = 0`` as the initial iterate and a
-finite difference approximation to the derivative.
+finite difference approximation to the derivative. The output of
+nsolsc is a tuple. The history vector contains the nonlinear residual
+norm. In this example I've limited the number of iterations to 5, so
+history has 6 components (including the initial residual, iteration 0).
 
 ```julia
 julia> nsolout=nsolsc(atan,1.0;maxit=5,atol=1.e-12,rtol=1.e-12);
@@ -66,6 +80,42 @@ julia> nsolout.history
  7.96200e-10
  2.79173e-24
 ```
+
+Now try the same problem with the secant method. I'll need one more
+iteration to meet the termination criterion.
+
+```julia
+julia> secout=nsolsc(atan,1.0;maxit=6,atol=1.e-12,rtol=1.e-12, solver="secant");
+
+
+julia> secout.history
+7-element Array{Float64,1}:
+ 7.85398e-01
+ 5.18729e-01
+ 5.39030e-02
+ 4.86125e-03
+ 4.28860e-06
+ 3.37529e-11
+ 2.06924e-22
+```
+
+In this example I define a function and its derivative and send that
+to nsolsc. I print both the history vectors and the solution history.
+```julia
+julia> fs(x)=x^2-4.0; fsp(x)=2x;
+
+julia> nsolout=nsolsc(fs,1.0,fsp; maxit=5,atol=1.e-9,rtol=1.e-9);
+
+julia> [nsolout.solhist.-2 nsolout.history]
+6×2 Array{Float64,2}:
+ -1.00000e+00  3.00000e+00
+  5.00000e-01  2.25000e+00
+  5.00000e-02  2.02500e-01
+  6.09756e-04  2.43940e-03
+  9.29223e-08  3.71689e-07
+  2.22045e-15  8.88178e-15
+```
+
 
 ## Nonlinear systems with direct linear solvers: Chapter 2
 The ideas from Chapter 1 remain important here. For systems the Newton step is the solution of the linear system
@@ -89,7 +139,8 @@ There are two codes for the methods in this chapter
    - The Shamanskii method, where the derivative evaluation is
      done every m iterations. ``m=1`` is Newton and ``m=\infty`` is chord.
    - The secant method
-   - You have the option to do an Armijo line search for all the methods.
+   - I do an Armijo line search for all the methods unless the method is
+     chord or you tell me not to.
 
 2. ptcsolsc.jl is pseudo-transient continuation. 
 
