@@ -83,7 +83,7 @@ FV[1]=x[1]*x[1]  -2.0;
 FV[2]=exp(x[1]-1) + x[2]*x[2] - 2.0;
 end
 
-function jbasic2d!(FV,JV,x)
+function jbasic2d!(JV,FV,x)
 JV[1,1]=2*x[1] 
 JV[1,2]=0.0
 JV[2,1]=exp(x[1]-1) 
