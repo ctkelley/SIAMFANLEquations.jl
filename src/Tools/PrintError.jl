@@ -41,12 +41,12 @@ end
 """
 Lottery_Winner(resnorm, tol)
 """
-function Lottery_Winner(resnorm, tol, printerr)
-if printerr
-println("Congratulations, your initial iterate met the teremination criteria.")
-println("Residual norm = ", resnorm, " Tolerance = ", tol)
-println("  ")
-end
-errcode = -1
-return errcode
-end
+#function Lottery_Winner(resnorm, tol, printerr)
+#if printerr
+#println("Congratulations, your initial iterate met the teremination criteria.")
+#println("Residual norm = ", resnorm, " Tolerance = ", tol)
+#println("  ")
+#end
+#errcode = -1
+#return errcode
+#end

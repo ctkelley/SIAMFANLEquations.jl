@@ -12,8 +12,11 @@ This documentation is sketchy and designed to get you going, but the real deal i
 
 This is version 0.2.1. 
 
-** This thing is under constant revision. I think the user interfaces to
-nsolsc, ptcsolsc, and nsold are stable, but you never know.***
+__This thing is under constant revision. I think the user interfaces to
+nsolsc and ptcsolsc are stable, but you never know.__
+
+__BREAKING CHANGE__ coming for nsold.jl. I think this will be the last 
+thing to do, but I have had that opinion before.
 
 The scalar solvers and the first chapter of the notebook are done as of
 v0.1.2.
@@ -26,12 +29,14 @@ the test problems now.
 
 The notebooks for Chapter 2 are nowhere close to done. The to-do list inlcudes
 
-0. Finishing the test problems and the solvers. (75% done)
+__Item 0__: Finishing the test problems and the solvers. (75% done)
+
 1. Getting the print book part of Chapter 2 looking the way I want. (75% done)
 2. Making the formatting of Chapter 1 consistent with Chapter 2. (25% done)
-3. Mapping the print book part of Chapter 2 to the notebook. (0% done)
-4. Completing the notebook part of Chapter 2. (10% done)
-5. Mapping the notebook part of Chapter 2 to the printbook. (0% done)
+3. Fixing the API for the codes. __BREAKING change__ in the works for nsold.jl
+4. Mapping the print book part of Chapter 2 to the notebook. (0% done)
+5. Completing the notebook part of Chapter 2. (10% done)
+6. Mapping the notebook part of Chapter 2 to the printbook. (0% done)
 
 If all goes well, I should post a draft of everything by late September
 
