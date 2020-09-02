@@ -144,6 +144,18 @@ if ~chordok
    println("Chord test failed")
 end
 #
+# Make sure nsolsc knows if the solution and the intial iterate are
+# the same
+#
+lotout=nsolsc(flot,0.0)
+lotok= (lotout.errcode == -1)
+if ~lotok
+   println("Lottery test failed")
+end
 return locok && globok && secantok && analyticok && zecok && 
-       shamfastok && afok && resok && p3pok && chordok
+       shamfastok && afok && resok && p3pok && chordok && lotok
+end
+
+function flot(x)
+flot = x*exp(x)
 end

@@ -165,7 +165,7 @@ function nsolsc(
     itc = 0
     idid = true
     errcode=0
-    iline = true
+    iline = false
     #=
      If you like the sham=large methods, I will evaluate the derivative 
      anyhow if the line search kicks in. 
@@ -223,6 +223,11 @@ function nsolsc(
     residratio = 1
     df = 0.0
     armstop = true
+    #
+    # If the initial iterate satisfies the termination criteria, tell me.
+    #
+    toosoon = false
+    resnorm > tol || (toosoon = true)
     #
     # The main loop stops on convergence, too many iterations, or a
     # line search failure after a derivative evaluation.
@@ -290,9 +295,10 @@ function nsolsc(
     solution = x
     fval = fc
     resfail = (resnorm > tol)
-    idid = ~(resfail || iline)
+    idid = ~(resfail || iline || toosoon)
     if ~idid 
-        errcode = NewtonError(resfail, iline, resnorm, itc, maxit, armmax,printerr)
+        errcode = NewtonError(resfail, iline, resnorm, toosoon, tol,
+                    itc, maxit, armmax,printerr)
     end
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
     if keepsolhist

@@ -207,7 +207,7 @@ function nsold(
 
     itc = 0
     idid = true
-    iline = true
+    iline = false
     #=
     First evaluation of the function. I evaluate the derivative when
     Shamanskii tells me to, at the first iteration (duh!), and when
@@ -258,6 +258,15 @@ function nsold(
     step = zeros(size(x))
     xt = zeros(size(x))
     FT = zeros(size(x))
+    #
+    # If the initial iterate satisfies the termination criteria, tell me.
+    #
+    toosoon = false
+    resnorm > tol || (toosoon = true)
+    #
+    # The main loop stops on convergence, too many iterations, or a
+    # line search failure after a derivative evaluation.
+    #
     while resnorm > tol && itc < maxit && (armstop || stagnationok)
         #   
         # Evaluate and factor the Jacobian.   
@@ -265,7 +274,7 @@ function nsold(
         newfun = 0
         newjac = 0
         #
-        # Evaluate the derivativce if (1) you are using the chord method 
+        # Evaluate the derivative if (1) you are using the chord method 
         # and it's the intial iterate, or
         # (2) it's Newton and you are on the right part of the Shamaskii loop,
         # or the line search failed with a stale deriviative, or the residual
@@ -314,10 +323,11 @@ function nsold(
     solution = x
     functionval = FS
     resfail = (resnorm > tol)
-    idid = ~(resfail || iline)
+    idid = ~(resfail || iline || toosoon)
     errcode=0
     if ~idid 
-        errcode= NewtonError(resfail, iline, resnorm, itc, maxit, armmax, printerr)
+        errcode= NewtonError(resfail, iline, resnorm, toosoon, tol,
+                        itc, maxit, armmax, printerr)
     end
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
     if keepsolhist
