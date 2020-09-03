@@ -11,10 +11,14 @@ C. T. Kelley, 2020
 Julia versions of the nonlinear solvers from my SIAM books. 
 Herewith: nsold
 
+You must allocate storage for the function and Jacobian in advance
+--> in the calling program <-- ie. in FS and FPS
 
 Inputs:\n
 - F!: function evaluation, the ! indicates that F! overwrites FS, your
     preallocated storage for the function.\n
+
+    FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
 
 - x0: initial iterate\n
 
@@ -26,6 +30,19 @@ Inputs:\n
     preallocated storage for the Jacobian. If you leave this out the
     default is a finite difference Jacobian.\n
 
+    FP=J!(FP,FV,x) or FP=J!(FP,FV,x,pdata) returns FP=F'(x);
+    (FP,FV, x) must be the argument list, even if FP does not need FV.
+    One reason for this is that the finite-difference Jacobian
+    does and that is the default in the solver.
+
+    Lemme tell ya 'bout precision. I designed this code for full precision
+    functions and linear algebra in any precision you want. You can declare
+    FPS as Float64, Float32, or Float16 and nsold will do the right thing if
+    YOU do not destroy the declaration in your J! function. I'm amazed
+    that this works so easily. If the Jacobian is reasonably well 
+    conditioned, I can see no reason to do linear algebra in 
+    double precision. 
+
 ----------------------
 
 Keyword Arguments (kwargs):\n
@@ -34,14 +51,14 @@ Keyword Arguments (kwargs):\n
 
 - maxit: limit on nonlinear iterations\n
 
-solver:\n
-Your choices are "newton"(default) or "chord". However,
+solver: default = "newton"\n
+Your choices are "newton" or "chord". However,
 you have sham at your disposal only if you chose newton. "chord"
 will keep using the initial derivative until the iterate converges,
 uses the iteration budget, or the line search fails. It is not the
 same as sham=Inf, which is smarter.\n
 
-sham:\n
+sham: default = 1 (ie Newton)\n
 This is the Shamanskii method. If sham=1, you have Newton.
 The iteration updates the derivative every sham iterations.
 The convergence rate has local q-order sham+1 if you only count
@@ -51,19 +68,19 @@ is chord only if chord is converging well.\n
 
 armmax: upper bound on stepsize reductions in linesearch\n
 
-resdec:\n 
-target value for residual reduction.
+resdec: default = .1\n 
+This is the target value for residual reduction.
 The default value is .1. In the old MATLAB codes it was .5.
 I only turn Shamanskii on if the residuals are decreasing
 rapidly, at least a factor of resdec, and the line search is quiescent.
 If you want to eliminate resdec from the method ( you don't ) then set
 resdec = 1.0 and you will never hear from it again.
 
-dx:\n
+dx: default = 1.e-7\n
 difference increment in finite-difference derivatives
       h=dx*norm(x)+1.e-6
 
-armfix:\n
+armfix: default = false\n
 The default is a parabolic line search (ie false). Set to true and
 the stepsize will be fixed at .5. Don't do this unless you are doing
 experiments for research.\n
@@ -73,11 +90,15 @@ precomputed data for the function/Jacobian.
 Things will go better if you use this rather than hide the data 
 in global variables within the module for your function/Jacobian
 
-jfact:\n
+jfact: default = klfact (tries to figure out best choice) \n
 If you have a dense Jacobian I call PrepareJac! to evaluate the
 Jacobian (using your J!) and factor it. The default is to use
+klfact (and internal function) to do something reasonable. For 
+general matrices, klfact picks 
 lu! to compute an LU factorization and share storage with the
-Jacobian. You may change LU to something else by, for example,
+Jacobian. klfact knows about tridiagonal and banded matrices.
+If you give me something not on klfact's list, you get lu.
+You may change LU to something else by, for example,
 setting jfact = cholseky! if your Jacobian is spd. 
 
 Please do not mess with the line that calls PrepareJac!. 
@@ -86,62 +107,46 @@ FPF is not the same as FPS (the storage you allocate for the Jacobian)
 for a reason. FPF and FPS do not have the same type, even though they
 share storage. So, FPS=PrepareJac!(FPS, FS, ...) will break things.
 
-printerr:\n
+printerr: default = true\n
 I print a helpful message when the solver fails. To supress that
 message set printerr to false.
 
-keepsolhist:\n
+keepsolhist: default = false\n
 Set this to true to get the history of the iteration in the output
 tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
-stagnationok:\n
+stagnationok: default = false\n
 Set this to true if you want to disable the line search and either
 observe divergence or stagnation. This is only useful for research
 or writing a book.
 
+Output:\n
+A named tuple (solution, functionval, history, stats, idid,
+               errcode, solhist)
+where
+
+solution = converged result
+functionval = F(solution)
+history = the vector of residual norms (||F(x)||) for the iteration
+stats = named tuple of the history of (ifun, ijac, iarm), the number
+of functions/derivatives/steplength reductions at each iteration.
+
+I do not count the function values for a finite-difference derivative
+because they count toward a Jacobian evaluation. 
+
+idid=true if the iteration succeeded and false if not.
+
+errcode = 0 if if the iteration succeeded
+        = -1 if the initial iterate satisifies the termination criteria
+        = 10 if no convergence after maxit iterations
+        = 1  if the line search failed
+
+solhist:\n
+This is the entire history of the iteration if you've set
+keepsolhist=true
+
 ------------------------
-
-# Using nsold.jl
-
-Here are the rules as of August 11, 2020.
-
-F! is the nonlinear residual. 
-J! is the Jacobian evaluation.
-
-I like to put all my function/Jacobian/initialization stuff in a
-Module and only export the things I actually use.
-
-A) You allocate storage for the function and Jacobian in advance 
-   --> in the calling program <-- ie. in FS and FPS
-
-FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
-
-FP=J!(FP,FV,x) or FP=J!(FP,FV,x,pdata) returns FP=F'(x); 
-    (FP,FV, x) must be the argument list, even if FP does not need FV.
-    One reason for this is that the finite-difference Jacobian
-    does and that is the default in the solver.
-
-In the future J! will also be a matrix-vector product and FPS will
-be the PREALLOCATED (!!) storage for the GMRES(m) Krylov vectors.
-
-Lemme tell ya 'bout precision. I designed this code for full precision
-functions and linear algebra in any precision you want. You can declare
-FPS as Float64, Float32, or Float16 and nsold will do the right thing if 
-YOU do not destroy the declaration in your J! function. I'm amazed 
-that this works so easily. 
-
-If the Jacobian is reasonably well conditioned, I can see no reason
-to do linear algebra in double precision
-
-Don't try to evaluate function and Jacobian all at once because 
-that will cost you a extra function evaluation every time the line
-search kicks in.
-
-B) Any precomputed data for functions, Jacobians, matrix-vector products
-   or preallocted storage may live in global variables within a module 
-   containing F! and J!.  Don't do that if you can avoid it. 
-   Use pdata instead.
 
 # Examples
 ## World's easiest problem example.
@@ -208,6 +213,11 @@ function nsold(
     itc = 0
     idid = true
     iline = false
+#
+#   If I'm letting the iteration stagnate and turning off the
+#   linesearch, then the line search cannot fail.
+#
+    stagflag = stagnationok && (armmax==0)
     #=
     First evaluation of the function. I evaluate the derivative when
     Shamanskii tells me to, at the first iteration (duh!), and when
@@ -303,10 +313,11 @@ function nsold(
         FS .= AOUT.afc
         #
         # If the line search fails and the derivative is current,
-        # stop the iteration.
+        # stop the iteration. Print an error message unless
+        # stagnationok == true and armmax=0
         #
         armstop = AOUT.idid || derivative_is_old
-        iline = ~armstop
+        iline = ~armstop && ~stagflag
         #
         # Keep the books.
         #

@@ -34,13 +34,14 @@ function klfact(A::BandedMatrix)
 TF=qr(A)
 end
 
-function klfact(A::Tridiagonal)
+#function klfact(A::Tridiagonal)
+function klfact(A)
 TF=A
 end
 
-function klfact(A)
-TF = lu(A)
-end
+#function klfact(A)
+#TF = lu(A)
+#end
 
 
 """

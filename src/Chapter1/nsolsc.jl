@@ -95,6 +95,33 @@ solhist:\n
 This is the entire history of the iteration if you've set
 keepsolhist=true
 
+Output:\n
+A named tuple (solution, functionval, history, stats, idid,
+               errcode, solhist)
+where
+
+solution = converged result
+functionval = F(solution)
+history = the vector of residual norms (||F(x)||) for the iteration
+stats = named tuple of the history of (ifun, ijac, iarm), the number
+of functions/derivatives/steplength reductions at each iteration.
+
+I do not count the function values for a finite-difference derivative
+because they count toward a Jacobian evaluation. I do count them for
+the secant method model.
+
+idid=true if the iteration succeeded and false if not.
+
+errcode = 0 if if the iteration succeeded
+        = -1 if the initial iterate satisifies the termination criteria
+        = 10 if no convergence after maxit iterations
+        = 1  if the line search failed
+
+solhist:\n
+This is the entire history of the iteration if you've set
+keepsolhist=true
+
+
 # Examples
 ```jldoctest
 julia> nsolout=nsolsc(atan,1.0;maxit=5,atol=1.e-12,rtol=1.e-12);
