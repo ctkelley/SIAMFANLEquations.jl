@@ -66,7 +66,7 @@ This is version v0.2.1.
 - nsold.jl is in the package with about 50% of the test problems and it works. __User interface changes frequently.__
 - ptcsold.jl is in the works. PTC is a really simple algorithm, so it won't take long once the test problem(s) are done.
 - The notebook is at least a few weeks from being finished. 
-- The scalar code, nsolsc.jl, has been stable for a while. Aside from the docstrings, I will probably leave it alone for several months, if not forever.
+- The scalar code, nsolsc.jl is done for a while.
 
 I have released version v0.1.2. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapter 1 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. I have not stopped working on Chapter 1 and add new things all the time. 
 
