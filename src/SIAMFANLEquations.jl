@@ -62,8 +62,8 @@ include("TestProblems/Scalars/fpatan.jl")
 include("TestProblems/Scalars/spitchfork.jl")
 include("TestProblems/Scalars/linatan.jl")
 include("TestProblems/Scalars/ftanx.jl")
-include("TestProblems/Chapter2/simple!.jl")
-include("TestProblems/Chapter2/Fbvp!.jl")
+include("TestProblems/Systems/simple!.jl")
+include("TestProblems/Systems/Fbvp!.jl")
 include("TestProblems/Heq4nsold.jl")
 
 using .Heq4nsold
