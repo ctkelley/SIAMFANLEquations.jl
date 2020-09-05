@@ -1,7 +1,7 @@
 """
 Heq4nsold
 
-This module contains the Chandrasekhar H-equation examples
+This file contains the Chandrasekhar H-equation examples
 and everything you should need to run them.
 
 It still has a couple global variables that I'm having trouble 
@@ -9,20 +9,6 @@ making go away.
 
 If you only want to run the examples, you should not have to look
 at the code.
-"""
-module Heq4nsold
-
-export heqf!
-export heqJ!
-export setc!
-export heqinit
-export heqbos!
-
-using AbstractFFTs
-using FFTW
-using LinearAlgebra
-using LinearAlgebra.BLAS
-
 """
 function heqJ!(FP,F,x,pdata)
 
@@ -204,11 +190,4 @@ function heqbos!(F, x, pdata)
         F[ig] = 1.0 / (cval + F[ig])
     end
     F .= x - F
-end
-
-
-
-#
-# end of module
-#
 end
