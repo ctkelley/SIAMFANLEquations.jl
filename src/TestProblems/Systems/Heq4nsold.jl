@@ -10,6 +10,8 @@ making go away.
 If you only want to run the examples, you should not have to look
 at the code.
 """
+### And now for the functions ...
+"""
 function heqJ!(FP,F,x,pdata)
 
 The is the Jacobian evaluation playing by nsold rules. The
