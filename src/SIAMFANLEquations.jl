@@ -7,9 +7,7 @@ using BandedMatrices
 using Printf
 
 export nsolsc
-export parab3p
 export ptcsolsc
-export printhist
 export nsold
 
 include("Tools/parab3p.jl")

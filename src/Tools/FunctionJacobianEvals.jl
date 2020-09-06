@@ -38,12 +38,12 @@ end
 
 # Default: do nothing.
 function klfact(A)
-TF=A
+TF=nofact(A)
 end
 
-#function klfact(A)
-#TF = lu(A)
-#end
+function nofact(A)
+TF = A
+end
 
 
 """

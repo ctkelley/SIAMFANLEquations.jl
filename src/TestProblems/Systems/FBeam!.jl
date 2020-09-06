@@ -89,8 +89,3 @@ D2=Tridiagonal(slo,d,sup)
 D2=D2/(dx*dx);
 return D2
 end
-
-function nofact(A)
-println("no fact")
-TF=A
-end
