@@ -53,7 +53,12 @@ export
     chandprint,
     bvpinit,
     Fbvp!,
-    Jbvp!
+    Jbvp!,
+    FBeam!,
+    FBeamtd!,
+    BeamJ!,
+    BeamtdJ!,
+    beaminit
     
 
 
@@ -64,6 +69,7 @@ include("TestProblems/Scalars/linatan.jl")
 include("TestProblems/Scalars/ftanx.jl")
 include("TestProblems/Systems/simple!.jl")
 include("TestProblems/Systems/Fbvp!.jl")
+include("TestProblems/Systems/FBeam!.jl")
 include("TestProblems/Systems/Heq4nsold.jl")
 
 end

@@ -1,11 +1,9 @@
 """
 Heq4nsold
 
-This file contains the Chandrasekhar H-equation examples
-and everything you should need to run them.
-
-It still has a couple global variables that I'm having trouble 
-making go away.
+This file contains the function/Jacobian evaluations for
+the Chandrasekhar H-equation examples and everything you should 
+need to run them.
 
 If you only want to run the examples, you should not have to look
 at the code.

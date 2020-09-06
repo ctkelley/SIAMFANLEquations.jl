@@ -91,15 +91,26 @@ Things will go better if you use this rather than hide the data
 in global variables within the module for your function/Jacobian
 
 jfact: default = klfact (tries to figure out best choice) \n
-If you have a dense Jacobian I call PrepareJac! to evaluate the
+If your Jacobian has any special structure, please set jfact
+to the correct choice for a factorization.
+
+I use jfact when I call PrepareJac! to evaluate the
 Jacobian (using your J!) and factor it. The default is to use
-klfact (and internal function) to do something reasonable. For 
-general matrices, klfact picks 
-lu! to compute an LU factorization and share storage with the
-Jacobian. klfact knows about tridiagonal and banded matrices.
-If you give me something not on klfact's list, you get lu.
-You may change LU to something else by, for example,
-setting jfact = cholseky! if your Jacobian is spd. 
+klfact (an internal function) to do something reasonable.
+For general matrices, klfact picks lu! to compute an LU factorization
+and share storage with the Jacobian.  You may change LU to something else by,
+for example, setting jfact = cholseky! if your Jacobian is spd.
+
+klfact knows about banded matrices and picks qr. You should,
+however RTFM, allocate the extra two upper bands, and use jfact=qr!
+to override klfact.
+
+If you give me something that klfact does not know how to dispatch on,
+then nothing happens. I just return the original Jacobian matrix and 
+nsold will use backslash to compute the Newton step.
+
+I know that this is probably not optimal in your situation, so it is 
+good to pick something else, like jfact = lu.
 
 Please do not mess with the line that calls PrepareJac!. 
         FPF = PrepareJac!(FPS, FS, x, ItRules)

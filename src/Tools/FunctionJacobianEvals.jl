@@ -30,11 +30,13 @@ function klfact(A::Array{T,2}) where T<:Real
 TF = lu!(A)
 end
 
+# The default is qr, because I do not trust you to allocate
+# the extra two upper bands so I can use qr!.
 function klfact(A::BandedMatrix)
 TF=qr(A)
 end
 
-#function klfact(A::Tridiagonal)
+# Default: do nothing.
 function klfact(A)
 TF=A
 end
