@@ -10,11 +10,9 @@ export nsolsc
 export ptcsolsc
 export nsold
 
-include("Tools/parab3p.jl")
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
 include("Tools/FunctionJacobianEvals.jl")
-include("Tools/FunctionDerivativeEvals.jl")
 include("Tools/ManageStats.jl")
 include("Chapter1/nsolsc.jl")
 include("Chapter1/ptcsolsc.jl")
