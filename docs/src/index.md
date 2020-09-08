@@ -8,7 +8,7 @@ for the book
 __Solving Nonlinear Equations with Iterative Methods:__
 __Solvers and Examples in Julia__
 
-__Testing github actions: second attempt__
+__Testing github actions: seems to work. A bit more to do.__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
@@ -16,9 +16,6 @@ This is version 0.2.1.
 
 __This thing is under constant revision. I think the user interfaces to
 nsolsc and ptcsolsc are stable, but you never know.__
-
-__BREAKING CHANGE__ coming for nsold.jl. I think this will be the last 
-thing to do, but I have had that opinion before.
 
 The scalar solvers and the first chapter of the notebook are done as of
 v0.1.2.
@@ -29,16 +26,19 @@ done. I'll tag v0.2.2 when the notebook is ready.
 nsold.jl, Newton with direct linear solvers, is done. I am finishing 
 the test problems now.
 
-The notebooks for Chapter 2 are nowhere close to done. The to-do list inlcudes
+ptcsold.jl, PTC with direct linear solvers. It's working and I can 
+solve the buckling beam problem.
 
-__Item 0__: Finishing the test problems and the solvers. (75% done)
+The notebooks for Chapter 2 are nowhere close to done. The to-do list includes
+
+__Item 0__: Finishing the test problems and the solvers. (85% done)
 
 1. Getting the print book part of Chapter 2 looking the way I want. (75% done)
 2. Making the formatting of Chapter 1 consistent with Chapter 2. (25% done)
-3. Fixing the API for the codes. __BREAKING change__ in the works for nsold.jl
+3. Fixing the API for the codes. Close for now (90%)
 4. Mapping the print book part of Chapter 2 to the notebook. (0% done)
 5. Completing the notebook part of Chapter 2. (10% done)
-6. Mapping the notebook part of Chapter 2 to the printbook. (0% done)
+6. Mapping the notebook part of Chapter 2 to the print book. (0% done)
 
 If all goes well, I should post a draft of everything by late September
 
@@ -64,7 +64,7 @@ nsolsc(f,x, fp=difffp)
 
 Here x is the initial iterate and fp (optional) is the function
 for evaluating the derivative. If you leave fp out, nsold uses
-a forward difference aproximation.
+a forward difference approximation.
 
 See the code overview or the notebook for details. Here are a couple 
 of simple examples.
@@ -129,9 +129,9 @@ The ideas from Chapter 1 remain important here. For systems the Newton step is t
 
 ``F'(x) s = - F(x)``
 
-This chapter is about solving the equation for the Newton step with Gaussian elimination. Infrequent reevaluation of ``F'``means that we also factor ``F'`` infrequenly, so the impact of this idea is greater. Even better, there is typically no loss in the nonlinear iteration if we do that factorization in single precision. You an make that happen by giving nsold and ptcsold the single precision storage for the Jacobian. Half precision is also possible, but is a very, very bad idea. 
+This chapter is about solving the equation for the Newton step with Gaussian elimination. Infrequent reevaluation of ``F'``means that we also factor ``F'`` infrequently, so the impact of this idea is greater. Even better, there is typically no loss in the nonlinear iteration if we do that factorization in single precision. You an make that happen by giving nsold and ptcsold the single precision storage for the Jacobian. Half precision is also possible, but is a very, very bad idea. 
 
-Bottom line: __single precision can cut the linear algebra cost in half with no loss in the quality of the solution or the number of nonlinear iterations it takes to get there.
+Bottom line: __single precision can cut the linear algebra cost in half with no loss in the quality of the solution or the number of nonlinear iterations it takes to get there.__
 
 ## Nonlinear systems with iterative linear solvers: Chapter 3
 
@@ -152,5 +152,20 @@ There are two codes for the methods in this chapter
 2. ptcsolsc.jl is pseudo-transient continuation. 
 
 ### Nonlinear systems with direct linear solvers: Chapter 2
+
+This is the same story as it was for scalar equations, 'ceptin for the
+linear algebra. The linear solvers for this chapter are the matrix
+factorizations that live in Julia/LAPACK/SuiteSparse.
+
+1. nsold.jl is is all variations of Newton's method __except__
+   pseudo transient continuation. The methods are
+   - Newton's method
+   - The Shamanskii method, where the derivative evaluation is
+     done every m iterations. ``m=1`` is Newton and ``m=\infty`` is chord.
+   - I do an Armijo line search for all the methods unless the method is
+     chord or you tell me not to.
+
+2. ptcsold.jl is pseudo-transient continuation.
+
 
 ### Nonlinear systems with iterative linear solvers: Chapter 3
