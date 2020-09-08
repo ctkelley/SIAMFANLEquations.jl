@@ -22,7 +22,7 @@ jobs:
         with:
           version: ${{ matrix.julia-version }}
       - name: Install dependencies
-        run: julia --project=docs -e '
+        run: julia --project=docs/ -e '
         using Pkg
         Pkg.add(PackageSpec(path=pwd()))
         Pkg.instantiate()'
