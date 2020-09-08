@@ -30,7 +30,8 @@ solok=(abs(ptcdata1.solution-ustable) < 1.e-10)
 funok=(abs(ptcdata1.functionval) < 1.e-12)
 histok=(length(ptcfun)==18)
 ptcdataf=ptcsolsc(sptest,u0; dt0=.1, rtol=1.e-12)
-failok=~ptcdataf.idid
+errcode=ptcdataf.errcode
+failok=~ptcdataf.idid && (errcode == 10)
 ptcok=fdok && solok && funok && histok && failok
 if ~ptcok 
    println("Failure in Scalar PTC")

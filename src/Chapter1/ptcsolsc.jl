@@ -1,6 +1,6 @@
 """
-ptcsolsc(f, x, fp=difffp; rtol=1.e-6, atol=1.e-12, fp=difffp, 
-        dt0=1.e-6, maxit=100, keepsolhist=true)
+ptcsolsc(f, x, fp=difffp; rtol=1.e-6, atol=1.e-12, 
+        dt0=1.e-6, maxit=100, printerr = true, keepsolhist=true)
 
 C. T. Kelley, 2020
 
@@ -19,7 +19,7 @@ its name. For example fp=foobar tells me that foobar is your
 function for the derivative. The default is a forward difference
 Jacobian that I provide.\n
 
-Options:\n
+Keyword Arguments:\n
 rtol, atol: real and absolute error tolerances\n
 
 dt0: initial time step. The default value of 1.e-3 is a bit conservative 
@@ -31,16 +31,24 @@ coupled to dt0. If your choice of dt0 is too small (conservative)
 then you'll need many iterations to converge and will need a larger
 value of maxit.
 
+printerr: default = true\n
+I print a helpful message when the solver fails. To supress that
+message set printerr to false.
+
 keepsolhist: if true you get the history of the iteration in the output 
 tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
-Output: A tuple (solution, functionval, history, idid, solhist) where
+Output: A tuple (solution, functionval, history, idid, errcode, solhist) where
 history is the array of absolute function values |f(x)|
 of residual norms and time steps. Unless something has gone badly wrong,
 dt approx |f(x_0)|/|f(x)|.
 
 idid=true if the iteration succeeded and false if not.
+
+errcode = 0 if if the iteration succeeded
+        = -1 if the initial iterate satisifies the termination criteria
+        = 10 if no convergence after maxit iterations
 
 solhist=entire history of the iteration if keepsolhist=true
 
@@ -71,18 +79,26 @@ function ptcsolsc(
     atol = 1.e-12,
     dt0 = 1.e-3,
     maxit = 100,
+    printerr = true,
     keepsolhist = true,
 )
     itc = 0
     idid = true
     fval = f(x)
-    tol = atol + rtol * abs(fval)
+    resnorm=abs(fval)
+    tol = atol + rtol * resnorm
     h = 1.e-7
     dt = dt0
-    ithist = [abs(fval)]
+    ithist = [resnorm]
     if keepsolhist
         solhist = [x]
     end
+    #
+    # If the initial iterate satisfies the termination criteria, tell me.
+    #
+#    toosoon = false
+#    resnorm > tol || (toosoon = true)
+    toosoon = (resnorm <= tol)
     while itc < maxit + 1 && abs(fval) > tol
         df = fpeval_newton(x, f, fval, fp, h)
         idt = 1.0 / dt
@@ -102,19 +118,23 @@ function ptcsolsc(
     end
     resnorm = abs(fval)
     #
+    errcode = 0
     if resnorm > tol
         idid = false
-        PTCError(resnorm, maxit, dt0)
+        errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
     end
+    ~toosoon || (errcode = Lottery_Winner(resnorm, tol, printerr))
     if keepsolhist
         return (
             solution = x,
             functionval = fval,
             history = ithist,
             idid = idid,
+            errcode = errcode,
             solhist = solhist,
         )
     else
-        return (solution = x, functionval = fval, history = ithist, idid = idid)
+        return (solution = x, functionval = fval, history = ithist, 
+       idid = idid, errcode=errcode)
     end
 end

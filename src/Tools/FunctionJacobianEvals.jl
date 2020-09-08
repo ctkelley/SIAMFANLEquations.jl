@@ -7,13 +7,13 @@ about the Jacobian, you can tell me what factorization to use.
 For example, if your Jacobian is spd, fact!=cholesky! would work well.
 
 """
-function PrepareJac!(FPS, FS, x, ItRules) 
+function PrepareJac!(FPS, FS, x, ItRules,dt=0) 
 F! =ItRules.f
 J! =ItRules.fp
 dx =ItRules.dx
 fact = ItRules.fact
 pdata=ItRules.pdata
-EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
+EvalJ!(FPS, FS, x, F!, J!, dx, pdata,dt)
 TF=fact(FPS)
 return TF
 end
@@ -78,17 +78,20 @@ function JV!(FPS, FS, x, J!, q::Nothing)
 end
 
 """
-EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
+EvalJ!(FPS, FS, x, F!, J!, dx, pdata,dt=0)
 
 evaluates the Jacobian before the factorization in PrepareJac!
 
 """
 
-function EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
+function EvalJ!(FPS, FS, x, F!, J!, dx, pdata, dt=0)
     if J! != diffjac!
         JV!(FPS, FS, x, J!, pdata)
     else
         diffjac!(FPS, FS, F!, x, dx, pdata)
+    end
+    if dt>0
+       FPS .= FPS + (1.0/dt)*I
     end
 end
 
