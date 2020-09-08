@@ -8,7 +8,7 @@ for the book
 __Solving Nonlinear Equations with Iterative Methods:__
 __Solvers and Examples in Julia__
 
-__Testing github actions__
+__Testing github actions: second attempt__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
