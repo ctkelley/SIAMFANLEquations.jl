@@ -22,7 +22,7 @@ jobs:
         with:
           version: ${{ matrix.julia-version }}
       - name: build this mess
-        run: import Pkg; Pkg.add("SIAMFANLEquations")
+        run: julia --project=docs -e 'import Pkg; Pkg.add("SIAMFANLEquations")'
       - name: Install dependencies
         run: julia --project=docs -e 'using Pkg; Pkg.instantiate()'
       - name: Build and deploy
