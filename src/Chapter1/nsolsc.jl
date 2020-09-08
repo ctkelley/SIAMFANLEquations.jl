@@ -75,27 +75,6 @@ observe divergence or stagnation. This is only useful for research
 or writing a book.
 
 Output:\n
-A tuple (solution, functionval, history, stats, idid, solhist) where
-history is the vector of residual norms (|f(x)|) for the iteration
-and stats is a tuple of the history of (ifun, ijac, iarm), the number
-of functions/derivatives/steplength reductions at each iteration.
-
-I do not count the function values for a finite-difference derivative
-because they count toward a Jacobian evaluation. I do count them for
-the secant method model.
-
-idid=true if the iteration succeeded and false if not.
-
-errcode = 0 if if the iteration succeeded
-        = -1 if the initial iterate satisifies the termination criteria
-        = 10 if no convergence after maxit iterations
-        = 1  if the line search failed
-
-solhist:\n
-This is the entire history of the iteration if you've set
-keepsolhist=true
-
-Output:\n
 A named tuple (solution, functionval, history, stats, idid,
                errcode, solhist)
 where
@@ -253,8 +232,9 @@ function nsolsc(
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
-    toosoon = false
-    resnorm > tol || (toosoon = true)
+#    toosoon = false
+#    resnorm > tol || (toosoon = true)
+    toosoon = (resnorm <= tol)
     #
     # The main loop stops on convergence, too many iterations, or a
     # line search failure after a derivative evaluation.

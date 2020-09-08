@@ -282,8 +282,9 @@ function nsold(
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
-    toosoon = false
-    resnorm > tol || (toosoon = true)
+#    toosoon = false
+#    resnorm > tol || (toosoon = true)
+    toosoon = (resnorm <= tol)
     #
     # The main loop stops on convergence, too many iterations, or a
     # line search failure after a derivative evaluation.

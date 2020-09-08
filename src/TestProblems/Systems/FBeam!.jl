@@ -60,17 +60,16 @@ FV .= dU + dt*FV
 end
 
 """
-beaminit(n,dt)
+beaminit(n,dt,lambda=20.0)
 
 Set up the beam problem with n interior grid points.
 """
 
-function beaminit(n,dt)
+function beaminit(n,dt,lambda=20.0)
 D2=Lap1d(n)
 dx=1.0/(n+1)
 x=collect(dx:dx:1.0-dx);
 UN=zeros(size(x))
-lambda=20.0
 bdata=(D2=D2, x=x, dx=dx, dt=dt, lambda=lambda, UN=UN)
 end
 

@@ -9,6 +9,12 @@ using Printf
 export nsolsc
 export ptcsolsc
 export nsold
+export klfact
+export EvalF!
+export ItStats
+export PrepareJac!
+export updateStats!
+export PTCError
 
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
