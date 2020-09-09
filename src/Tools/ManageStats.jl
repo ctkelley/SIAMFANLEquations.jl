@@ -9,14 +9,6 @@ function ItStats(hist)
    ItStats([1],[0],[0],[hist])
 end
 
-function updateStats!(ItData, newfun, newjac, resnorm)
-newfun = newfun + 1
-newjac = newjac + 1
-append!(ItData.ifun,newfun)
-append!(ItData.ijac,newjac)
-append!(ItData.history,resnorm)
-end
-
 function updateStats!(ItData, newfun, newjac, AOUT)
 newiarm = AOUT.aiarm
 newfun = newfun + newiarm + 1
