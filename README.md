@@ -5,6 +5,9 @@
 
 # SIAMFANLEquations version 0.2.1
 
+# One more round of major chages before tagging this version. I've moved so much of the iteration bookkeeping to the src/Tools directory that I can multiple dispatch my way to one Newton code (nsol.jl) and one PTC code (ptc.jl) without sacrificing clarity or killing myself. This change should not break anything, but will cost me some time to test it and rewrite Chapters 1 and 2. 
+
+
 This is the package with the solvers and test problems for 
 
 # Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia
@@ -152,9 +155,9 @@ The linear solvers are tuned to communicate well with nonlinear solvers. My old 
 The algorithms, listed by book chapter will be
 
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsolsc.jl
-        - Codes: __Done!__, Notebook: __Done!__
+        - Codes: __Done! Merge with Chap 2 codes in progress.__, Notebook: __Done!__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
-        - Codes: __In progress. The examples with dense and banded Jacobians work.__
+        - Codes: __Done! Merge with Chapter 1 codes in progress. The examples with dense and banded Jacobians work.__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptcsoli.jl
        - Linear solver(s): klgmres.jl and maybe klbicgstab.jl
    - Chapter 4: Anderson acceleration: aasol.jl
