@@ -83,10 +83,13 @@ The plan is, for x > 1
 __I like bug reports; I need bug reports__, but ...
 
 __Please, please__, do not send me PRs. If you find 
-   - a bug (programming or performance) in the codes,
-   - confusion, lack of clarity, or errors in the installation instructions,
-   - a factual error in the documentation/notebook, or 
-   - an error/inconsistency in the docstrings, please ...
+   1.  a bug (programming or performance) in the codes,
+   2. confusion, lack of clarity, or errors in the installation instructions,
+   3. something I could do in the user interface to help you do your work ...
+       1. that won't break other stuff or make the code opaque
+       2. or eat up lots of time,
+   4. a factual error in the documentation/notebook, or 
+   5. an error/inconsistency in the docstrings, please ...
   
  Do your choice of ... 
 
@@ -97,16 +100,18 @@ This is a book project and I need to put all changes in by hand so I'll have mus
 
 I have limited bandwidth, __so please do not send me email or open issues about__ ...
 
-   - Typos in the notebook or the docstrings. This project is far from the final proofreading stage and I want to fix those things in peace. There are many of them
-  and I do not need 100s of emails/issues about that.
-   - Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia and am on the case. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. There may be something more abstract coming at the end of the project, but that is far away from now.
-      - I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. 
-           -  Fortran + Julia = __Foolia__
-   - Organization of the repo. I'm still thinking this through. The important thing is that it make sense for the print book. I must do this work with the publisher.
-   - Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully and understand this field fairly well.
-   - Questions like "Why doesn't SIAMFANLequations.jl look/work/smell like and/or use DasKapital.jl?" The reasons are that (1) I am neither Karl nor Groucho, (2) this project has a different mission, and (3) I am working hard to limit depencencies. 
-   - Philosophy, politics, opinions, invitations to debates, ...
-   - anything else that is not bugs/facts/inconsistencies
+   1. Typos in the notebook or the docstrings. This project is far from the final proofreading stage and I want to fix those things in peace. There are many of them and I do not need 100s of emails/issues about that.
+   2. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia and am on the case. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. There may be something more abstract coming at the end of the project, but that is far away from now.
+      1. I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. 
+           1.  Fortran + Julia = __Foolia__
+   3. Organization of the repo. I'm still thinking this through. The important thing is that it make sense for the print book. I must do this work with the publisher.
+   4. Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully and understand this field fairly well.
+   5. Questions like "Why doesn't SIAMFANLequations.jl look/work/smell like and/or use DasKapital.jl?" The reasons are that
+      1. I am neither Karl nor Groucho,
+      2. this project has a different mission, and 
+      3. I am working hard to limit depencencies. 
+   6. Philosophy, politics, opinions, invitations to debates, ...
+   7. Anything else that is not bugs/facts/inconsistencies/helping you
 
 
 ## Core References and Documentation
