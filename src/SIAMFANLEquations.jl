@@ -9,12 +9,9 @@ using Printf
 export nsolsc
 export ptcsolsc
 export nsold
-export klfact
-export EvalF!
-export ItStats
-export PrepareJac!
-export updateStats!
-export PTCError
+export ptcsold
+export ptcsol
+export PTCUpdate
 
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
@@ -23,6 +20,9 @@ include("Tools/ManageStats.jl")
 include("Chapter1/nsolsc.jl")
 include("Chapter1/ptcsolsc.jl")
 include("Chapter2/nsold.jl")
+include("Chapter2/ptcsold.jl")
+include("Solvers/ptcsol.jl")
+include("Solvers/PTCUpdate.jl")
 include("PlotsTables/printhist.jl")
 include("Tools/test_evaljac.jl")
 
