@@ -5,8 +5,7 @@
 
 # SIAMFANLEquations version 0.2.1
 
-# One more round of major chages before tagging this version. I've moved so much of the iteration bookkeeping to the src/Tools directory that I can multiple dispatch my way to one Newton code (nsol.jl) and one PTC code (ptc.jl) without sacrificing clarity or killing myself. This change should not break anything, but will cost me some time to test it and rewrite Chapters 1 and 2. 
-
+# One more round of major chages before tagging this version. I can move to one Newton code (nsol.jl) and one PTC code (ptcsol.jl) without sacrificing clarity or killing myself. This change should not break anything, but will cost me some time to test it and rewrite Chapters 1 and 2. 
 
 This is the package with the solvers and test problems for 
 
