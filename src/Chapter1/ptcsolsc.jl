@@ -91,8 +91,11 @@ function ptcsolsc(
     dx = 1.e-7
     dt = dt0
     ithist = [resnorm]
+    n=length(x)
     if keepsolhist
-        solhist = [x]
+        solhist = zeros(n, maxit + 1)
+        @views solhist[:, 1] .= x
+#        solhist = [x]
     end
     #
     # If the initial iterate satisfies the termination criteria, tell me.
@@ -102,8 +105,8 @@ function ptcsolsc(
     toosoon = (resnorm <= tol)
     df=0.0
     step=0.0
-    ItRules = ( f = f, fp = fp, dx=dx)
-    while itc < maxit + 1 && abs(fval) > tol
+    ItRules = ( f = f, fp = fp, dx=dx, pdata=nothing, jfact=nothing)
+    while itc < maxit && resnorm > tol
 #
 # Take a PTC step: update the point and dt
 #
@@ -113,10 +116,13 @@ function ptcsolsc(
 #
         itc = itc + 1
         residm = resnorm
-        if keepsolhist
-            newsol = x
-            append!(solhist, newsol)
+if keepsolhist
+            @views solhist[:, itc+1] .= x
         end
+#        if keepsolhist
+#            newsol = x
+#            append!(solhist, newsol)
+#        end
         append!(ithist, resnorm)
     end
     #
@@ -133,7 +139,7 @@ function ptcsolsc(
             history = ithist,
             idid = idid,
             errcode = errcode,
-            solhist = solhist,
+            solhist = solhist[1:itc+1],
         )
     else
         return (solution = x, functionval = fval, history = ithist, 

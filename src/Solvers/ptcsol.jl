@@ -199,24 +199,7 @@ function ptcsol(
         #
         newfun = 0
         newjac = 0
-if false
-(x, dt, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, residm, dt)
-else
-        #
-        FPF = PrepareJac!(FPS, FS, x, ItRules, dt)
-        #
-        step .= -(FPF \ FS)
-        #
-        # update solution/function value
-        #
-        x .= x + step
-        EvalF!(F!, FS, x, pdata)
-        resnorm = norm(FS)
-        #
-        # Update dt
-        #
-        dt *= (residm / resnorm)
-end
+        (x, dt, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, residm, dt)
         #
         # Keep the books
         #
