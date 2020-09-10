@@ -157,7 +157,7 @@ The algorithms, listed by book chapter will be
         - Codes: __Done! Merge with Chap 2 codes in progress.__, Notebook: __Done!__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
         - Codes: __Done! Merge with Chapter 1 codes in progress. The examples with dense and banded Jacobians work.__
-   - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptcsoli.jl
+   - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsol.jl and ptcsol.jl
        - Linear solver(s): klgmres.jl and maybe klbicgstab.jl
    - Chapter 4: Anderson acceleration: aasol.jl
    - Chapter 5: Broyden's method: brsol.jl
