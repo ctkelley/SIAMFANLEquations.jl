@@ -86,6 +86,7 @@ function ptcsolsc(
     idid = true
     fval = f(x)
     resnorm=abs(fval)
+    residm=resnorm
     tol = atol + rtol * resnorm
     h = 1.e-7
     dt = dt0
@@ -99,24 +100,25 @@ function ptcsolsc(
 #    toosoon = false
 #    resnorm > tol || (toosoon = true)
     toosoon = (resnorm <= tol)
+    df=0.0
+    step=0.0
+    ItRules = ( f = f, fp = fp, h=h)
     while itc < maxit + 1 && abs(fval) > tol
-        df = fpeval_newton(x, f, fval, fp, h)
-        idt = 1.0 / dt
-        step = -fval / (idt + df)
-        x = x + step
-        fvalm = fval
-        fval = f(x)
-        # SER 
-        newhist = abs(fval)
-        dt = dt * abs(fvalm) / abs(fval)
+#
+# Take a PTC step: update the point and dt
+#
+(x, dt, fval, resnorm) = PTCUpdate(df, fval, x, ItRules, step, residm, dt)
+#
+# Keep the books
+#
         itc = itc + 1
+        residm = resnorm
         if keepsolhist
             newsol = x
             append!(solhist, newsol)
         end
-        append!(ithist, newhist)
+        append!(ithist, resnorm)
     end
-    resnorm = abs(fval)
     #
     errcode = 0
     if resnorm > tol
