@@ -5,11 +5,11 @@ on:
     branches:
       - 'master'
       - 'release-'
-    tags: '*'
     paths-ignore:
       - 'LICENSE.md'
       - 'README.md'
       - '.github/workflows/TagBot.yml'
+    tags: '*'
   pull_request:
 
 jobs:
