@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - 'master'
-      - 'release-*'
+      - 'release-'
     paths-ignore:
       - 'LICENSE.md'
       - 'README.md'
