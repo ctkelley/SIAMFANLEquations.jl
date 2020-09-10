@@ -20,9 +20,9 @@ end
 
 function PTCUpdate(df::Real, fval, x, ItRules, step, residm, dt)
         f = ItRules.f
-        h = ItRules.h
+        dx = ItRules.dx
         fp = ItRules.fp
-        df = fpeval_newton(x, f, fval, fp, h)
+        df = fpeval_newton(x, f, fval, fp, dx)
         idt = 1.0 / dt
         step = -fval / (idt + df)
         x = x + step

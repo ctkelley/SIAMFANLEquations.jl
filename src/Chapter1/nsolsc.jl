@@ -260,7 +260,7 @@ function nsolsc(
         # initialized the chord method. For secant it costs an extra function.
         #
         if evaljac
-            df = PrepareDerivative(ItRules, x, xm, fc, fm)
+            df = PrepareJac!(x, xm, fc, fm, ItRules)
             newfun += solver == "secant"
             newjac += ~(solver == "secant")
         end

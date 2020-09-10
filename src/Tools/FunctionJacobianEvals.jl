@@ -1,5 +1,5 @@
 """
-PrepareJac!(FPS::Array{T,2}, FS, x, ItRules) where T<:Real
+PrepareJac!(FPS, FS, x, ItRules, dt=0) 
 
 Compute the Jacobian and perform the factorization. If know something
 about the Jacobian, you can tell me what factorization to use. 
@@ -17,6 +17,28 @@ EvalJ!(FPS, FS, x, F!, J!, dx, pdata,dt)
 TF=fact(FPS)
 return TF
 end
+
+"""
+PrepareJac!(x::Real,xm,fc,fm,ItRules,dt=0)
+Scalar equations
+"""
+function PrepareJac!(x::Real,xm,fc,fm,ItRules,dt=0)
+newjac=0
+newfun=0
+fp=ItRules.fp
+f=ItRules.f
+dx=ItRules.dx
+solver=ItRules.solver
+if solver == "secant"
+   df = (fc - fm) / (x - xm)
+   newfun=newfun+1
+else
+   df = fpeval_newton(x, f, fc, fp, dx)
+   newjac=newjac+1
+end
+return df
+end
+
 
 """
 klfact(A)
@@ -140,7 +162,8 @@ end
 PrepareDerivative(ItRules,x,xm,fc,fm)
 Scalar equations
 """
-function PrepareDerivative(ItRules,x,xm,fc,fm)
+#function PrepareDerivative(ItRules,x,xm,fc,fm)
+function PrepareJacobian!(ItRules,x,xm,fc,fm)
 newjac=0
 newfun=0
 fp=ItRules.fp

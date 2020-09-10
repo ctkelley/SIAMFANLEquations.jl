@@ -14,7 +14,7 @@ end
 """
 BeamJ!(FP,FV,U,bdata)
 
-Jacobian for RHS of the beam problem
+Jacobian for the beam problem
 F(u) = -u'' - lambda sin(u)
 so
 F'(u) w  = D2 w - lambda cos(u) w

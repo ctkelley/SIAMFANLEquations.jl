@@ -88,7 +88,7 @@ function ptcsolsc(
     resnorm=abs(fval)
     residm=resnorm
     tol = atol + rtol * resnorm
-    h = 1.e-7
+    dx = 1.e-7
     dt = dt0
     ithist = [resnorm]
     if keepsolhist
@@ -102,7 +102,7 @@ function ptcsolsc(
     toosoon = (resnorm <= tol)
     df=0.0
     step=0.0
-    ItRules = ( f = f, fp = fp, h=h)
+    ItRules = ( f = f, fp = fp, dx=dx)
     while itc < maxit + 1 && abs(fval) > tol
 #
 # Take a PTC step: update the point and dt
