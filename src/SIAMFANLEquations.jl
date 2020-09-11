@@ -71,7 +71,7 @@ include("TestProblems/Scalars/ftanx.jl")
 include("TestProblems/Systems/simple!.jl")
 include("TestProblems/Systems/Fbvp!.jl")
 include("TestProblems/Systems/FBeam!.jl")
-include("TestProblems/Systems/Heq4nsold.jl")
+include("TestProblems/Systems/Hequation.jl")
 
 end
 
