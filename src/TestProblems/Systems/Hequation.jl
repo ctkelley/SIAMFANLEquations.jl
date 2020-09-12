@@ -24,7 +24,7 @@ function heqJ!(FP::Array{T,2}, F,  x, pdata) where T <: Real
     #
     pmu = pdata.pmu
     Gfix = pdata.gtmp
-    @views Gfix .= T.(x - F)
+    @views Gfix .= x - F
     @views Gfix .= -(Gfix .* Gfix .* pmu)
     @views @inbounds for jfp = 1:n
         FP[:, jfp] .= Gfix[:, 1] .* pseed[jfp:jfp+n-1]
@@ -70,11 +70,11 @@ function HeqFix!(Gfix, x, pdata)
 end
 
 """
-heqinit(x0::Array{T,1}, c, TJ=Float64) where T :< Real
+heqinit(x0::Array{T,1}, c) where T :< Real
 
 Initialize H-equation precomputed data.
 """
-function heqinit(x0::Array{T,1}, c, TJ=Float64) where T<: Real
+function heqinit(x0::Array{T,1}, c) where T<: Real
     n = length(x0)
     cval=ones(1,)
     cval[1]=c
@@ -83,15 +83,15 @@ function heqinit(x0::Array{T,1}, c, TJ=Float64) where T<: Real
     ssize = (2 * n - 1,)
     FFA = plan_fft(ones(bsize))
     mu = collect(0.5:1:n-0.5)
-    pmu = TJ.(mu * c)
+    pmu = mu * c
     mu = mu / n
     hseed = zeros(ssize)
     for is = 1:2*n-1
         hseed[is] = 1.0 / is
     end
     hseed = (0.5 / n) * hseed
-    pseed = TJ.(hseed)
-    gtmp = zeros(TJ, vsize)
+    pseed = hseed
+    gtmp = zeros(vsize)
     rstore = zeros(bsize)
     zstore = zeros(bsize) * (1.0 + im)
     hankel = zeros(bsize) * (1.0 + im)
