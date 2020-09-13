@@ -6,7 +6,7 @@ ptcsol(F!, x0, FS, FPS, J! = diffjac!; rtol=1.e-6, atol=1.e-12,
 C. T. Kelley, 2020
 
 Julia versions of the nonlinear solvers from my SIAM books. 
-Herewith: ptcsol
+Herewith: some new stuff ==> ptcsol
 
 You must allocate storage for the function and Jacobian in advance
 --> in the calling program <-- ie. in FS and FPS
@@ -20,6 +20,8 @@ Inputs:\n
 - x0: initial iterate\n
 
 - FS: Preallcoated storage for function. It is an N x 1 column vector\n
+      You may dimension it as (n,) or (n,1). (n,) is best, but the
+      solvers can deal with it either way.
 
 - FPS: preallcoated storage for Jacobian. It is an N x N matrix\n
 
@@ -72,7 +74,7 @@ jfact: default = klfact (tries to figure out best choice) \n
 If your Jacobian has any special structure, please set jfact
 to the correct choice for a factorization.
 
-I use jfact when I call PrepareJac! to evaluate the
+I use jfact when I call PTCUpdate to evaluate the
 Jacobian (using your J!) and factor it. The default is to use
 klfact (an internal function) to do something reasonable.
 For general matrices, klfact picks lu! to compute an LU factorization
@@ -89,15 +91,6 @@ ptcsol will use backslash to compute the Newton step.
 
 I know that this is probably not optimal in your situation, so it is 
 good to pick something else, like jfact = lu.
-
-Please do not mess with the line that calls PrepareJac!. 
-        FPF = PrepareJac!(FPS, FS, x, ItRules,dt)
-PrePareJac! builds F'(u) + (1/dt)I, factors it, and sends ptcsol that
-factorization.
-
-FPF is not the same as FPS (the storage you allocate for the Jacobian)
-for a reason. FPF and FPS do not have the same type, even though they
-share storage. So, FPS=PrepareJac!(FPS, FS, ...) will break things.
 
 printerr: default = true\n
 I print a helpful message when the solver fails. To supress that
@@ -152,31 +145,22 @@ function ptcsol(
 )
     itc = 0
     idid = true
-    iline = false
     #
-    #    First evaluation of the function. 
+    #   Initialize the iteration
+    #   As with the other codes, ItRules packages all the details of
+    #   the problem so it's easy to pass them around. 
     #
-    x = zeros(size(x0))
-    n = length(x0)
-    x .= x0
-    if keepsolhist
-        solhist = zeros(n, maxit + 1)
-        @views solhist[:, 1] .= x
-    end
+    (ItRules, x, n) = PTCinit(x0, dx, F!, J!, pdata, jfact)
+    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
+    #
+    # First Evaluation of the function. Initialize the iteration history.
+    # Fix the tolerances for convergence and define the derivative FPF
+    # outside of the main loop for scoping.
+    #    
     EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     ithist = [resnorm]
     residm = resnorm
-    ItRules = (dx = dx, f = F!, fp = J!, pdata = pdata, fact = jfact)
-    #
-    # Initialize the iteration statistics
-    #   
-    newfun = 0
-    newjac = 0
-    #
-    # Fix the tolerances for convergence and define the derivative FPF
-    # outside of the main loop for scoping.
-    #    
     tol = rtol * resnorm + atol
     FPF = []
     #
@@ -186,8 +170,7 @@ function ptcsol(
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
-    toosoon = false
-    resnorm > tol || (toosoon = true)
+    toosoon = (resnorm <= tol)
     #
     # The main loop stops on convergence, too many iterations, or a
     # line search failure after a derivative evaluation.
@@ -197,8 +180,6 @@ function ptcsol(
         #   
         # Evaluate and factor the Jacobian.   
         #
-        newfun = 0
-        newjac = 0
         (x, dt, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, residm, dt)
         #
         # Keep the books
@@ -206,9 +187,7 @@ function ptcsol(
         append!(ithist, resnorm)
         residm = resnorm
         itc += 1
-        if keepsolhist
-            @views solhist[:, itc+1] .= x
-        end
+        ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     solution = x
     functionval = FS
@@ -238,3 +217,5 @@ function ptcsol(
         )
     end
 end
+
+

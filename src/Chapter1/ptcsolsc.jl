@@ -1,6 +1,6 @@
 """
-ptcsolsc(f, x, fp=difffp; rtol=1.e-6, atol=1.e-12, 
-        dt0=1.e-6, maxit=100, printerr = true, keepsolhist=true)
+ptcsolsc(f, x0, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=100,
+        dt0=1.e-6, dx=1.e-7, printerr = true, keepsolhist=true)
 
 C. T. Kelley, 2020
 
@@ -22,14 +22,18 @@ Jacobian that I provide.\n
 Keyword Arguments:\n
 rtol, atol: real and absolute error tolerances\n
 
-dt0: initial time step. The default value of 1.e-3 is a bit conservative 
-and is one option you really should play with. Look at the example
-where I set it to 1.0!\n
-
 maxit: upper bound on number of nonlinear iterations. This is 
 coupled to dt0. If your choice of dt0 is too small (conservative)
 then you'll need many iterations to converge and will need a larger
 value of maxit.
+
+dt0: initial time step. The default value of 1.e-3 is a bit conservative 
+and is one option you really should play with. Look at the example
+where I set it to 1.0!\n
+
+dx: default = 1.e-7\n
+difference increment in finite-difference derivatives
+      h=dx*norm(x)+1.e-6
 
 printerr: default = true\n
 I print a helpful message when the solver fails. To supress that
@@ -73,39 +77,33 @@ julia> [ptcout.solhist ptcout.history]
 """
 function ptcsolsc(
     f,
-    x,
+    x0,
     fp = difffp;
     rtol = 1.e-6,
     atol = 1.e-12,
-    dt0 = 1.e-3,
     maxit = 100,
+    dt0 = 1.e-3,
+    dx = 1.e-7,
     printerr = true,
-    keepsolhist = true,
+    keepsolhist = true
 )
     itc = 0
     idid = true
-    fval = f(x)
-    resnorm=abs(fval)
-    residm=resnorm
-    tol = atol + rtol * resnorm
-    dx = 1.e-7
-    dt = dt0
-    ithist = [resnorm]
-    n=length(x)
-    if keepsolhist
-        solhist = zeros(n, maxit + 1)
-        @views solhist[:, 1] .= x
-#        solhist = [x]
-    end
+    (ItRules, x, n)=PTCinit(x0, dx, f, fp, nothing, nothing)
+    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
-#    toosoon = false
-#    resnorm > tol || (toosoon = true)
+    fval = f(x)
+    resnorm=abs(fval)
+    residm=resnorm
+    ithist = [resnorm]
+    tol = atol + rtol * resnorm
     toosoon = (resnorm <= tol)
     df=0.0
     step=0.0
-    ItRules = ( f = f, fp = fp, dx=dx, pdata=nothing, jfact=nothing)
+#    ItRules = ( f = f, fp = fp, dx=dx, pdata=nothing, jfact=nothing)
+    dt = dt0
     while itc < maxit && resnorm > tol
 #
 # Take a PTC step: update the point and dt
@@ -116,22 +114,22 @@ function ptcsolsc(
 #
         itc = itc + 1
         residm = resnorm
-if keepsolhist
-            @views solhist[:, itc+1] .= x
-        end
+        ~keepsolhist || (@views solhist[:, itc+1] .= x)
 #        if keepsolhist
-#            newsol = x
-#            append!(solhist, newsol)
+#            @views solhist[:, itc+1] .= x
 #        end
         append!(ithist, resnorm)
     end
     #
     errcode = 0
-    if resnorm > tol
-        idid = false
-        errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
-    end
-    ~toosoon || (errcode = Lottery_Winner(resnorm, tol, printerr))
+    resfail = (resnorm > tol)
+    idid = ~(resfail || toosoon)
+    errcode = 0
+#    if ~idid
+#        errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
+#    end
+~(resfail || toosoon) || 
+     (errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr))
     if keepsolhist
         return (
             solution = x,
