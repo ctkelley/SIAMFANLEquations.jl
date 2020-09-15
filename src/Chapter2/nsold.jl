@@ -237,10 +237,7 @@ function nsold(
     x = zeros(size(x0))
     n = length(x0)
     x .= x0
-    if keepsolhist
-        solhist = zeros(n, maxit + 1)
-        @views solhist[:, 1] .= x
-    end
+    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
     EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     ItRules = (
@@ -339,9 +336,7 @@ function nsold(
         updateStats!(ItData, newfun, newjac, AOUT)
         newiarm = AOUT.aiarm
         itc += 1
-        if keepsolhist
-            @views solhist[:, itc+1] .= x
-        end
+        ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     solution = x
     functionval = FS

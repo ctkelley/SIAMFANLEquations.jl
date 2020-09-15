@@ -151,7 +151,7 @@ function ptcsol(
     #   the problem so it's easy to pass them around. 
     #
     (ItRules, x, n) = PTCinit(x0, dx, F!, J!, pdata, jfact)
-    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
+    keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
     #
     # First Evaluation of the function. Initialize the iteration history.
     # Fix the tolerances for convergence and define the derivative FPF
@@ -160,9 +160,7 @@ function ptcsol(
     EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     ithist = [resnorm]
-    residm = resnorm
     tol = rtol * resnorm + atol
-    FPF = []
     #
     # Preallocate a vector for the step
     #
@@ -172,50 +170,29 @@ function ptcsol(
     #
     toosoon = (resnorm <= tol)
     #
-    # The main loop stops on convergence, too many iterations, or a
-    # line search failure after a derivative evaluation.
+    # The main loop stops on convergence or too many iterations.
     #
     dt = dt0
     while resnorm > tol && itc < maxit
         #   
-        # Evaluate and factor the Jacobian.   
+        # Evaluate and factor the Jacobian; update x, F(x), and dt.  
         #
-        (x, dt, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, residm, dt)
+       (x, dt, FS, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, resnorm, dt)
         #
         # Keep the books
         #
         append!(ithist, resnorm)
-        residm = resnorm
         itc += 1
         ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
-    solution = x
-    functionval = FS
     resfail = (resnorm > tol)
     idid = ~(resfail || toosoon)
     errcode = 0
     if ~idid
         errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
     end
-    if keepsolhist
-        sizehist = itc + 1
-        return (
-            solution = x,
-            functionval = FS,
-            history = ithist,
-            idid = idid,
-            errcode = errcode,
-            solhist = solhist[:, 1:sizehist],
-        )
-    else
-        return (
-            solution = x,
-            functionval = FS,
-            history = ithist,
-            idid = idid,
-            errcode = errcode,
-        )
-    end
+itout=PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist)
+return(itout)
 end
 
 

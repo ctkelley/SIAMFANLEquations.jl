@@ -90,57 +90,38 @@ function ptcsolsc(
     itc = 0
     idid = true
     (ItRules, x, n)=PTCinit(x0, dx, f, fp, nothing, nothing)
-    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
+#    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
+    keepsolhist ?  (solhist=solhistinit(n, maxit, x)) : (solhist=[])
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
     fval = f(x)
     resnorm=abs(fval)
-    residm=resnorm
     ithist = [resnorm]
     tol = atol + rtol * resnorm
     toosoon = (resnorm <= tol)
     df=0.0
     step=0.0
-#    ItRules = ( f = f, fp = fp, dx=dx, pdata=nothing, jfact=nothing)
     dt = dt0
     while itc < maxit && resnorm > tol
 #
 # Take a PTC step: update the point and dt
 #
-(x, dt, fval, resnorm) = PTCUpdate(df, fval, x, ItRules, step, residm, dt)
+(x, dt, fval, resnorm) = PTCUpdate(df, fval, x, ItRules, step, resnorm, dt)
 #
 # Keep the books
 #
-        itc = itc + 1
-        residm = resnorm
-        ~keepsolhist || (@views solhist[:, itc+1] .= x)
-#        if keepsolhist
-#            @views solhist[:, itc+1] .= x
-#        end
         append!(ithist, resnorm)
+        itc += 1
+        ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     #
     errcode = 0
     resfail = (resnorm > tol)
     idid = ~(resfail || toosoon)
     errcode = 0
-#    if ~idid
-#        errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
-#    end
-~(resfail || toosoon) || 
+    ~(resfail || toosoon) || 
      (errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr))
-    if keepsolhist
-        return (
-            solution = x,
-            functionval = fval,
-            history = ithist,
-            idid = idid,
-            errcode = errcode,
-            solhist = solhist[1:itc+1],
-        )
-    else
-        return (solution = x, functionval = fval, history = ithist, 
-       idid = idid, errcode=errcode)
-    end
+    itout=PTCClose(x, fval, ithist, idid, errcode, keepsolhist, solhist)
+    return(itout)
 end

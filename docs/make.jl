@@ -7,6 +7,9 @@ format = Documenter.HTML(
            ),
 pages = Any[
      "Home" => "index.md",
+     "Solvers" => Any[
+       "functions/ptcsol.md",
+       ],
      "Scalar Equations" => Any[
        "functions/nsolsc.md",
        "functions/ptcsolsc.md",

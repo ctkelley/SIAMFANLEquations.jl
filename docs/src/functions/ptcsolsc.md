@@ -1,4 +1,4 @@
-# ptcsolsc: pseuto-transient continuation
+# ptcsolsc: pseudo-transient continuation
 ```@docs
 ptcsolsc(x,f)
 ```

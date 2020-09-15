@@ -33,7 +33,7 @@ function PTCUpdate(FPS::AbstractArray, FS, x, ItRules, step, residm, dt)
     # Update dt
     #
     dt *= (residm / resnorm)
-    return (x, dt, resnorm)
+    return (x, dt, FS, resnorm)
 end
 
 """
@@ -42,7 +42,7 @@ PTCUpdate(df::Real, fval, x, ItRules, step, residm, dt)
 PTC for scalar equations. 
 """
 
-function PTCUpdate(df::Real, fval, x, ItRules, step, residm, dt)
+function PTCUpdate(df::Real, fval, x, ItRules, step, resnorm, dt)
     f = ItRules.f
     dx = ItRules.dx
     fp = ItRules.fp
@@ -52,15 +52,19 @@ function PTCUpdate(df::Real, fval, x, ItRules, step, residm, dt)
     x = x + step
     fval = f(x)
     # SER
+    residm = resnorm
     resnorm = abs(fval)
     dt *= (residm / resnorm)
     return (x, dt, fval, resnorm)
 end
 
+#
+# These functions work fine with both scalar and vector equations.
+#
+
 function PTCinit(x0, dx, F!, J!, pdata, jfact)
     #
     #   Initialize the iteration.
-    #   This seems to work for scalar equations too.
     #
     n = length(x0)
     x = copy(x0)
@@ -69,7 +73,34 @@ function PTCinit(x0, dx, F!, J!, pdata, jfact)
 end
 
 function solhistinit(n, maxit, x)
+#
+# If you are keeping a solution history, make some room for it.
+#
     solhist = zeros(n, maxit + 1)
     @views solhist[:, 1] .= x
     return solhist
 end
+
+function PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist=[])
+if keepsolhist
+        sizehist = length(ithist)
+        return (
+            solution = x,
+            functionval = FS,
+            history = ithist,
+            idid = idid,
+            errcode = errcode,
+            solhist = solhist[:, 1:sizehist],
+        )
+    else
+        return (
+            solution = x,
+            functionval = FS,
+            history = ithist,
+            idid = idid,
+            errcode = errcode,
+        )
+    end
+end
+
+
