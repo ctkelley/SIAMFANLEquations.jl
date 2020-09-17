@@ -238,7 +238,7 @@ function nsold(
     n = length(x0)
     x .= x0
     ~keepsolhist || (solhist=solhistinit(n, maxit, x))
-    EvalF!(F!, FS, x, pdata)
+    FS=EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     ItRules = (
         solver = solver,

@@ -89,16 +89,20 @@ function ptcsolsc(
 )
     itc = 0
     idid = true
+    fval=1.0
     (ItRules, x, n)=PTCinit(x0, dx, f, fp, nothing, nothing)
-#    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
     keepsolhist ?  (solhist=solhistinit(n, maxit, x)) : (solhist=[])
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
-    fval = f(x)
+#    fval = f(x)
+    fval=EvalF!(f, fval, x)
     resnorm=abs(fval)
     ithist = [resnorm]
     tol = atol + rtol * resnorm
+    #
+    # If the initial iterate satisfies the termination criteria, tell me.
+    #
     toosoon = (resnorm <= tol)
     df=0.0
     step=0.0

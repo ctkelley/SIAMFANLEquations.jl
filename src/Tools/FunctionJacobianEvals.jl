@@ -77,10 +77,16 @@ about this.
 """
 function EvalF!(F!, FS, x, q::Nothing)
         F!(FS, x)
+        return FS
 end
 
 function EvalF!(F!, FS, x, pdata)
         F!(FS, x, pdata)
+        return FS
+end
+
+function EvalF!(F!, FS, x::Real)
+         return FS = F!(x)
 end
 
 
@@ -159,10 +165,9 @@ end
 
 
 """
-PrepareDerivative(ItRules,x,xm,fc,fm)
+PrepareJacobian!(ItRules,x,xm,fc,fm)
 Scalar equations
 """
-#function PrepareDerivative(ItRules,x,xm,fc,fm)
 function PrepareJacobian!(ItRules,x,xm,fc,fm)
 newjac=0
 newfun=0
