@@ -87,6 +87,7 @@ __I like bug reports; I need bug reports__, but ...
 __Please, please__, do not send me PRs. If you find 
    1.  a bug (programming or performance) in the codes,
    2. confusion, lack of clarity, or errors in the installation instructions,
+       1. I would __really like__ some Windows users to try this stuff, especially the notebooks.
    3. something I could do in the user interface to help you do your work ...
        1. that won't break other stuff or make the code opaque
        2. or eat up lots of time,
