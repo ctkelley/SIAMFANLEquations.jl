@@ -1,10 +1,10 @@
-module SIAMFANLEquations
-using LinearAlgebra
+module SIAMFANLEquations using LinearAlgebra
 using LinearAlgebra.BLAS
 using SparseArrays
 using SuiteSparse
 using BandedMatrices
 using Printf
+using Requires
 
 export nsolsc
 export ptcsolsc
@@ -71,8 +71,7 @@ include("TestProblems/Systems/simple!.jl")
 include("TestProblems/Systems/Fbvp!.jl")
 include("TestProblems/Systems/FBeam!.jl")
 include("TestProblems/Systems/Hequation.jl")
-
-
 end
+
 
 end # module
