@@ -11,7 +11,7 @@
 *.tar
 *.zip
 docs/build/
-Manifest.toml
+#Manifest.toml
 src/Archive
 src/FALocalTesting
 GoAway
