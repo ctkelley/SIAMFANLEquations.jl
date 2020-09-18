@@ -66,9 +66,10 @@ If __log(version_number) < 0__ there's trouble!
 This is version v0.2.1.
 - __New stuff__ = __Chapter 2__: Systems of equations with direct linear solvers .
 - nsold.jl is in the package with about 50% of the test problems and it works. __User interface changes frequently.__
-- ptcsold.jl is in the works. PTC is a really simple algorithm, so it won't take long once the test problem(s) are done.
+- ptcsol.jl is in the works and a working code is in the Solvers directory. PTC is a really simple algorithm, so it won't take long once the test problem(s) are done. I think 
+I can fix this so that it also works for scalar equations, which means that ptcsolsc.jl will become a stub.
 - The notebook is at least a few weeks from being finished. 
-- The scalar code, nsolsc.jl is done for a while.
+- The scalar code, nsolsc.jl is done for a while unless I can put most of its functionality in a new nsol.jl, which is likely.
 
 I have released version v0.1.2. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapter 1 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. I have not stopped working on Chapter 1 and add new things all the time. 
 
@@ -86,7 +87,7 @@ __I like bug reports; I need bug reports__, but ...
 
 __Please, please__, do not send me PRs. If you find 
    1.  a bug (programming or performance) in the codes,
-   2. confusion, lack of clarity, or errors in the installation instructions,
+   2. confusion, lack of clarity, or __errors in the installation instructions__,
        1. I would __really like__ some Windows users to try this stuff, especially the notebooks.
    3. something I could do in the user interface to help you do your work ...
        1. that won't break other stuff or make the code opaque
@@ -114,7 +115,7 @@ I have limited bandwidth, __so please do not send me email or open issues about_
       2. this project has a different mission, and 
       3. I am working hard to limit depencencies. 
    6. Philosophy, politics, opinions, invitations to debates, ...
-   7. Anything else that is not bugs/facts/inconsistencies/helping you
+   7. Anything else that is not bugs, facts, inconsistencies or helping you use the codes
 
 
 ## Core References and Documentation
