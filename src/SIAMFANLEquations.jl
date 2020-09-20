@@ -4,7 +4,6 @@ using SparseArrays
 using SuiteSparse
 using BandedMatrices
 using Printf
-using Requires
 
 export nsolsc
 export ptcsolsc
