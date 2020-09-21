@@ -167,7 +167,7 @@ function ptcsol(
     #
     # Preallocate a vector for the step
     #
-    step = zeros(size(x))
+    step = copy(x)
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
@@ -188,12 +188,13 @@ function ptcsol(
         itc += 1
         ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
-    resfail = (resnorm > tol)
-    idid = ~(resfail || toosoon)
-    errcode = 0
-    if ~idid
-        errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
-    end
+#    resfail = (resnorm > tol)
+#    idid = ~(resfail || toosoon)
+#    errcode = 0
+#    if ~idid
+#        errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
+#    end
+(idid, errcode) = PTCOK(resnorm, tol, toosoon, ItRules, printerr)
 itout=PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist)
 return(itout)
 end
