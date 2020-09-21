@@ -54,7 +54,11 @@ errcode = 0 if if the iteration succeeded
         = -1 if the initial iterate satisifies the termination criteria
         = 10 if no convergence after maxit iterations
 
-solhist=entire history of the iteration if keepsolhist=true
+solhist=entire history of the iteration if keepsolhist=true\n
+ptcsolsc builds solhist with a function from the Tools directory. For
+systems, solhist is an N x K array where N is the length of x and K 
+is the number of iteration + 1. So, for scalar equations (N=1), solhist
+is a row vector.
 
 If the iteration fails it's time to play with the tolerances, dt0, and maxit.
 You are certain to fail if there is no stable solution to the equation.

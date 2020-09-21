@@ -124,7 +124,10 @@ errcode = 0 if if the iteration succeeded
 
 solhist:\n
 This is the entire history of the iteration if you've set
-keepsolhist=true
+keepsolhist=true\n 
+solhist is an N x K array where N is the length of x and K is the number
+of iteration + 1. So, for scalar equations, it's a row vector.
+
 
 """
 function ptcsol(

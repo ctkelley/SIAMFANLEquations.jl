@@ -98,7 +98,11 @@ errcode = 0 if if the iteration succeeded
 
 solhist:\n
 This is the entire history of the iteration if you've set
-keepsolhist=true
+keepsolhist=true\n
+nsolsc builds solhist with a function from the Tools directory. For
+systems, solhist is an N x K array where N is the length of x and K 
+is the number of iteration + 1. So, for scalar equations (N=1), solhist
+is a row vector.
 
 
 # Examples
