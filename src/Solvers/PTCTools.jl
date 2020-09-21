@@ -62,13 +62,14 @@ end
 # These functions work fine with both scalar and vector equations.
 #
 
-function PTCinit(x0, dx, F!, J!, pdata, jfact)
+function PTCinit(x0, dx, F!, J!, dt0, maxit, pdata, jfact)
     #
     #   Initialize the iteration.
     #
     n = length(x0)
     x = copy(x0)
-    ItRules = (dx = dx, f = F!, fp = J!, pdata = pdata, fact = jfact)
+    ItRules = (dx = dx, f = F!, fp = J!, dt0=dt0, 
+           maxit=maxit, pdata = pdata, fact = jfact)
     return (ItRules, x, n)
 end
 
@@ -79,6 +80,19 @@ function solhistinit(n, maxit, x)
     solhist = zeros(n, maxit + 1)
     @views solhist[:, 1] .= x
     return solhist
+end
+
+function PTCOK(resnorm, tol, toosoon, ItRules, printerr)
+maxit=ItRules.maxit
+dt0=ItRules.dt0
+errcode = 0
+resfail = (resnorm > tol)
+idid = ~(resfail || toosoon)
+errcode = 0
+if ~idid
+    (errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr))
+end
+return (idid, errcode)
 end
 
 function PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist=[])

@@ -153,7 +153,7 @@ function ptcsol(
     #   As with the other codes, ItRules packages all the details of
     #   the problem so it's easy to pass them around. 
     #
-    (ItRules, x, n) = PTCinit(x0, dx, F!, J!, pdata, jfact)
+    (ItRules, x, n) = PTCinit(x0, dx, F!, J!, dt0, maxit, pdata, jfact)
     keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
     #
     # First Evaluation of the function. Initialize the iteration history.

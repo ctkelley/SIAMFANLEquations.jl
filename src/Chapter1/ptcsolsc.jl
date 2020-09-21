@@ -89,47 +89,41 @@ function ptcsolsc(
     dt0 = 1.e-3,
     dx = 1.e-7,
     printerr = true,
-    keepsolhist = true
+    keepsolhist = true,
 )
     itc = 0
     idid = true
-    fval=1.0
-    (ItRules, x, n)=PTCinit(x0, dx, f, fp, nothing, nothing)
-    keepsolhist ?  (solhist=solhistinit(n, maxit, x)) : (solhist=[])
+    fval = 1.0
+    (ItRules, x, n) = PTCinit(x0, dx, f, fp, dt0, maxit, nothing, nothing)
+    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
-#    fval = f(x)
-    fval=EvalF!(f, fval, x)
-    resnorm=abs(fval)
+    fval = EvalF!(f, fval, x)
+    resnorm = abs(fval)
     ithist = [resnorm]
     tol = atol + rtol * resnorm
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
     toosoon = (resnorm <= tol)
-    df=0.0
-    step=0.0
+    df = 0.0
+    step = 0.0
     dt = dt0
     while itc < maxit && resnorm > tol
-#
-# Take a PTC step: update the point and dt
-#
-(x, dt, fval, resnorm) = PTCUpdate(df, fval, x, ItRules, step, resnorm, dt)
-#
-# Keep the books
-#
+        #
+        # Take a PTC step: update the point and dt
+        #
+     (x, dt, fval, resnorm) = PTCUpdate(df, fval, x, ItRules, step, resnorm, dt)
+        #
+        # Keep the books
+        #
         append!(ithist, resnorm)
         itc += 1
         ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     #
-    errcode = 0
-    resfail = (resnorm > tol)
-    idid = ~(resfail || toosoon)
-    errcode = 0
-    ~(resfail || toosoon) || 
-     (errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr))
-    itout=PTCClose(x, fval, ithist, idid, errcode, keepsolhist, solhist)
-    return(itout)
+    (idid, errcode) = PTCOK(resnorm, tol, toosoon, ItRules, printerr)
+    itout = PTCClose(x, fval, ithist, idid, errcode, keepsolhist, solhist)
+    return (itout)
 end
