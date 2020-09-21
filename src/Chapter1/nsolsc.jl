@@ -254,7 +254,7 @@ function nsolsc(
         # reduction ratio is too large. This logic is a bit tedious, so I
         # put it in a function. See src/Tools/test_evaljac.jl
         #
-        #        evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
+        #   evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
         #        chordinit = (solver == "chord") && itc == 0
         #        evaljac = (evaljacit && solver == "newton") || chordinit ||
         #            solver == "secant"
