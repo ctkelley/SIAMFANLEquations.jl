@@ -41,13 +41,20 @@ The new book with have a different algorithm mix and the solvers and examples wi
 This package has been tested on Julia 1.4 and 1.5. __It no longer works on 1.0!__ Before mid-September __I will make changes that only 1.5 supports.__
 You have been warned. 
 
-Type this in the REPL to install
+Type this 
 
 ```
 ] add https://github.com/ctkelley/SIAMFANLEquations.jl
 ```
 
-then, as usual
+or this
+
+```
+import Pkg; Pkg.add(url="https://github.com/ctkelley/SIAMFANLEquations.jl")
+```
+in the REPL to install the package.
+
+Then, as usual
 ```
 using SIAMFANLequations
 ```
