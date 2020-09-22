@@ -12,7 +12,7 @@ export ptcsold
 export ptcsol
 export PTCinit
 
-include("Tools/armijo.jl")
+include("Tools/armijo.jl") 
 include("Tools/PrintError.jl")
 include("Tools/FunctionJacobianEvals.jl")
 include("Tools/ManageStats.jl")
@@ -32,6 +32,7 @@ using BandedMatrices
 using AbstractFFTs
 using FFTW
 using Printf
+using SIAMFANLEquations
 
 export
     #Functions
@@ -58,7 +59,8 @@ export
     FBeamtd!,
     BeamJ!,
     BeamtdJ!,
-    beaminit
+    beaminit,
+    ptctest
     
 
 include("TestProblems/Scalars/fcos.jl")
@@ -70,6 +72,7 @@ include("TestProblems/Systems/simple!.jl")
 include("TestProblems/Systems/Fbvp!.jl")
 include("TestProblems/Systems/FBeam!.jl")
 include("TestProblems/Systems/Hequation.jl")
+include("Examples/ptctest.jl")
 end
 
 
