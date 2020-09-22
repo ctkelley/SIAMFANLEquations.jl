@@ -49,7 +49,7 @@ function ivpBeam(n, dt, stepnum)
             JB,
             BeamtdJ!;
             pdata = bdata,
-            atol = 1.e-6,
+            atol = 1.e-10,
             rtol = 1.e-6,
             maxit = 3,
             solver = "chord",
@@ -65,9 +65,9 @@ function ivpBeam(n, dt, stepnum)
         push!(fhistt, nout.history[end])
 #
 # If the predictor satisfies the termination criterion, advance
-# in time anyhow.
+# in time anyhow?
 #
-        idid=abs(idid)
+#        idid=abs(idid)
     end
     t = dt * collect(1:1:idt)
     zp=zeros(idt,);
