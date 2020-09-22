@@ -1,28 +1,12 @@
 """
-function beam_test()
-Test the time-dependent and steady state beam problem.
-
-"""
-function beam_test()
-#
-dt=.02; n=20; stepnum=5
-(t, se, xe, fhist, fhistt) =  beamivp(n, dt, stepnum)
-beamtdout= (length(fhist)==6) && (norm(fhistt,Inf) < 5.e-5)
-(pout, nout) = ptcBeam(10,100);
-nsolp=norm(pout.solution); nsoln=norm(nout.solution); 
-itp=length(pout.history)
-pnormok=(nsolp > 5.0) && (nsoln < 1.e-15)
-presok=(itp < 100) && (pout.history[itp] < 1.e-10)
-return beamtdout && pnormok && presok
-end
-
-"""
-beamivp(n, dt, stepnum)
+ivpBeam(n, dt, stepnum)
 Solve the time-dependent beam problem. Return the iteration history
 for the figure and the tables.
 
+We use the same initial data as in the PTC example, ptcBeam.jl
+
 """
-function beamivp(n, dt, stepnum)
+function ivpBeam(n, dt, stepnum)
 #
 # Set up the initial data for the temporal integration and
 # the figure.
@@ -34,7 +18,8 @@ function beamivp(n, dt, stepnum)
     zr = zeros(n - 1)
     JB = Tridiagonal(zr, zd, zr)
     x = bdata.x
-    un = (1.e-4) * x .* (1.0 .- x)
+    un=x.*(1.0 .- x).*(2.0 .- x)
+    un .*= exp.(-10.0*un)
     bdata.UN .= un
     nout = []
     solhist = zeros(n, stepnum + 1)
@@ -46,9 +31,7 @@ function beamivp(n, dt, stepnum)
     fx = FBeam!(FR, un, bdata)
     fxn = norm(fx, Inf)
     fxt = FBeamtd!(FR, un, bdata)
-    fxtn = norm(fxt)
     push!(fhist, fxn)
-    push!(fhistt, fxtn)
     #
     # Take stepnum time steps and accumulate the data for the book.
     # The integration will terminate prematurely if the nonlinear solve fails.
@@ -80,6 +63,11 @@ function beamivp(n, dt, stepnum)
         fxn = norm(fx, Inf)
         push!(fhist, fxn)
         push!(fhistt, nout.history[end])
+#
+# If the predictor satisfies the termination criterion, advance
+# in time anyhow.
+#
+        idid=abs(idid)
     end
     t = dt * collect(1:1:idt)
     zp=zeros(idt,);

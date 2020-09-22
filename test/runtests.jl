@@ -1,5 +1,6 @@
 using SIAMFANLEquations
 using SIAMFANLEquations.TestProblems
+using SIAMFANLEquations.Examples
 using Test
 using LinearAlgebra
 

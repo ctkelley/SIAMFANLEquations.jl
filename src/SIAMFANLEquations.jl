@@ -1,4 +1,5 @@
-module SIAMFANLEquations using LinearAlgebra
+module SIAMFANLEquations 
+using LinearAlgebra
 using LinearAlgebra.BLAS
 using SparseArrays
 using SuiteSparse
@@ -8,9 +9,9 @@ using Printf
 export nsolsc
 export ptcsolsc
 export nsold
-export ptcsold
+#export ptcsold
 export ptcsol
-export PTCinit
+#export PTCinit
 
 include("Tools/armijo.jl") 
 include("Tools/PrintError.jl")
@@ -32,7 +33,6 @@ using BandedMatrices
 using AbstractFFTs
 using FFTW
 using Printf
-using SIAMFANLEquations
 
 export
     #Functions
@@ -72,8 +72,18 @@ include("TestProblems/Systems/simple!.jl")
 include("TestProblems/Systems/Fbvp!.jl")
 include("TestProblems/Systems/FBeam!.jl")
 include("TestProblems/Systems/Hequation.jl")
-include("Examples/ptctest.jl")
 end
 
+module Examples
+using SIAMFANLEquations
+using SIAMFANLEquations.TestProblems
+using LinearAlgebra
+
+export ptcBeam
+export ivpBeam
+
+include("Examples/ptcBeam.jl")
+include("Examples/ivpBeam.jl")
+end
 
 end # module
