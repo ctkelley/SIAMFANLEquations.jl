@@ -81,9 +81,13 @@ using LinearAlgebra
 
 export ptcBeam
 export ivpBeam
+export BVP_solve
+export nsolheq
 
 include("Examples/ptcBeam.jl")
 include("Examples/ivpBeam.jl")
+include("Examples/BVP_solve.jl")
+include("Examples/Internal/nsolheq.jl")
 end
 
 end # module

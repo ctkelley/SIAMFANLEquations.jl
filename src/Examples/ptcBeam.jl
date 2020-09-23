@@ -2,11 +2,11 @@
 ptcBeam(n, maxit, dt=.01, lambda=20.0; precision=Float64)
 
 Test PTC for systems on the buckling beam problem.
+Compare to Newton, which will converge to the unstable solution.
 """
 function ptcBeam(n, maxit, dt=.01, lambda=20.0; precision=Float64)
 bdata=beaminit(n,dt,lambda)
 x=bdata.x
-u0=x.*(1.0 .- x).^2
 u0=x.*(1.0 .- x).*(2.0 .- x)
 peak=exp.(-10.0*u0)
 u0 .*= peak
