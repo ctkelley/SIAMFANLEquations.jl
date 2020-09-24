@@ -14,6 +14,10 @@ This documentation is sketchy and designed to get you going, but the real deal i
 
 This is version 0.2.1. 
 
+I am making changes to the way I've organized the solvers. This will
+make the rest of the project go faster and reduce the size of the 
+code base. It is also eating up a lot of time.
+
 __This thing is under constant revision. I think the user interfaces to
 nsolsc and ptcsolsc are stable, but you never know.__
 
@@ -23,11 +27,14 @@ v0.1.2.
 Chapter 2 is under construction and I'll tag this when the solvers are 
 done. I'll tag v0.2.2 when the notebook is ready.
 
-nsold.jl, Newton with direct linear solvers, is done. I am finishing 
+nsol.jl, Newton with direct linear solvers, is done. I am finishing 
 the test problems now.
 
-ptcsold.jl, PTC with direct linear solvers. It's working and I can 
+ptcsol.jl, PTC with direct linear solvers. It's working and I can 
 solve the buckling beam problem.
+
+ptcsolsc.jl is a wrapper for ptcsol.jl. I am working on the scalar Newton
+solver nsolsc.jl to do the same thing.
 
 The notebooks for Chapter 2 are nowhere close to done. The to-do list includes
 
@@ -37,10 +44,10 @@ __Item 0__: Finishing the test problems and the solvers. (85% done)
 2. Making the formatting of Chapter 1 consistent with Chapter 2. (25% done)
 3. Fixing the API for the codes. Close for now (90%)
 4. Mapping the print book part of Chapter 2 to the notebook. (0% done)
-5. Completing the notebook part of Chapter 2. (10% done)
+5. Completing the notebook part of Chapter 2. (20% done)
 6. Mapping the notebook part of Chapter 2 to the print book. (0% done)
 
-If all goes well, I should post a draft of everything by late September
+If all goes well, I should post a draft of everything by late October.
 
 Once item 0 is done I will tag v0.2.1.
 
@@ -157,7 +164,7 @@ This is the same story as it was for scalar equations, 'ceptin for the
 linear algebra. The linear solvers for this chapter are the matrix
 factorizations that live in Julia/LAPACK/SuiteSparse.
 
-1. nsold.jl is is all variations of Newton's method __except__
+1. nsol.jl is is all variations of Newton's method __except__
    pseudo transient continuation. The methods are
    - Newton's method
    - The Shamanskii method, where the derivative evaluation is
@@ -165,7 +172,10 @@ factorizations that live in Julia/LAPACK/SuiteSparse.
    - I do an Armijo line search for all the methods unless the method is
      chord or you tell me not to.
 
-2. ptcsold.jl is pseudo-transient continuation.
+2. ptcsol.jl is pseudo-transient continuation.
 
 
 ### Nonlinear systems with iterative linear solvers: Chapter 3
+
+1. The plan is to make this part of nsol and ptcsol. That is one 
+reason for the code reorganization I'm doing now.

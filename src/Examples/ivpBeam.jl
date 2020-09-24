@@ -42,7 +42,7 @@ function ivpBeam(n, dt, stepnum)
     # we are getting close to steady state.
     #
     while idt <= stepnum && idid && fxn > 1.e-12
-        nout = nsold(
+        nout = nsol(
             FBeamtd!,
             un,
             FB,

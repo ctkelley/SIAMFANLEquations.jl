@@ -1,7 +1,7 @@
 """
 basic2d_test()
 
-Test nsold with the simple 2D problem.
+Test nsol with the simple 2D problem.
 
 """
 function basic2d_test()
@@ -13,8 +13,8 @@ jsv = zeros(Float32,2,2);
 #
 # single vs double Jacobian
 #
-nout=nsold(basic2d!,x0,fv,jv; rtol=1.e-10);
-sout=nsold(basic2d!,x0,fv,jsv);
+nout=nsol(basic2d!,x0,fv,jv; rtol=1.e-10);
+sout=nsol(basic2d!,x0,fv,jsv);
 dss=norm(nout.solution-sout.solution)
 hss=norm(nout.history-sout.history)
 singleok=(norm(dss) < 1.e-7) && (norm(hss) < 1.e-7)
@@ -24,7 +24,7 @@ end
 #
 # chord vs Newton
 #
-cout=nsold(basic2d!,x0,fv,jv; solver="chord");
+cout=nsol(basic2d!,x0,fv,jv; solver="chord");
 dsc=norm(nout.solution-cout.solution)
 lch=length(cout.history)
 lnh=length(nout.history)
@@ -36,7 +36,7 @@ end
 #
 # Analytic vs finite-difference Jacobian
 #
-eout=nsold(basic2d!,x0,fv,jv,jbasic2d!)
+eout=nsol(basic2d!,x0,fv,jv,jbasic2d!)
 fdok = (norm(eout.history-nout.history) < 1.e-6 ) && 
        (norm(eout.solution-nout.solution) < 1.e-10 ) 
 if ~fdok
@@ -45,10 +45,10 @@ end
 #
 # Shamanskii
 #
-s1out=nsold(basic2d!,x0,fv,jv; sham=2, rtol=1.e-10);
+s1out=nsol(basic2d!,x0,fv,jv; sham=2, rtol=1.e-10);
 dout1=norm(s1out.solution - nout.solution)
 jevals1=sum(s1out.stats.ijac)
-s2out=nsold(basic2d!,x0,fv,jv; sham=2, rtol=1.e-10, resdec=.5);
+s2out=nsol(basic2d!,x0,fv,jv; sham=2, rtol=1.e-10, resdec=.5);
 jevals2=sum(s2out.stats.ijac)
 dout2=norm(s2out.solution - nout.solution)
 shamok=(dout1 < 1.e-10) && (dout2 < 1.e-10) && (jevals1==4) && (jevals2==3)
@@ -62,9 +62,9 @@ x0a=[2, .5];
 FS=zeros(2,);
 FPS=zeros(2,2);
 FPSS=zeros(Float32,2,2);
-nouta=nsold(simple!, x0a, FS, FPS; keepsolhist=true);
-noutb=nsold(simple!, x0a, FS, FPSS, jsimple!; keepsolhist=true);
-noutc=nsold(simple!, x0a, FS, FPSS, jsimple!; armmax=0);
+nouta=nsol(simple!, x0a, FS, FPS; keepsolhist=true);
+noutb=nsol(simple!, x0a, FS, FPSS, jsimple!; keepsolhist=true);
+noutc=nsol(simple!, x0a, FS, FPSS, jsimple!; armmax=0);
 iarm=nouta.stats.iarm
 iarm2=noutc.idid
 armok = (iarm[2]==2) && ~iarm2

@@ -1,5 +1,5 @@
 """
-    nsold(F!, x0, FS, FPS, J!=diffjac!; rtol=1.e-6, atol=1.e-12,
+    nsol(F!, x0, FS, FPS, J!=diffjac!; rtol=1.e-6, atol=1.e-12,
                maxit=20, solver="newton", sham=1, armmax=10, resdec=.1,
                dx = 1.e-7, armfix=false, 
                pdata = nothing, jfact = klfact,
@@ -9,7 +9,7 @@
 C. T. Kelley, 2020
 
 Julia versions of the nonlinear solvers from my SIAM books. 
-Herewith: nsold
+Herewith: nsol
 
 You must allocate storage for the function and Jacobian in advance
 --> in the calling program <-- ie. in FS and FPS
@@ -37,7 +37,7 @@ Inputs:\n
 
     Lemme tell ya 'bout precision. I designed this code for full precision
     functions and linear algebra in any precision you want. You can declare
-    FPS as Float64, Float32, or Float16 and nsold will do the right thing if
+    FPS as Float64, Float32, or Float16 and nsol will do the right thing if
     YOU do not destroy the declaration in your J! function. I'm amazed
     that this works so easily. If the Jacobian is reasonably well 
     conditioned, I can see no reason to do linear algebra in 
@@ -107,7 +107,7 @@ to override klfact.
 
 If you give me something that klfact does not know how to dispatch on,
 then nothing happens. I just return the original Jacobian matrix and 
-nsold will use backslash to compute the Newton step.
+nsol will use backslash to compute the Newton step.
 
 I know that this is probably not optimal in your situation, so it is 
 good to pick something else, like jfact = lu.
@@ -172,7 +172,7 @@ iteration + 1. So, for scalar equations, it's a row vector.
 f (generic function with 1 method)
 
 julia> x=ones(2,); fv=zeros(2,); jv=zeros(2,2);
-julia> nout=nsold(f!,x,fv,jv);
+julia> nout=nsol(f!,x,fv,jv);
 julia> nout.history
 5-element Array{Float64,1}:
  1.88791e+00
@@ -193,7 +193,7 @@ julia> nout.solution
 ```jldoctest
 julia> n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n);
 julia> hdata=heqinit(x0, .5);
-julia> hout=nsold(heqf!,x0,FV,JV;pdata=hdata);
+julia> hout=nsol(heqf!,x0,FV,JV;pdata=hdata);
 julia> hout.history
 3-element Array{Float64,1}:
  6.17376e-01
@@ -201,7 +201,7 @@ julia> hout.history
  6.22034e-08
 ```
 """
-function nsold(
+function nsol(
     F!,
     x0,
     FS,

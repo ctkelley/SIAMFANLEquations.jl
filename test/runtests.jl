@@ -14,7 +14,7 @@ include("Chapter2/beam_test.jl")
    @test nsolsc_solution_test()
    @test ptcsolsc_test()
 end
-@testset "nsold: Chapter 2" begin
+@testset "nsol and ptcsol: Chapter 2" begin
     @test basic2d_test()
     @test bvp_test(201)
     @test beam_test()

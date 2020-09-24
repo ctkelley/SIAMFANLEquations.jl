@@ -15,7 +15,8 @@ pages = Any[
        "functions/ptcsolsc.md",
        ],
      "Systems with Direct Linear Solvers" => Any[
-       "functions/nsold.md",
+       "functions/nsol.md",
+       "functions/ptcsol.md",
       ]
      
 ]

@@ -12,7 +12,7 @@ FPS=ones(n,n);
 FPSS=ones(Float32,n,n);
 hdata = heqinit(x0, c)
 nsoloutfd=nsolheq(x0, FS, FPS, hdata)
-nsoloutbos=nsold(heqbos!, x0, FS, FPS; pdata = c);
+nsoloutbos=nsol(heqbos!, x0, FS, FPS; pdata = c);
 dbos=norm(nsoloutbos.solution-nsoloutfd.solution)
 bosok=dbos<1.e-7
 if ~bosok
@@ -33,8 +33,8 @@ end
 #
 h5=nsoloutfd.solution
 setc!(hdata,.7)
-nsoldoutfd7=nsolheq(h5, FS, FPS, hdata)
-contok = (nsoldoutfd7.history[4] < 1.e-12)
+nsoloutfd7=nsolheq(h5, FS, FPS, hdata)
+contok = (nsoloutfd7.history[4] < 1.e-12)
 if ~contok
     println("Update c test fails in H-equation")
 end

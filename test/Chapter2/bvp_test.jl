@@ -1,7 +1,7 @@
 """
 bvp_test()
 
-Test nsold on the boundary value problem from Chapter 2 with
+Test nsol on the boundary value problem from Chapter 2 with
 the LAPACK band solver.
 
 Compare two small grids.
