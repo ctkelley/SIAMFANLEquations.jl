@@ -62,19 +62,24 @@ enables you to use the codes. You'll need
 ```
 using SIAMFANLEquations.TestProblems
 ```
-to run the test problems.
-
+to run the test problems. Then there the examples you get with
+```
+using SIAMFANLEquations.Examples
+```
+for the unit tests, the examples in the book, and the notebook.
 
 
 ## Meaning of version numbers
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.2.1.
+This is version v0.2.1. I am reorganizing the code base. This will take some time but once done, the rest of the project will go faster.
 - __New stuff__ = __Chapter 2__: Systems of equations with direct linear solvers .
-- nsold.jl is in the package with about 50% of the test problems and it works. __User interface changes frequently.__
-- ptcsol.jl is in the works and a working code is in the Solvers directory. PTC is a really simple algorithm, so it won't take long once the test problem(s) are done. I think 
-I can fix this so that it also works for scalar equations, which means that ptcsolsc.jl will become a stub.
+
+    -  nsol.jl is in the Solvers directory. Most of the test problems are done and it works. I am getting it to work for scalar equations so nsolsc will be a stub like ptcsolsc is now.
+
+     - ptcsol.jl is and the code is in the Solvers directory. I have fixed this so that it also works for scalar equations, which means that ptcsolsc.jl is now just a stub. Look at the source.
+
 - The notebook is at least a few weeks from being finished. 
 - The scalar code, nsolsc.jl is done for a while unless I can put most of its functionality in a new nsol.jl, which is likely.
 
@@ -82,11 +87,11 @@ I have released version v0.1.2. The codes can now duplicate the examples (at lea
 
 The plan is, for x > 1
 
--- v0.x.1 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 0.x.y for y > 2 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
+- v0.x.1 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 0.x.y for y > 2 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
 
--- I will formally register the package no earlier than version 0.2.1 and no later than version 0.2.2. 
+- I will formally register the package no earlier than version 0.2.1 and no later than version 0.2.2. 
 
--- v1.0.0 goes out when the print book is published. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
+- v1.0.0 goes out when the print book is published. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
 ## Pull Requests
 
@@ -97,7 +102,7 @@ __Please, please__, do not send me PRs. If you find
    2. confusion, lack of clarity, or __errors in the installation instructions__,
        1. I would __really like__ some Windows users to try this stuff, especially the notebooks.
    3. something I could do in the user interface to help you do your work ...
-       1. that won't break other stuff or make the code opaque
+       1. that won't break other stuff or make the code or __user interface__ opaque to a novice
        2. or eat up lots of time,
    4. a factual error in the documentation/notebook, or 
    5. an error/inconsistency in the docstrings, please ...
