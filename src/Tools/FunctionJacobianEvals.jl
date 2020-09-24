@@ -171,27 +171,6 @@ return(xt, FS, resnorm)
 end
 
 
-#"""
-#PrepareJacobian!(ItRules,x,xm,fc,fm)
-#Scalar equations
-#"""
-#function PrepareJacobian!(ItRules,x,xm,fc,fm)
-#newjac=0
-#newfun=0
-#fp=ItRules.fp
-#f=ItRules.f
-#dx=ItRules.dx
-#solver=ItRules.solver
-#if solver == "secant"
-#   df = (fc - fm) / (x - xm)
-#   newfun=newfun+1
-#else
-#   df = fpeval_newton(x, f, fc, fp, dx)
-#   newjac=newjac+1
-#end
-#return df
-#end
-
 function UpdateIteration(xt::T, xm, ft, lambda, d, ItRules) where T <: Real
 f=ItRules.f
 xt = xm + lambda * d
@@ -208,7 +187,9 @@ Evaluates f' by differences or the user's code.
 
 """
 function fpeval_newton(x, f, fc, fp, h)
-    if fp == difffp
+fps=string(fp)
+dps=string(difffp)
+    if fps == dps
         df = difffp(x, f, fc, h)
     else
         df = fp(x) 

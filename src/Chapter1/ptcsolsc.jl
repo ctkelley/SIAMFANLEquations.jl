@@ -9,7 +9,10 @@ stable steady state solutions of
 
 dx/dt = - f(x)
 
-It is ABSOLUTELY NOT a general purpose nonlinear solver.
+The scalar code is a simple wrapper around a call to ptcsol.jl, the 
+PTC solver for systems.
+
+--> PTC is ABSOLUTELY NOT a general purpose nonlinear solver.
 
 Input:\n
 f: function\n
@@ -58,7 +61,8 @@ solhist=entire history of the iteration if keepsolhist=true\n
 ptcsolsc builds solhist with a function from the Tools directory. For
 systems, solhist is an N x K array where N is the length of x and K 
 is the number of iteration + 1. So, for scalar equations (N=1), solhist
-is a row vector.
+is a row vector. Hence I use [ptcout.solhist' ptcout.history] in the
+example below.
 
 If the iteration fails it's time to play with the tolerances, dt0, and maxit.
 You are certain to fail if there is no stable solution to the equation.
@@ -67,7 +71,7 @@ You are certain to fail if there is no stable solution to the equation.
 ```jldoctest
 julia> ptcout=ptcsolsc(sptest,.2;dt0=2.0,rtol=1.e-3,atol=1.e-3);
 
-julia> [ptcout.solhist ptcout.history]
+julia> [ptcout.solhist' ptcout.history]
 7×2 Array{Float64,2}:
  2.00000e-01  9.20000e-02
  9.66666e-01  4.19962e-01
@@ -91,39 +95,16 @@ function ptcsolsc(
     printerr = true,
     keepsolhist = true,
 )
-    itc = 0
-    idid = true
-    fval=1.0
-    (ItRules, x, n) = PTCinit(x0, dx, f, fp, dt0, maxit, nothing, nothing)
-    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
-    #
-    # If the initial iterate satisfies the termination criteria, tell me.
-    #
-    fval = EvalF!(f, fval, x)
-    resnorm = abs(fval)
-    ithist = [resnorm]
-    tol = atol + rtol * resnorm
-    #
-    # If the initial iterate satisfies the termination criteria, tell me.
-    #
-    toosoon = (resnorm <= tol)
-    df = 0.0
-    step = 0.0
-    dt = dt0
-    while itc < maxit && resnorm > tol
-        #
-        # Take a PTC step: update the point and dt
-        #
-     (x, dt, fval, resnorm) = PTCUpdate(df, fval, x, ItRules, step, resnorm, dt)
-        #
-        # Keep the books
-        #
-        append!(ithist, resnorm)
-        itc += 1
-        ~keepsolhist || (@views solhist[:, itc+1] .= x)
-    end
-    #
-    (idid, errcode) = PTCOK(resnorm, tol, toosoon, ItRules, printerr)
-    itout = PTCClose(x, fval, ithist, idid, errcode, keepsolhist, solhist)
-    return (itout)
+#
+# The scalar code is a simple wrapper for the real code (ptcsol). The
+# wrapper puts placeholders for the memory allocations and the precomputed
+# data.
+#
+fp0=copy(x0)
+fpp0=copy(x0)
+zdata=[]
+itout=ptcsol(f,x0,fp0,fpp0,fp;
+             rtol=rtol,atol=atol,maxit=maxit,dt0=dt0,dx=dx,
+             pdata=zdata,printerr=printerr,keepsolhist=keepsolhist)
+return itout
 end

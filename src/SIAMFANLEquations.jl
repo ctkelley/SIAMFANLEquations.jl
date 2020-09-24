@@ -9,9 +9,7 @@ using Printf
 export nsolsc
 export ptcsolsc
 export nsold
-#export ptcsold
 export ptcsol
-#export PTCinit
 
 include("Tools/armijo.jl") 
 include("Tools/PrintError.jl")
