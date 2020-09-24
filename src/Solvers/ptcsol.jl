@@ -160,7 +160,7 @@ function ptcsol(
     # Fix the tolerances for convergence and define the derivative FPF
     # outside of the main loop for scoping.
     #    
-    EvalF!(F!, FS, x, pdata)
+    FS=EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     ithist = [resnorm]
     tol = rtol * resnorm + atol

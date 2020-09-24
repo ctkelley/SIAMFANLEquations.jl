@@ -86,8 +86,15 @@ function EvalF!(F!, FS, x, pdata)
         return FS
 end
 
-function EvalF!(F!, FS, x::Real)
-         return FS = F!(x)
+function EvalF!(F!, FS::Real, x::Real)
+         FS = F!(x)
+         return FS
+end
+
+function EvalF!(F!, FS::Real, x::Real, pdata)
+        FS = F!(x)
+println("x = ",x,"   f = ",FS)
+        return FS 
 end
 
 

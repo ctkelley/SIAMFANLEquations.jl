@@ -93,7 +93,7 @@ function ptcsolsc(
 )
     itc = 0
     idid = true
-    fval = 1.0
+    fval=1.0
     (ItRules, x, n) = PTCinit(x0, dx, f, fp, dt0, maxit, nothing, nothing)
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     #
