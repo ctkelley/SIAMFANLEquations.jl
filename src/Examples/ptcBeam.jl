@@ -8,8 +8,7 @@ function ptcBeam(n, maxit, dt=.01, lambda=20.0; precision=Float64)
 bdata=beaminit(n,dt,lambda)
 x=bdata.x
 u0=x.*(1.0 .- x).*(2.0 .- x)
-peak=exp.(-10.0*u0)
-u0 .*= peak
+u0 .*= exp.(-10.0*u0)
 FS=copy(u0)
 FPS=precision.(copy(bdata.D2))
 bout=ptcsol(FBeam!, u0, FS, FPS, BeamJ!; 

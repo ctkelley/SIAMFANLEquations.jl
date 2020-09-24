@@ -102,7 +102,7 @@ keepsolhist=true\n
 nsolsc builds solhist with a function from the Tools directory. For
 systems, solhist is an N x K array where N is the length of x and K 
 is the number of iteration + 1. So, for scalar equations (N=1), solhist
-is a row vector.
+is a row vector. Hence the use of solhist' in the example below.
 
 
 # Examples
@@ -143,7 +143,7 @@ julia> fs(x)=x^2-4.0; fsp(x)=2x;
 
 julia> nsolout=nsolsc(fs,1.0,fsp; maxit=5,atol=1.e-9,rtol=1.e-9);
 
-julia> [nsolout.solhist.-2 nsolout.history]
+julia> [nsolout.solhist'.-2 nsolout.history]
 6×2 Array{Float64,2}:
  -1.00000e+00  3.00000e+00
   5.00000e-01  2.25000e+00
@@ -173,6 +173,7 @@ function nsolsc(
     stagnationok = false,
 )
     itc = 0
+    n=length(x)
     idid = true
     errcode=0
     iline = false
@@ -222,9 +223,7 @@ function nsolsc(
     newjac = 0
     newsol = x
     xt = x
-    if keepsolhist
-        solhist = [x]
-    end
+    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
     #
     # Fix the tolerances for convergence and define the derivative df
     # outside of the main loop for scoping.
@@ -298,10 +297,7 @@ function nsolsc(
         updateStats!(ItData, newfun, newjac, AOUT)
         #
         itc += 1
-        if keepsolhist
-            newsol = x
-            append!(solhist, newsol)
-        end
+    ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     solution = x
     fval = fc
@@ -320,7 +316,7 @@ function nsolsc(
             stats = stats,
             idid = idid,
             errcode = errcode,
-            solhist = solhist,
+            solhist = solhist[:, 1:itc+1],
         )
     else
         return (
