@@ -93,7 +93,6 @@ end
 
 function EvalF!(F!, FS::Real, x::Real, pdata)
         FS = F!(x)
-println("x = ",x,"   f = ",FS)
         return FS 
 end
 
