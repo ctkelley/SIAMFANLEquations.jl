@@ -188,12 +188,6 @@ function ptcsol(
         itc += 1
         ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
-#    resfail = (resnorm > tol)
-#    idid = ~(resfail || toosoon)
-#    errcode = 0
-#    if ~idid
-#        errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
-#    end
 (idid, errcode) = PTCOK(resnorm, tol, toosoon, ItRules, printerr)
 itout=PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist)
 return(itout)

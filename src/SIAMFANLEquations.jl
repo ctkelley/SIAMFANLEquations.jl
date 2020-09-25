@@ -22,6 +22,7 @@ include("Solvers/ptcsol.jl")
 include("Solvers/nsol.jl")
 include("PlotsTables/printhist.jl")
 include("Tools/test_evaljac.jl")
+include("Tools/NewtonIterationManagement.jl")
 
 module TestProblems
 using LinearAlgebra

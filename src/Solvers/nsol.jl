@@ -236,52 +236,34 @@ function nsol(
     Shamanskii tells me to, at the first iteration (duh!), and when
     the rate of residual reduction is below the target value of resdec.
     =#
-    x = zeros(size(x0))
-    n = length(x0)
-    x .= x0
-    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
-    FS=EvalF!(F!, FS, x, pdata)
-    resnorm = norm(FS)
-    ItRules = (
-        solver = solver,
-        sham = sham,
-        armmax = armmax,
-        armfix = armfix,
-        resdec = resdec,
-        dx = dx,
-        f = F!,
-        fp = J!,
-        pdata = pdata,
-        fact = jfact,
-    )
-
+    (ItRules, x, n) = Newtoninit(x0, dx, F!, J!, solver, sham, 
+         armmax, armfix, resdec, maxit, printerr, pdata, jfact)
+    keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
     #
-    # Initialize the iteration statistics
-    #   
-    newiarm = -1
-    ItData = ItStats(resnorm)
-    newfun = 0
-    newjac = 0
-    #
+    # First Evaluation of the function. Initialize the iteration stats.
     # Fix the tolerances for convergence and define the derivative FPF
     # outside of the main loop for scoping.
-    #    
+    #   
+    FS=EvalF!(F!, FS, x, pdata)
+    resnorm = norm(FS)
     tol = rtol * resnorm + atol
+    FPF = []
+    ItData = ItStats(resnorm)
+    newiarm = -1
+    newfun = 0
+    newjac = 0
     derivative_is_old = false
     residratio = 1.0
-    FPF = []
     armstop = true
     #
     # Preallocate a few vectors for the step, trial step, trial function
     #
-    step = zeros(size(x))
-    xt = zeros(size(x))
-    FT = zeros(size(x))
+    step=copy(x)
+    xt=copy(x)
+    FT=copy(x)
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
-#    toosoon = false
-#    resnorm > tol || (toosoon = true)
     toosoon = (resnorm <= tol)
     #
     # The main loop stops on convergence, too many iterations, or a
@@ -301,21 +283,18 @@ function nsol(
         # reduction ratio is too large. This leads to a tedious barrage
         # of conditionals that I have parked in a function.
         #
-        #        evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
-        #        chordinit = (solver == "chord") && itc == 0
-        #        evaljac = test_evaljac(itc, solver, sham, newiarm, residratio, resdec)
         evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         if evaljac
             FPF = PrepareJac!(FPS, FS, x, ItRules)
             newjac += 1
         end
         derivative_is_old = (newjac == 0) && (solver == "newton")
-        #        derivative_is_old = ~evaljacit && (solver == "newton")
         step .= -(FPF \ FS)
         #
         # Compute the trial point, evaluate F and the residual norm.     
         #
-        AOUT = armijosc(xt, x, FT, FS, step, resnorm, ItRules, derivative_is_old)
+        AOUT = armijosc(xt, x, FT, FS, step, resnorm, ItRules, 
+                derivative_is_old)
         #
         # update solution/function value
         #
@@ -341,33 +320,10 @@ function nsol(
     end
     solution = x
     functionval = FS
-    resfail = (resnorm > tol)
-    idid = ~(resfail || iline || toosoon)
-    errcode=0
-    if ~idid 
-        errcode= NewtonError(resfail, iline, resnorm, toosoon, tol,
-                        itc, maxit, armmax, printerr)
-    end
+    (idid, errcode)=NewtonOK(resnorm, iline, tol, toosoon, itc, 
+            ItRules)
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
-    if keepsolhist
-        sizehist = itc + 1
-        return (
-            solution = x,
-            functionval = FS,
-            history = ItData.history,
-            stats = stats,
-            idid = idid,
-            errcode = errcode,
-            solhist = solhist[:, 1:sizehist],
-        )
-    else
-        return (
-            solution = x,
-            functionval = FS,
-            history = ItData.history,
-            stats = stats,
-            idid = idid,
-            errcode = errcode
-        )
-    end
+    newtonout=NewtonClose(x, FS, ItData.history, stats,
+             idid, errcode, keepsolhist, solhist)
+    return newtonout
 end

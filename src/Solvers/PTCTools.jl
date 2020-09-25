@@ -82,6 +82,9 @@ function solhistinit(n, maxit, x)
     return solhist
 end
 
+"""
+PTCOK: Figure out idid and errcode
+"""
 function PTCOK(resnorm, tol, toosoon, ItRules, printerr)
 maxit=ItRules.maxit
 dt0=ItRules.dt0
@@ -95,6 +98,10 @@ end
 return (idid, errcode)
 end
 
+
+"""
+PTCOKClose: package the output of ptcsol
+"""
 function PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist=[])
 if keepsolhist
         sizehist = length(ithist)
