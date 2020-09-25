@@ -1,5 +1,5 @@
 """
-nsolsc(f,x, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
+nsolsc(f,x0, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
         solver="newton", sham=1, armmax=10, resdec=.1, dx=1.e-7,
         armfix=false, 
         printerr=true, keepsolhist=true, stagnationok=false)
@@ -11,7 +11,7 @@ code for systems of equations needs.
 
 Input:\n 
 f: function\n 
-x: initial iterate\n
+x0: initial iterate\n
 fp: derivative. If your derivative function is fp, you give me
 its name. For example fp=foobar tells me that foobar is your
 function for the derivative. The default is a forward difference
@@ -157,7 +157,7 @@ julia> [nsolout.solhist'.-2 nsolout.history]
 """
 function nsolsc(
     f,
-    x,
+    x0,
     fp = difffp;
     rtol = 1.e-6,
     atol = 1.e-12,
@@ -173,7 +173,6 @@ function nsolsc(
     stagnationok = false,
 )
     itc = 0
-    n=length(x)
     idid = true
     errcode=0
     iline = false
@@ -189,11 +188,11 @@ function nsolsc(
      things go south with no interference. Please don't do that as
      standard procedure and, if you do, don't blame me.
     =#
-    fc = f(x)
+    fc = f(x0)
     fm = fc
-    xm = x
+    xm = copy(x0)
     if solver == "secant"
-        xm = x * 1.0001
+        xm = x0 * 1.0001
         if xm == 0
             xm = 0.0001
         end
@@ -203,6 +202,14 @@ function nsolsc(
     end
     derivative_is_old = false
     resnorm = abs(fc)
+if true
+pdata=nothing
+jfact=nothing
+(ItRules, x, n) = Newtoninit(x0, dx, f, fp, solver, sham,
+         armmax, armfix, resdec, maxit, printerr, pdata, jfact)
+else
+    n=length(x0)
+    x = copy(x0)
     ItRules = (
         solver = solver,
         sham = sham,
@@ -213,6 +220,7 @@ function nsolsc(
         f = f,
         fp = fp,
     )
+end
     #
     # Initialize the iteration statistics
     #
@@ -235,8 +243,6 @@ function nsolsc(
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
-#    toosoon = false
-#    resnorm > tol || (toosoon = true)
     toosoon = (resnorm <= tol)
     #
     # The main loop stops on convergence, too many iterations, or a
@@ -253,10 +259,6 @@ function nsolsc(
         # reduction ratio is too large. This logic is a bit tedious, so I
         # put it in a function. See src/Tools/test_evaljac.jl
         #
-        #   evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
-        #        chordinit = (solver == "chord") && itc == 0
-        #        evaljac = (evaljacit && solver == "newton") || chordinit ||
-        #            solver == "secant"
         evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         # 
         # We've evaluated a derivative if the solver is Newton or we just
@@ -297,7 +299,7 @@ function nsolsc(
         updateStats!(ItData, newfun, newjac, AOUT)
         #
         itc += 1
-    ~keepsolhist || (@views solhist[:, itc+1] .= x)
+    keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
     end
     solution = x
     fval = fc
@@ -308,24 +310,7 @@ function nsolsc(
                     itc, maxit, armmax,printerr)
     end
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
-    if keepsolhist
-        return (
-            solution = solution,
-            functionval = fval,
-            history = ItData.history,
-            stats = stats,
-            idid = idid,
-            errcode = errcode,
-            solhist = solhist[:, 1:itc+1],
-        )
-    else
-        return (
-            solution = solution,
-            functionval = fval,
-            history = ItData.history,
-            stats = stats,
-            idid = idid,
-            errcode = errcode
-        )
-    end
+    newtonout=NewtonClose(x, fval, ItData.history, stats,
+             idid, errcode, keepsolhist, solhist)
+    return newtonout
 end
