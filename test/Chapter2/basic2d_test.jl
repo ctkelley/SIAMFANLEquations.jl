@@ -58,7 +58,7 @@ end
 #
 # Global convergence
 #
-x0a=[2, .5];
+x0a=[2., .5];
 FS=zeros(2,);
 FPS=zeros(2,2);
 FPSS=zeros(Float32,2,2);

@@ -14,27 +14,26 @@ You must allocate storage for the function and Jacobian in advance
 Inputs:\n
 - F!: function evaluation, the ! indicates that F! overwrites FS, your
     preallocated storage for the function.\n
-
-    FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
+    So, FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
 
 - x0: initial iterate\n
 
-- FS: Preallcoated storage for function. It is an N x 1 column vector\n
-      You may dimension it as (n,) or (n,1). (n,) is best, but the
-      solvers can deal with it either way.
+- FS: Preallcoated storage for function. It is an N x 1 column vector.\n
+You may dimension it as (n,) or (n,1). (n,) is best, but the
+solvers can deal with it either way.
 
 - FPS: preallcoated storage for Jacobian. It is an N x N matrix\n
 
 - J!: Jacobian evaluation, the ! indicates that J! overwrites FPS, your
     preallocated storage for the Jacobian. If you leave this out the
     default is a finite difference Jacobian.\n
-
-    FP=J!(FP,FV,x) or FP=J!(FP,FV,x,pdata) returns FP=F'(x);
+    So, FP=J!(FP,FV,x) or FP=J!(FP,FV,x,pdata) returns FP=F'(x);
     (FP,FV, x) must be the argument list, even if FP does not need FV.
     One reason for this is that the finite-difference Jacobian
     does and that is the default in the solver.
 
-    Lemme tell ya 'bout precision. I designed this code for full precision
+- Precision: Lemme tell ya 'bout precision. I designed this code for 
+    full precision
     functions and linear algebra in any precision you want. You can declare
     FPS as Float64, Float32, or Float16 and ptcsol will do the right thing if
     YOU do not destroy the declaration in your J! function. I'm amazed
