@@ -1,4 +1,4 @@
 # nsolsc: scalar equation solver
 ```@docs
-nsolsc(x,f)
+nsolsc(f,x)
 ```

@@ -19,10 +19,11 @@ return TF
 end
 
 """
-PrepareJac!(x::Real,xm,fc,fm,ItRules,dt=0)
+PrepareJac!(fc::Real, fm, x, xm, ItRules, dt=0)
 Scalar equations
 """
-function PrepareJac!(x::Real,xm,fc,fm,ItRules,dt=0)
+function PrepareJac!(fc::Real, fm, x, xm, ItRules, dt=0)
+#function PrepareJac!(x::Real,xm,fc,fm,ItRules,dt=0)
 newjac=0
 newfun=0
 fp=ItRules.fp

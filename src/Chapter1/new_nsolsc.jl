@@ -200,98 +200,13 @@ function nsolsc(
         sham = 1
         fp = difffp
     end
-    derivative_is_old = false
-    resnorm = abs(fc)
-pdata=nothing
-jfact=nothing
-stagflag = stagnationok && (armmax==0)
-(ItRules, x, n) = Newtoninit(x0, dx, f, fp, solver, sham,
-         armmax, armfix, resdec, maxit, printerr, pdata, jfact)
-    #
-    # Initialize the iteration statistics
-    #
-    newiarm = -1
-    ItData = ItStats(resnorm)
-    newfun = 0
-    newjac = 0
-    newsol = x
-    xt = x
-    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
-    #
-    # Fix the tolerances for convergence and define the derivative df
-    # outside of the main loop for scoping.
-    #
-    tol = rtol * resnorm + atol
-    residratio = 1
-    df = 0.0
-    armstop = true
-    #
-    # If the initial iterate satisfies the termination criteria, tell me.
-    #
-    toosoon = (resnorm <= tol)
-    #
-    # The main loop stops on convergence, too many iterations, or a
-    # line search failure after a derivative evaluation.
-    #
-    while (resnorm > tol) && (itc < maxit) && (armstop || stagnationok)
-        newfun = 0
-        newjac = 0
-        #
-        # Evaluate the derivativce if (1) you are using the secant method, 
-        # (2) you are using the chord method and it's the intial iterate, or
-        # (3) it's Newton and you are on the right part of the Shamaskii loop,
-        # or the line search failed with a stale deriviative, or the residual
-        # reduction ratio is too large. This logic is a bit tedious, so I
-        # put it in a function. See src/Tools/test_evaljac.jl
-        #
-        evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
-        # 
-        # We've evaluated a derivative if the solver is Newton or we just
-        # initialized the chord method. For secant it costs an extra function.
-        #
-        if evaljac
-            df = PrepareJac!(fc::Real, fm, x, xm, ItRules)
-            newfun += solver == "secant"
-            newjac += ~(solver == "secant")
-        end
-        derivative_is_old = (newjac == 0) && (solver == "newton")
-        #
-        # Compute the Newton direction and call the line search.
-        #
-        xm = x
-        fm = fc
-        ft = fc
-        d = -fc / df
-        AOUT = armijosc(xt, x, ft, fc, d, resnorm, ItRules, derivative_is_old)
-        #
-        # update solution/function value
-        #
-        x = AOUT.ax
-        fc = AOUT.afc
-        #
-        # If the line search fails and the derivative is current, 
-        # stop the iteration.
-        #
-        armstop = AOUT.idid || derivative_is_old
-        iline = ~armstop && ~stagflag
-        newiarm = AOUT.aiarm
-        #
-        # Keep the books.
-        #
-        residm = resnorm
-        resnorm = AOUT.resnorm
-        residratio = resnorm / residm
-        updateStats!(ItData, newfun, newjac, AOUT)
-        #
-        itc += 1
-    keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
-    end
-    solution = x
-    fval = fc
-(idid, errcode)=NewtonOK(resnorm, iline, tol, toosoon, itc,
-            ItRules)
-    stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
-    newtonout=NewtonClose(x, fval, ItData.history, stats,
-             idid, errcode, keepsolhist, solhist)
+   fp0=copy(x0)
+   fpp0=copy(x0)
+   zdata=[]
+   newtonout=nsol(f, x0, fp0, fpp0, fp;
+         rtol=rtol,atol=atol,maxit=maxit,solver=solver, sham=sham,
+         armmax=armmax, resdec=resdec, dx=dx, armfix=armfix,
+       pdata=zdata,printerr=printerr,keepsolhist=keepsolhist, 
+       stagnationok=stagnationok)
     return newtonout
 end

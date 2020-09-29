@@ -1,21 +1,16 @@
 """
-nsolsc(f,x0, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
-        solver="newton", sham=1, armmax=10, resdec=.1, dx=1.e-7,
-        armfix=false, 
+secant(f,x0; rtol=1.e-6, atol=1.e-12, maxit=10,
+        armmax=10, armfix=false, 
         printerr=true, keepsolhist=true, stagnationok=false)
 
 C. T. Kelley, 2020
 
-Newton's method for scalar equations. Has most of the features a
-code for systems of equations needs.
+The secant method for scalar equations. Has most of the features a
+Broyden method code for systems of equations needs.
 
 Input:\n 
 f: function\n 
-x0: initial iterate\n
-fp: derivative. If your derivative function is fp, you give me
-its name. For example fp=foobar tells me that foobar is your
-function for the derivative. The default is a forward difference
-Jacobian that I provide.\n
+x0: initial iterate
 
 
 Keyword Arguments (kwargs):\n
@@ -23,37 +18,10 @@ rtol, atol: real and absolute error tolerances\n
 
 maxit: upper bound on number of nonlinear iterations\n
 
-solver:\n
-Your choices are "newton"(default), "secant", or "chord". However, 
-you have sham at your disposal only if you chose newton. "chord"
-will keep using the initial derivative until the iterate converges,
-uses the iteration budget, or the line search fails. It is not the
-same as sham=Inf, which is smarter.\n
-
 If you use secant and your initial iterate is poor, you have made
-a mistake. I will help you by driving the line search with a finite
-difference derivative.\n
-
-sham:\n
-This is the Shamanskii method. If sham=1, you have Newton.
-The iteration updates the derivative every sham iterations.
-The convergence rate has local q-order sham+1 if you only count
-iterations where you update the derivative. You need not
-provide your own derivative function to use this option. sham=Inf
-is chord only if chord is converging well.\n
+a mistake. You will get an error message.
 
 armmax: upper bound on stepsize reductions in linesearch
-
-resdec: target value for residual reduction. \n
-The default value is .1. In the old MATLAB codes it was .5.
-I only turn Shamanskii on if the residuals are decreasing
-rapidly, at least a factor of resdec, and the line search is quiescent.
-If you want to eliminate resdec from the method ( you don't ) then set
-resdec = 1.0 and you will never hear from it again.  
-
-dx:\n
-This is the increment for forward difference, default = 1.e-7.
-dx should be roughly the square root of the noise in the function.
 
 armfix:\n
 The default is a parabolic line search (ie false). Set to true and
@@ -84,10 +52,7 @@ functionval = F(solution)
 history = the vector of residual norms (||F(x)||) for the iteration
 stats = named tuple of the history of (ifun, ijac, iarm), the number
 of functions/derivatives/steplength reductions at each iteration.
-
-I do not count the function values for a finite-difference derivative
-because they count toward a Jacobian evaluation. I do count them for
-the secant method model.
+For the secant method, ijac = 0.
 
 idid=true if the iteration succeeded and false if not.
 
@@ -99,7 +64,7 @@ errcode = 0 if if the iteration succeeded
 solhist:\n
 This is the entire history of the iteration if you've set
 keepsolhist=true\n
-nsolsc builds solhist with a function from the Tools directory. For
+secant builds solhist with a function from the Tools directory. For
 systems, solhist is an N x K array where N is the length of x and K 
 is the number of iteration + 1. So, for scalar equations (N=1), solhist
 is a row vector. Hence the use of solhist' in the example below.
@@ -107,22 +72,8 @@ is a row vector. Hence the use of solhist' in the example below.
 
 # Examples
 ```jldoctest
-julia> nsolout=nsolsc(atan,1.0;maxit=5,atol=1.e-12,rtol=1.e-12);
 
-julia> nsolout.history
-6-element Array{Float64,1}:
- 7.85398e-01
- 5.18669e-01
- 1.16332e-01
- 1.06102e-03
- 7.96200e-10
- 2.79173e-24
-```
-
-# Same problem with the secant method.
-
-```julia
-julia> secout=nsolsc(atan,1.0;maxit=6,atol=1.e-12,rtol=1.e-12, solver="secant");
+julia> secout=secant(atan,1.0;maxit=6,atol=1.e-12,rtol=1.e-12);
 
 
 julia> secout.history
@@ -135,39 +86,17 @@ julia> secout.history
  3.37529e-11
  2.06924e-22
 ```
-
-# If you have an analytic derivative, I will use it.
-
-```jldoctest
-julia> fs(x)=x^2-4.0; fsp(x)=2x;
-
-julia> nsolout=nsolsc(fs,1.0,fsp; maxit=5,atol=1.e-9,rtol=1.e-9);
-
-julia> [nsolout.solhist'.-2 nsolout.history]
-6×2 Array{Float64,2}:
- -1.00000e+00  3.00000e+00
-  5.00000e-01  2.25000e+00
-  5.00000e-02  2.02500e-01
-  6.09756e-04  2.43940e-03
-  9.29223e-08  3.71689e-07
-  2.22045e-15  8.88178e-15
-
-```
-
 """
-function nsolsc(
+function secant(
     f,
-    x0,
-    fp = difffp;
+    x0;
     rtol = 1.e-6,
     atol = 1.e-12,
     maxit = 10,
-    solver = "newton",
-    sham = 1,
+    solver = "secant",
     armmax = 5,
-    resdec = 0.1,
-    dx = 1.e-7,
     armfix = false,
+    dx = 1.e-7,
     printerr = true,
     keepsolhist = true,
     stagnationok = false,
@@ -177,16 +106,9 @@ function nsolsc(
     errcode=0
     iline = false
     #=
-     If you like the sham=large methods, I will evaluate the derivative 
-     anyhow if the line search kicks in. 
-     
      The theory does not support convergence of the secant-Armijo iteration
      and you assume a risk when you use it. The same is true for Broyden
      and any other quasi-Newton method.
-                    
-     The chord method will ignore poor convergence and let
-     things go south with no interference. Please don't do that as
-     standard procedure and, if you do, don't blame me.
     =#
     fc = f(x0)
     fm = fc
@@ -198,15 +120,14 @@ function nsolsc(
         end
         fm = f(xm)
         sham = 1
-        fp = difffp
     end
     derivative_is_old = false
     resnorm = abs(fc)
-pdata=nothing
-jfact=nothing
-stagflag = stagnationok && (armmax==0)
-(ItRules, x, n) = Newtoninit(x0, dx, f, fp, solver, sham,
-         armmax, armfix, resdec, maxit, printerr, pdata, jfact)
+    pdata=nothing
+    jfact=nothing
+    stagflag = stagnationok && (armmax==0)
+    (ItRules, x, n) = Secantinit(x0, dx, f, solver, sham,
+         armmax, armfix, maxit, printerr, pdata, jfact)
     #
     # Initialize the iteration statistics
     #
@@ -216,7 +137,7 @@ stagflag = stagnationok && (armmax==0)
     newjac = 0
     newsol = x
     xt = x
-    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
+    keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
     #
     # Fix the tolerances for convergence and define the derivative df
     # outside of the main loop for scoping.
@@ -237,23 +158,7 @@ stagflag = stagnationok && (armmax==0)
         newfun = 0
         newjac = 0
         #
-        # Evaluate the derivativce if (1) you are using the secant method, 
-        # (2) you are using the chord method and it's the intial iterate, or
-        # (3) it's Newton and you are on the right part of the Shamaskii loop,
-        # or the line search failed with a stale deriviative, or the residual
-        # reduction ratio is too large. This logic is a bit tedious, so I
-        # put it in a function. See src/Tools/test_evaljac.jl
-        #
-        evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
-        # 
-        # We've evaluated a derivative if the solver is Newton or we just
-        # initialized the chord method. For secant it costs an extra function.
-        #
-        if evaljac
-            df = PrepareJac!(fc::Real, fm, x, xm, ItRules)
-            newfun += solver == "secant"
-            newjac += ~(solver == "secant")
-        end
+        df = (fc - fm)/(x-xm)
         derivative_is_old = (newjac == 0) && (solver == "newton")
         #
         # Compute the Newton direction and call the line search.
@@ -266,7 +171,9 @@ stagflag = stagnationok && (armmax==0)
         #
         # update solution/function value
         #
+        xm=x
         x = AOUT.ax
+        fm=fc
         fc = AOUT.afc
         #
         # If the line search fails and the derivative is current, 
@@ -284,11 +191,10 @@ stagflag = stagnationok && (armmax==0)
         updateStats!(ItData, newfun, newjac, AOUT)
         #
         itc += 1
-    keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
     end
     solution = x
     fval = fc
-(idid, errcode)=NewtonOK(resnorm, iline, tol, toosoon, itc,
+    (idid, errcode)=NewtonOK(resnorm, iline, tol, toosoon, itc,
             ItRules)
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
     newtonout=NewtonClose(x, fval, ItData.history, stats,

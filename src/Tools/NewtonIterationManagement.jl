@@ -16,6 +16,21 @@ function Newtoninit(x0, dx, F!, J!, solver, sham, armmax, armfix, resdec,
 end
 
 """
+Secantinit(x0, dx, f, solver, sham,
+         armmax, armfix, maxit, printerr, pdata, jfact)
+"""
+function Secantinit(x0, dx, f, solver, sham,
+         armmax, armfix, maxit, printerr, pdata, jfact)
+    n = length(x0)
+    x = copy(x0)
+ItRules = (f = f,
+           solver=solver, armmax=armmax, armfix=armfix,
+          maxit=maxit, printerr=printerr,
+          pdata = pdata, fact = jfact)
+return (ItRules, x, n)
+end
+
+"""
 NewtonOK: Figure out idid and errcode
 """
 function NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)

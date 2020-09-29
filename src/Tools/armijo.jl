@@ -13,8 +13,8 @@ function armijosc(xt, xc, ft, fc, d, residm, ItRules, derivative_is_old)
     lamc = lambda
     lamm = lamc
     f=ItRules.f
-    fp=ItRules.fp
-    dx=ItRules.dx
+#    fp=ItRules.fp
+#    dx=ItRules.dx
     ResidC = residm
     armmax=ItRules.armmax
     armfix=ItRules.armfix

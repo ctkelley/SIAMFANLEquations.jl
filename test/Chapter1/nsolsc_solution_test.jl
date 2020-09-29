@@ -57,7 +57,8 @@ end
 #
 # Local convergence with secant method
 #
-sdatas=nsolsc(atan,1.0; solver="secant")
+#sdatas=nsolsc(atan,1.0; solver="secant")
+sdatas=secant(atan,1.0)
 solok=(abs(sdatas.solution) < 1.e-10)
 funok=(abs(sdatas.functionval) < 1.e-10)
 hs=size(sdatas.history)
@@ -69,7 +70,8 @@ end
 #
 # Initialize secant method when x0=0
 #
-zedata=nsolsc(fcos,0.0;solver="secant",rtol=1.e-9)
+#zedata=nsolsc(fcos,0.0;solver="secant",rtol=1.e-9)
+zedata=secant(fcos,0.0;solver="secant",rtol=1.e-9)
 solution=7.390851333858823e-01
 solok=(abs(zedata.solution-solution) < 1.e-9)
 funok=(abs(zedata.functionval) < 1.e-9)

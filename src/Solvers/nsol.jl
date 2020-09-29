@@ -286,7 +286,8 @@ function nsol(
         evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         if evaljac
             FPF = PrepareJac!(FPS, FS, x, ItRules)
-            newjac += 1
+            newfun += solver == "secant"
+            newjac += ~(solver == "secant")
         end
         derivative_is_old = (newjac == 0) && (solver == "newton")
         step .= -(FPF \ FS)

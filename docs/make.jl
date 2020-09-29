@@ -13,6 +13,7 @@ pages = Any[
      "Scalar Equations" => Any[
        "functions/nsolsc.md",
        "functions/ptcsolsc.md",
+       "functions/secant.md",
        ],
      "Systems with Direct Linear Solvers" => Any[
        "functions/nsol.md",
