@@ -290,7 +290,11 @@ function nsol(
             newjac += ~(solver == "secant")
         end
         derivative_is_old = (newjac == 0) && (solver == "newton")
-        step .= -(FPF \ FS)
+        if n > 1
+        step .= -(FPF \ FS) 
+        else
+        step = - FS/FPF
+        end
         #
         # Compute the trial point, evaluate F and the residual norm.     
         #
@@ -299,8 +303,13 @@ function nsol(
         #
         # update solution/function value
         #
-        x .= AOUT.ax
-        FS .= AOUT.afc
+        if n > 1
+           x .= AOUT.ax 
+           FS .= AOUT.afc
+        else
+           x = AOUT.ax; 
+           FS = AOUT.afc
+        end
         #
         # If the line search fails and the derivative is current,
         # stop the iteration. Print an error message unless

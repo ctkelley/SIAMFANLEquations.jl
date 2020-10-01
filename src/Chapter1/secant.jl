@@ -113,26 +113,24 @@ function secant(
     fc = f(x0)
     fm = fc
     xm = copy(x0)
-    if solver == "secant"
-        xm = x0 * 1.0001
-        if xm == 0
-            xm = 0.0001
-        end
-        fm = f(xm)
-        sham = 1
+    xm = x0 * 1.0001
+    if xm == 0
+        xm = 0.0001
     end
+    fm = f(xm)
+    newfun0=1
     derivative_is_old = false
     resnorm = abs(fc)
     pdata=nothing
     jfact=nothing
     stagflag = stagnationok && (armmax==0)
-    (ItRules, x, n) = Secantinit(x0, dx, f, solver, sham,
+    (ItRules, x, n) = Secantinit(x0, dx, f, solver, 
          armmax, armfix, maxit, printerr, pdata, jfact)
     #
     # Initialize the iteration statistics
     #
     newiarm = -1
-    ItData = ItStats(resnorm)
+    ItData = ItStats(resnorm,2)
     newfun = 0
     newjac = 0
     newsol = x
@@ -156,7 +154,11 @@ function secant(
     #
     while (resnorm > tol) && (itc < maxit) && (armstop || stagnationok)
         newfun = 0
+#
+# Extra function call at the start.
+#
         newjac = 0
+        newfun = 0
         #
         df = (fc - fm)/(x-xm)
         derivative_is_old = (newjac == 0) && (solver == "newton")

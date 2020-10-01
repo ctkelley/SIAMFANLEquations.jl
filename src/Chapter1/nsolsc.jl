@@ -7,7 +7,8 @@ nsolsc(f,x0, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
 C. T. Kelley, 2020
 
 Newton's method for scalar equations. Has most of the features a
-code for systems of equations needs.
+code for systems of equations needs. This is a wrapper for a call
+to nsol.jl, the real code for systems. 
 
 Input:\n 
 f: function\n 
@@ -24,7 +25,7 @@ rtol, atol: real and absolute error tolerances\n
 maxit: upper bound on number of nonlinear iterations\n
 
 solver:\n
-Your choices are "newton"(default), "secant", or "chord". However, 
+Your choices are "newton"(default) or "chord". However, 
 you have sham at your disposal only if you chose newton. "chord"
 will keep using the initial derivative until the iterate converges,
 uses the iteration budget, or the line search fails. It is not the
@@ -119,23 +120,6 @@ julia> nsolout.history
  2.79173e-24
 ```
 
-# Same problem with the secant method.
-
-```julia
-julia> secout=nsolsc(atan,1.0;maxit=6,atol=1.e-12,rtol=1.e-12, solver="secant");
-
-
-julia> secout.history
-7-element Array{Float64,1}:
- 7.85398e-01
- 5.18729e-01
- 5.39030e-02
- 4.86125e-03
- 4.28860e-06
- 3.37529e-11
- 2.06924e-22
-```
-
 # If you have an analytic derivative, I will use it.
 
 ```jldoctest
@@ -172,126 +156,18 @@ function nsolsc(
     keepsolhist = true,
     stagnationok = false,
 )
-    itc = 0
-    idid = true
-    errcode=0
-    iline = false
-    #=
-     If you like the sham=large methods, I will evaluate the derivative 
-     anyhow if the line search kicks in. 
-     
-     The theory does not support convergence of the secant-Armijo iteration
-     and you assume a risk when you use it. The same is true for Broyden
-     and any other quasi-Newton method.
-                    
-     The chord method will ignore poor convergence and let
-     things go south with no interference. Please don't do that as
-     standard procedure and, if you do, don't blame me.
-    =#
-    fc = f(x0)
-    fm = fc
-    xm = copy(x0)
-    if solver == "secant"
-        xm = x0 * 1.0001
-        if xm == 0
-            xm = 0.0001
-        end
-        fm = f(xm)
-        sham = 1
-        fp = difffp
-    end
-    derivative_is_old = false
-    resnorm = abs(fc)
-pdata=nothing
-jfact=nothing
-stagflag = stagnationok && (armmax==0)
-(ItRules, x, n) = Newtoninit(x0, dx, f, fp, solver, sham,
-         armmax, armfix, resdec, maxit, printerr, pdata, jfact)
-    #
-    # Initialize the iteration statistics
-    #
-    newiarm = -1
-    ItData = ItStats(resnorm)
-    newfun = 0
-    newjac = 0
-    newsol = x
-    xt = x
-    ~keepsolhist || (solhist=solhistinit(n, maxit, x))
-    #
-    # Fix the tolerances for convergence and define the derivative df
-    # outside of the main loop for scoping.
-    #
-    tol = rtol * resnorm + atol
-    residratio = 1
-    df = 0.0
-    armstop = true
-    #
-    # If the initial iterate satisfies the termination criteria, tell me.
-    #
-    toosoon = (resnorm <= tol)
-    #
-    # The main loop stops on convergence, too many iterations, or a
-    # line search failure after a derivative evaluation.
-    #
-    while (resnorm > tol) && (itc < maxit) && (armstop || stagnationok)
-        newfun = 0
-        newjac = 0
-        #
-        # Evaluate the derivativce if (1) you are using the secant method, 
-        # (2) you are using the chord method and it's the intial iterate, or
-        # (3) it's Newton and you are on the right part of the Shamaskii loop,
-        # or the line search failed with a stale deriviative, or the residual
-        # reduction ratio is too large. This logic is a bit tedious, so I
-        # put it in a function. See src/Tools/test_evaljac.jl
-        #
-        evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
-        # 
-        # We've evaluated a derivative if the solver is Newton or we just
-        # initialized the chord method. For secant it costs an extra function.
-        #
-        if evaljac
-            df = PrepareJac!(fc::Real, fm, x, xm, ItRules)
-            newfun += solver == "secant"
-            newjac += ~(solver == "secant")
-        end
-        derivative_is_old = (newjac == 0) && (solver == "newton")
-        #
-        # Compute the Newton direction and call the line search.
-        #
-        xm = x
-        fm = fc
-        ft = fc
-        d = -fc / df
-        AOUT = armijosc(xt, x, ft, fc, d, resnorm, ItRules, derivative_is_old)
-        #
-        # update solution/function value
-        #
-        x = AOUT.ax
-        fc = AOUT.afc
-        #
-        # If the line search fails and the derivative is current, 
-        # stop the iteration.
-        #
-        armstop = AOUT.idid || derivative_is_old
-        iline = ~armstop && ~stagflag
-        newiarm = AOUT.aiarm
-        #
-        # Keep the books.
-        #
-        residm = resnorm
-        resnorm = AOUT.resnorm
-        residratio = resnorm / residm
-        updateStats!(ItData, newfun, newjac, AOUT)
-        #
-        itc += 1
-    keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
-    end
-    solution = x
-    fval = fc
-(idid, errcode)=NewtonOK(resnorm, iline, tol, toosoon, itc,
-            ItRules)
-    stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
-    newtonout=NewtonClose(x, fval, ItData.history, stats,
-             idid, errcode, keepsolhist, solhist)
+#
+# The scalar code is a simple wrapper for the real code (nsol). The
+# wrapper puts placeholders for the memory allocations and the precomputed
+# data.
+#
+   fp0 = copy(x0)
+   fpp0=copy(x0)
+   zdata=[]
+   newtonout=nsol(f, x0, fp0, fpp0, fp;
+         rtol=rtol,atol=atol,maxit=maxit,solver=solver, sham=sham,
+         armmax=armmax, resdec=resdec, dx=dx, armfix=armfix,
+       pdata=zdata,printerr=printerr,keepsolhist=keepsolhist, 
+       stagnationok=stagnationok)
     return newtonout
 end

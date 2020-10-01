@@ -16,10 +16,10 @@ function Newtoninit(x0, dx, F!, J!, solver, sham, armmax, armfix, resdec,
 end
 
 """
-Secantinit(x0, dx, f, solver, sham,
+Secantinit(x0, dx, f, solver, 
          armmax, armfix, maxit, printerr, pdata, jfact)
 """
-function Secantinit(x0, dx, f, solver, sham,
+function Secantinit(x0, dx, f, solver, 
          armmax, armfix, maxit, printerr, pdata, jfact)
     n = length(x0)
     x = copy(x0)

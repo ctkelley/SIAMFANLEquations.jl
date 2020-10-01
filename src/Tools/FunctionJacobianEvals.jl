@@ -19,25 +19,19 @@ return TF
 end
 
 """
-PrepareJac!(fc::Real, fm, x, xm, ItRules, dt=0)
+PrepareJac!(fc, fm::Real, x, xm, ItRules, dt=0)
 Scalar equations
 """
-function PrepareJac!(fc::Real, fm, x, xm, ItRules, dt=0)
-#function PrepareJac!(x::Real,xm,fc,fm,ItRules,dt=0)
+function PrepareJac!(fps::Real, fc, x, ItRules, dt=0)
 newjac=0
 newfun=0
 fp=ItRules.fp
 f=ItRules.f
 dx=ItRules.dx
 solver=ItRules.solver
-if solver == "secant"
-   df = (fc - fm) / (x - xm)
-   newfun=newfun+1
-else
-   df = fpeval_newton(x, f, fc, fp, dx)
-   dt==0 || (df += 1.0/dt)
-   newjac=newjac+1
-end
+df = fpeval_newton(x, f, fc, fp, dx)
+dt==0 || (df += 1.0/dt)
+newjac=newjac+1
 return df
 end
 

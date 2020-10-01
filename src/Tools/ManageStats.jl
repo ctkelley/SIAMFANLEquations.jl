@@ -5,8 +5,12 @@ iarm::Array{Int64,1}
 history::Array{T,1}
 end
 
-function ItStats(hist)
-   ItStats([1],[0],[0],[hist])
+#
+# initfun = 1 unless it's the scalar secant method
+#             then it's 2
+#
+function ItStats(hist,initfun=1)
+   ItStats([initfun],[0],[0],[hist])
 end
 
 function updateStats!(ItData, newfun, newjac, AOUT)
