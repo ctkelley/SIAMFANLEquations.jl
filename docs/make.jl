@@ -8,18 +8,14 @@ format = Documenter.HTML(
 pages = Any[
      "Home" => "index.md",
      "Solvers" => Any[
+       "functions/nsol.md",
        "functions/ptcsol.md",
        ],
      "Scalar Equations" => Any[
        "functions/nsolsc.md",
        "functions/ptcsolsc.md",
        "functions/secant.md",
-       ],
-     "Systems with Direct Linear Solvers" => Any[
-       "functions/nsol.md",
-       "functions/ptcsol.md",
-      ]
-     
+       ]
 ]
 )
 deploydocs(

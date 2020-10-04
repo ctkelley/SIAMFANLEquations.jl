@@ -140,9 +140,24 @@ This chapter is about solving the equation for the Newton step with Gaussian eli
 
 Bottom line: __single precision can cut the linear algebra cost in half with no loss in the quality of the solution or the number of nonlinear iterations it takes to get there.__
 
-## Nonlinear systems with iterative linear solvers: Chapter 3
 
 ## Overview of the Codes
+
+The core solvers (so far) are 
+
+1. nsol.jl is is all variations of Newton's method __except__
+   pseudo transient continuation. The methods are
+   - Newton's method
+   - The Shamanskii method, where the derivative evaluation is
+     done every m iterations. ``m=1`` is Newton and ``m=\infty`` is chord.
+   - I do an Armijo line search for all the methods unless the method is
+     chord or you tell me not to.
+
+2. ptcsol.jl is pseudo-transient continuation.
+
+The solvers for scalar equations are wrappers for the core codes with
+the same interface. The expection is that the scalar codes do not need
+to manage linear algebra or storage of arrays.
 
 ### Scalar Equations: Chapter 1
 There are two codes for the methods in this chapter
@@ -156,7 +171,11 @@ There are two codes for the methods in this chapter
    - I do an Armijo line search for all the methods unless the method is
      chord or you tell me not to.
 
-2. ptcsolsc.jl is pseudo-transient continuation. 
+2. secant.jl is the scalar secant method. It is a stand-alone code.
+I do not know if I'll merge it with the Broyden code or not. It's really
+too simple to mess with much.
+
+3. ptcsolsc.jl is pseudo-transient continuation. 
 
 ### Nonlinear systems with direct linear solvers: Chapter 2
 
@@ -164,18 +183,12 @@ This is the same story as it was for scalar equations, 'ceptin for the
 linear algebra. The linear solvers for this chapter are the matrix
 factorizations that live in Julia/LAPACK/SuiteSparse.
 
-1. nsol.jl is is all variations of Newton's method __except__
-   pseudo transient continuation. The methods are
-   - Newton's method
-   - The Shamanskii method, where the derivative evaluation is
-     done every m iterations. ``m=1`` is Newton and ``m=\infty`` is chord.
-   - I do an Armijo line search for all the methods unless the method is
-     chord or you tell me not to.
-
-2. ptcsol.jl is pseudo-transient continuation.
-
+The examples in this chapter use the core codes directly.
 
 ### Nonlinear systems with iterative linear solvers: Chapter 3
 
-1. The plan is to make this part of nsol and ptcsol. That is one 
-reason for the code reorganization I'm doing now.
+1. The plan is to make this part of nsol and ptcsol. 
+2. The GMRES linear solver is 50% done. I expect to get Bi-CGSTAB
+in there too.
+
+
