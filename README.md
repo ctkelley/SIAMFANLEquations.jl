@@ -5,8 +5,6 @@
 
 # SIAMFANLEquations version 0.2.1
 
-__One more round of major chages before tagging this version. This change should not break anything, but will cost me some time to test it and rewrite Chapters 1 and 2. This is how book projects work.__
-
 This is the package with the solvers and test problems for 
 
 # Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia
@@ -76,12 +74,12 @@ If __log(version_number) < 0__ there's trouble!
 This is version v0.2.1. I am reorganizing the code base. This will take some time but once done, the rest of the project will go faster.
 - __New stuff__ = __Chapter 2__: Systems of equations with direct linear solvers .
 
-    -  nsol.jl is in the Solvers directory. Most of the test problems are done and it works. I am getting it to work for scalar equations so nsolsc will be a stub like ptcsolsc is now.
+    -  nsol.jl is in the Solvers directory. Most of the test problems are done and it works. It also works for scalar equations and nsolsc.jl is just a stub. 
 
-     - ptcsol.jl is and the code is in the Solvers directory. I have fixed this so that it also works for scalar equations, which means that ptcsolsc.jl is now just a stub. Look at the source.
+     - ptcsol.jl  is in the Solvers directory. I have fixed this so that it also works for scalar equations, which means that ptcsolsc.jl is now just a stub. Look at the source.
 
 - The notebook is at least a few weeks from being finished. 
-- The scalar code, nsolsc.jl is done for a while unless I can put most of its functionality in a new nsol.jl, which is likely.
+- The scalar codes nsolsc.jl and ptcsolsc.jl are stable and I won't be messing with them for quite a while.
 
 I have released version v0.1.2. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapter 1 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. I have not stopped working on Chapter 1 and add new things all the time. 
 
