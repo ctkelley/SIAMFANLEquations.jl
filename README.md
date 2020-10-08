@@ -177,7 +177,7 @@ The algorithms, listed by book chapter will be
    
 ## Test Problems
 
-You'll need the TestProblems submodule to run the notebook. To get it type __using SIAMFANLEquations.TestProblems__ in the repl or the notebook.
+You'll need the TestProblems and examples submodules to run the notebook. To get those type ```using SIAMFANLEquations.TestProblems``` and  ```using SIAMFANLEquations.Examples``` in the repl or run the first code cell in the notebook (```include("fanote_init.jl")```).
 
 There are two kinds of test problems. The ones you care about are the ones that I use in the print book and notebook to demonstrate the algorithms. The "inside baseball" problems are the ones I __only__ use for CI. They only appear in the /test directory. If you don't know or care what CI is, be happy.
    
