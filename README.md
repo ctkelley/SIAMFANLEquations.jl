@@ -36,19 +36,18 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Installation: Use Julia 1.5 and up with this thing!!!
 
-This package has been tested on Julia 1.4 and 1.5. __It no longer works on 1.0!__ Before mid-September __I will make changes that only 1.5 supports.__
-You have been warned. 
+This package has been tested on Julia 1.5. __It no longer works on 1.0!__ It may still work on 1.4, but I make no promises.
 
-Type this 
+If you're reading this after I announced the package, then I've registered the packkage. Type this 
 
 ```
-] add https://github.com/ctkelley/SIAMFANLEquations.jl
+] add SIAMFANLEquations
 ```
 
 or this
 
 ```
-import Pkg; Pkg.add(url="https://github.com/ctkelley/SIAMFANLEquations.jl")
+import Pkg; Pkg.add("SIAMFANLEquations")
 ```
 in the REPL to install the package.
 
