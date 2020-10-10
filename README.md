@@ -38,7 +38,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 This package has been tested on Julia 1.5. __It no longer works on 1.0!__ It may still work on 1.4, but I make no promises.
 
-If you're reading this after I announced the package, then I've registered the packkage. Type this 
+If you're reading this after I announced the package, then I've registered the package. Type this 
 
 ```
 ] add SIAMFANLEquations
