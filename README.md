@@ -124,7 +124,7 @@ I have limited bandwidth, __so please do not send me email or open issues about_
       2. this project has a different mission, and 
       3. I am working hard to limit depencencies. 
    6. Philosophy, politics, opinions, invitations to debates, ...
-   7. Anything else that is not bugs, facts, inconsistencies or helping you use the codes
+ 
 
 
 ## Core References and Documentation
@@ -176,7 +176,17 @@ The algorithms, listed by book chapter will be
    
 ## Test Problems
 
-You'll need the TestProblems and examples submodules to run the notebook. To get those type ```using SIAMFANLEquations.TestProblems``` and  ```using SIAMFANLEquations.Examples``` in the repl or run the first code cell in the notebook (```include("fanote_init.jl")```).
+You'll need the TestProblems and examples submodules to run the notebook. To get those type 
+
+```using SIAMFANLEquations.TestProblems```
+
+and 
+
+```using SIAMFANLEquations.Examples``` 
+
+in the REPL or run the first code cell in the notebook 
+
+```include("fanote_init.jl")```
 
 There are two kinds of test problems. The ones you care about are the ones that I use in the print book and notebook to demonstrate the algorithms. The "inside baseball" problems are the ones I __only__ use for CI. They only appear in the /test directory. If you don't know or care what CI is, be happy.
    
