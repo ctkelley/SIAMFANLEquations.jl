@@ -12,7 +12,7 @@ at the code.
 """
 function heqJ!(FP,F,x,pdata)
 
-The is the Jacobian evaluation playing by nsold rules. The
+The is the Jacobian evaluation playing by nsol rules. The
 precomputed data is a big deal for this one. 
 """
 function heqJ!(FP::Array{T,2}, F,  x, pdata) where T <: Real
@@ -171,6 +171,17 @@ function heq_cprod!(b, pdata)
     b .= real.(xb)
 end
 
+"""
+Alternative formulation for CI. Tuned to match the paper
+
+author="P. B. Bosma and W. A. DeRooij",
+title="Efficient Methods to Calculate Chandrasekhar's H-functions",
+journal="Astron. Astrophys.",
+volume=126,
+year=1983,
+pages=283
+
+"""
 function heqbos!(F, x, pdata)
     c=pdata
     n = length(x)
