@@ -13,8 +13,8 @@ jsv = zeros(Float32,2,2);
 #
 # single vs double Jacobian
 #
-nout=nsol(basic2d!,x0,fv,jv; rtol=1.e-10);
-sout=nsol(basic2d!,x0,fv,jsv);
+nout=nsol(basic2d!,x0,fv,jv; rtol=1.e-10, sham=1);
+sout=nsol(basic2d!,x0,fv,jsv; sham=1);
 dss=norm(nout.solution-sout.solution)
 hss=norm(nout.history-sout.history)
 singleok=(norm(dss) < 1.e-7) && (norm(hss) < 1.e-7)
@@ -36,7 +36,7 @@ end
 #
 # Analytic vs finite-difference Jacobian
 #
-eout=nsol(basic2d!,x0,fv,jv,jbasic2d!)
+eout=nsol(basic2d!,x0,fv,jv,jbasic2d!; sham=1)
 fdok = (norm(eout.history-nout.history) < 1.e-6 ) && 
        (norm(eout.solution-nout.solution) < 1.e-10 ) 
 if ~fdok
@@ -62,9 +62,9 @@ x0a=[2., .5];
 FS=zeros(2,);
 FPS=zeros(2,2);
 FPSS=zeros(Float32,2,2);
-nouta=nsol(simple!, x0a, FS, FPS; keepsolhist=true);
-noutb=nsol(simple!, x0a, FS, FPSS, jsimple!; keepsolhist=true);
-noutc=nsol(simple!, x0a, FS, FPSS, jsimple!; armmax=0);
+nouta=nsol(simple!, x0a, FS, FPS; keepsolhist=true, sham=1);
+noutb=nsol(simple!, x0a, FS, FPSS, jsimple!; keepsolhist=true, sham=1);
+noutc=nsol(simple!, x0a, FS, FPSS, jsimple!; armmax=0, sham=1);
 iarm=nouta.stats.iarm
 iarm2=noutc.idid
 armok = (iarm[2]==2) && ~iarm2

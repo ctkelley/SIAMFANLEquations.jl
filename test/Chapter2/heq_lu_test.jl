@@ -12,7 +12,7 @@ FPS=ones(n,n);
 FPSS=ones(Float32,n,n);
 hdata = heqinit(x0, c)
 nsoloutfd=nsolheq(x0, FS, FPS, hdata)
-nsoloutbos=nsol(heqbos!, x0, FS, FPS; pdata = c);
+nsoloutbos=nsol(heqbos!, x0, FS, FPS; pdata = c, sham=1);
 dbos=norm(nsoloutbos.solution-nsoloutfd.solution)
 bosok=dbos<1.e-7
 if ~bosok

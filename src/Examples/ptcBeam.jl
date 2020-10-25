@@ -13,6 +13,6 @@ FS=copy(u0)
 FPS=precision.(copy(bdata.D2))
 bout=ptcsol(FBeam!, u0, FS, FPS, BeamJ!; 
              rtol=1.e-10, pdata=bdata, dt0=dt, maxit=maxit);
-qout=nsol(FBeam!, u0, FS, FPS, BeamJ!; pdata=bdata);
+qout=nsol(FBeam!, u0, FS, FPS, BeamJ!; pdata=bdata, sham=1);
 return (bout, qout)
 end

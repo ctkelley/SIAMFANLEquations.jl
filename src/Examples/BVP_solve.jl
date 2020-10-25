@@ -15,10 +15,10 @@ function BVP_solve(n = 801, T = Float64; bfact=qr)
     U0[2:2:2n] = vp
     if bfact == qr
 # Test to see if the default (qr instead of qr!) works.
-    bvpout = nsol(Fbvp!, U0, FV, FPV, Jbvp!; rtol = 1.e-10,
+    bvpout = nsol(Fbvp!, U0, FV, FPV, Jbvp!; rtol = 1.e-10, sham=1,
              pdata = bdata)
     else
-    bvpout = nsol(Fbvp!, U0, FV, FPV, Jbvp!; rtol = 1.e-10,
+    bvpout = nsol(Fbvp!, U0, FV, FPV, Jbvp!; rtol = 1.e-10, sham=1,
              pdata = bdata, jfact=bfact)
     end
     return (bvpout=bvpout, tv=tv)

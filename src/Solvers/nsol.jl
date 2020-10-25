@@ -1,6 +1,6 @@
 """
     nsol(F!, x0, FS, FPS, J!=diffjac!; rtol=1.e-6, atol=1.e-12,
-               maxit=20, solver="newton", sham=1, armmax=10, resdec=.1,
+               maxit=20, solver="newton", sham=5, armmax=10, resdec=.1,
                dx = 1.e-7, armfix=false, 
                pdata = nothing, jfact = klfact,
                printerr = true, keepsolhist = false, stagnationok=false)
@@ -58,13 +58,17 @@ will keep using the initial derivative until the iterate converges,
 uses the iteration budget, or the line search fails. It is not the
 same as sham=Inf, which is smarter.\n
 
-sham: default = 1 (ie Newton)\n
+sham: default = 5 (ie Newton)\n
 This is the Shamanskii method. If sham=1, you have Newton.
 The iteration updates the derivative every sham iterations.
 The convergence rate has local q-order sham+1 if you only count
 iterations where you update the derivative. You need not
 provide your own derivative function to use this option. sham=Inf
 is chord only if chord is converging well.\n
+
+I made sham=1 the default for scalar equations. For systems I'm
+more aggressive and want to invest as little energy in linear algebra
+as possible. 
 
 armmax: upper bound on stepsize reductions in linesearch\n
 
@@ -172,7 +176,7 @@ iteration + 1. So, for scalar equations, it's a row vector.
 f (generic function with 1 method)
 
 julia> x=ones(2,); fv=zeros(2,); jv=zeros(2,2);
-julia> nout=nsol(f!,x,fv,jv);
+julia> nout=nsol(f!,x,fv,jv; sham=1);
 julia> nout.history
 5-element Array{Float64,1}:
  1.88791e+00
@@ -188,17 +192,18 @@ julia> nout.solution
 
 ```
 
-## H-equation example
+## H-equation example. I'm taking the sham=5 default here, so the convergence is not quadratic. The good news is that we evaluate the Jacobian only once.
 
 ```jldoctest
 julia> n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n);
 julia> hdata=heqinit(x0, .5);
 julia> hout=nsol(heqf!,x0,FV,JV;pdata=hdata);
 julia> hout.history
-3-element Array{Float64,1}:
+4-element Array{Float64,1}:
  6.17376e-01
  3.17810e-03
- 6.22034e-08
+ 2.75227e-05
+ 2.35817e-07
 ```
 """
 function nsol(
@@ -211,7 +216,7 @@ function nsol(
     atol = 1.e-12,
     maxit = 20,
     solver = "newton",
-    sham = 1,
+    sham = 5,
     armmax = 10,
     resdec = 0.1,
     dx = 1.e-7,
