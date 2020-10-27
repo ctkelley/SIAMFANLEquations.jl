@@ -17,7 +17,7 @@ You must allocate storage for the function and Jacobian in advance
 Inputs:\n
 - F!: function evaluation, the ! indicates that F! overwrites FS, your
     preallocated storage for the function.\n
-    So FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
+    So FS=F!(FS,x) or FS=F!(FS,x,pdata) returns FS=F(x)
 
 
 - x0: initial iterate\n
@@ -29,8 +29,8 @@ Inputs:\n
 - J!: Jacobian evaluation, the ! indicates that J! overwrites FPS, your
     preallocated storage for the Jacobian. If you leave this out the
     default is a finite difference Jacobian.\n
-    So, FP=J!(FP,FV,x) or FP=J!(FP,FV,x,pdata) returns FP=F'(x);
-    (FP,FV, x) must be the argument list, even if FP does not need FV.
+    So, FP=J!(FP,FS,x) or FP=J!(FP,FS,x,pdata) returns FP=F'(x). \n
+    (FP,FS, x) must be the argument list, even if FP does not need FS.
     One reason for this is that the finite-difference Jacobian
     does and that is the default in the solver.
 
@@ -68,7 +68,7 @@ is chord only if chord is converging well.\n
 
 I made sham=1 the default for scalar equations. For systems I'm
 more aggressive and want to invest as little energy in linear algebra
-as possible. 
+as possible. So the default is sham=5.
 
 armmax: upper bound on stepsize reductions in linesearch\n
 
@@ -82,7 +82,7 @@ resdec = 1.0 and you will never hear from it again.
 
 dx: default = 1.e-7\n
 difference increment in finite-difference derivatives
-      h=dx*norm(x)+1.e-6
+      h=dx*norm(x,Inf)+1.e-8
 
 armfix: default = false\n
 The default is a parabolic line search (ie false). Set to true and
@@ -112,12 +112,13 @@ to override klfact.
 If you give me something that klfact does not know how to dispatch on,
 then nothing happens. I just return the original Jacobian matrix and 
 nsol will use backslash to compute the Newton step.
-
 I know that this is probably not optimal in your situation, so it is 
 good to pick something else, like jfact = lu.
 
 Please do not mess with the line that calls PrepareJac!. 
+
         FPF = PrepareJac!(FPS, FS, x, ItRules)
+
 FPF is not the same as FPS (the storage you allocate for the Jacobian)
 for a reason. FPF and FPS do not have the same type, even though they
 share storage. So, FPS=PrepareJac!(FPS, FS, ...) will break things.
@@ -166,7 +167,7 @@ iteration + 1. So, for scalar equations, it's a row vector.
 ------------------------
 
 # Examples
-## World's easiest problem example.
+#### World's easiest problem example.
 
 ```jldoctest
  julia> function f!(fv,x)
@@ -192,7 +193,7 @@ julia> nout.solution
 
 ```
 
-## H-equation example. I'm taking the sham=5 default here, so the convergence is not quadratic. The good news is that we evaluate the Jacobian only once.
+#### H-equation example. I'm taking the sham=5 default here, so the convergence is not quadratic. The good news is that we evaluate the Jacobian only once.
 
 ```jldoctest
 julia> n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n);
