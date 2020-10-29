@@ -1,5 +1,5 @@
 """
-Heq4nsold
+Hequation.jl
 
 This file contains the function/Jacobian evaluations for
 the Chandrasekhar H-equation examples and everything you should 
