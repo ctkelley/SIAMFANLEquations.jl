@@ -70,17 +70,18 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.2.1. I am reorganizing the code base. This will take some time but once done, the rest of the project will go faster.
+I am releasing v0.2.1. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapters 1 and 2 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. Chapter 2 is in good shape for a draft and the notebook part of Chapter 2 is almost done. I have not stopped working on Chapter 1, but Chapters 2 and (soon) 3 have priority.
+
 - __New stuff__ = __Chapter 2__: Systems of equations with direct linear solvers .
 
-    -  nsol.jl is in the Solvers directory. Most of the test problems are done and it works. It also works for scalar equations and nsolsc.jl is just a stub. 
+     - nsol.jl is in the Solvers directory. Most of the test problems are done and it works. It also works for scalar equations and nsolsc.jl is just a stub. 
 
-     - ptcsol.jl  is in the Solvers directory. I have fixed this so that it also works for scalar equations, which means that ptcsolsc.jl is now just a stub. Look at the source.
+     -  ptcsol.jl  is in the Solvers directory. I have fixed this so that it also works for scalar equations, which means that ptcsolsc.jl is now just a stub. Look at the source.
 
-- The notebook is at least a few weeks from being finished. 
-- The scalar codes nsolsc.jl and ptcsolsc.jl are stable and I won't be messing with them for quite a while.
+     - The notebook is at least a few weeks from being finished. The examples all work. The mappings notebook-->print book and printbook-->notebook need more time.
+      
+     - The scalar codes nsolsc.jl and ptcsolsc.jl are stable and I won't be messing with them for quite a while.
 
-I have released version v0.1.2. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapter 1 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. I have not stopped working on Chapter 1 and add new things all the time. 
 
 The plan is, for x > 1
 
@@ -99,8 +100,9 @@ __Please, please__, do not send me PRs. If you find
    2. confusion, lack of clarity, or __errors in the installation instructions__,
        1. I would __really like__ some Windows users to try this stuff, especially the notebooks.
    3. something I could do in the user interface to help you do your work ...
-       1. that won't break other stuff or make the code or __user interface__ opaque to a novice
-       2. or eat up lots of time,
+       1. that won't break other stuff, 
+       2. make the code or __user interface__ opaque to a novice,
+       3. or eat up lots of time,
    4. a factual error in the documentation/notebook, or 
    5. an error/inconsistency in the docstrings, please ...
   
@@ -114,15 +116,15 @@ This is a book project and I need to put all changes in by hand so I'll have mus
 I have limited bandwidth, __so please do not send me email or open issues about__ ...
 
    1. Typos in the notebook or the docstrings. This project is far from the final proofreading stage and I want to fix those things in peace. There are many of them and I do not need 100s of emails/issues about that.
-   2. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia and am on the case. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. There may be something more abstract coming at the end of the project, but that is far away from now.
+   2. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia, am working on it, and getting better. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. There may be something more abstract coming at the end of the project, but that is far away from now.
       1. I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. 
            1.  Fortran + Julia = __Foolia__
    3. Organization of the repo. I'm still thinking this through. The important thing is that it make sense for the print book. I must do this work with the publisher.
-   4. Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully and understand this field fairly well.
+   4. Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully, have a clear vision for this project, and understand this field fairly well. 
    5. Questions like "Why doesn't SIAMFANLequations.jl look/work/smell like and/or use DasKapital.jl?" The reasons are that
       1. I am neither Karl nor Groucho,
       2. this project has a different mission, and 
-      3. I am working hard to limit depencencies. 
+      3. __I am working hard to limit depencencies__. 
    6. Philosophy, politics, opinions, invitations to debates, ...
  
 
