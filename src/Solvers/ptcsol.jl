@@ -39,7 +39,13 @@ solvers can deal with it either way.
     YOU do not destroy the declaration in your J! function. I'm amazed
     that this works so easily. If the Jacobian is reasonably well 
     conditioned, I can see no reason to do linear algebra in 
-    double precision. 
+    double precision I can see no reason to do linear algebra in
+    double precision for anything other than horribly ill-conditioned
+    problems.\n
+    BUT ... Julia has very limited support for direct sparse solvers in
+    anything other than Float64. I recommend that you only use Float64
+    with direct sparse solvers unless you really know what you're doing.
+
 
 ----------------------
 

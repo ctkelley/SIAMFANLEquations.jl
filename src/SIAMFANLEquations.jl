@@ -79,6 +79,7 @@ module Examples
 using SIAMFANLEquations
 using SIAMFANLEquations.TestProblems
 using LinearAlgebra
+using BandedMatrices
 
 export ptcBeam
 export ivpBeam

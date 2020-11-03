@@ -35,13 +35,17 @@ Inputs:\n
     does and that is the default in the solver.
 
 - Precision: Lemme tell ya 'bout precision. I designed this code for 
-    full precision
-    functions and linear algebra in any precision you want. You can declare
+    full precision functions and linear algebra in any precision you want. 
+    You can declare
     FPS as Float64, Float32, or Float16 and nsol will do the right thing if
     YOU do not destroy the declaration in your J! function. I'm amazed
     that this works so easily. If the Jacobian is reasonably well 
     conditioned, I can see no reason to do linear algebra in 
-    double precision. 
+    double precision for anything other than horribly ill-conditioned
+    problems.\n
+    BUT ... Julia has very limited support for direct sparse solvers in
+    anything other than Float64. I recommend that you only use Float64
+    with direct sparse solvers unless you really know what you're doing.
 
 ----------------------
 
