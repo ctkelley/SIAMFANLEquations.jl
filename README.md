@@ -20,7 +20,7 @@ Hence the notebook and this package all have SIAMFANL in their names.
 The new book with have a different algorithm mix and the solvers and examples will be in Juila. The project will have three parts.
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
-   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source)
+   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/tree/0.2.0) (open source)
    3. This package (MIT License)<br>
       I will register this package no earlier that the release of v0.2.1 and no later than the release of v0.2.2 (when Chapter 2 of the notebook and the solvers/test problems for that chapter are in final draft form and I'm startingon Chapter 3). 
    
