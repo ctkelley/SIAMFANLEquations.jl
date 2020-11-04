@@ -22,7 +22,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source)
    3. This package (MIT License)<br>
-      I will register this package no earlier that the release of v0.2.1 and no later than the release of v0.2.2 (when Chapter 2 of the notebook and the solvers/test problems for that chapter are closer to done than they are now). 
+      I will register this package no earlier that the release of v0.2.1 and no later than the release of v0.2.2 (when Chapter 2 of the notebook and the solvers/test problems for that chapter are in final draft form and I'm startingon Chapter 3). 
    
 ## Readme Contents:
 - [Installation](#Installation)
