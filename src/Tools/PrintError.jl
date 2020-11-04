@@ -21,18 +21,18 @@ end
 PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
 """
 function PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
-if toosoon
-errcode = Lottery_Winner(resnorm, tol, printerr)
-else
-if printerr
+~toosoon || (errcode = Lottery_Winner(resnorm, tol, printerr))
+#if toosoon
+#errcode = Lottery_Winner(resnorm, tol, printerr)
+#else
+if printerr && ~toosoon
 println("PTC failure; increase maxit and/or dt0")
 println("Residual norm =", "  ", resnorm)
 println("Current values: maxit  =  ", maxit, ",  dt0 = ", dt0)
 println("Give the history array a look to see what's happening.")
 println("  ")
 end
-errcode=10
-end
+toosoon || (errcode=10)
 return errcode
 end
 
