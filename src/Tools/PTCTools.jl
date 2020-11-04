@@ -17,12 +17,14 @@ share storage. So, FPS=PrepareJac!(FPS, FS, ...) will break things.
 
 """
 function PTCUpdate(FPS::AbstractArray, FS, x, ItRules, step, residm, dt)
+    T=eltype(FPS)
     F! = ItRules.f
     pdata = ItRules.pdata
     #
     FPF = PrepareJac!(FPS, FS, x, ItRules, dt)
     #
-    step .= -(FPF \ FS)
+#    step .= -(FPF \ FS)
+    T==Float64 ? (step .= -(FPF \ FS)) : (step .= -(FPF \ T.(FS)))
     #
     # update solution/function value
     #

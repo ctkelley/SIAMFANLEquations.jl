@@ -40,12 +40,13 @@ Inputs:\n
     FPS as Float64, Float32, or Float16 and nsol will do the right thing if
     YOU do not destroy the declaration in your J! function. I'm amazed
     that this works so easily. If the Jacobian is reasonably well 
-    conditioned, I can see no reason to do linear algebra in 
-    double precision for anything other than horribly ill-conditioned
-    problems.\n
-    BUT ... Julia has very limited support for direct sparse solvers in
+    conditioned, you can cut the cost of Jacobian factorization and
+    storage in half with no loss. For large dense Jacobians and inexpensive
+    functions, this is a good deal.\n
+    BUT ... There is very limited support for direct sparse solvers in
     anything other than Float64. I recommend that you only use Float64
-    with direct sparse solvers unless you really know what you're doing.
+    with direct sparse solvers unless you really know what you're doing. I
+    have a couple examples in the notebook, but watch out.
 
 ----------------------
 
@@ -279,6 +280,7 @@ function nsol(
     # The main loop stops on convergence, too many iterations, or a
     # line search failure after a derivative evaluation.
     #
+    T=eltype(FPS)
     while resnorm > tol && itc < maxit && (armstop || stagnationok)
         #   
         # Evaluate and factor the Jacobian.   
@@ -301,7 +303,8 @@ function nsol(
         end
         derivative_is_old = (newjac == 0) && (solver == "newton")
         if n > 1
-        step .= -(FPF \ FS) 
+        T==Float64 ? (step .= -(FPF \ FS)) : (step .= -(FPF \ T.(FS)))
+#        step .= -(FPF \ FS)
         else
         step = - FS/FPF
         end

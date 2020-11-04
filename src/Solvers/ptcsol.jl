@@ -37,14 +37,15 @@ solvers can deal with it either way.
     functions and linear algebra in any precision you want. You can declare
     FPS as Float64, Float32, or Float16 and ptcsol will do the right thing if
     YOU do not destroy the declaration in your J! function. I'm amazed
-    that this works so easily. If the Jacobian is reasonably well 
-    conditioned, I can see no reason to do linear algebra in 
-    double precision I can see no reason to do linear algebra in
-    double precision for anything other than horribly ill-conditioned
-    problems.\n
-    BUT ... Julia has very limited support for direct sparse solvers in
+    that this works so easily. If the Jacobian is reasonably well
+    conditioned, you can cut the cost of Jacobian factorization and
+    storage in half with no loss. For large dense Jacobians and inexpensive
+    functions, this is a good deal.\n
+    BUT ... There is very limited support for direct sparse solvers in
     anything other than Float64. I recommend that you only use Float64
-    with direct sparse solvers unless you really know what you're doing.
+    with direct sparse solvers unless you really know what you're doing. I
+    have a couple examples in the notebook, but watch out.
+
 
 
 ----------------------
