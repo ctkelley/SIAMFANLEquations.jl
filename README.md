@@ -2,7 +2,7 @@
 |:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-img]][build-url] [![][codecov-img]][codecov-url] |
 
-
+[![Build Status](https://github.com/invenia/SIAMFANLEquations.jl/workflows/CI/badge.svg)](https://github.com/invenia/SIAMFANLEquations.jl/actions)
 # SIAMFANLEquations version 0.2.1
 
 This is the package with the solvers and test problems for 
@@ -225,3 +225,6 @@ or the Army Research Office.
 
 [codecov-img]: https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl
+
+
+
