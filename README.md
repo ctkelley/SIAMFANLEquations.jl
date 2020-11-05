@@ -1,6 +1,6 @@
 | **Documentation**                                                               | **Build Status**                                                                                |
 |:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
-| [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![Build Status](https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI/badge.svg)](https://github.com/ctkelley/SIAMFANLEquations.jl/actions)[![][codecov-img]][codecov-url] |
+| [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![Build Status](https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI/badge.svg)](https://github.com/ctkelley/SIAMFANLEquations.jl/actions)  [![][codecov-img]][codecov-url] |
 
 
 
