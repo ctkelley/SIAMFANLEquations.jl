@@ -102,9 +102,10 @@ function ptcsolsc(
 #
 fp0=copy(x0)
 fpp0=copy(x0)
-zdata=[]
+#zdata=[]
 itout=ptcsol(f,x0,fp0,fpp0,fp;
              rtol=rtol,atol=atol,maxit=maxit,dt0=dt0,dx=dx,
-             pdata=zdata,printerr=printerr,keepsolhist=keepsolhist)
+             printerr=printerr,keepsolhist=keepsolhist)
+#             pdata=zdata,printerr=printerr,keepsolhist=keepsolhist)
 return itout
 end
