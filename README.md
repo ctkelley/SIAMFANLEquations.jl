@@ -1,6 +1,8 @@
 | **Documentation**                                                               | **Build Status**                                                                                |
 |:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
-| [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] |   <img alt="CI" src="https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI/badge.svg"> [![][codecov-img]][codecov-url] |
+| [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![Build Status](https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI/badge.svg)](https://github.com/ctkelley/SIAMFANLEquations.jl/actions)[![][codecov-img]][codecov-url] |
+
+
 
  
 # SIAMFANLEquations version 0.2.1
@@ -222,7 +224,7 @@ or the Army Research Office.
 
 #[build-img]: https://img.shields.io/github/workflow/status/ctkelley/SIAMFANLEquations.jl/CI.svg
 [build-img]: https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI/badge.svg
-[build-url]: https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI
+[build-url]: https://github.com/ctkelley/SIAMFANLEquations.jl/actions
 
 [codecov-img]: https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl
