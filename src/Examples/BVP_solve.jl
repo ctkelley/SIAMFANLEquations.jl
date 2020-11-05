@@ -1,8 +1,8 @@
 """
-BVP_solve(n = 801, T = Float64)
+BVP_solve(n = 801, T = Float64; bfact=qr!)
 Solve the BVP for the Chapter 2 figures and testing.
 """
-function BVP_solve(n = 801, T = Float64)
+function BVP_solve(n = 801, T = Float64; bfact=qr!)
 # Set it up
     bdata = bvpinit(n, T);
 #
@@ -15,8 +15,14 @@ function BVP_solve(n = 801, T = Float64)
 #
     BVP_U0!(U0, n, bdata);
 #
+if bfact==qr!
     bvpout = nsol(Fbvp!, U0, FV, FPV, Jbvp!; rtol = 1.e-10, sham=1,
-             pdata = bdata, jfact=qr!)
+             pdata = bdata, jfact=bfact)
+else
+# Test for default of qr. Used for CI only.
+    bvpout = nsol(Fbvp!, U0, FV, FPV, Jbvp!; rtol = 1.e-10, sham=1,
+             pdata = bdata)
+end
     return (bvpout=bvpout, tv=bdata.tv)
 end
 

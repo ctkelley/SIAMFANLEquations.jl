@@ -17,7 +17,7 @@ hs2=smallout2.bvpout.history./sqrt(hsmall)
 smok = norm(hs-hs2,Inf)<1.e-13
 #
 nbig=2*nsmall
-bigout=BVP_solve(nbig)
+bigout=BVP_solve(nbig; bfact=qr!)
 hbig=20.0/(nbig-1)
 statsb=bigout.bvpout.stats
 bs=bigout.bvpout.history./sqrt(hbig)

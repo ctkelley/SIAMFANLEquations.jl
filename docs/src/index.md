@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.2.1
+# SIAMFANLEquations.jl v0.2.0
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -24,8 +24,10 @@ nsolsc and ptcsolsc are stable, but you never know.__
 The scalar solvers and the first chapter of the notebook are done as of
 v0.1.2.
 
-Chapter 2 is under construction and I'll tag this when the solvers are 
-done. I'll tag v0.2.2 when the notebook is ready.
+Chapter 2 is under construction. The solvers are done and this is
+v0.2.0. I'm moving to GitHub Actions and will tag v0.2.1 when that's done. 
+I'll tag v0.2.2 when the notebook, print book and the mappings
+between them are ready. I'll register the package at that time.
 
 nsol.jl, Newton with direct linear solvers, is done. I am finishing 
 the test problems now.
@@ -40,16 +42,16 @@ The notebooks for Chapter 2 are nowhere close to done. The to-do list includes
 
 __Item 0__: Finishing the test problems and the solvers. (85% done)
 
-1. Getting the print book part of Chapter 2 looking the way I want. (75% done)
-2. Making the formatting of Chapter 1 consistent with Chapter 2. (25% done)
-3. Fixing the API for the codes. Close for now (90%)
+1. Getting the print book part of Chapter 2 looking the way I want. (95% done)
+2. Making the formatting of Chapter 1 consistent with Chapter 2. (done)
+3. Fixing the API for the codes. Close for now (done)
 4. Mapping the print book part of Chapter 2 to the notebook. (0% done)
-5. Completing the notebook part of Chapter 2. (20% done)
+5. Completing the notebook part of Chapter 2. (90% done)
 6. Mapping the notebook part of Chapter 2 to the print book. (0% done)
 
 If all goes well, I should post a draft of everything by late October.
 
-Once item 0 is done I will tag v0.2.1.
+I'm tagging v0.2.0. 
 
 ## Scalar Equations: Chapter 1
 
