@@ -74,11 +74,13 @@ I have released v0.2.0. The codes can now duplicate the examples (at least the o
 
 __Version 0.2.1 will be the version where I switch from Travis to GitHub Actions.__ There will be a little bit of new stuff in there, but not a lot.
 
-- __New stuff__ = __Chapter 2__: Systems of equations with direct linear solvers .
+- __New stuff__ = __Chapter 2__: Systems of equations with __direct__ linear solvers .
 
      - nsol.jl is in the Solvers directory. Most of the test problems are done and it works. It also works for scalar equations and nsolsc.jl is just a stub. 
 
      -  ptcsol.jl  is in the Solvers directory. I have fixed this so that it also works for scalar equations, which means that ptcsolsc.jl is now just a stub. Look at the source.
+     
+     - The solvers support using single precision linear solvers for dense and banded matrices. This cuts the cost of factorization and storage for the Jacobian half. For well conditioned problems it does no harm. This is a close to a free lunch as anything ever gets. 
 
      - The notebook section for Chapter 2, __SIAMFANLCh2s.ipynb__ works and is essentially done. Chapter 2 of the print book is in the same shape. 
      The examples all work. The mappings notebook-->print book and printbook-->notebook need more time. When that is done it's time to release v0.2.2 and register the package.
