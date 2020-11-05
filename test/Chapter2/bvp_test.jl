@@ -8,7 +8,7 @@ Compare two small grids.
 """
 function bvp_test(nsmall=101)
 #
-smallout=BVP_solve(nsmall)
+smallout=BVP_solve(nsmall; bfact=qr)
 smallout2=BVP_solve(nsmall)
 hsmall=20.0/(nsmall-1)
 statss=smallout.bvpout.stats
