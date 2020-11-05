@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.2.0
+# SIAMFANLEquations.jl v0.2.1
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -25,7 +25,7 @@ The scalar solvers and the first chapter of the notebook are done as of
 v0.1.2.
 
 Chapter 2 is under construction. The solvers are done and this is
-v0.2.0. I'm moving to GitHub Actions and will tag v0.2.1 when that's done. 
+v0.2.1. I'm moving to GitHub Actions and will tag v0.2.1 when that's done. 
 I'll tag v0.2.2 when the notebook, print book and the mappings
 between them are ready. I'll register the package at that time.
 
@@ -50,8 +50,6 @@ __Item 0__: Finishing the test problems and the solvers. (85% done)
 6. Mapping the notebook part of Chapter 2 to the print book. (0% done)
 
 If all goes well, I should post a draft of everything by late October.
-
-I'm tagging v0.2.0. 
 
 ## Scalar Equations: Chapter 1
 
