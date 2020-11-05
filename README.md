@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][travis-img]][travis-url] [![][codecov-img]][codecov-url] |
 
 
-# SIAMFANLEquations version 0.2.0
+# SIAMFANLEquations version 0.2.1
 
 This is the package with the solvers and test problems for 
 
@@ -70,7 +70,7 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-I am releasing v0.2.0. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapters 1 and 2 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. Chapter 2 is in good shape. I have not stopped working on Chapter 1, but Chapters 2 and (soon) 3 have priority. 
+I have released v0.2.0. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapters 1 and 2 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. Chapter 2 is in good shape. I have not stopped working on Chapter 1, but Chapters 2 and (soon) 3 have priority. 
 
 __Version 0.2.1 will be the version where I switch from Travis to GitHub Actions.__ There will be a little bit of new stuff in there, but not a lot.
 
@@ -84,7 +84,6 @@ __Version 0.2.1 will be the version where I switch from Travis to GitHub Actions
      The examples all work. The mappings notebook-->print book and printbook-->notebook need more time. When that is done it's time to release v0.2.2 and register the package.
       
      - The scalar codes nsolsc.jl and ptcsolsc.jl are stable and I won't be messing with them for quite a while.
-
 
 The plan is, for x > 2.
 
