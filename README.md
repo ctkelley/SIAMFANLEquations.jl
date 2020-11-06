@@ -6,6 +6,7 @@
 
  
 # SIAMFANLEquations version 0.2.1
+Same as 0.2.0 with GitHub Actions replacing Travis
 
 This is the package with the solvers and test problems for 
 
