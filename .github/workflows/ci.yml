@@ -1,6 +1,13 @@
 name: CI
 on:
   - push
+branches:
+      - 'master'
+      - 'release-'
+    paths-ignore:
+      - 'LICENSE.md'
+      - 'README.md'
+    tags: '*'
   - pull_request
 jobs:
   test:
