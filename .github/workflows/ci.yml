@@ -1,9 +1,6 @@
 name: CI
 on:
   - push
-  - paths-ignore
-      - 'LICENSE.md'
-      - 'README.md'
   - pull_request
 jobs:
   test:
