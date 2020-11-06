@@ -81,7 +81,7 @@ function EvalF!(F!, FS, x, pdata)
         return FS
 end
 
-function EvalF!(F!, FS::Real, x::Real)
+function EvalF!(F!, FS::Real, x::Real, q::Nothing)
          FS = F!(x)
          return FS
 end
