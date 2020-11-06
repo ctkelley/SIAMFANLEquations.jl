@@ -1,6 +1,6 @@
 name: CI
 on:
-   push
+   push:
       branches:
        - 'master'
        - 'release-'
@@ -8,7 +8,8 @@ on:
       - 'LICENSE.md'
       - 'README.md'
     tags: '*'
-   pull_request
+   pull_request:
+
 jobs:
   test:
     name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }}
