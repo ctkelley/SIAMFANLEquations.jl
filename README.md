@@ -3,8 +3,6 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] |
 
 
-
- [![Build Status](https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI/badge.svg)](https://github.com/ctkelley/SIAMFANLEquations.jl/actions) 
 # SIAMFANLEquations version 0.2.1
 Same as 0.2.0 with GitHub Actions replacing Travis and a minor change to the API for the scalar codes. Nothing breaking in this version.
 
