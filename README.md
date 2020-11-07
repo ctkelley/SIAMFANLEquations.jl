@@ -90,7 +90,7 @@ __Version 0.2.1 will be the version where I switch from Travis to GitHub Actions
      - The notebook section for Chapter 2, __SIAMFANLCh2s.ipynb__ works and is essentially done. Chapter 2 of the print book is in the same shape. 
      The examples all work. The mappings notebook-->print book and printbook-->notebook need more time. When that is done it's time to release v0.2.2 and register the package.
       
-     - The scalar codes nsolsc.jl and ptcsolsc.jl are stable and I won't be messing with them for quite a while.
+     - The scalar codes nsolsc.jl and ptcsolsc.jl are stable. I've made a minor chage in v0.2.1 to let the function use precomputed data. I explain this in the notebook. The examples for pseudo-transient continuation changed a bit in the scalar cases to make CI do it's job. 
 
 The plan is, for x > 2.
 
