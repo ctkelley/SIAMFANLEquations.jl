@@ -222,9 +222,6 @@ or the Army Research Office.
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://ctkelley.github.io/SIAMFANLEquations.jl/stable
 
-#[ci-img]: https://travis-ci.com/ctkelley/SIAMFANLEquations.jl.svg?branch=master
-#[ci-url]: https://travis-ci.com/ctkelley/SIAMFANLEquations.jl
-
 [build-status-img]: https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI/badge.svg
 [build-status-url]: https://github.com/ctkelley/SIAMFANLEquations.jl/actions
 
