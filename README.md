@@ -26,6 +26,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
       I will register this package no earlier that the release of v0.2.1 and no later than the release of v0.2.2 (when Chapter 2 of the notebook and the solvers/test problems for that chapter are in final draft form and I'm startingon Chapter 3). 
    
 ## Readme Contents:
+- [Mission](#Package-Mission)
 - [Installation](#Installation)
 - [Meaning of Version Numbers](#Meaning-of-version-numbers)
 - [__Please__ No Pull Requests](#Pull-Requests)
@@ -34,6 +35,9 @@ The new book with have a different algorithm mix and the solvers and examples wi
 - [About the test problems](#Test-Problems)
 - [Funding](#Funding) 
 
+## Package Mission
+
+This package is designed and built to support a book project. So the solvers and examples reinforce the algorithmic discussion in the book. This is a different mission from a general-purpose package. 
 
 ## Installation: Use Julia 1.5 and up with this thing!!!
 
