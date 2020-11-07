@@ -2,7 +2,7 @@
 |:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![Build Status](https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI/badge.svg)](https://github.com/ctkelley/SIAMFANLEquations.jl/actions)  [![][codecov-img]][codecov-url] |
 
-
+[![][build-status-img]][build-status-url]
 
  
 # SIAMFANLEquations version 0.2.1
@@ -224,7 +224,7 @@ or the Army Research Office.
 #[ci-url]: https://travis-ci.com/ctkelley/SIAMFANLEquations.jl
 
 [build-status-img]: https://github.com/ctkelley/SIAMFANLEquations.jl/workflows/CI/badge.svg
-[build-ustatus-rl]: https://github.com/ctkelley/SIAMFANLEquations.jl/actions
+[build-status-url]: https://github.com/ctkelley/SIAMFANLEquations.jl/actions
 
 [codecov-img]: https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/ctkelley/SIAMFANLEquations.jl
