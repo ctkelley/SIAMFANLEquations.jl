@@ -37,7 +37,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 ## Package Mission
 
-This package is designed and built to support a book project. So the solvers and examples reinforce the algorithmic discussion in the book. This is a different mission from a general-purpose package. 
+This package is designed and built to support a book project. So the solvers and examples reinforce the algorithmic discussion in the book. General purpose packages have a different mission.
 
 ## Installation: Use Julia 1.5 and up with this thing!!!
 
