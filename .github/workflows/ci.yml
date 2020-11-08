@@ -4,9 +4,12 @@ on:
    paths-ignore:
       - 'LICENSE.md'
       - 'README.md'
+   branches:
+      - master
   pull_request:
-#  - push
-#  - pull_request
+   branches:
+      - master
+   tags: '*'
 
 jobs:
   test:
