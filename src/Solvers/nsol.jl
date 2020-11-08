@@ -237,25 +237,38 @@ function nsol(
     itc = 0
     idid = true
     iline = false
-#
-#   If I'm letting the iteration stagnate and turning off the
-#   linesearch, then the line search cannot fail.
-#
-    stagflag = stagnationok && (armmax==0)
+    #
+    #   If I'm letting the iteration stagnate and turning off the
+    #   linesearch, then the line search cannot fail.
+    #
+    stagflag = stagnationok && (armmax == 0)
     #=
     First evaluation of the function. I evaluate the derivative when
     Shamanskii tells me to, at the first iteration (duh!), and when
     the rate of residual reduction is below the target value of resdec.
     =#
-    (ItRules, x, n) = Newtoninit(x0, dx, F!, J!, solver, sham, 
-         armmax, armfix, resdec, maxit, printerr, pdata, jfact)
-    keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
+    (ItRules, x, n) = Newtoninit(
+        x0,
+        dx,
+        F!,
+        J!,
+        solver,
+        sham,
+        armmax,
+        armfix,
+        resdec,
+        maxit,
+        printerr,
+        pdata,
+        jfact,
+    )
+    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     #
     # First Evaluation of the function. Initialize the iteration stats.
     # Fix the tolerances for convergence and define the derivative FPF
     # outside of the main loop for scoping.
     #   
-    FS=EvalF!(F!, FS, x, pdata)
+    FS = EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     tol = rtol * resnorm + atol
     FPF = []
@@ -269,9 +282,9 @@ function nsol(
     #
     # Preallocate a few vectors for the step, trial step, trial function
     #
-    step=copy(x)
-    xt=copy(x)
-    FT=copy(x)
+    step = copy(x)
+    xt = copy(x)
+    FT = copy(x)
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #
@@ -280,7 +293,7 @@ function nsol(
     # The main loop stops on convergence, too many iterations, or a
     # line search failure after a derivative evaluation.
     #
-    T=eltype(FPS)
+    T = eltype(FPS)
     while resnorm > tol && itc < maxit && (armstop || stagnationok)
         #   
         # Evaluate and factor the Jacobian.   
@@ -303,25 +316,24 @@ function nsol(
         end
         derivative_is_old = (newjac == 0) && (solver == "newton")
         if n > 1
-        T==Float64 ? (step .= -(FPF \ FS)) : (step .= -(FPF \ T.(FS)))
-#        step .= -(FPF \ FS)
+            T == Float64 ? (step .= -(FPF \ FS)) : (step .= -(FPF \ T.(FS)))
+            #        step .= -(FPF \ FS)
         else
-        step = - FS/FPF
+            step = -FS / FPF
         end
         #
         # Compute the trial point, evaluate F and the residual norm.     
         #
-        AOUT = armijosc(xt, x, FT, FS, step, resnorm, ItRules, 
-                derivative_is_old)
+        AOUT = armijosc(xt, x, FT, FS, step, resnorm, ItRules, derivative_is_old)
         #
         # update solution/function value
         #
         if n > 1
-           x .= AOUT.ax 
-           FS .= AOUT.afc
+            x .= AOUT.ax
+            FS .= AOUT.afc
         else
-           x = AOUT.ax; 
-           FS = AOUT.afc
+            x = AOUT.ax
+            FS = AOUT.afc
         end
         #
         # If the line search fails and the derivative is current,
@@ -343,10 +355,9 @@ function nsol(
     end
     solution = x
     functionval = FS
-    (idid, errcode)=NewtonOK(resnorm, iline, tol, toosoon, itc, 
-            ItRules)
+    (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
-    newtonout=NewtonClose(x, FS, ItData.history, stats,
-             idid, errcode, keepsolhist, solhist)
+    newtonout =
+        NewtonClose(x, FS, ItData.history, stats, idid, errcode, keepsolhist, solhist)
     return newtonout
 end

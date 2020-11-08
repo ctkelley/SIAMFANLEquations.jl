@@ -17,14 +17,14 @@ share storage. So, FPS=PrepareJac!(FPS, FS, ...) will break things.
 
 """
 function PTCUpdate(FPS::AbstractArray, FS, x, ItRules, step, residm, dt)
-    T=eltype(FPS)
+    T = eltype(FPS)
     F! = ItRules.f
     pdata = ItRules.pdata
     #
     FPF = PrepareJac!(FPS, FS, x, ItRules, dt)
     #
-#    step .= -(FPF \ FS)
-    T==Float64 ? (step .= -(FPF \ FS)) : (step .= -(FPF \ T.(FS)))
+    #    step .= -(FPF \ FS)
+    T == Float64 ? (step .= -(FPF \ FS)) : (step .= -(FPF \ T.(FS)))
     #
     # update solution/function value
     #
@@ -48,11 +48,13 @@ function PTCUpdate(df::Real, fval, x, ItRules, step, resnorm, dt)
     f = ItRules.f
     dx = ItRules.dx
     fp = ItRules.fp
-    df = fpeval_newton(x, f, fval, fp, dx)
+    pdata = ItRules.pdata
+    df = fpeval_newton(x, f, fval, fp, dx, pdata)
     idt = 1.0 / dt
     step = -fval / (idt + df)
     x = x + step
-    fval = f(x)
+    #    fval = f(x)
+    fval = EvalF!(f, fval, x, pdata)
     # SER
     residm = resnorm
     resnorm = abs(fval)
@@ -70,15 +72,15 @@ function PTCinit(x0, dx, F!, J!, dt0, maxit, pdata, jfact)
     #
     n = length(x0)
     x = copy(x0)
-    ItRules = (dx = dx, f = F!, fp = J!, dt0=dt0, 
-           maxit=maxit, pdata = pdata, fact = jfact)
+    ItRules =
+        (dx = dx, f = F!, fp = J!, dt0 = dt0, maxit = maxit, pdata = pdata, fact = jfact)
     return (ItRules, x, n)
 end
 
 function solhistinit(n, maxit, x)
-#
-# If you are keeping a solution history, make some room for it.
-#
+    #
+    # If you are keeping a solution history, make some room for it.
+    #
     solhist = zeros(n, maxit + 1)
     @views solhist[:, 1] .= x
     return solhist
@@ -88,24 +90,24 @@ end
 PTCOK: Figure out idid and errcode
 """
 function PTCOK(resnorm, tol, toosoon, ItRules, printerr)
-maxit=ItRules.maxit
-dt0=ItRules.dt0
-errcode = 0
-resfail = (resnorm > tol)
-idid = ~(resfail || toosoon)
-errcode = 0
-if ~idid
-    (errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr))
-end
-return (idid, errcode)
+    maxit = ItRules.maxit
+    dt0 = ItRules.dt0
+    errcode = 0
+    resfail = (resnorm > tol)
+    idid = ~(resfail || toosoon)
+    errcode = 0
+    if ~idid
+        (errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr))
+    end
+    return (idid, errcode)
 end
 
 
 """
 PTCOKClose: package the output of ptcsol
 """
-function PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist=[])
-if keepsolhist
+function PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist = [])
+    if keepsolhist
         sizehist = length(ithist)
         return (
             solution = x,
@@ -125,5 +127,3 @@ if keepsolhist
         )
     end
 end
-
-

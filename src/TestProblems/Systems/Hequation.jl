@@ -15,7 +15,7 @@ function heqJ!(FP,F,x,pdata)
 The is the Jacobian evaluation playing by nsol rules. The
 precomputed data is a big deal for this one. 
 """
-function heqJ!(FP::Array{T,2}, F,  x, pdata) where T <: Real
+function heqJ!(FP::Array{T,2}, F, x, pdata) where {T<:Real}
     pseed = pdata.pseed
     mu = pdata.mu
     n = length(x)
@@ -74,10 +74,10 @@ heqinit(x0::Array{T,1}, c) where T :< Real
 
 Initialize H-equation precomputed data.
 """
-function heqinit(x0::Array{T,1}, c) where T<: Real
+function heqinit(x0::Array{T,1}, c) where {T<:Real}
     n = length(x0)
-    cval=ones(1,)
-    cval[1]=c
+    cval = ones(1,)
+    cval[1] = c
     vsize = (n,)
     bsize = (2 * n,)
     ssize = (2 * n - 1,)
@@ -100,7 +100,7 @@ function heqinit(x0::Array{T,1}, c) where T<: Real
     @views bigseed .= [hseed[n:2*n-1]; 0; hseed[1:n-1]]
     @views hankel .= conj(FFA * bigseed)
     return (
-        cval=cval,
+        cval = cval,
         mu = mu,
         hseed = hseed,
         pseed = pseed,
@@ -121,10 +121,10 @@ If you are varying c in a computation, this function
 lets you set it.
 """
 function setc!(pdata, cin)
-    c=pdata.cval[1]
-    cfix=cin/c
-    pdata.pmu.*=cfix
-    pdata.cval[1]=cin
+    c = pdata.cval[1]
+    cfix = cin / c
+    pdata.pmu .*= cfix
+    pdata.cval[1] = cin
 end
 
 
@@ -183,7 +183,7 @@ pages=283
 
 """
 function heqbos!(F, x, pdata)
-    c=pdata
+    c = pdata
     n = length(x)
     mu = 0.5:1:n-0.5
     mu = mu / n

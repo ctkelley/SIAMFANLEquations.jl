@@ -28,9 +28,8 @@ function PrepareJac!(fps::Real, fc, x, ItRules, dt = 0)
     fp = ItRules.fp
     f = ItRules.f
     dx = ItRules.dx
-    pdata = ItRules.pdata
     solver = ItRules.solver
-    df = fpeval_newton(x, f, fc, fp, dx, pdata)
+    df = fpeval_newton(x, f, fc, fp, dx)
     dt == 0 || (df += 1.0 / dt)
     newjac = newjac + 1
     return df
@@ -88,7 +87,7 @@ function EvalF!(F!, FS::Real, x::Real, q::Nothing)
 end
 
 function EvalF!(F!, FS::Real, x::Real, pdata)
-    FS = F!(x, pdata)
+    FS = F!(x)
     return FS
 end
 
@@ -185,14 +184,13 @@ fpeval_newton
 Evaluates f' by differences or the user's code.
 
 """
-function fpeval_newton(x, f, fc, fp, h, pdata)
+function fpeval_newton(x, f, fc, fp, h)
     fps = string(fp)
-    df = 0.0
     dps = string(difffp)
     if fps == dps
-        df = difffp(x, f, fc, h, pdata)
+        df = difffp(x, f, fc, h)
     else
-        df = EvalF!(fp, df, x, pdata)
+        df = fp(x)
     end
     return df
 end
@@ -203,10 +201,7 @@ difffp
 
 forward differencing for scalar equations
 """
-function difffp(x, f, fc, h, pdata)
-    fph = 0.0
-    fph = EvalF!(f, fph, x + h, pdata)
-    df = (fph - fc) / h
-    #    df = (f(x + h) - fc) / h
+function difffp(x, f, fc, h)
+    df = (f(x + h) - fc) / h
     return df
 end

@@ -1,4 +1,4 @@
-module SIAMFANLEquations 
+module SIAMFANLEquations
 using LinearAlgebra
 using LinearAlgebra.BLAS
 using SparseArrays
@@ -12,7 +12,7 @@ export ptcsol
 export nsol
 export secant
 
-include("Tools/armijo.jl") 
+include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
 include("Tools/FunctionJacobianEvals.jl")
 include("Tools/ManageStats.jl")
@@ -62,7 +62,7 @@ export
     BeamtdJ!,
     beaminit,
     ptctest
-    
+
 
 include("TestProblems/Scalars/fcos.jl")
 include("TestProblems/Scalars/fpatan.jl")

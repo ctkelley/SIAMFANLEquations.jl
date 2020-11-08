@@ -1,7 +1,7 @@
 """
 nsolsc(f,x0, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
         solver="newton", sham=1, armmax=10, resdec=.1, dx=1.e-7,
-        armfix=false, 
+        armfix=false, pdata=nothing,
         printerr=true, keepsolhist=true, stagnationok=false)
 
 C. T. Kelley, 2020
@@ -60,6 +60,13 @@ armfix:\n
 The default is a parabolic line search (ie false). Set to true and
 the stepsize will be fixed at .5. Don't do this unless you are doing
 experiments for research.
+
+pdata:\n
+precomputed data for the function/derivative.
+Things will go better if you use this rather than hide the data
+in global variables within the module for your function/derivative
+If you use this option your function and derivative must take pdata
+as a second argument. eg f(x,pdata) and fp(x,pdata)
 
 printerr:\n
 I print a helpful message when the solver fails. To supress that
@@ -152,22 +159,37 @@ function nsolsc(
     resdec = 0.1,
     dx = 1.e-7,
     armfix = false,
+    pdata = nothing,
     printerr = true,
     keepsolhist = true,
     stagnationok = false,
 )
-#
-# The scalar code is a simple wrapper for the real code (nsol). The
-# wrapper puts placeholders for the memory allocations and the precomputed
-# data.
-#
-   fp0 = copy(x0)
-   fpp0=copy(x0)
-   zdata=[]
-   newtonout=nsol(f, x0, fp0, fpp0, fp;
-         rtol=rtol,atol=atol,maxit=maxit,solver=solver, sham=sham,
-         armmax=armmax, resdec=resdec, dx=dx, armfix=armfix,
-       pdata=zdata,printerr=printerr,keepsolhist=keepsolhist, 
-       stagnationok=stagnationok)
+    #
+    # The scalar code is a simple wrapper for the real code (nsol). The
+    # wrapper puts placeholders for the memory allocations and the precomputed
+    # data.
+    #
+    fp0 = copy(x0)
+    fpp0 = copy(x0)
+    newtonout = nsol(
+        f,
+        x0,
+        fp0,
+        fpp0,
+        fp;
+        rtol = rtol,
+        atol = atol,
+        maxit = maxit,
+        solver = solver,
+        sham = sham,
+        armmax = armmax,
+        resdec = resdec,
+        dx = dx,
+        armfix = armfix,
+        pdata = pdata,
+        printerr = printerr,
+        keepsolhist = keepsolhist,
+        stagnationok = stagnationok,
+    )
     return newtonout
 end

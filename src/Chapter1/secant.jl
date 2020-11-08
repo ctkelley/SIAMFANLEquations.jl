@@ -103,7 +103,7 @@ function secant(
 )
     itc = 0
     idid = true
-    errcode=0
+    errcode = 0
     iline = false
     #=
      The theory does not support convergence of the secant-Armijo iteration
@@ -118,24 +118,24 @@ function secant(
         xm = 0.0001
     end
     fm = f(xm)
-    newfun0=1
+    newfun0 = 1
     derivative_is_old = false
     resnorm = abs(fc)
-    pdata=nothing
-    jfact=nothing
-    stagflag = stagnationok && (armmax==0)
-    (ItRules, x, n) = Secantinit(x0, dx, f, solver, 
-         armmax, armfix, maxit, printerr, pdata, jfact)
+    pdata = nothing
+    jfact = nothing
+    stagflag = stagnationok && (armmax == 0)
+    (ItRules, x, n) =
+        Secantinit(x0, dx, f, solver, armmax, armfix, maxit, printerr, pdata, jfact)
     #
     # Initialize the iteration statistics
     #
     newiarm = -1
-    ItData = ItStats(resnorm,2)
+    ItData = ItStats(resnorm, 2)
     newfun = 0
     newjac = 0
     newsol = x
     xt = x
-    keepsolhist ? (solhist=solhistinit(n, maxit, x)) : (solhist=[])
+    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     #
     # Fix the tolerances for convergence and define the derivative df
     # outside of the main loop for scoping.
@@ -154,13 +154,13 @@ function secant(
     #
     while (resnorm > tol) && (itc < maxit) && (armstop || stagnationok)
         newfun = 0
-#
-# Extra function call at the start.
-#
+        #
+        # Extra function call at the start.
+        #
         newjac = 0
         newfun = 0
         #
-        df = (fc - fm)/(x-xm)
+        df = (fc - fm) / (x - xm)
         derivative_is_old = (newjac == 0) && (solver == "newton")
         #
         # Compute the Newton direction and call the line search.
@@ -173,9 +173,9 @@ function secant(
         #
         # update solution/function value
         #
-        xm=x
+        xm = x
         x = AOUT.ax
-        fm=fc
+        fm = fc
         fc = AOUT.afc
         #
         # If the line search fails and the derivative is current, 
@@ -196,10 +196,9 @@ function secant(
     end
     solution = x
     fval = fc
-    (idid, errcode)=NewtonOK(resnorm, iline, tol, toosoon, itc,
-            ItRules)
+    (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
-    newtonout=NewtonClose(x, fval, ItData.history, stats,
-             idid, errcode, keepsolhist, solhist)
+    newtonout =
+        NewtonClose(x, fval, ItData.history, stats, idid, errcode, keepsolhist, solhist)
     return newtonout
 end

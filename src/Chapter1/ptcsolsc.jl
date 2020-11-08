@@ -1,6 +1,6 @@
 """
 ptcsolsc(f, x0, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=100,
-        dt0=1.e-6, dx=1.e-7, printerr = true, keepsolhist=true)
+        dt0=1.e-6, dx=1.e-7, pdata=nothing, printerr = true, keepsolhist=true)
 
 C. T. Kelley, 2020
 
@@ -37,6 +37,13 @@ where I set it to 1.0!\n
 dx: default = 1.e-7\n
 difference increment in finite-difference derivatives
       h=dx*norm(x)+1.e-6
+
+pdata:\n
+precomputed data for the function/derivative.
+Things will go better if you use this rather than hide the data
+in global variables within the module for your function/derivative
+If you use this option your function and derivative must take pdata 
+as a second argument. eg f(x,pdata) and fp(x,pdata)
 
 printerr: default = true\n
 I print a helpful message when the solver fails. To supress that
@@ -92,20 +99,32 @@ function ptcsolsc(
     maxit = 100,
     dt0 = 1.e-3,
     dx = 1.e-7,
+    pdata = nothing,
     printerr = true,
     keepsolhist = true,
 )
-#
-# The scalar code is a simple wrapper for the real code (ptcsol). The
-# wrapper puts placeholders for the memory allocations and the precomputed
-# data.
-#
-fp0=copy(x0)
-fpp0=copy(x0)
-zdata=[]
-itout=ptcsol(f,x0,fp0,fpp0,fp;
-             rtol=rtol,atol=atol,maxit=maxit,dt0=dt0,dx=dx,
-             printerr=printerr,keepsolhist=keepsolhist)
-#             pdata=zdata,printerr=printerr,keepsolhist=keepsolhist)
-return itout
+    #
+    # The scalar code is a simple wrapper for the real code (ptcsol). The
+    # wrapper puts placeholders for the memory allocations and the precomputed
+    # data.
+    #
+    fp0 = copy(x0)
+    fpp0 = copy(x0)
+    itout = ptcsol(
+        f,
+        x0,
+        fp0,
+        fpp0,
+        fp;
+        rtol = rtol,
+        atol = atol,
+        maxit = maxit,
+        dt0 = dt0,
+        dx = dx,
+        pdata = pdata,
+        printerr = printerr,
+        keepsolhist = keepsolhist,
+    )
+    #             printerr=printerr,keepsolhist=keepsolhist)
+    return itout
 end

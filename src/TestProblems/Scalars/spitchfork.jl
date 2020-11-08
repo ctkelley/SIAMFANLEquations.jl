@@ -9,24 +9,24 @@ if lambda > 0. This is a simple-minded version of the buckling beam problem.
 The function sptest(u) = spitchfork(u,.5) is the one I call in the testing.
 
 """
-function spitchfork(u,lambda)
-fu=u^3 - lambda*u
-return fu
+function spitchfork(u, lambda)
+    fu = u^3 - lambda * u
+    return fu
 end
 
 function sptest(u)
-lambda=.5
-spt=spitchfork(u,lambda)
-return spt
+    lambda = 0.5
+    spt = spitchfork(u, lambda)
+    return spt
 end
 
-function spitchp(u,lambda)
-fp=3*u^2 - lambda
-return fp
+function spitchp(u, lambda)
+    fp = 3 * u^2 - lambda
+    return fp
 end
 
 function sptestp(u)
-lambda=.5
-sptp=spitchp(u,lambda)
-return sptp
+    lambda = 0.5
+    sptp = spitchp(u, lambda)
+    return sptp
 end

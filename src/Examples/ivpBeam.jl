@@ -7,10 +7,10 @@ We use the same initial data as in the PTC example, ptcBeam.jl
 
 """
 function ivpBeam(n, dt, stepnum)
-#
-# Set up the initial data for the temporal integration and
-# the figure.
-#
+    #
+    # Set up the initial data for the temporal integration and
+    # the figure.
+    #
     bdata = beaminit(n, dt)
     FB = zeros(n)
     FR = zeros(n)
@@ -18,8 +18,8 @@ function ivpBeam(n, dt, stepnum)
     zr = zeros(n - 1)
     JB = Tridiagonal(zr, zd, zr)
     x = bdata.x
-    un=x.*(1.0 .- x).*(2.0 .- x)
-    un .*= exp.(-10.0*un)
+    un = x .* (1.0 .- x) .* (2.0 .- x)
+    un .*= exp.(-10.0 * un)
     bdata.UN .= un
     nout = []
     solhist = zeros(n, stepnum + 1)
@@ -63,15 +63,15 @@ function ivpBeam(n, dt, stepnum)
         fxn = norm(fx, Inf)
         push!(fhist, fxn)
         push!(fhistt, nout.history[end])
-#
-# If the predictor satisfies the termination criterion, advance
-# in time anyhow?
-#
-#        idid=abs(idid)
+        #
+        # If the predictor satisfies the termination criterion, advance
+        # in time anyhow?
+        #
+        #        idid=abs(idid)
     end
     t = dt * collect(1:1:idt)
-    zp=zeros(idt,);
-    se=[zp solhist[:,1:idt]' zp]'
-    xe=[0.0 x' 1.0]'
-    return (t=t, se=se, xe=xe, fhist=fhist, fhistt=fhistt)
+    zp = zeros(idt)
+    se = [zp solhist[:, 1:idt]' zp]'
+    xe = [0.0 x' 1.0]'
+    return (t = t, se = se, xe = xe, fhist = fhist, fhistt = fhistt)
 end
