@@ -21,27 +21,23 @@ function ptcsolsc_test()
     # Convergence to the right solution
     #
     ptcdata1 = ptcsolsc(sptest, u0, sptestp; dt0 = 1.0, rtol = 1.e-12)
-    #ptcdata2=ptcsolsc(sptest,u0; dt0=1.0, rtol=1.e-12, keepsolhist=false)
-    ptcdata2 = ptcsolsc(
-        spitchfork,
-        u0;
-        dt0 = 1.0,
-        rtol = 1.e-12,
-        pdata = lambda,
-        keepsolhist = false,
-    )
+    ptcdata2 = ptcsolsc( spitchfork, u0; dt0 = 1.0, rtol = 1.e-12, 
+        pdata = lambda, keepsolhist = false,)
+    ptcdatasec = secant( spitchfork, u0; rtol = 1.e-12, 
+        pdata = lambda, keepsolhist = false,)
     dh = ptcdata1.history - ptcdata2.history
     ndh = norm(dh[:, 1], Inf)
     fdok = (ndh < 1.e-7)
     ptcerr = ptcdata1.solhist .- ustable
     ptcfun = ptcdata1.history
+    secok = abs(ptcdatasec.solution) < 1.e-10
     solok = (abs(ptcdata1.solution - ustable) < 1.e-10)
     funok = (abs(ptcdata1.functionval) < 1.e-12)
     histok = (length(ptcfun) == 18)
     ptcdataf = ptcsolsc(sptest, u0; dt0 = 0.1, rtol = 1.e-12)
     errcode = ptcdataf.errcode
     failok = ~ptcdataf.idid && (errcode == 10)
-    ptcok = fdok && solok && funok && histok && failok
+    ptcok = fdok && solok && funok && histok && failok && secok
     if ~ptcok
         println("Failure in Scalar PTC")
         println(ptcdata1)

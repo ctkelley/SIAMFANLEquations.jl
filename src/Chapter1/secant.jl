@@ -1,6 +1,6 @@
 """
 secant(f,x0; rtol=1.e-6, atol=1.e-12, maxit=10,
-        armmax=10, armfix=false, 
+        armmax=10, armfix=false, pdata=nothing,
         printerr=true, keepsolhist=true, stagnationok=false)
 
 C. T. Kelley, 2020
@@ -97,6 +97,7 @@ function secant(
     armmax = 5,
     armfix = false,
     dx = 1.e-7,
+    pdata = nothing,
     printerr = true,
     keepsolhist = true,
     stagnationok = false,
@@ -110,18 +111,19 @@ function secant(
      and you assume a risk when you use it. The same is true for Broyden
      and any other quasi-Newton method.
     =#
-    fc = f(x0)
+    fc=0.0;
+    fc = EvalF!(f, fc, x0, pdata)
     fm = fc
     xm = copy(x0)
     xm = x0 * 1.0001
     if xm == 0
         xm = 0.0001
     end
-    fm = f(xm)
+    fm = fc
+    fm = EvalF!(f, fm, xm, pdata)
     newfun0 = 1
     derivative_is_old = false
     resnorm = abs(fc)
-    pdata = nothing
     jfact = nothing
     stagflag = stagnationok && (armmax == 0)
     (ItRules, x, n) =

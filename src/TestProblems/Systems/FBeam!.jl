@@ -7,7 +7,6 @@ function FBeam!(FV, U, bdata)
     D2 = bdata.D2
     lambda = bdata.lambda
     su = lambda * sin.(U)
-    # FV = -U'' - lambda sin(U)
     FV .= (D2 * U - su)
 end
 
