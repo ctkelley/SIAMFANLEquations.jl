@@ -3,12 +3,11 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] |
 
 
-# SIAMFANLEquations version 0.2.1
+# SIAMFANLEquations version 0.2.2
 
   - Chapter 2 codes complete. 
-  - Travis replaced by GitHub Actions. 
-  - Notebook for Chapter 2 done.
-  - Deleted prerelease 0.2.0. Unexpected and overdue changes in scalar solvers.
+  - Notebooks for Chapters 1 and 2 done
+  - Registered package
 
 This is the package with the solvers and test problems for 
 
@@ -80,21 +79,9 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-I have released v0.2.1. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapters 1 and 2 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. Chapter 2 is in good shape. I have not stopped working on Chapter 1, but Chapters 2 and (soon) 3 have priority. 
-
-- __New stuff__ = __Chapter 2__: Systems of equations with __direct__ linear solvers .
-
-     - nsol.jl is in the Solvers directory. Most of the test problems are done and it works. It also works for scalar equations and nsolsc.jl is just a stub. 
-
-     -  ptcsol.jl  is in the Solvers directory. I have fixed this so that it also works for scalar equations, which means that ptcsolsc.jl is now just a stub. Look at the source.
-     
-     - The solvers support using single precision linear solvers for dense and banded matrices. This cuts the cost of factorization and storage for the Jacobian half. For well conditioned problems it does no harm. This is a close to a free lunch as anything ever gets. 
-
-     - The notebook section for Chapter 2, __SIAMFANLCh2s.ipynb__ works and is essentially done. Chapter 2 of the print book is in the same shape. 
-     The examples all work. The mappings notebook-->print book and printbook-->notebook need more time. When that is done it's time to release v0.2.2 and register the package.
+This is version v0.2.2. v0.2.x for x>2 will happen only if I find major bugs. I will start on Chapter 3 soon.
       
-     - The scalar codes nsolsc.jl and ptcsolsc.jl are stable. I've made a minor chage in v0.2.1 to let the function use precomputed data. 
-
+     - The scalar codes nsolsc.jl and ptcsolsc.jl are stable. 
 The plan is, for x > 2.
 
 - v0.x.0 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.1 means the codes are finished and I have solid drafts of the print book and notebook parts of the chapter. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 0.x.y for y > 2 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
