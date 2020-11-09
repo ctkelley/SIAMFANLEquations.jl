@@ -20,8 +20,7 @@ This is version 0.2.1. What's new?
 
 - The solvers for Chapter 2: nsol.jl and ptcsol.jl are done.
 
-- Chapter 2 of the notebook is done and the map between notebook and
-print book is underway.
+- Chapter 2 of the notebook is done and the map between notebook and print book is underway.
 
 I'll tag v0.2.2 when the notebook, print book and the mappings
 between them are ready. I'll register the package at that time.
@@ -175,7 +174,6 @@ or BandedMatrices.
 ### Nonlinear systems with iterative linear solvers: Chapter 3
 
 1. The plan is to make this part of nsol and ptcsol. 
-2. The GMRES linear solver is 50% done. I expect to get Bi-CGSTAB
-in there too.
+2. The GMRES linear solver is 50% done. I expect to get Bi-CGSTAB in there too.
 
 
