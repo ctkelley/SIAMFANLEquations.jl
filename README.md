@@ -4,7 +4,11 @@
 
 
 # SIAMFANLEquations version 0.2.1
-Same as 0.2.0 with GitHub Actions replacing Travis and a minor change to the API for the scalar codes. Nothing breaking in this version.
+
+  - Chapter 2 codes complete. 
+  - Travis replaced by GitHub Actions. 
+  - Notebook for Chapter 2 done.
+  - Deleted prerelease 0.2.0. Unexpected and overdue changes in scalar solvers.
 
 This is the package with the solvers and test problems for 
 
@@ -75,9 +79,7 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-I have released v0.2.0. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapters 1 and 2 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. Chapter 2 is in good shape. I have not stopped working on Chapter 1, but Chapters 2 and (soon) 3 have priority. 
-
-__Version 0.2.1 will be the version where I switch from Travis to GitHub Actions.__ There will be a little bit of new stuff in there, but not a lot.
+I have released v0.2.1. The codes can now duplicate the examples (at least the ones that will remain in the new book)  from Chapters 1 and 2 of (Kel03), make all the new examples, and I have finished the first draft Chaper 1 of the notebook and print book. Chapter 2 is in good shape. I have not stopped working on Chapter 1, but Chapters 2 and (soon) 3 have priority. 
 
 - __New stuff__ = __Chapter 2__: Systems of equations with __direct__ linear solvers .
 
@@ -90,7 +92,7 @@ __Version 0.2.1 will be the version where I switch from Travis to GitHub Actions
      - The notebook section for Chapter 2, __SIAMFANLCh2s.ipynb__ works and is essentially done. Chapter 2 of the print book is in the same shape. 
      The examples all work. The mappings notebook-->print book and printbook-->notebook need more time. When that is done it's time to release v0.2.2 and register the package.
       
-     - The scalar codes nsolsc.jl and ptcsolsc.jl are stable. I've made a minor chage in v0.2.1 to let the function use precomputed data. I explain this in the notebook. The examples for pseudo-transient continuation changed a bit in the scalar cases to make CI do it's job. 
+     - The scalar codes nsolsc.jl and ptcsolsc.jl are stable. I've made a minor chage in v0.2.1 to let the function use precomputed data. 
 
 The plan is, for x > 2.
 
