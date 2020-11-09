@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.2.1
+# SIAMFANLEquations.jl v0.2.2
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -12,26 +12,10 @@ __Testing github actions: Working now. The next tag is the bit test.__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-This is version 0.2.1. What's new?
+This is version 0.2.2. 
 
-- Stable __(I think)__ interfaces for the scalar codes: nsolc.jl, 
-  ptcsol.jl, secant.jl. nsolsc.jl and ptcsol.jl are now wrappers around
-  the codes for systems.
-
-- The solvers for Chapter 2: nsol.jl and ptcsol.jl are done.
-
-- Chapter 2 of the notebook is done and the map between notebook and print book is underway.
-
-I'll tag v0.2.2 when the notebook, print book and the mappings
-between them are ready. I'll register the package at that time.
-
-The shrinking to-do list for Chapter 2 is
-
-1. Getting the print book part of Chapter 2 looking the way I want. (95% done)
-2. Mapping the print book part of Chapter 2 to the notebook. (0% done)
-3. Mapping the notebook part of Chapter 2 to the print book. (0% done)
-
-If all goes well, I should post a draft of everything by Thanksgiving.
+- Registration of SIAMFANLEquations.jl
+- Chapter 2 done. 
 
 __Chapter 3__ will be Newton-Krylov solvers. That will take some time because
 I need to modify my GMRES and BiCGStab solvers. I write my own Krylov
