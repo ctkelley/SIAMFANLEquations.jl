@@ -4,7 +4,7 @@ PrepareJac!(FPS, FS, x, ItRules, dt=0)
 Compute the Jacobian and perform the factorization. If know something
 about the Jacobian, you can tell me what factorization to use. 
 
-For example, if your Jacobian is spd, fact!=cholesky! would work well.
+For example, if your Jacobian is spd, fact=cholesky! would work well.
 
 """
 function PrepareJac!(FPS, FS, x, ItRules, dt = 0)
