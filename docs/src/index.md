@@ -12,44 +12,33 @@ __Testing github actions: Working now. The next tag is the bit test.__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-This is version 0.2.1. 
+This is version 0.2.1. What's new?
 
-I am making changes to the way I've organized the solvers. This will
-make the rest of the project go faster and reduce the size of the 
-code base. It is also eating up a lot of time.
+- Stable __(I think)__ interfaces for the scalar codes: nsolc.jl, 
+  ptcsol.jl, secant.jl. nsolsc.jl and ptcsol.jl are now wrappers around
+  the codes for systems.
 
-__This thing is under constant revision. I think the user interfaces to
-nsolsc and ptcsolsc are stable, but you never know.__
+- The solvers for Chapter 2: nsol.jl and ptcsol.jl are done.
 
-The scalar solvers and the first chapter of the notebook are done as of
-v0.1.2.
+- Chapter 2 of the notebook is done and the map between notebook and
+print book is underway.
 
-Chapter 2 is under construction. The solvers are done and this is
-v0.2.1. I'm moving to GitHub Actions and will tag v0.2.1 when that's done. 
 I'll tag v0.2.2 when the notebook, print book and the mappings
 between them are ready. I'll register the package at that time.
 
-nsol.jl, Newton with direct linear solvers, is done. I am finishing 
-the test problems now.
-
-ptcsol.jl, PTC with direct linear solvers. It's working and I can 
-solve the buckling beam problem.
-
-ptcsolsc.jl is a wrapper for ptcsol.jl. I am working on the scalar Newton
-solver nsolsc.jl to do the same thing.
-
-The notebooks for Chapter 2 are nowhere close to done. The to-do list includes
-
-__Item 0__: Finishing the test problems and the solvers. (85% done)
+The shrinking to-do list for Chapter 2 is
 
 1. Getting the print book part of Chapter 2 looking the way I want. (95% done)
-2. Making the formatting of Chapter 1 consistent with Chapter 2. (done)
-3. Fixing the API for the codes. Close for now (done)
-4. Mapping the print book part of Chapter 2 to the notebook. (0% done)
-5. Completing the notebook part of Chapter 2. (90% done)
-6. Mapping the notebook part of Chapter 2 to the print book. (0% done)
+2. Mapping the print book part of Chapter 2 to the notebook. (0% done)
+3. Mapping the notebook part of Chapter 2 to the print book. (0% done)
 
-If all goes well, I should post a draft of everything by late October.
+If all goes well, I should post a draft of everything by Thanksgiving.
+
+__Chapter 3__ will be Newton-Krylov solvers. That will take some time because
+I need to modify my GMRES and BiCGStab solvers. I write my own Krylov
+solvers so they will communicate with the nonlinear solvers the way I want
+and so I can do GMRES my way (classical Gram-Schmidt twice!). The nonlinear
+part won't be so bad once the linear solvers do what I want.
 
 ## Scalar Equations: Chapter 1
 
@@ -99,7 +88,7 @@ Now try the same problem with the secant method. I'll need one more
 iteration to meet the termination criterion.
 
 ```julia
-julia> secout=nsolsc(atan,1.0;maxit=6,atol=1.e-12,rtol=1.e-12, solver="secant");
+julia> secout=secant(atan,1.0;maxit=6,atol=1.e-12,rtol=1.e-12);
 
 
 julia> secout.history
@@ -156,7 +145,7 @@ The core solvers (so far) are
 2. ptcsol.jl is pseudo-transient continuation.
 
 The solvers for scalar equations are wrappers for the core codes with
-the same interface. The expection is that the scalar codes do not need
+the same interface. The expectation is that the scalar codes do not need
 to manage linear algebra or storage of arrays.
 
 ### Scalar Equations: Chapter 1
@@ -167,7 +156,6 @@ There are two codes for the methods in this chapter
    - Newton's method 
    - The Shamanskii method, where the derivative evaluation is
      done every m iterations. ``m=1`` is Newton and ``m=\infty`` is chord.
-   - The secant method
    - I do an Armijo line search for all the methods unless the method is
      chord or you tell me not to.
 
@@ -181,9 +169,8 @@ too simple to mess with much.
 
 This is the same story as it was for scalar equations, 'ceptin for the
 linear algebra. The linear solvers for this chapter are the matrix
-factorizations that live in Julia/LAPACK/SuiteSparse.
-
-The examples in this chapter use the core codes directly.
+factorizations that live in LinearAlgebra, SuiteSparse,
+or BandedMatrices. 
 
 ### Nonlinear systems with iterative linear solvers: Chapter 3
 
