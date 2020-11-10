@@ -166,13 +166,13 @@ The linear solvers are tuned to communicate well with nonlinear solvers. My old 
 The algorithms, listed by book chapter will be
 
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsolsc.jl
-        - Codes: __Done!__, Notebook: __One more round of editing in progress__
+        - Codes: __Done!__, Notebook: __Stable for now.__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
-        - Codes: __Done! The examples with dense and banded Jacobians work.__, Notebook: __In progress__
+        - Codes: __Done!, Notebook: __50% done__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsol.jl and ptcsol.jl
-       - Linear solver(s): klgmres.jl and maybe klbicgstab.jl
-   - Chapter 4: Anderson acceleration: aasol.jl
-   - Chapter 5: Broyden's method: brsol.jl
+       - Linear solver(s): klgmres.jl and maybe klbicgstab.jl: __20% done__
+   - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
+   - Chapter 5: Broyden's method: brsol.jl __0% done, but won't take long once I get started. I will do it the right way (ie from (Kel95)).__
    
    
 ## Test Problems
