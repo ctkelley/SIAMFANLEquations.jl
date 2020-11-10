@@ -172,7 +172,7 @@ iteration + 1. So, for scalar equations, it's a row vector.
 ------------------------
 
 # Examples
-#### World's easiest problem example.
+#### World's easiest problem example. Test 64 and 32 bit Jacobians. No meaningful difference in the residual histories or the converged solutions.
 
 ```jldoctest
  julia> function f!(fv,x)
@@ -181,21 +181,21 @@ iteration + 1. So, for scalar equations, it's a row vector.
        end
 f (generic function with 1 method)
 
-julia> x=ones(2,); fv=zeros(2,); jv=zeros(2,2);
+julia> x=ones(2,); fv=zeros(2,); jv=zeros(2,2); jv32=zeros(Float32,2,2);
 julia> nout=nsol(f!,x,fv,jv; sham=1);
-julia> nout.history
-5-element Array{Float64,1}:
- 1.88791e+00
- 2.43119e-01
- 1.19231e-02
- 1.03266e-05
- 1.46416e-11
+julia> nout32=nsol(f!,x,fv,jv32; sham=1);
+julia> [nout.history nout32.history]
+5×2 Array{Float64,2}:
+ 1.88791e+00  1.88791e+00
+ 2.43119e-01  2.43119e-01
+ 1.19231e-02  1.19231e-02
+ 1.03266e-05  1.03262e-05
+ 1.46416e-11  1.43548e-11
 
-julia> nout.solution
-2-element Array{Float64,1}:
- -7.39085e-01
-  2.30988e+00
-
+julia> [nout.solution nout.solution - nout32.solution]
+2×2 Array{Float64,2}:
+ -7.39085e-01  -5.42899e-14
+  2.30988e+00   3.49498e-13
 ```
 
 #### H-equation example. I'm taking the sham=5 default here, so the convergence is not quadratic. The good news is that we evaluate the Jacobian only once.
