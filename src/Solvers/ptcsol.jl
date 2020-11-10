@@ -18,11 +18,11 @@ Inputs:\n
 
 - x0: initial iterate\n
 
-- FS: Preallcoated storage for function. It is an N x 1 column vector.\n
+- FS: Preallocated storage for function. It is an N x 1 column vector.\n
 You may dimension it as (n,) or (n,1). (n,) is best, but the
 solvers can deal with it either way.
 
-- FPS: preallcoated storage for Jacobian. It is an N x N matrix\n
+- FPS: preallocated storage for Jacobian. It is an N x N matrix\n
 
 - J!: Jacobian evaluation, the ! indicates that J! overwrites FPS, your
     preallocated storage for the Jacobian. If you leave this out the
@@ -63,7 +63,7 @@ This is coupled to dt0. If your choice of dt0 is too small (conservative)
 then you'll need many iterations to converge and will need a larger
 value of maxit
 
-For PTC you'll need more iterations than for a stright-up
+For PTC you'll need more iterations than for a straight-up
 nonlinear solve. This is part of the price for finding the 
 stable solution.
 
@@ -99,7 +99,7 @@ I know that this is probably not optimal in your situation, so it is
 good to pick something else, like jfact = lu.
 
 printerr: default = true\n
-I print a helpful message when the solver fails. To supress that
+I print a helpful message when the solver fails. To suppress that
 message set printerr to false.
 
 keepsolhist: default = false\n
@@ -124,7 +124,7 @@ because they count toward a Jacobian evaluation.
 idid=true if the iteration succeeded and false if not.
 
 errcode = 0 if if the iteration succeeded
-        = -1 if the initial iterate satisifies the termination criteria
+        = -1 if the initial iterate satisfies the termination criteria
         = 10 if no convergence after maxit iterations
         = 1  if the line search failed
 

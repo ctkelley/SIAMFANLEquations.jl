@@ -22,9 +22,9 @@ Inputs:\n
 
 - x0: initial iterate\n
 
-- FS: Preallcoated storage for function. It is an N x 1 column vector\n
+- FS: Preallocated storage for function. It is an N x 1 column vector\n
 
-- FPS: preallcoated storage for Jacobian. It is an N x N matrix\n
+- FPS: preallocated storage for Jacobian. It is an N x N matrix\n
 
 - J!: Jacobian evaluation, the ! indicates that J! overwrites FPS, your
     preallocated storage for the Jacobian. If you leave this out the
@@ -75,7 +75,7 @@ I made sham=1 the default for scalar equations. For systems I'm
 more aggressive and want to invest as little energy in linear algebra
 as possible. So the default is sham=5.
 
-armmax: upper bound on stepsize reductions in linesearch\n
+armmax: upper bound on step size reductions in line search\n
 
 resdec: default = .1\n 
 This is the target value for residual reduction.
@@ -91,7 +91,7 @@ difference increment in finite-difference derivatives
 
 armfix: default = false\n
 The default is a parabolic line search (ie false). Set to true and
-the stepsize will be fixed at .5. Don't do this unless you are doing
+the step size will be fixed at .5. Don't do this unless you are doing
 experiments for research.\n
 
 pdata:\n 
@@ -129,7 +129,7 @@ for a reason. FPF and FPS do not have the same type, even though they
 share storage. So, FPS=PrepareJac!(FPS, FS, ...) will break things.
 
 printerr: default = true\n
-I print a helpful message when the solver fails. To supress that
+I print a helpful message when the solver fails. To suppress that
 message set printerr to false.
 
 keepsolhist: default = false\n
@@ -159,7 +159,7 @@ because they count toward a Jacobian evaluation.
 idid=true if the iteration succeeded and false if not.
 
 errcode = 0 if if the iteration succeeded
-        = -1 if the initial iterate satisifies the termination criteria
+        = -1 if the initial iterate satisfies the termination criteria
         = 10 if no convergence after maxit iterations
         = 1  if the line search failed
 
