@@ -37,7 +37,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
-- [How to cite this stuff](#Citations_for_Package,_Notebook,_and_Print_Book)
+- [How to cite this stuff](#Citations)
 - [Funding](#Funding) 
 
 ## Package Mission
@@ -192,7 +192,8 @@ in the REPL or run the first code cell in the notebook
 
 There are two kinds of test problems. The ones you care about are the ones that I use in the print book and notebook to demonstrate the algorithms. The "inside baseball" problems are the ones I __only__ use for CI. They only appear in the /test directory. If you don't know or care what CI is, be happy.
 
-## Citations for Package, Notebook, and Print Book
+## Citations 
+Cite the package, notebook, and print book like this. 
 ```
 @misc{ctk:siamfanl,
 title="{SIAMFANLEquations.jl}",
