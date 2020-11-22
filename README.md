@@ -208,11 +208,12 @@ author="C. T. Kelley",
 title="{Solving Nonlinear Equations with Iterative Methods:
 Solvers and Examples in Julia}",
 year=2020,
-note="Unpublished book ms"
+note="Unpublished book ms, under contract with SIAM"
 }
 
 @misc{ctk:notebooknl,
-title="{NotebookSIAMFANL}",
+title="{Notebook for Solving Nonlinear Equations with Iterative Methods:
+Solvers and Examples in Julia}",
 author="C. T. Kelley",
 year=2020,
 note="IJulia Notebook",
