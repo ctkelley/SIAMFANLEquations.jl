@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.2.2
+# SIAMFANLEquations.jl v0.2.3
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -12,7 +12,7 @@ __Testing github actions: Working now. The next tag is the bit test.__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-This is version 0.2.2. 
+This is version 0.2.3. 
 
 - Registration of SIAMFANLEquations.jl
 - Chapter 2 done. 
