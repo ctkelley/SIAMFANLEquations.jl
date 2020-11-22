@@ -193,7 +193,7 @@ in the REPL or run the first code cell in the notebook
 There are two kinds of test problems. The ones you care about are the ones that I use in the print book and notebook to demonstrate the algorithms. The "inside baseball" problems are the ones I __only__ use for CI. They only appear in the /test directory. If you don't know or care what CI is, be happy.
 
 ## Citations 
-Cite the package, notebook, and print book like this. 
+Cite the package, print book and notebook like this. 
 ```
 @misc{ctk:siamfanl,
 title="{SIAMFANLEquations.jl}",
