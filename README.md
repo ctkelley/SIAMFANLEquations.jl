@@ -7,7 +7,7 @@
 
   - Chapter 2 codes complete. 
   - Notebooks for Chapters 1 and 2 done
-  - Registered package
+  - Registered package with 0.2.3; 0.2.2 gets a DOI for the package
 
 This is the package with the solvers and test problems for 
 
