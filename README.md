@@ -37,6 +37,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
+- [How to cite this stuff](#Citations_for_Package,_Notebook,_and_Print_Book)
 - [Funding](#Funding) 
 
 ## Package Mission
@@ -190,6 +191,34 @@ in the REPL or run the first code cell in the notebook
 ```include("fanote_init.jl")```
 
 There are two kinds of test problems. The ones you care about are the ones that I use in the print book and notebook to demonstrate the algorithms. The "inside baseball" problems are the ones I __only__ use for CI. They only appear in the /test directory. If you don't know or care what CI is, be happy.
+
+## Citations for Package, Notebook, and Print Book
+```
+@misc{ctk:siamfanl,
+title="{SIAMFANLEquations.jl}",
+author="C. T. Kelley",
+year=2020,
+note="Julia Package",
+url="https://github.com/ctkelley/SIAMFANLEquations.jl"
+}
+
+@misc{ctk:fajulia,
+author="C. T. Kelley",
+title="{Solving Nonlinear Equations with Iterative Methods:
+Solvers and Examples in Julia}",
+year=2020,
+note="Unpublished book ms"
+}
+
+@misc{ctk:notebooknl,
+title="{NotebookSIAMFANL}",
+author="C. T. Kelley",
+year=2020,
+note="IJulia Notebook",
+url="https://github.com/ctkelley/NotebookSIAMFANL",
+doi="10.5281/zenodo.4284687"
+}
+```
    
 ## Funding
 
