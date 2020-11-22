@@ -3,11 +3,11 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] |
 
 
-# SIAMFANLEquations version 0.2.2
+# SIAMFANLEquations version 0.2.3
 
   - Chapter 2 codes complete. 
   - Notebooks for Chapters 1 and 2 done
-  - Registered package with 0.2.3; 0.2.2 gets a DOI for the package
+  - Registered package with 0.2.3
 
 This is the package with the solvers and test problems for 
 
