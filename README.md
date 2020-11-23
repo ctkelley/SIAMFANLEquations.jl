@@ -24,10 +24,9 @@ Hence the notebook and this package all have SIAMFANL in their names.
 The new book with have a different algorithm mix and the solvers and examples will be in Juila. The project will have three parts.
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
-   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.2.1) (open source)
+   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.2.3) (open source, MIT License, Creative Commons License)
       - You can roll the dice and use the [IJulia notebook Master Branch](https://github.com/ctkelley/NotebookSIAMFANL). It has the new stuff and is not likely to break things in this version of the package __today__.
    3. This package (MIT License)<br>
-      I will register this package no earlier that the release of v0.2.1 and no later than the release of v0.2.2 (when Chapter 2 of the notebook and the solvers/test problems for that chapter are in final draft form and I'm startingon Chapter 3). 
    
 ## Readme Contents:
 - [Mission](#Package-Mission)
@@ -80,14 +79,15 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.2.2. v0.2.x for x>2 will happen only if I find major bugs. I will start on Chapter 3 soon.
+This is version v0.2.3. v0.2.y for y>3 will happen only if I find major bugs. I'll fix typos and minor bugs in the master branch, which will also become v0.3.0. I will start on Chapter 3 soon.
       
-     - The scalar codes nsolsc.jl and ptcsolsc.jl are stable. 
+     - nsol.jl, ptcsol.jl (Newton and pseudo-transient continuation) codes are stable. The scalar codes nsolsc.jl and ptcsol.jl are also stable.
+     
 The plan is, for x > 2.
 
 - v0.x.0 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.1 means the codes are finished and I have solid drafts of the print book and notebook parts of the chapter. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 0.x.y for y > 2 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
 
-- I will formally register the package no earlier than version 0.2.1 and no later than version 0.2.2. 
+- I will formally register the package with this version 0.2.3
 
 - v1.0.0 goes out when the print book is published. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
@@ -169,7 +169,7 @@ The algorithms, listed by book chapter will be
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsolsc.jl
         - Codes: __Done!__, Notebook: __Stable for now.__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
-        - Codes: __Done!, Notebook: __50% done__
+        - Codes: __Done!, Notebook: __80% done__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsol.jl and ptcsol.jl
        - Linear solver(s): klgmres.jl and maybe klbicgstab.jl: __20% done__
    - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
