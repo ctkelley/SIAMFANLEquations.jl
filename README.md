@@ -81,7 +81,7 @@ If __log(version_number) < 0__ there's trouble!
 
 This is version v0.2.3. v0.2.y for y>3 will happen only if I find major bugs. I'll fix typos and minor bugs in the master branch, which will also become v0.3.0. I will start on Chapter 3 soon.
       
-     - nsol.jl, ptcsol.jl (Newton and pseudo-transient continuation) codes are stable. The scalar codes nsolsc.jl and ptcsol.jl are also stable.
+- nsol.jl, ptcsol.jl (Newton and pseudo-transient continuation) codes are stable. The scalar codes nsolsc.jl and ptcsol.jl are also stable.
      
 The plan is, for x > 2.
 
