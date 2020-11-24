@@ -200,6 +200,7 @@ title="{SIAMFANLEquations.jl}",
 author="C. T. Kelley",
 year=2020,
 note="Julia Package",
+doi="10.5281/zenodo.4284807",
 url="https://github.com/ctkelley/SIAMFANLEquations.jl"
 }
 
