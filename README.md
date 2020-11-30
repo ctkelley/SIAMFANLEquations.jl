@@ -47,7 +47,7 @@ This package is designed and built to support a book project. So the solvers and
 
 This package has been tested on Julia 1.5. __It no longer works on 1.0!__ It may still work on 1.4, but I make no promises.
 
-If you're reading this after I announced the package, then I've registered the package. Type this 
+If you're reading this after I announced the package, then I've registered the package (in progess on 11/30). Type this 
 
 ```
 ] add SIAMFANLEquations
