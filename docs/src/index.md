@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.2.3
+# SIAMFANLEquations.jl v0.3.0
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -12,13 +12,11 @@ __Testing github actions: Working now. The next tag is the bit test.__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-This is version 0.2.3. 
+This is version 0.3.0. 
 
-- Registration of SIAMFANLEquations.jl
-- Chapter 2 done. 
-
-__Chapter 3__ will be Newton-Krylov solvers. That will take some time because
-I need to modify my GMRES and BiCGStab solvers. I write my own Krylov
+This version will feature
+__Chapter 3__, Newton-Krylov solvers. I at work on the examples and
+the GMRES and BiCGStab solvers. I write my own Krylov
 solvers so they will communicate with the nonlinear solvers the way I want
 and so I can do GMRES my way (classical Gram-Schmidt twice!). The nonlinear
 part won't be so bad once the linear solvers do what I want.
