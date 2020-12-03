@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.2.3
+# SIAMFANLEquations version 0.3.0
 
   - Chapter 2 codes complete. 
   - Notebooks for Chapters 1 and 2 done
@@ -47,7 +47,7 @@ This package is designed and built to support a book project. So the solvers and
 
 This package has been tested on Julia 1.5. __It no longer works on 1.0!__ It may still work on 1.4, but I make no promises.
 
-If you're reading this after I announced the package, then I've registered the package (in progess on 11/30). Type this 
+Type this 
 
 ```
 ] add SIAMFANLEquations
@@ -79,15 +79,13 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.2.3. v0.2.y for y>3 will happen only if I find major bugs. I'll fix typos and minor bugs in the master branch, which will also become v0.3.0. I will start on Chapter 3 soon.
+This is version v0.3.0. I will tag this once the Newton-GMRES solver is working and I've done the examples (at least the ones I plan to keep) from KEL03 in the notebook.
       
 - nsol.jl, ptcsol.jl (Newton and pseudo-transient continuation) codes are stable. The scalar codes nsolsc.jl and ptcsol.jl are also stable.
      
 The plan is, for x > 2.
 
 - v0.x.0 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.1 means the codes are finished and I have solid drafts of the print book and notebook parts of the chapter. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 0.x.y for y > 2 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
-
-- I will formally register the package with this version 0.2.3
 
 - v1.0.0 goes out when the print book is published. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
@@ -167,9 +165,9 @@ The linear solvers are tuned to communicate well with nonlinear solvers. My old 
 The algorithms, listed by book chapter will be
 
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsolsc.jl
-        - Codes: __Done!__, Notebook: __Stable for now.__
+        - Codes: __Done!__, Notebook: __done!__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
-        - Codes: __Done!, Notebook: __80% done__
+        - Codes: __Done!, Notebook: __done!__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsol.jl and ptcsol.jl
        - Linear solver(s): klgmres.jl and maybe klbicgstab.jl: __20% done__
    - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
