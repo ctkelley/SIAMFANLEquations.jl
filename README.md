@@ -25,7 +25,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.2.3) (open source, MIT License, Creative Commons License)
-      - You can roll the dice and use the [IJulia notebook Master Branch](https://github.com/ctkelley/NotebookSIAMFANL). It has the new stuff and is not likely to break things in this version of the package __today__.
+      - If you're using the Chapter 3 stuff you must use the [IJulia notebook Master Branch](https://github.com/ctkelley/NotebookSIAMFANL). It has the new stuff and is not likely to break things in the older version the package __today__.
    3. This package (MIT License)<br>
    
 ## Readme Contents:
@@ -229,11 +229,12 @@ This project was partially supported by
    1. OAC-1740309
    2. DMS-1745654
    3. DMS-1906446
+3. Department of Energy grant DE-NA003967
    
 Any opinions, findings, and conclusions or
 recommendations expressed in this material are those of the author and
 do not necessarily reflect the views of the National
-Science Foundation
+Science Foundation, the Department of Energy,
 or the Army Research Office.
 
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
