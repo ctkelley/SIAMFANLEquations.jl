@@ -196,7 +196,7 @@ Cite the package, print book and notebook like this.
 @misc{ctk:siamfanl,
 title="{SIAMFANLEquations.jl}",
 author="C. T. Kelley",
-year=2020,
+year=2021,
 note="Julia Package",
 doi="10.5281/zenodo.4284807",
 url="https://github.com/ctkelley/SIAMFANLEquations.jl"
@@ -206,7 +206,7 @@ url="https://github.com/ctkelley/SIAMFANLEquations.jl"
 author="C. T. Kelley",
 title="{Solving Nonlinear Equations with Iterative Methods:
 Solvers and Examples in Julia}",
-year=2020,
+year=2021,
 note="Unpublished book ms, under contract with SIAM"
 }
 
@@ -214,7 +214,7 @@ note="Unpublished book ms, under contract with SIAM"
 title="{Notebook for Solving Nonlinear Equations with Iterative Methods:
 Solvers and Examples in Julia}",
 author="C. T. Kelley",
-year=2020,
+year=2021,
 note="IJulia Notebook",
 url="https://github.com/ctkelley/NotebookSIAMFANL",
 doi="10.5281/zenodo.4284687"
