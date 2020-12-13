@@ -82,7 +82,6 @@ function Lap1d(n)
     d = 2.0 * ones(n)
     sup = -ones(n - 1)
     slo = -ones(n - 1)
-    #D2=Tridiagonal(subdl,diagdl,supdl)
     D2 = Tridiagonal(slo, d, sup)
     D2 = D2 / (dx * dx)
     return D2
