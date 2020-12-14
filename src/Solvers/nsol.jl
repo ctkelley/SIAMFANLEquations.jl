@@ -42,7 +42,8 @@ Inputs:\n
     that this works so easily. If the Jacobian is reasonably well 
     conditioned, you can cut the cost of Jacobian factorization and
     storage in half with no loss. For large dense Jacobians and inexpensive
-    functions, this is a good deal.\n
+    functions, this is a good deal with Float32. Half precision is too
+    flaky to recommend.\n
     BUT ... There is very limited support for direct sparse solvers in
     anything other than Float64. I recommend that you only use Float64
     with direct sparse solvers unless you really know what you're doing. I
@@ -316,8 +317,14 @@ function nsol(
         end
         derivative_is_old = (newjac == 0) && (solver == "newton")
         if n > 1
+        # If the Jacobian precision is worse than Float32, you'll have to 
+        # avoid coversion of the residual to the Jacobian precision. That'll
+        # cost you in the solve phase, but it's gotta be done.
+        if T == Float64 || T == Float32
             T == Float64 ? (step .= -(FPF \ FS)) : (step .= -(FPF \ T.(FS)))
-            #        step .= -(FPF \ FS)
+        else
+                   step .= -(FPF \ FS)
+        end
         else
             step = -FS / FPF
         end
