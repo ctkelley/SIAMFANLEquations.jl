@@ -5,9 +5,12 @@
 
 # SIAMFANLEquations version 0.3.0
 
-  - Chapter 2 codes complete. 
-  - Notebooks for Chapters 1 and 2 done
-  - Registered package with 0.2.3
+# Coming soon
+
+ -  Elliptic PDE test problem + Fast Poisson Solver preconditioner
+ - New PDE example for Chapter 2
+ - GMRES + Newton-GMRES
+ 
 
 This is the package with the solvers and test problems for 
 
