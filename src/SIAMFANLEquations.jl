@@ -61,8 +61,19 @@ export
     BeamJ!,
     BeamtdJ!,
     beaminit,
-    ptctest
-
+    ptctest,
+    pdeF!,
+    pdeJ!,
+    pdeinit,
+    fishinit,
+    fish2d,
+    Lap2d,
+    Dx2d,
+    Dy2d,
+    solexact,
+    l2dexact,
+    dxexact,
+    dyexact
 
 include("TestProblems/Scalars/fcos.jl")
 include("TestProblems/Scalars/fpatan.jl")
@@ -73,6 +84,8 @@ include("TestProblems/Systems/simple!.jl")
 include("TestProblems/Systems/Fbvp!.jl")
 include("TestProblems/Systems/FBeam!.jl")
 include("TestProblems/Systems/Hequation.jl")
+include("TestProblems/Systems/EllipticPDE.jl")
+include("TestProblems/Systems/PDE_Tools.jl")
 end
 
 module Examples
@@ -89,6 +102,7 @@ export nsolheq
 include("Examples/ptcBeam.jl")
 include("Examples/ivpBeam.jl")
 include("Examples/BVP_solve.jl")
+include("Examples/NsolPDE.jl")
 include("Examples/Internal/nsolheq.jl")
 end
 
