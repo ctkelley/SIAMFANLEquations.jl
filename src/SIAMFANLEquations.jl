@@ -98,6 +98,7 @@ export ptcBeam
 export ivpBeam
 export BVP_solve
 export nsolheq
+export NsolPDE
 
 include("Examples/ptcBeam.jl")
 include("Examples/ivpBeam.jl")

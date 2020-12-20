@@ -11,6 +11,7 @@ include("Chapter2/heq_lu_test.jl")
 include("Chapter2/bvp_test.jl")
 include("Chapter2/beam_test.jl")
 include("Chapter2/pde_lin_test.jl")
+include("Chapter2/nsolpde_test.jl")
 @testset "Scalar Equations: Chapter 1" begin
     @test nsolsc_solution_test()
     @test ptcsolsc_test()
@@ -21,4 +22,5 @@ end
     @test beam_test()
     @test heq_lu_test()
     @test pde_lin_test(31)
+    @test nsolpde_test(31)
 end
