@@ -79,9 +79,7 @@ I return the solution u.
 function fish2d(f, fdata)
 T=fdata.T
 (nx,ny) = size(f)
-if nx != ny
-   error("need a square grid in fish2d")
-end
+nx == ny || error("need a square grid in fish2d")
 u=sintv(f,fdata)';
 u[:]=T\u[:];
 u=isintv(u',fdata)

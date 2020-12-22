@@ -96,16 +96,13 @@ end
 
 
 """
-function build_exact(x)
-
-Builds u, u_x, u_y, and the negative Laplacian for the 
+This collection of functions 
+builds u, u_x, u_y, and the negative Laplacian for the 
 example problem in the book. Here
 u(x,y) = 10 x y (1-x)(1-y) exp(x^4.5)
 
 which is the example from FA01.
 """
-function build_exact(x)
-end
 
 function w(x)
 w = 10.0*x.*(1.0.-x).*exp.(x.^(4.5))
