@@ -65,6 +65,7 @@ export
     pdeF!,
     pdeJ!,
     pdeinit,
+    pdegminit,
     fishinit,
     fish2d,
     Pfish2d,

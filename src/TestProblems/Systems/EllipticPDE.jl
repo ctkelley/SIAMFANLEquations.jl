@@ -1,7 +1,8 @@
 """
 pdeF!.jl
 
-This file contains everything you need to run the Ellptic PDE examples.  This includes the version with an explict sparse matrix Jacobian and
+This file contains everything you need to run the Ellptic PDE examples.  
+This includes the version with an explict sparse matrix Jacobian and
 the fixed point formulations using the fish2d.jl preconditioner.
 
 I've also parked the exact solution in here so you can do the grid refinement
@@ -9,6 +10,9 @@ study.
 
 Look at pdeinit for the construction of the precomputed data. There is
 a lot of it.
+
+There is another init function, pdegminit, for the CI for the Krylov
+methods. 
 
 If you only want to run the examples, you should not have to look
 at the code.
@@ -88,11 +92,63 @@ dxv=reshape(dxe,(n2,))
 dyv=reshape(dye,(n2,))
 d2v=reshape(d2e,(n2,))
 uv=reshape(uexact,(n2,))
+fdata=fishinit(n)
 # The right side of the equation
 RHS=d2v + 20.0*uv.*(dxv + dyv) 
 # Pack it and ship it.
-pdedata=(D2=D2, CV=CV, CT=CT, RHS=RHS, uexact=uexact)
+pdedata=(D2=D2, CV=CV, CT=CT, RHS=RHS, fdata=fdata, uexact=uexact)
 end
+
+
+"""
+pdegminit(n)
+
+collects the precomputed data for the linear elliptic pde example. 
+This is the example on page 54-55 of FR16.
+
+This
+includes
+
+- the sparse matrix representation of the operators,
+- the right side of the equation,
+- the exact solution,
+- the data that the fft-based fast Poisson solver (fish2d) needs
+"""
+function pdegminit(n)
+# Make the grids
+n2=n*n
+h=1.0/(n+1.0);
+x=collect(h:h:1.0-h);
+o=ones(n,)
+Y=o*x'
+y20=20.0*reshape(Y,(n2,))
+DiagY=Diagonal(y20)
+# collect the operators
+D2=Lap2d(n)
+DX=Dx2d(n)
+DY=Dy2d(n)
+LY=copy(DY)
+mul!(LY,DiagY,DY)
+#L = D2 + DX + LY+ I
+L = D2 + I
+L .+= DX
+L .+= LY
+# Exact solution and its derivatives
+uexact=solexact(x)
+dxe=dxexact(x)
+dye=dyexact(x)
+d2e=l2dexact(x)
+dxv=reshape(dxe,(n2,))
+dyv=reshape(dye,(n2,))
+d2v=reshape(d2e,(n2,))
+uv=reshape(uexact,(n2,))
+fdata=fishinit(n)
+# The right side of the equation
+RHS=d2v + dxv + y20.*dyv + uv
+# Pack it and ship it.
+pdedata=( L, RHS=RHS, ue=uv, fdata=fdata)
+end
+
 
 
 """
