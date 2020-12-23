@@ -67,6 +67,7 @@ export
     pdeinit,
     fishinit,
     fish2d,
+    Pfish2d,
     Lap2d,
     Dx2d,
     Dy2d,
