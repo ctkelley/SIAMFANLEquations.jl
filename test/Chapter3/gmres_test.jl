@@ -10,6 +10,8 @@ function gmres_test()
 pass3 = test3x3()
 passint = test_integop(40)
 passr1 = testR1()
+passorth=orth_test()
+passqr=qr_test()
 passgm = pass3 && passint && passr1
 return passgm
 end
@@ -114,4 +116,64 @@ end
 
 function ker(x, y)
     ker = 0.1 * sin(x + exp(y))
+end
+
+
+"""
+orth_test()
+
+Used for CI to make sure the orthogonalizers do what I expect.
+"""
+function orth_test() A = collect(0.01:0.01:0.25)
+    A = reshape(A, 5, 5)
+    A = I - A
+    B = Float32.(A)
+    C = Float16.(A)
+    pass64 = qr_test(A, 4.e-16)
+    pass32 = qr_test(B, 2.e-7)
+    pass16 = qr_test(C, 2.e-3)
+    return pass64 && pass32 && pass16
+end
+
+
+function qr_test(A = rand(3, 3), tol = 1.e-13)
+    OM = ("mgs1", "mgs2", "cgs1", "cgs2")
+    T = eltype(A)
+    passqr = true
+    for orth in OM
+        C = copy(A)
+        (Q, R) = qrctk!(C, orth)
+        fres = norm(Q * R - A, Inf) / norm(A, Inf)
+        ores = norm(Q' * Q - I, Inf)
+        npass = fres + ores
+        #println(eltype(Q)," ",eltype(R),"  ",typeof(npass)," ",
+        #        orth, "   ", npass)
+        pass = (npass < tol)
+        pass || println(
+            "qr_test fails with precision = ",
+            T,
+            ", method = ",
+            orth,
+            "error = ",
+            npass,
+        )
+        passqr = passqr && pass
+    end
+    passqr
+end
+
+
+function qrctk!(A, orth = "cgs2")
+    T = typeof(A[1, 1])
+    (m, n) = size(A)
+    R = zeros(T, n, n)
+    @views R[1, 1] = norm(A[:, 1])
+    @views A[:, 1] /= R[1, 1]
+    @views for k = 2:n
+        hv = vec(R[1:k, k])
+        Qkm = view(A, :, 1:k-1)
+        vv = vec(A[:, k])
+        Orthogonalize!(Qkm, hv, vv, orth)
+    end
+    return (Q = A, R = R)
 end
