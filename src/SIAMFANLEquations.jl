@@ -11,6 +11,8 @@ export ptcsolsc
 export ptcsol
 export nsol
 export secant
+export kl_gmres
+export Orthogonalize!
 
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
@@ -22,6 +24,8 @@ include("Chapter1/ptcsolsc.jl")
 include("Chapter1/secant.jl")
 include("Solvers/ptcsol.jl")
 include("Solvers/nsol.jl")
+include("Solvers/LinearSolvers/kl_gmres.jl")
+include("Solvers/LinearSolvers/Orthogonalize!.jl")
 include("PlotsTables/printhist.jl")
 include("Tools/test_evaljac.jl")
 include("Tools/NewtonIterationManagement.jl")
@@ -68,6 +72,8 @@ export
     pdegminit,
     fishinit,
     fish2d,
+    sintv,
+    isintv,
     Pfish2d,
     Lap2d,
     Dx2d,

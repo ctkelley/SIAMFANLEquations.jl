@@ -47,19 +47,15 @@ on n x n grid.
 Unit square, homogeneous Dirichlet BC
 """
 function Lap2d(n)
-h=1/(n+1)
-maindiag=4*ones(n^2,)/(h*h)
-mdiag=Pair(0,maindiag);
+h=1/(n+1);
+maindiag=4*ones(n^2,)/(h*h);
 sxdiag=-ones(n^2-1,)/(h*h);
+sydiag=-ones(n^2-n,)/(h*h);
 for iz=n:n:n^2-1
    sxdiag[iz]=0.0;
 end
-upxdiag=Pair(1,sxdiag);
-lowxdiag=Pair(-1,sxdiag);
-sydiag=-ones(n^2-n,)/(h*h);
-upydiag=Pair(n,sydiag);
-lowydiag=Pair(-n,sydiag);
-L2d=spdiagm(lowydiag, lowxdiag, mdiag, upxdiag, upydiag);
+L2d=spdiagm(-n => sydiag, -1 => sxdiag, 0=> maindiag, 
+             1 => sxdiag, n => sydiag);
 return L2d
 end
 
@@ -67,86 +63,51 @@ end
 """
 u=fish2d(f, fdata)
 
-Fast Poisson solver in two space dimensions. 
-Same as the Matlab code. 
+Fast Poisson solver in two space dimensions.
+Same as the Matlab code.
 Unit squre + homogeneous Dirichlet BCs.
 
 Grid is nx by nx
 
-You give me f as a two-dimensional vector f(x,y). 
+You give me f as a two-dimensional vector f(x,y).
 I return the solution u.
 """
 function fish2d(f, fdata)
+u=fdata.utmp
+v=fdata.uhat
 T=fdata.T
+ST=fdata.ST
 (nx,ny) = size(f)
 nx == ny || error("need a square grid in fish2d")
-u=sintv(f,fdata)';
-u[:]=T\u[:];
-u=isintv(u',fdata)
-return u
+u.=f; u=ST*u; u=u'
+u1=reshape(u,(nx*nx,))
+u1 .= T\u1;
+u = reshape(u1,(nx,nx))
+#u .= u'; u = ST*u; u ./=(2*nx+2);
+v .= u'; v = ST*v; v ./=(2*nx+2);
+#return u
+return v
 end
 
-
-"""
-uhat=sintv(u, fdata)
-
-Fast sine transform using FFTW 
-
-Preallocated data and using plan_fft!
-
-Nothing fancy.
-"""
-function sintv(u, fdata)
-utmp=fdata.utmp;
-FFF=fdata.FFF;
-uhat=fdata.uhat
-(nx,ny)=size(u);
-utmp.=0.0;
-@views utmp[2:nx+1,:].=u;
-FFF*utmp;
-@views uhat.=-imag.(utmp[2:nx+1,:])
-return uhat
-end
-
-
-"""
-uhat=isintv(u, fdata)
-
-Fast inverse sine transform using FFTW 
-
-Preallocated data and using plan_fft!
-
-Nothing fancy.
-"""
-function isintv(u, fdata)
-utmp=fdata.utmp
-IFFF=fdata.IFFF
-(nx,ny)=size(u)
-utmp .= 0.0
-@views utmp[2:nx+1,:].=u;
-IFFF*utmp
-@views iuhat=4*imag.(utmp[2:nx+1,:])
-return iuhat
-end
 
 """
 fishinit(n)
 
-Run plan_fft! and plan_ifft! to set up the solver. Do not mess
+Run FFTW.plan_r2r to set up the solver. Do not mess
 with this function.
 """
 function fishinit(n)
-bsize=(2*n+2,n);
-zstore = zeros(bsize) * (1.0 + im)
-FFF=plan_fft!(zstore,[1]);
-IFFF=plan_ifft!(zstore,[1]);
-utmp = zeros(bsize) * (1.0 + im)
+#
+# Get the sine transform from FFTW. This is faster/better/cleaner
+# than what I did in the Matlab codes.
+#
+zstore = zeros(n,n)
+ST = FFTW.plan_r2r!(zstore, FFTW.RODFT00, 1);
 uhat=zeros(n,n);
 T=newT(n)
-fdata=(FFF=FFF, IFFF=IFFF, utmp=utmp, uhat=uhat, T=T)
+fdata=(ST=ST, uhat=uhat, utmp=zstore, T=T)
 return fdata
 end
-
 
 """
 T = newT(n)
@@ -175,11 +136,12 @@ end
 Use fish2d and reshape for preconditioning.
 """
 function Pfish2d(v,fdata)
+u2=fdata.uhat
 n2=length(v)
 n=Int(sqrt(n2))
 (n*n == n2) || error("input to Pfish2d not a square array")
 v2=reshape(v,(n,n))
-u2=fish2d(v2,fdata)
+u2.=fish2d(v2,fdata)
 u=reshape(u2,(n2,))
 return u
 end

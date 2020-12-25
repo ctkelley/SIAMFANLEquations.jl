@@ -127,11 +127,10 @@ DiagY=Diagonal(y20)
 D2=Lap2d(n)
 DX=Dx2d(n)
 DY=Dy2d(n)
-LY=copy(DY)
-mul!(LY,DiagY,DY)
-#L = D2 + DX + LY+ I
 L = D2 + I
 L .+= DX
+LY=copy(DY)
+mul!(LY,DiagY,DY)
 L .+= LY
 # Exact solution and its derivatives
 uexact=solexact(x)
@@ -142,11 +141,14 @@ dxv=reshape(dxe,(n2,))
 dyv=reshape(dye,(n2,))
 d2v=reshape(d2e,(n2,))
 uv=reshape(uexact,(n2,))
+# Preallocate a copy of the unknown for the function
+# and preconditioner evaluation.
+xc=copy(uv)
 fdata=fishinit(n)
 # The right side of the equation
 RHS=d2v + dxv + y20.*dyv + uv
 # Pack it and ship it.
-pdedata=( L, RHS=RHS, ue=uv, fdata=fdata)
+pdedata=( L, RHS=RHS, ue=uv, xc=xc, fdata=fdata)
 end
 
 
