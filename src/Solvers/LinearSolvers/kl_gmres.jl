@@ -7,38 +7,54 @@ Uses gmres_base which is completely oblivious to these things.
 
 The deal is
 
-Input:
-x0 = initial iterate, this is usually zero for nonlinear solvers
+Input:\n
+x0:  initial iterate, this is usually zero for nonlinear solvers
 
-b = right hand side (duh!)
+b: right hand side (duh!)
 
-atv = matrix-vector product which depends on precomputed data pdta
+atv:  matrix-vector product which depends on precomputed data pdta
       I expect you to use pdata most or all of the time, so it is not
       a keyword argument (at least for now). If your mat-vec is just
       A*v, you have to write a function where A is the precomputed data.
+      API for atv is ax=atv(x,pdata)
 
-V = Preallocated n x K array for the Krylov vectors. I store the initial
+V:  Preallocated n x K array for the Krylov vectors. I store the initial
     normalized residual in column 1, so  you have at most K-1 iterations
     before gmres_base returns a failure. kl_gmres will handle the restarts.
 
-eta = Termination happens when ||b - Ax|| <= eta || b ||
+eta: Termination happens when ||b - Ax|| <= eta || b ||
 
-ptv = preconditioner-vector product, which will also use pdata. The
+ptv:  preconditioner-vector product, which will also use pdata. The
       default is klnopc, which is no preconditioning at all.
+      API for ptv is px=ptv(x,pdata)
 
 Keyword arguments
 
-pdata = precomputed data. The default is nothing, but that ain't gonna
+pdata: precomputed data. The default is nothing, but that ain't gonna
         work well for nonlinear equations.
 
-orth = your choice of the wise default, classical Gram-Schmidt twice,
-       or something slow and less stable. Those are classical onece (really
+orth: your choice of the wise default, classical Gram-Schmidt twice,
+       or something slow and less stable. Those are classical once (really
        bad) or a couple variants of modified Gram-Schmidt. mgs2 is what I
        used in my old matlab codes. Not terrible, but far from great.
 
-side = left or right preconditioning. The default is "left".
+side: left or right preconditioning. The default is "left".
 
 Other parameters on the way.
+
+Output:\n
+A named tuple (sol, reshist, lits, idid)
+
+where
+
+sol= final result
+reshist = residual norm history
+lits = number of iterations
+idid = status of the iteration
+       true -> converged 
+       false -> failed to converge
+              
+ 
 """
 function kl_gmres(x0, b, atv, V, eta, ptv=klnopc; 
             orth = "cgs2", side="left", pdata=nothing)
@@ -104,34 +120,22 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
     # Allocate for Givens
     #
     kmax = m - 1
-#    x = copy(x0)
     r = copy(b)
     h = zeros(kmax + 1, kmax + 1)
     c = zeros(kmax + 1)
     s = zeros(kmax + 1)
-    if norm(x0) > 0
-#        q = b - atv(x0, pdata)
-#        r .= q
-#         r .= b
-         r .-= atv(x0, pdata)
-    end
+    (norm(x0) == 0.0) || (r .-= atv(x0, pdata) )
     rho = norm(r)
     g = zeros(size(c))
     g[1] = rho
     errtol = eta * rho
     reshist = []
     #
-    # Terminate on entry?
+    # Initialize
     #
+    idid = true
     push!(reshist, rho)
-    total_iters = 0
     k = 0
-    if rho < errtol
-        println("Terminating on entry")
-        println("rho= ", rho, " errtol= ", errtol)
-        return (sol = x, reshist = reshist, lits = k)
-        return
-    end
     #
     # Showtime!
     #
@@ -180,8 +184,9 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
 #    x .+= r
     r.=x0
     mul!(r, qmf, y, 1.0, 1.0)
-#    @views x .+= (V[1:n, 1:k] * y)
-    return (sol = r, reshist = Float64.(reshist), lits = k)
+    (rho <= errtol)  || (idid=false)
+    k > 0 || println("GMRES iteration terminates on entry.")
+    return (sol = r, reshist = Float64.(reshist), lits = k, idid=idid)
 end
 
 function giveapp!(c, s, vin, k)
@@ -194,6 +199,12 @@ function giveapp!(c, s, vin, k)
     return vin
 end
 
+"""
+klnopc(x,pdata)
+This function does absolutely nothing. Commenting it out seems to be
+a bug.
+"""
 function klnopc(x,pdata)
-return x
+#println("Inside klnopc")
+#return x
 end

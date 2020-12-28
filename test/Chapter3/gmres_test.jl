@@ -26,6 +26,7 @@ function test3x3()
     R = []
     rightsize = [10, 6, 5, 4]
     Methods = ("cgs1", "mgs1", "mgs2", "cgs2")
+    TestC = (false, true, true, true)
     i = 1
     for orth in Methods
         gout = kl_gmres(x0, b, atv, V, 1.e-10; pdata=A, orth = orth)
@@ -33,7 +34,8 @@ function test3x3()
         lhist = length(ithist)
         push!(R, ithist)
         resnorm = norm(A * gout.sol - b)
-        locpass = (resnorm < 1.e-8) && (lhist == rightsize[i])
+        locpass = ((resnorm < 1.e-8) && (lhist == rightsize[i]) 
+                  && (gout.idid == TestC[i]))
         locpass || println(
             "failure at orth = ",
             orth,
@@ -59,7 +61,7 @@ function testR1()
     gout = kl_gmres(x0, b, atv, V, 1.e-7; pdata=A)
     lhist = length(gout.reshist)
     nerr = norm(A * gout.sol - b, Inf)
-    pass = (lhist == 3) && (nerr < 1.e-14)
+    pass = (lhist == 3) && (nerr < 1.e-14) 
     pass || println("Rank one test fails")
     return pass
 end
