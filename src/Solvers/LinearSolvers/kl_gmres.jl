@@ -114,8 +114,6 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
 #        r .= q
 #         r .= b
          r .-= atv(x0, pdata)
-    else
-        r .= b
     end
     rho = norm(r)
     g = zeros(size(c))
@@ -196,6 +194,6 @@ function giveapp!(c, s, vin, k)
     return vin
 end
 
-function klnopc(x,pdata)
-return x
-end
+#function klnopc(x,pdata)
+#return x
+#end
