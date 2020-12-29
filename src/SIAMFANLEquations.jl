@@ -10,6 +10,7 @@ export nsolsc
 export ptcsolsc
 export ptcsol
 export nsol
+export nofact
 export secant
 export kl_gmres
 export Orthogonalize!

@@ -120,6 +120,13 @@ nsol will use backslash to compute the Newton step.
 I know that this is probably not optimal in your situation, so it is 
 good to pick something else, like jfact = lu.
 
+If you want to manage your own factorization within your Jacobian 
+evaluation function, then set\n
+jfact = nofact\n
+and nsol will not attempt to factor your Jacobian. That is also what
+happens when klfact does not know what to do. Your Jacobian is sent
+directly to Julia's \\  operation
+
 Please do not mess with the line that calls PrepareJac!. 
 
         FPF = PrepareJac!(FPS, FS, x, ItRules)
@@ -187,15 +194,15 @@ julia> nout32=nsol(f!,x,fv,jv32; sham=1);
 julia> [nout.history nout32.history]
 5×2 Array{Float64,2}:
  1.88791e+00  1.88791e+00
- 2.43119e-01  2.43119e-01
+ 2.43119e-01  2.43120e-01
  1.19231e-02  1.19231e-02
- 1.03266e-05  1.03262e-05
- 1.46416e-11  1.43548e-11
+ 1.03266e-05  1.03265e-05
+ 1.46416e-11  1.50402e-11
 
-julia> [nout.solution nout.solution - nout32.solution]
+julia> [nout.solution nout.solution-nout32.solution]
 2×2 Array{Float64,2}:
- -7.39085e-01  -5.42899e-14
-  2.30988e+00   3.49498e-13
+ -7.39085e-01  5.69433e-13
+  2.30988e+00  2.89546e-13
 ```
 
 #### H-equation example. I'm taking the sham=5 default here, so the convergence is not quadratic. The good news is that we evaluate the Jacobian only once.
