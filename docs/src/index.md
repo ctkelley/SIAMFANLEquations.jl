@@ -155,9 +155,11 @@ or BandedMatrices.
 
 ### Nonlinear systems with iterative linear solvers: Chapter 3
 
-1. The plan is to make this part of nsol and ptcsol. 
-2. The GMRES linear solver is 90% done and the documentation is in herer.
-I expect to get Bi-CGSTAB in there too.
+1. The plan was to make this part of nsol and ptcsol. However, the logic
+in Newton-Krylov methods is different enough that I'm makeing nsoli
+and ptcsoli their own codes. 
+2. The GMRES linear solver is 90% done and the documentation is in here.
+Bi-CGSTAB is coming, but will be after all the nonlinear stuff is done.
 
 ### Krylov linear solvers. 
 

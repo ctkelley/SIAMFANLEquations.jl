@@ -13,6 +13,7 @@ include("Chapter2/beam_test.jl")
 include("Chapter2/pde_lin_test.jl")
 include("Chapter2/nsolpde_test.jl")
 include("Chapter3/gmres_test.jl")
+include("Chapter3/Krylov_pde_test.jl")
 @testset "Scalar Equations: Chapter 1" begin
     @test nsolsc_solution_test()
     @test ptcsolsc_test()
@@ -27,4 +28,5 @@ end
 end
 @testset "Krylov solvers: Chapter 3" begin
     @test gmres_test()
+    @test gmres_test_pde(31)
 end
