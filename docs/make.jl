@@ -15,6 +15,9 @@ pages = Any[
        "functions/nsolsc.md",
        "functions/ptcsolsc.md",
        "functions/secant.md",
+       ],
+     "Linear Solvers" => Any[
+       "functions/kl_gmres.md",
        ]
 ]
 )

@@ -156,6 +156,9 @@ or BandedMatrices.
 ### Nonlinear systems with iterative linear solvers: Chapter 3
 
 1. The plan is to make this part of nsol and ptcsol. 
-2. The GMRES linear solver is 50% done. I expect to get Bi-CGSTAB in there too.
+2. The GMRES linear solver is 90% done and the documentation is in herer.
+I expect to get Bi-CGSTAB in there too.
 
+### Krylov linear solvers. 
 
+1. kl_gmres: GMRES with orthogonalization via classical Gram-Schmidt twice.
