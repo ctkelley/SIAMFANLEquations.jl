@@ -1,5 +1,5 @@
 """
-kl_gmres(x0, b, atv, V, eta, ptv=klnopc; 
+kl_gmres(x0, b, atv, V, eta, ptv=nothing; 
             orth = "cgs2", side="left", pdata=nothing)
 
 Gmres linear solver. Handles preconditioning and (coming soon) restarts. 
@@ -14,8 +14,9 @@ b: right hand side (duh!)
 
 atv:  matrix-vector product which depends on precomputed data pdta
       I expect you to use pdata most or all of the time, so it is not
-      a keyword argument (at least for now). If your mat-vec is just
-      A*v, you have to write a function where A is the precomputed data.
+      an optional argument, even if it's nothing (at least for now). 
+      If your mat-vec is just A*v, you have to write a function where 
+      A is the precomputed data.
       API for atv is ax=atv(x,pdata)
 
 V:  Preallocated n x K array for the Krylov vectors. I store the initial
@@ -25,7 +26,7 @@ V:  Preallocated n x K array for the Krylov vectors. I store the initial
 eta: Termination happens when ||b - Ax|| <= eta || b ||
 
 ptv:  preconditioner-vector product, which will also use pdata. The
-      default is klnopc, which is no preconditioning at all.
+      default is nothing, which is no preconditioning at all.
       API for ptv is px=ptv(x,pdata)
 
 Keyword arguments
@@ -56,12 +57,12 @@ idid = status of the iteration
               
  
 """
-function kl_gmres(x0, b, atv, V, eta, ptv=klnopc; 
+function kl_gmres(x0, b, atv, V, eta, ptv=nothing; 
             orth = "cgs2", side="left", pdata=nothing)
 #
 # Build some precomputed data to inform KL_atv about preconditioning ...
 #
-    if side == "right" || ptv == klnopc
+    if side == "right" || ptv == nothing
        rhs = b
     else
        rhs=ptv(b,pdata)
@@ -71,7 +72,7 @@ function kl_gmres(x0, b, atv, V, eta, ptv=klnopc;
 #
 # Fixup the solution if preconditioning from the right.
 #
-    if side == "left" || ptv == klnopc
+    if side == "left" || ptv == nothing 
     return gout
     else
     sol=ptv(gout.sol,pdata)
@@ -90,7 +91,9 @@ pdata=Kpdata.pdata
 ptv=Kpdata.ptv
 atv=Kpdata.atv
 side=Kpdata.side
-if ptv == klnopc
+sideok = (side == "left") || (side=="right")
+sideok || error("Bad preconditioner side in kl_gmres, input side = ",side, ". Side must be \"left\" or \"right\" ")
+if ptv == nothing
    y=atv(x,pdata)
    return y
 elseif side == "left"
@@ -99,10 +102,6 @@ elseif side == "left"
 elseif side == "right"
    y=ptv(x,pdata)
    return atv(y,pdata)
-else
-   println("Bad preconditioner side in Katv, side = ",side)
-   println(side)
-   error("not ready yet")
 end
 end
 
@@ -197,14 +196,4 @@ function giveapp!(c, s, vin, k)
         vin[i:i+1] .= [w1, w2]
     end
     return vin
-end
-
-"""
-klnopc(x,pdata)
-This function does absolutely nothing. Commenting it out seems to be
-a bug.
-"""
-function klnopc(x,pdata)
-#println("Inside klnopc")
-#return x
 end
