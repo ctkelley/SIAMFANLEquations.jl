@@ -15,7 +15,7 @@
  - GMRES + Newton-GMRES
       - Linear solvers live in src/Solvers/LinearSolvers
       - __kl_gmres.jl__ is a new linear solver and is working
-      - It uses __Orthogonalize!.kl__ which defaults to classical Gram-Schmidt twice
+      - It uses __Orthogonalize!.jl__ which defaults to classical Gram-Schmidt twice
  
 
 This is the package with the solvers and test problems for 
