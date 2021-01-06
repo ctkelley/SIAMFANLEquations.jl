@@ -7,9 +7,15 @@
 
 # Coming soon
 
- -  Elliptic PDE test problem + Fast Poisson Solver preconditioner
- - New PDE example for Chapter 2
+ -  Elliptic PDE test problem + Fast Poisson Solver preconditioner + New PDE example for Chapter 2
+    - Fast Poisson solver preconditioner via FFT (__fish2d.jl__ and __Pfish2d.jl__) live in src/TestProblems/Systems/PDE_Tools.jl
+    - Chapter 2: Code works, examples work, only the writeup is left. This mess is in 
+       - src/TestProblems/Systems/EllipticPDE.jl
+       - src/Examples/NsolPDE.jl
  - GMRES + Newton-GMRES
+      - Linear solvers live in src/Solvers/LinearSolvers
+      - __kl_gmres.jl__ is a new linear solver and is working
+      - It uses __Orthogonalize!.kl__ which defaults to classical Gram-Schmidt twice
  
 
 This is the package with the solvers and test problems for 
