@@ -101,20 +101,26 @@ end
 
 function integopinit(n)
     h = 1 / n
-    x = collect(0.5*h:h:1.0-0.5*h)
-    K = zeros(n, n)
-    for j = 1:n
-        for i = 1:n
-            K[i, j] = ker(x[i], x[j])
-        end
-    end
+    X = collect(0.5*h:h:1.0-0.5*h)
+    K = [ker(x,y) for x=X, y=X]
+#    K = zeros(n, n)
+#    for j = 1:n
+#        for i = 1:n
+#            K[i, j] = ker(x[i], x[j])
+#        end
+#    end
     K .*= h
-    sol = exp.(x) .* log.(2.0 * x .+ 1.0)
+#    sol = exp.(x) .* log.(2.0 * x .+ 1.0)
+#    sol = usol.(X)
+    sol = [usol(x) for x=X]
     f = sol - K * sol
     pdata = (K = K, xe = sol, f = f)
     return pdata
 end
 
+function usol(x)
+return exp.(x) .* log.(2.0 * x .+ 1.0)
+end
 
 function ker(x, y)
     ker = 0.1 * sin(x + exp(y))

@@ -21,7 +21,7 @@ atv:  matrix-vector product which depends on precomputed data pdta
 
 V:  Preallocated n x K array for the Krylov vectors. I store the initial
     normalized residual in column 1, so  you have at most K-1 iterations
-    before gmres_base returns a failure. kl_gmres will handle the restarts.
+    before gmres\\_base returns a failure. kl\\_gmres will handle the restarts.
 
 eta: Termination happens when ||b - Ax|| <= eta || b ||
 
@@ -35,7 +35,7 @@ pdata: precomputed data. The default is nothing, but that ain't gonna
         work well for nonlinear equations.
 
 orth: your choice of the wise default, classical Gram-Schmidt twice,
-       or something slow and less stable. Those are classical once (really
+       or something slower and less stable. Those are classical once (really
        bad) or a couple variants of modified Gram-Schmidt. mgs2 is what I
        used in my old matlab codes. Not terrible, but far from great.
 

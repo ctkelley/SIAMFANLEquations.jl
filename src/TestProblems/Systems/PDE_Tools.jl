@@ -47,10 +47,14 @@ on n x n grid.
 Unit square, homogeneous Dirichlet BC
 """
 function Lap2d(n)
-h=1/(n+1);
-maindiag=4*ones(n^2,)/(h*h);
-sxdiag=-ones(n^2-1,)/(h*h);
-sydiag=-ones(n^2-n,)/(h*h);
+#h=1/(n+1);
+#maindiag=4*ones(n^2,)/(h*h);
+#sxdiag=-ones(n^2-1,)/(h*h);
+#sydiag=-ones(n^2-n,)/(h*h);
+hm2=(n+1.0)^2;
+maindiag=fill(4*hm2,(n^2,));
+sxdiag=fill(-hm2,(n^2-1,));
+sydiag=fill(-hm2,(n^2-n,));
 for iz=n:n:n^2-1
    sxdiag[iz]=0.0;
 end
