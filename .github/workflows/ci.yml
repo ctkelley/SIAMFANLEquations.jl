@@ -21,12 +21,12 @@ jobs:
       matrix:
         version:
           - '1.5'
-          - '1.6'
+#          - '1.6'
           - 'nightly'
         os:
-          - ubuntu-latest
+#          - ubuntu-latest
           - macOS-latest
-          - windows-latest
+#          - windows-latest
         arch:
           - x64
     steps:
