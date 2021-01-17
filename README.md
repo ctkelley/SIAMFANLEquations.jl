@@ -5,18 +5,32 @@
 
 # SIAMFANLEquations version 0.3.0
 
-# Coming soon
+# New Stuff
 
- -  Elliptic PDE test problem + Fast Poisson Solver preconditioner + New PDE example for Chapter 2
+-  Elliptic PDE test problem + Fast Poisson Solver preconditioner + New PDE example for Chapter 2
     - Fast Poisson solver preconditioner via FFT (__fish2d.jl__ and __Pfish2d.jl__) live in src/TestProblems/Systems/PDE_Tools.jl
     - Chapter 2: Code works, examples work, only the writeup is left. This mess is in 
        - src/TestProblems/Systems/EllipticPDE.jl
        - src/Examples/NsolPDE.jl
- - GMRES + Newton-GMRES
+       
+ - GMRES Linear Solver
       - Linear solvers live in src/Solvers/LinearSolvers
       - __kl_gmres.jl__ is a new linear solver and is working
       - It uses __Orthogonalize!.jl__ which defaults to classical Gram-Schmidt twice
+
+# Coming soon: Release of v 0.3.0
+
+ - Notebook update for PDE example in Ch 2
  
+ - Newton-GMRES
+      - Uses __kl_gmres.jl__ 
+      - H-equation + PDE Examples working in notebook
+ 
+ # This part is done when ...
+
+ - PTC-Krylov + examples are done
+ - BiCGSTAB linear solver is done
+ - Chapter 3 is finished
 
 This is the package with the solvers and test problems for 
 
