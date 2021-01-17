@@ -49,8 +49,22 @@ function klfact(A::Array{T,2}) where {T<:Real}
     TF = lu!(A)
 end
 
-# The default is qr, because I do not trust you to allocate
-# the extra two upper bands so I can use qr!.
+# The default for sparse is lu. lu! for sparse matrices is 
+# too complicated to put in here. You can use lu! if you
+# set fact = nofact and manage the factorization in your Jacobian
+# evaluation code. You'll also get to manage the storage. There's
+# a project in chapter 2 about that.
+#
+function klfact(A::SparseMatrixCSC{Float64,Int64})
+    TF = lu(A)
+end
+
+
+# The default for banded matrices is qr, because I do not trust 
+# you to allocate the extra two upper bands so I can use qr!.
+# I'm using qr! in the example in Chapter 2. Look at the source
+# to see how I did that.
+#
 function klfact(A::BandedMatrix)
     TF = qr(A)
 end

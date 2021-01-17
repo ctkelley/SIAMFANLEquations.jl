@@ -308,12 +308,16 @@ function nsol(
         newfun = 0
         newjac = 0
         #
-        # Evaluate the derivative if (1) you are using the chord method 
-        # and it's the intial iterate, or
+        # Evaluate and factor the Jacobian if (1) you are using the chord 
+        # method and it's the intial iterate, or
         # (2) it's Newton and you are on the right part of the Shamaskii loop,
         # or the line search failed with a stale deriviative, or the residual
         # reduction ratio is too large. This leads to a tedious barrage
         # of conditionals that I have parked in a function.
+        #
+        # I'm storing the factorization in FPF unless you have asked for
+        # jfact = nofact or nsol can't figure out how to factor the Jacobian.
+        # In those case you just get the Jacobian back and I use \\.
         #
         evaljac = test_evaljac(ItRules, itc, newiarm, residratio)
         if evaljac
@@ -329,7 +333,6 @@ function nsol(
         # Float64 to make the logic simple.
             T == Float64 ? (step .= -(FPF \ FS)) : 
                  (ns=norm(FS,Inf); step .= -ns*(FPF \ T.(FS/ns)))
-            #        step .= -(FPF \ FS)
         else
             step = -FS / FPF
         end
