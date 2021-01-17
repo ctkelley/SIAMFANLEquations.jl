@@ -26,7 +26,7 @@
       - Uses __kl_gmres.jl__ 
       - H-equation + PDE Examples working in notebook
  
- # This part is done when ...
+ # This part is done and v 0.3.2 goes out the door when ..
 
  - PTC-Krylov + examples are done
  - BiCGSTAB linear solver is done
