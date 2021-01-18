@@ -55,9 +55,9 @@ sydiag=fill(-hm2,(n^2-n,));
 for iz=n:n:n^2-1
    sxdiag[iz]=0.0;
 end
-L2d=spdiagm(-n => sydiag, -1 => sxdiag, 0=> maindiag, 
+D2=spdiagm(-n => sydiag, -1 => sxdiag, 0=> maindiag, 
              1 => sxdiag, n => sydiag);
-return L2d
+return D2
 end
 
 
