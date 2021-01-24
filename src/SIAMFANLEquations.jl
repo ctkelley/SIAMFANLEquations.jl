@@ -12,6 +12,7 @@ export ptcsol
 export nsol
 export nofact
 export secant
+export armijo
 export kl_gmres
 export Orthogonalize!
 
