@@ -17,7 +17,7 @@ atv:  matrix-vector product which depends on precomputed data pdta
       an optional argument, even if it's nothing (at least for now). 
       If your mat-vec is just A*v, you have to write a function where 
       A is the precomputed data.
-      API for atv is ax=atv(x,pdata)
+      API for atv is av=atv(v,pdata)
 
 V:  Preallocated n x K array for the Krylov vectors. I store the initial
     normalized residual in column 1, so  you have at most K-1 iterations

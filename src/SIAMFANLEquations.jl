@@ -15,6 +15,7 @@ export secant
 export armijo
 export kl_gmres
 export Orthogonalize!
+export EvalF!
 
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
