@@ -12,10 +12,11 @@ export ptcsol
 export nsol
 export nofact
 export secant
-export armijo
+export armijosc
 export kl_gmres
 export Orthogonalize!
 export EvalF!
+export solhistinit
 
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
