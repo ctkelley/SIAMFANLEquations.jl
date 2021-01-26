@@ -26,9 +26,9 @@ cgs!(V, hv, vv, orth="twice")
 Classical Gram-Schmidt.
 """
 function cgs!(V, hv, vv, orth)
+    T = eltype(V)
     k = length(hv)
     @views rk = hv[1:k-1]
-    T = eltype(V)
     onep = T(1.0)
     zerop = T(0.0)
     pk = zeros(T, k - 1)

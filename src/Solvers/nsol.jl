@@ -52,9 +52,9 @@ Inputs:\n
 
 Keyword Arguments (kwargs):\n
 
-- rtol and atol: relative and absolute error tolerances\n
+rtol and atol: relative and absolute error tolerances\n
 
-- maxit: limit on nonlinear iterations\n
+maxit: limit on nonlinear iterations\n
 
 solver: default = "newton"\n
 Your choices are "newton" or "chord". However,
@@ -150,29 +150,36 @@ observe divergence or stagnation. This is only useful for research
 or writing a book.
 
 Output:\n
-A named tuple (solution, functionval, history, stats, idid,
+- A named tuple (solution, functionval, history, stats, idid,
                errcode, solhist)
 where
 
-solution = converged result
-functionval = F(solution)
-history = the vector of residual norms (||F(x)||) for the iteration
-stats = named tuple of the history of (ifun, ijac, iarm), the number
+   -- solution = converged result
+
+   -- functionval = F(solution)
+
+   -- history = the vector of residual norms (||F(x)||) for the iteration
+
+   -- stats = named tuple of the history of (ifun, ijac, iarm), the number
 of functions/derivatives/steplength reductions at each iteration.
 
 I do not count the function values for a finite-difference derivative
 because they count toward a Jacobian evaluation. 
 
-idid=true if the iteration succeeded and false if not.
+   -- idid=true if the iteration succeeded and false if not.
 
-errcode = 0 if if the iteration succeeded
+   -- errcode = 0 if if the iteration succeeded
+
         = -1 if the initial iterate satisfies the termination criteria
+
         = 10 if no convergence after maxit iterations
+
         = 1  if the line search failed
 
-solhist:\n
+   -- solhist:\n
 This is the entire history of the iteration if you've set
 keepsolhist=true\n
+
 solhist is an N x K array where N is the length of x and K is the number of
 iteration + 1. So, for scalar equations, it's a row vector.
 

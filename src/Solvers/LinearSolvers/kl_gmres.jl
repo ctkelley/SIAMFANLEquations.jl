@@ -120,11 +120,21 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
     #
     kmax = m - 1
     r = copy(b)
-    h = zeros(kmax + 1, kmax + 1)
+    T=eltype(V)
+    h = zeros(T,kmax + 1, kmax + 1)
     c = zeros(kmax + 1)
     s = zeros(kmax + 1)
+    #
+    # Don't do the mat-vec if the intial iterate is zero
+    #
     (norm(x0) == 0.0) || (r .-= atv(x0, pdata) )
+    #
+    #
     rho = norm(r)
+    #
+    # Initial residual = 0? This can't be good.
+    rho == 0.0 && error("Initial resdiual in kl_gmres is zero. Why?")
+    #
     g = zeros(size(c))
     g[1] = rho
     errtol = eta * rho
