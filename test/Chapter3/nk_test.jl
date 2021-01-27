@@ -24,7 +24,8 @@ FS=copy(x0)
 # Newton and forward difference directional derivatives for Newton-GMRES
 #
 dout=nsol(simple!, x0, FS, FPJ, jsimple!; sham=1, keepsolhist=true)
-kout=nsoli(simple!, x0, FS, FPS ;eta=1.e-10, lmaxit=2, keepsolhist=true)
+kout=nsoli(simple!, x0, FS, FPS ;eta=1.e-10, fixedeta=true, 
+                  lmaxit=3, keepsolhist=true)
 dsolhist=norm(kout.solhist-dout.solhist,Inf)
 shpass=(dsolhist < 1.e-7)
 shpass || println("solhist compare fails in nksimple")
@@ -35,7 +36,7 @@ vconverge = krstest(dout,kout)
 #
 x0=[3.0;5.0]
 dout=nsol(simple!, x0, FS, FPJ, jsimple!; sham=1)
-kout=nsoli(simple!, x0, FS, FPS, Jvsimple;eta=1.e-10, lmaxit=2)
+kout=nsoli(simple!, x0, FS, FPS, Jvsimple; fixedeta=true, eta=1.e-10, lmaxit=2)
 vdiverge = krstest(dout,kout)
 return vconverge && vdiverge && shpass
 end
