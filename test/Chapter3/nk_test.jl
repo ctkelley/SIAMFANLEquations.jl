@@ -55,8 +55,8 @@ fpass = (sum(fdiff)==0)
 fpass || println("function value compare fails in nksimple")
 #
 soldiff = kout.solution - dout.solution
-solpass = (norm(soldiff,Inf) < 1.e-11)
-solpass || println("solution compare fails in nksimple")
+solpass = (norm(soldiff,Inf) < 1.e-9)
+solpass || println("solution compare fails in nksimple  ", norm(soldiff,Inf))
 krpass = (fpass && apass && hpass && solpass)
 end
 
