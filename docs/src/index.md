@@ -158,9 +158,11 @@ or BandedMatrices.
 1. The plan was to make this part of nsol and ptcsol. However, the logic
 in Newton-Krylov methods is different enough that I'm makeing nsoli
 and ptcsoli their own codes. 
-2. The GMRES linear solver is 90% done and the documentation is in here.
-Bi-CGSTAB is coming, but will be after all the nonlinear stuff is done.
+
+2. The GMRES linear solver nsoli.jl is done and the documentation is in here.
+Bi-CGSTAB is coming, but PTC and GMRES(m) will come first.
 
 ### Krylov linear solvers. 
 
 1. kl_gmres: GMRES with orthogonalization via classical Gram-Schmidt twice.
+   Restarts are not in there yet.

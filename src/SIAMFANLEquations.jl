@@ -10,6 +10,7 @@ export nsolsc
 export ptcsolsc
 export ptcsol
 export nsol
+export nsoli
 export nofact
 export secant
 export armijosc
@@ -22,12 +23,14 @@ include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
 include("Tools/FunctionJacobianEvals.jl")
 include("Tools/ManageStats.jl")
+include("Tools/NewtonKrylov_Tools.jl")
 include("Tools/PTCTools.jl")
 include("Chapter1/nsolsc.jl")
 include("Chapter1/ptcsolsc.jl")
 include("Chapter1/secant.jl")
 include("Solvers/ptcsol.jl")
 include("Solvers/nsol.jl")
+include("Solvers/nsoli.jl")
 include("Solvers/LinearSolvers/kl_gmres.jl")
 include("Solvers/LinearSolvers/Orthogonalize!.jl")
 include("PlotsTables/printhist.jl")
