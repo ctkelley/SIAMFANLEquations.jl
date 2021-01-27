@@ -28,7 +28,7 @@ kout=nsoli(simple!, x0, FS, FPS ;eta=1.e-10, fixedeta=true,
                   lmaxit=3, keepsolhist=true)
 dsolhist=norm(kout.solhist-dout.solhist,Inf)
 shpass=(dsolhist < 1.e-7)
-shpass || println("solhist compare fails in nksimple")
+shpass || println("solhist compare fails in nksimple", dsolhist)
 vconverge = krstest(dout,kout)
 #
 # For the stagnating problem we will do analytic Jacobians for
