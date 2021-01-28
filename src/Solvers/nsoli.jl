@@ -75,9 +75,9 @@ where
 
 etag = eta if fixedeta=true
 
-etag = Eisenstadt-Walker if fixedeta=false
+etag = Eisenstat-Walker as implemented in book if fixedeta=false
 
-Eisenstadt-Walker not in here yet; coming soon. \n
+The default, which may change, is eta=.1, fixedeta=true
 
 Pvec: Preconditioner-vector product. The rules are similar to Jvec
     So, Pv=Pvec(v,x) or Pv=Pvec(v,x,pdata) returns P(x) v where
