@@ -52,7 +52,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.2.3) (open source, MIT License, Creative Commons License)
-      - If you're using the Chapter 3 stuff you must use the [IJulia notebook Master Branch](https://github.com/ctkelley/NotebookSIAMFANL). It has the new stuff and is not likely to break things in the older version of the package __today__.
+      - If you're using the Chapter 3 stuff you must should the [IJulia notebook Master Branch](https://github.com/ctkelley/NotebookSIAMFANL). It has the new stuff and is not likely to break things in the older version of the package __today__.
    3. This package (MIT License)<br>
    
 ## Readme Contents:
