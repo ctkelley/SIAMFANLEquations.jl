@@ -11,7 +11,10 @@ return nkpass
 end
 """
 nksimple()
-
+x0=[2.0;.5]
+FPS=zeros(2,4)
+FPJ=zeros(2,2)
+FS=copy(x0)
 Test nsoli with the simple 2D problem and line search failure and success.
 """
 function nksimple()
@@ -23,11 +26,11 @@ FS=copy(x0)
 # For the easy problem we will do analytic Jacobians for
 # Newton and forward difference directional derivatives for Newton-GMRES
 #
-dout=nsol(simple!, x0, FS, FPJ, jsimple!; sham=1, keepsolhist=true)
+dout=nsol(simple!, x0, FS, FPJ, jsimple!; sham=1, keepsolhist=true);
 kout=nsoli(simple!, x0, FS, FPS ;eta=1.e-10,
-                  lmaxit=3, keepsolhist=true)
+                  lmaxit=3, keepsolhist=true);
 dsolhist=norm(kout.solhist-dout.solhist,Inf)
-shpass=(dsolhist < 1.e-11)
+shpass=(dsolhist < 1.e-7)
 shpass || println("solhist compare fails in easy nksimple", dsolhist)
 vconverge = krstest(dout,kout)
 #
