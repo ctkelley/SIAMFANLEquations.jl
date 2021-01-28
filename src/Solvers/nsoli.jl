@@ -1,9 +1,8 @@
 """
     nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
                maxit=20, lmaxit=5, lsolver="gmres", eta=.1,
-               fixedeta=true, Pvec=nothing,
-               armmax=10, 
-               dx = 1.e-7, armfix=false, pdata = nothing,
+               fixedeta=true, Pvec=nothing, pside="left",
+               armmax=10, dx = 1.e-7, armfix=false, pdata = nothing,
                printerr = true, keepsolhist = false, stagnationok=false)
 )
 
@@ -152,14 +151,52 @@ iteration + 1. So, for scalar equations, it's a row vector.
 
 # Examples
 
-#### Simple 2D problem. You should get the same results as for nsol.jl.
+#### Simple 2D problem. You should get the same results as for nsol.jl because
+GMRES will solve the equation for the step exactly in two iterations. Finite
+difference Jacobians and analytic Jacobian-vector products for full precision
+and finite difference Jacobian-vector products for single precision.
+
+```jldoctest
+julia> function f!(fv,x)
+       fv[1]=x[1] + sin(x[2])
+       fv[2]=cos(x[1]+x[2])
+       end
+f! (generic function with 1 method)
+
+julia> function JVec(v, fv, x)
+       jvec=zeros(2,);
+       p=-sin(x[1]+x[2])
+       jvec[1]=v[1]+cos(x[2])*v[2]
+       jvec[2]=p*(v[1]+v[2])
+       return jvec
+       end
+JVec (generic function with 1 method)
+
+julia> x0=ones(2,); fv=zeros(2,); jv=zeros(2,2); jv32=zeros(Float32,2,2);
+
+julia> jvs=zeros(2,3); jvs32=zeros(Float32,2,3);
+
+julia> nout=nsol(f!,x0,fv,jv; sham=1);
+
+julia> kout=nsoli(f!,x0,fv,jvs,JVec; fixedeta=true, eta=.1, lmaxit=2);
+
+julia> kout32=nsoli(f!,x0,fv,jvs32; fixedeta=true, eta=.1, lmaxit=2);
+
+julia> [nout.history kout.history kout32.history]
+5×3 Array{Float64,2}:
+ 1.88791e+00  1.88791e+00  1.88791e+00
+ 2.43119e-01  2.43120e-01  2.43119e-01
+ 1.19231e-02  1.19231e-02  1.19231e-02
+ 1.03266e-05  1.03261e-05  1.03273e-05
+ 1.46416e-11  1.40862e-11  1.45457e-11
+```
 
 
 
 """
 function nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
                maxit=20, lmaxit=5, lsolver="gmres", eta=.1,
-               fixedeta=true, Pvec = nothing, armmax=10, 
+               fixedeta=true, Pvec = nothing, pside="left", armmax=10, 
                dx = 1.e-7, armfix=false, pdata = nothing,
                printerr = true, keepsolhist = false, stagnationok=false)
     itc = 0
@@ -180,6 +217,7 @@ function nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
         F!,
         Jvec,
         Pvec,
+        pside,
         lsolver,
         eta,
         fixedeta,

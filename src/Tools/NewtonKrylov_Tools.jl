@@ -4,6 +4,7 @@ function Newton_Krylov_Init(
     F!,
     Jvec,
     Pvec,
+    pside,
     lsolver,
     eta,
     fixedeta,
@@ -25,6 +26,7 @@ function Newton_Krylov_Init(
         f = F!,
         Jvec=Jvec,
         Pvec=Pvec,
+        pside=pside,
         lsolver = lsolver,
         eta=eta,
         fixedeta=fixedeta,
@@ -59,7 +61,9 @@ dx=ItRules.dx
 f=ItRules.f
 fixedeta=ItRules.fixedeta
 s0=zeros(size(step))
-kdata=(pdata=pdata, dx=dx, xc=x, f=f, FS=FS, Jvec=Jvec, Pvec=Pvec)
+side=ItRules.pside
+kdata=(pdata=pdata, dx=dx, xc=x, f=f, FS=FS, 
+       Jvec=Jvec, Pvec=Pvec)
 #
 # map the Jacobian-vector project from nsoli format to what
 # kl_gmres wants to see
@@ -69,7 +73,7 @@ Jvec == dirder && (Jvecg=Jvec)
 #
 #RHS=FS
 #T == Float64 || (RHS=T.(FS))
-kout=kl_gmres(s0, FS, Jvecg, FPS, etag; pdata=kdata)
+kout=kl_gmres(s0, FS, Jvecg, FPS, etag; pdata=kdata, side=side)
 step = -kout.sol
 reshist=kout.reshist
 lits=kout.lits
@@ -83,9 +87,25 @@ F=kdata.f
 FS=kdata.FS
 xc=kdata.xc
 JV=kdata.Jvec
+pdata=kdata.pdata
+atv=EvalJV(JV, v, FS, xc, pdata)
+return atv
+end
+
+function EvalJV(JV, v, FS, xc, q::Nothing)
 atv=JV(v, FS, xc)
 return atv
 end
+
+function EvalJV(JV, v, FS, xc, pdata) 
+atv=JV(v, FS, xc, pdata)
+return atv
+end
+
+
+
+
+
 
 function dirder(v,kdata)
 pdata=kdata.pdata
