@@ -68,7 +68,7 @@ kdata=(pdata=pdata, dx=dx, xc=x, f=f, FS=FS,
 # map the Jacobian-vector and preconditioner-vector products 
 # from nsoli format to what kl_gmres wants to see
 #
-Pvecg = Pvec
+Pvecg = Pvec2
 Jvecg = Jvec2
 Pvec == nothing && (Pvecg=Pvec)
 Jvec == dirder && (Jvecg=Jvec)
@@ -84,6 +84,17 @@ Lstats= (reshist=reshist, lits=lits, idid=idid)
 return (step=step, Lstats=Lstats)
 end
 
+function Pvec2(v,kdata)
+F=kdata.f
+FS=kdata.FS
+xc=kdata.xc
+PV=kdata.Pvec
+pdata=kdata.pdata
+ptv=EvalPV(PV, v, xc, pdata)
+return ptv
+end
+
+
 function Jvec2(v,kdata)
 F=kdata.f
 FS=kdata.FS
@@ -92,6 +103,16 @@ JV=kdata.Jvec
 pdata=kdata.pdata
 atv=EvalJV(JV, v, FS, xc, pdata)
 return atv
+end
+
+function EvalPV(PV, v, xc, q::Nothing)
+ptv=PV(v, xc)
+return ptv
+end
+
+function EvalPV(PV, v, xc, pdata) 
+ptv=PV(v, xc, pdata)
+return ptv
 end
 
 function EvalJV(JV, v, FS, xc, q::Nothing)
@@ -103,11 +124,6 @@ function EvalJV(JV, v, FS, xc, pdata)
 atv=JV(v, FS, xc, pdata)
 return atv
 end
-
-
-
-
-
 
 function dirder(v,kdata)
 pdata=kdata.pdata

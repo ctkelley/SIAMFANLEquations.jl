@@ -58,6 +58,26 @@ FP .+= CT
 end
 
 """
+Jvec2d(v, FS, u, pdata)
+
+Analytic Jacobian-vector product for PDE example
+"""
+function Jvec2d(v, FS, u, pdata)
+D2=pdata.D2
+CV=pdata.CV
+CT=pdata.CT
+cu=CV*u
+jvec=D2*v
+p1=20.0*(cu.*v)
+jvec .+= p1
+p2=CV*v
+p3=20.0*(u.*p2)
+jvec+=p3
+return jvec
+end
+
+
+"""
 pdeinit(n)
 
 collects the precomputed data for the elliptic pde example. This 

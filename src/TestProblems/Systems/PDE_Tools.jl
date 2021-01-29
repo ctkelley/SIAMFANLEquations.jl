@@ -147,3 +147,14 @@ u=reshape(u2,(n2,))
 return u
 end
 
+"""
+Pvec2d(v, u, pdata)
+
+Preconditioner for nsoli
+"""
+function Pvec2d(v, u, pdata)
+fdata=pdata.fdata
+u=Pfish2d(v, fdata)
+return u
+end
+

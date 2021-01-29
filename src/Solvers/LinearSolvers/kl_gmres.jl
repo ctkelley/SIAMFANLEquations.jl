@@ -76,7 +76,7 @@ function kl_gmres(x0, b, atv, V, eta, ptv=nothing;
     return gout
     else
     sol=ptv(gout.sol,pdata)
-    return (sol = sol, reshist = gout.reshist, lits=gout.lits)
+    return (sol = sol, reshist = gout.reshist, lits=gout.lits, idid=gout.idid)
     end
 end
 
