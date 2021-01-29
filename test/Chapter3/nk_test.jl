@@ -6,7 +6,9 @@ CI for nsoli
 function nk_test()
 passsimple=nksimple()
 passsimple || println("nksimple fails")
-nkpass = passsimple
+jvpass = jacvec2d()
+jvpass || println("jacvec2d fails")
+nkpass = passsimple && jvpass
 return nkpass
 end
 """
@@ -68,3 +70,56 @@ jsimple!(JM,FS,x)
 Jvec=JM*v
 return Jvec
 end
+
+
+"""
+jacvec2d()
+
+Analytic Jacobian-vector product. Compare Eisenstat-Walker to 
+fixed eta. Test precomputed data support.
+"""
+function jacvec2d()
+x0=ones(2,); fv=zeros(2,); jv=zeros(2,2); jvs=zeros(2,3); 
+pdata=zeros(2,)
+nout=nsol(f!,x0,fv,jv; sham=1, pdata=pdata);
+kout=nsoli(f!,x0,fv,jvs; fixedeta=false, eta=.9, lmaxit=2, pdata=pdata);
+kout2=nsoli(f!,x0,fv,jvs; fixedeta=true, eta=.1, lmaxit=2, pdata=pdata);
+histdiff=norm(nout.history-kout2.history)
+histpass= (histdiff < 1.e-5)
+histpass || println("hist test fails in jacvec2d")
+ncost=funcost(nout); nplot=acost(nout);
+kcost=funcost(kout); kplot=acost(kout);
+kcost2=funcost(kout2); kplot2=acost(kout2);
+costpass = (ncost==10) && (kcost == 21) && (kcost2 == 14)
+costpass || println("cost compare fails in jacvec2d")
+soldiff = (norm(kout.solution-nout.solution, Inf) + 
+norm(kout2.solution-nout.solution, Inf))
+solpass = (soldiff < 1.e-7)
+solpass || println("solution compare fails in jacvec2d")
+jvpass = histpass && costpass && solpass
+return jvpass
+end
+
+function f!(fv, x, pdata)
+fv[1]=x[1] + sin(x[2])
+fv[2]=cos(x[1]+x[2])
+end
+
+function JVec(v, fv, x, pdata)
+       jvec=zeros(2,);
+       p=-sin(x[1]+x[2])
+       pdata[1]=v[1]+cos(x[2])*v[2]
+       pdata[2]=p*(v[1]+v[2])
+       return pdata
+       end
+
+function funcost(itout)
+netcost=itout.stats.ifun+itout.stats.ijac
+cost=sum(netcost)
+end
+
+function acost(itout)
+netcost=itout.stats.ifun+itout.stats.ijac
+cost=cumsum(netcost)
+end
+

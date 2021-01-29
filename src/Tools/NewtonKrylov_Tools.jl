@@ -65,15 +65,17 @@ side=ItRules.pside
 kdata=(pdata=pdata, dx=dx, xc=x, f=f, FS=FS, 
        Jvec=Jvec, Pvec=Pvec)
 #
-# map the Jacobian-vector project from nsoli format to what
-# kl_gmres wants to see
+# map the Jacobian-vector and preconditioner-vector products 
+# from nsoli format to what kl_gmres wants to see
 #
+Pvecg = Pvec
 Jvecg = Jvec2
+Pvec == nothing && (Pvecg=Pvec)
 Jvec == dirder && (Jvecg=Jvec)
 #
 #RHS=FS
 #T == Float64 || (RHS=T.(FS))
-kout=kl_gmres(s0, FS, Jvecg, FPS, etag; pdata=kdata, side=side)
+kout=kl_gmres(s0, FS, Jvecg, FPS, etag, Pvecg; pdata=kdata, side=side)
 step = -kout.sol
 reshist=kout.reshist
 lits=kout.lits
