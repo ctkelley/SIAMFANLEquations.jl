@@ -140,12 +140,12 @@ JVecv2(v, fv, x)
 
 Precondition without precomputed/stored data
 """
-function JVec(v, fv, x)
+function JVecv2(v, fv, x)
     jvec = zeros(2)
     p = -sin(x[1] + x[2])
     jvec[1] = v[1] + cos(x[2]) * v[2]
     jvec[2] = p * (v[1] + v[2])
-    return pdata
+    return jvec
 end
 
 
