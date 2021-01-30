@@ -2,6 +2,7 @@
 nk_test()
 
 CI for nsoli
+Testing Eisenstat-Walker and functions witout precomputed data
 """
 function nk_test()
     passsimple = nksimple()
