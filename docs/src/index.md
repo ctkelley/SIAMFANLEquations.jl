@@ -118,6 +118,7 @@ julia> [nsolout.solhist.-2 nsolout.history]
 
 
 ## Nonlinear systems with direct linear solvers: Chapter 2
+
 The ideas from Chapter 1 remain important here. For systems the Newton step is the solution of the linear system
 
 ``F'(x) s = - F(x)``
@@ -126,6 +127,83 @@ This chapter is about solving the equation for the Newton step with Gaussian eli
 
 Bottom line: __single precision can cut the linear algebra cost in half with no loss in the quality of the solution or the number of nonlinear iterations it takes to get there.__
 
+Here is an extremely simple example from the book. The function
+and Jacobian codes are
+
+```julia
+"""
+simple!(FV,x)
+This is the function for Figure 2.1 in the
+book
+
+"""
+function simple!(FV, x)
+    FV[1] = x[1] * x[1] + x[2] * x[2] - 2.0
+    FV[2] = exp(x[1] - 1) + x[2] * x[2] - 2.0
+end
+
+function jsimple!(JacV, FV, x)
+    JacV[1, 1] = 2.0 * x[1]
+    JacV[1, 2] = 2.0 * x[2]
+    JacV[2, 1] = exp(x[1] - 1)
+    JacV[2, 2] = 2 * x[2]
+end
+```
+We will solve the equation with an initial iterate that will
+need the line search. Then we will show the iteration history.
+
+Note that we allocate storage for the Jacobian and the nonlinear
+residual. We're using Newton's method so must set ```sham=1```. 
+
+```julia
+julia> x0=[2.0,.5];
+
+julia> FS=zeros(2,);
+
+julia> FPS=zeros(2,2);
+
+julia> nout=nsol(simple!, x0, FS, FPS, jsimple!; sham=1);
+
+julia> nout.history
+6-element Array{Float64,1}:
+ 2.44950e+00
+ 2.17764e+00
+ 7.82402e-01
+ 5.39180e-02
+ 4.28404e-04
+ 3.18612e-08
+
+julia> nout.stats.iarm'
+1×6 Adjoint{Int64,Array{Int64,1}}:
+ 0  2  0  0  0  0
+```
+This history vector shows quadratic convergence. The iarm vector shows
+that the line search took two steplength reductions on the first iteration.
+
+We can do the linear algebra in single precision by storing the 
+Jacobian in Float32 and use a finite difference Jacobian by omitting
+```jsimple!``. So ...
+
+```julia
+julia> FP32=zeros(Float32,2,2);
+
+julia> nout32=nsol(simple!, x0, FS, FP32; sham=1);
+
+julia> nout32.history
+6-element Array{Float64,1}:
+ 2.44950e+00
+ 2.17764e+00
+ 7.82403e-01
+ 5.39180e-02
+ 4.28410e-04
+ 3.19098e-08
+```
+As you can see, not much has happened.
+
+## Nonlinear systems with Krylov linear solvers: Chapter 3
+
+The methods in this chapter use Krylov itertive solvers to compute
+the Newton step. 
 
 ## Overview of the Codes
 
