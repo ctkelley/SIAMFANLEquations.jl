@@ -96,7 +96,7 @@ function jacvec2d()
     nout = nsol(f!, x0, fv, jv; sham = 1, pdata = pdata)
     kout = nsoli(f!, x0, fv, jvs, JVec; fixedeta = false, eta = 0.9, lmaxit = 2, pdata = pdata)
     kout2 = nsoli(fv2!, x0, fv, jvs, JVecv2; fixedeta = true, eta = 0.1, 
-                 lmaxit = 2)
+                 lmaxit = 2, Pvec=PVecv2)
     histdiff = norm(nout.history - kout2.history)
     histpass = (histdiff < 1.e-5)
     histpass || println("hist test fails in jacvec2d")
@@ -133,6 +133,17 @@ Function evaluation witout precomputed data for testing.
 function fv2!(fv, x)
     fv[1] = x[1] + sin(x[2])
     fv[2] = cos(x[1] + x[2])
+end
+
+
+"""
+PVecv2(v, x)
+
+Here's a preconditioner that does not need procomputed data and
+does not do anything.
+"""
+function PVecv2(v, x)
+return v
 end
 
 """
