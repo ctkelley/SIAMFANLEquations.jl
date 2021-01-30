@@ -15,7 +15,7 @@ function basic2d_test()
     # jfact=nofact should have no effect on the nonlinear iteration
     #
     nout = nsol(basic2d!, x0, fv, jv; rtol = 1.e-10, sham = 1)
-    sout = nsol(basic2d!, x0, fv, jsv; sham = 1, jfact=nofact)
+    sout = nsol(basic2d!, x0, fv, jsv; sham = 1, jfact = nofact)
     dss = norm(nout.solution - sout.solution)
     hss = norm(nout.history - sout.history)
     singleok = (norm(dss) < 1.e-7) && (norm(hss) < 1.e-7)
@@ -61,7 +61,7 @@ function basic2d_test()
     # Global convergence
     #
     x0a = [2.0, 0.5]
-    FS = zeros(2,)
+    FS = zeros(2)
     FPS = zeros(2, 2)
     FPSS = zeros(Float32, 2, 2)
     nouta = nsol(simple!, x0a, FS, FPS; keepsolhist = true, sham = 1)

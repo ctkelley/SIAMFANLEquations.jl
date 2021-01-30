@@ -334,12 +334,12 @@ function nsol(
         end
         derivative_is_old = (newjac == 0) && (solver == "newton")
         if n > 1
-        # If the Jacobian precision is worse than Float32, you'll have to
-        # do some scaling to avoid underflow in the terminal phase of
-        # the nonlinear iteratinon. So, I do it for anything worse that
-        # Float64 to make the logic simple.
-            T == Float64 ? (step .= -(FPF \ FS)) : 
-                 (ns=norm(FS,Inf); step .= -ns*(FPF \ T.(FS/ns)))
+            # If the Jacobian precision is worse than Float32, you'll have to
+            # do some scaling to avoid underflow in the terminal phase of
+            # the nonlinear iteratinon. So, I do it for anything worse that
+            # Float64 to make the logic simple.
+            T == Float64 ? (step .= -(FPF \ FS)) :
+            (ns = norm(FS, Inf); step .= -ns * (FPF \ T.(FS / ns)))
         else
             step = -FS / FPF
         end

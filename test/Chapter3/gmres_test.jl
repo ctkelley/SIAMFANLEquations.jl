@@ -7,20 +7,20 @@ This is for CI only. Nothing to see here. Move along.
 """
 
 function gmres_test()
-pass3 = test3x3()
-passint = test_integop(40)
-passr1 = testR1()
-passorth=orth_test()
-passqr=qr_test()
-passgm = pass3 && passint && passr1
-return passgm
+    pass3 = test3x3()
+    passint = test_integop(40)
+    passr1 = testR1()
+    passorth = orth_test()
+    passqr = qr_test()
+    passgm = pass3 && passint && passr1
+    return passgm
 end
 
 function test3x3()
     A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4]
     V = zeros(3, 10)
     b = [1.0; 1.0; 1.0]
-    x0 = zeros(3,)
+    x0 = zeros(3)
     eta = 1.e-10
     passgm = true
     R = []
@@ -29,13 +29,12 @@ function test3x3()
     TestC = (false, true, true, true)
     i = 1
     for orth in Methods
-        gout = kl_gmres(x0, b, atv, V, 1.e-10; pdata=A, orth = orth)
+        gout = kl_gmres(x0, b, atv, V, 1.e-10; pdata = A, orth = orth)
         ithist = gout.reshist
         lhist = length(ithist)
         push!(R, ithist)
         resnorm = norm(A * gout.sol - b)
-        locpass = ((resnorm < 1.e-8) && (lhist == rightsize[i]) 
-                  && (gout.idid == TestC[i]))
+        locpass = ((resnorm < 1.e-8) && (lhist == rightsize[i]) && (gout.idid == TestC[i]))
         locpass || println(
             "failure at orth = ",
             orth,
@@ -47,7 +46,7 @@ function test3x3()
         passgm = passgm && locpass
         i += 1
     end
-#    return (pass = passgm, RH = R)
+    #    return (pass = passgm, RH = R)
     return passgm
 end
 
@@ -55,13 +54,13 @@ function testR1()
     A = Float64.([1 2 3 4 5])
     E = A' * A
     A = I + E
-    b = ones(5,)
-    x0 = zeros(5,)
+    b = ones(5)
+    x0 = zeros(5)
     V = zeros(5, 4)
-    gout = kl_gmres(x0, b, atv, V, 1.e-7; pdata=A)
+    gout = kl_gmres(x0, b, atv, V, 1.e-7; pdata = A)
     lhist = length(gout.reshist)
     nerr = norm(A * gout.sol - b, Inf)
-    pass = (lhist == 3) && (nerr < 1.e-14) 
+    pass = (lhist == 3) && (nerr < 1.e-14)
     pass || println("Rank one test fails")
     return pass
 end
@@ -75,7 +74,7 @@ function test_integop(n)
     Methods = ("cgs1", "mgs1", "mgs2", "cgs2")
     pass = true
     for orth in Methods
-        goutinteg = kl_gmres(u0, f, integop, V, 1.e-10; pdata=pdata, orth = orth)
+        goutinteg = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, orth = orth)
         errn = norm(goutinteg.sol - ue, Inf)
         rhist = goutinteg.reshist
         lhist = length(rhist)
@@ -102,24 +101,24 @@ end
 function integopinit(n)
     h = 1 / n
     X = collect(0.5*h:h:1.0-0.5*h)
-    K = [ker(x,y) for x=X, y=X]
-#    K = zeros(n, n)
-#    for j = 1:n
-#        for i = 1:n
-#            K[i, j] = ker(x[i], x[j])
-#        end
-#    end
+    K = [ker(x, y) for x in X, y in X]
+    #    K = zeros(n, n)
+    #    for j = 1:n
+    #        for i = 1:n
+    #            K[i, j] = ker(x[i], x[j])
+    #        end
+    #    end
     K .*= h
-#    sol = exp.(x) .* log.(2.0 * x .+ 1.0)
-#    sol = usol.(X)
-    sol = [usol(x) for x=X]
+    #    sol = exp.(x) .* log.(2.0 * x .+ 1.0)
+    #    sol = usol.(X)
+    sol = [usol(x) for x in X]
     f = sol - K * sol
     pdata = (K = K, xe = sol, f = f)
     return pdata
 end
 
 function usol(x)
-return exp.(x) .* log.(2.0 * x .+ 1.0)
+    return exp.(x) .* log.(2.0 * x .+ 1.0)
 end
 
 function ker(x, y)
@@ -132,7 +131,8 @@ orth_test()
 
 Used for CI to make sure the orthogonalizers do what I expect.
 """
-function orth_test() A = collect(0.01:0.01:0.25)
+function orth_test()
+    A = collect(0.01:0.01:0.25)
     A = reshape(A, 5, 5)
     A = I - A
     B = Float32.(A)

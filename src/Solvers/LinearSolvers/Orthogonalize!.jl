@@ -7,15 +7,15 @@ likely to become an undocumented option. Methods other than cgs2 are
 for CI for the linear solver.
 """
 function Orthogonalize!(V, hv, vv, orth = "mgs1")
-orthopts=["mgs1", "mgs2", "cgs1", "cgs2"]
-orth in orthopts || error("Impossible orth spec in Orthogonalize!")
+    orthopts = ["mgs1", "mgs2", "cgs1", "cgs2"]
+    orth in orthopts || error("Impossible orth spec in Orthogonalize!")
     if orth == "mgs1"
         mgs!(V, hv, vv)
     elseif orth == "mgs2"
         mgs!(V, hv, vv, "twice")
     elseif orth == "cgs1"
         cgs!(V, hv, vv, "once")
-    else 
+    else
         cgs!(V, hv, vv, "twice")
     end
 end
@@ -113,7 +113,7 @@ function mgs!(V, hv, vv, orth = "once")
     #
     #if hv[k+1] != 0
     #@views vv .= vv/hv[k+1]
-    nv !=0 || println("breakdown")
+    nv != 0 || println("breakdown")
     if nv != 0
         vv ./= nv
     end

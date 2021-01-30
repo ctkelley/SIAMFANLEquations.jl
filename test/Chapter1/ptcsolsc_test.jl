@@ -21,10 +21,15 @@ function ptcsolsc_test()
     # Convergence to the right solution
     #
     ptcdata1 = ptcsolsc(sptest, u0, sptestp; dt0 = 1.0, rtol = 1.e-12)
-    ptcdata2 = ptcsolsc( spitchfork, u0; dt0 = 1.0, rtol = 1.e-12, 
-        pdata = lambda, keepsolhist = false,)
-    ptcdatasec = secant( spitchfork, u0; rtol = 1.e-12, 
-        pdata = lambda, keepsolhist = false,)
+    ptcdata2 = ptcsolsc(
+        spitchfork,
+        u0;
+        dt0 = 1.0,
+        rtol = 1.e-12,
+        pdata = lambda,
+        keepsolhist = false,
+    )
+    ptcdatasec = secant(spitchfork, u0; rtol = 1.e-12, pdata = lambda, keepsolhist = false)
     dh = ptcdata1.history - ptcdata2.history
     ndh = norm(dh[:, 1], Inf)
     fdok = (ndh < 1.e-7)

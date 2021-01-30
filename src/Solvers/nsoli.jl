@@ -194,11 +194,29 @@ julia> [nout.history kout.history kout32.history]
 
 
 """
-function nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
-               maxit=20, lmaxit=5, lsolver="gmres", eta=.1,
-               fixedeta=true, Pvec = nothing, pside="left", armmax=10, 
-               dx = 1.e-7, armfix=false, pdata = nothing,
-               printerr = true, keepsolhist = false, stagnationok=false)
+function nsoli(
+    F!,
+    x0,
+    FS,
+    FPS,
+    Jvec = dirder;
+    rtol = 1.e-6,
+    atol = 1.e-12,
+    maxit = 20,
+    lmaxit = 5,
+    lsolver = "gmres",
+    eta = 0.1,
+    fixedeta = true,
+    Pvec = nothing,
+    pside = "left",
+    armmax = 10,
+    dx = 1.e-7,
+    armfix = false,
+    pdata = nothing,
+    printerr = true,
+    keepsolhist = false,
+    stagnationok = false,
+)
     itc = 0
     idid = true
     iline = false
@@ -244,7 +262,7 @@ function nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
     newjac = 0
     residratio = 1.0
     armstop = true
-    etag=eta
+    etag = eta
     #
     # Preallocate a few vectors for the step, trial step, trial function
     #
@@ -273,14 +291,13 @@ function nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
         # for Gaussian elimination on dense matrices.
         #
         step .*= 0.0
-        etag=eta
-        etag=forcing(itc, residratio, etag, ItRules)
+        etag = forcing(itc, residratio, etag, ItRules, tol, resnorm)
         kout = Krylov_Step!(step, x, FS, FPS, ItRules, etag)
         step = kout.step
-#
-# For GMRES you get 1 jac-vec per iteration and there is no jac-vec
-# for the initial inner iterate of zero
-#
+        #
+        # For GMRES you get 1 jac-vec per iteration and there is no jac-vec
+        # for the initial inner iterate of zero
+        #
         newjac = kout.Lstats.lits
         linok = kout.Lstats.idid
         linok || println("Linear solver did not meet termination criterion.
@@ -300,7 +317,7 @@ function nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
         # stop the iteration. Print an error message unless
         # stagnationok == true
         #
-        armstop = AOUT.idid 
+        armstop = AOUT.idid
         iline = ~armstop && ~stagflag
         #
         # Keep the books.
@@ -312,15 +329,14 @@ function nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
         newiarm = AOUT.aiarm
         itc += 1
         keepsolhist && (@views solhist[:, itc+1] .= x)
-#        ~keepsolhist || (@views solhist[:, itc+1] .= x)
+        #        ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     solution = x
     functionval = FS
     (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
     newtonout =
-        NewtonClose(x, FS, ItData.history, stats, idid, errcode, 
-      keepsolhist, solhist)
+        NewtonClose(x, FS, ItData.history, stats, idid, errcode, keepsolhist, solhist)
     return newtonout
-#return (solution=x, functionval=FS, history=ItData.history)
+    #return (solution=x, functionval=FS, history=ItData.history)
 end

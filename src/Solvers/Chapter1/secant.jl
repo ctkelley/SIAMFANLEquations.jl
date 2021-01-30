@@ -111,7 +111,7 @@ function secant(
      and you assume a risk when you use it. The same is true for Broyden
      and any other quasi-Newton method.
     =#
-    fc=0.0;
+    fc = 0.0
     fc = EvalF!(f, fc, x0, pdata)
     fm = fc
     xm = copy(x0)

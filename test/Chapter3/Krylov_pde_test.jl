@@ -22,14 +22,23 @@ function gmres_test_pde(n; orth = "cgs2", write = false, eta = 9.8 * 1.e-4)
     pcresr /= pcresr[1]
     solrhw = pdeptv(goutp.sol, pdata)
     # Put left preconditioning in the argument list.
-    goutpl2 = kl_gmres(u0, RHS, pdeatv, V, eta, pdeptv;
-            pdata = pdata, orth = orth, side = "left")
+    goutpl2 =
+        kl_gmres(u0, RHS, pdeatv, V, eta, pdeptv; pdata = pdata, orth = orth, side = "left")
     pcresl2 = goutpl2.reshist
     pcresl2 /= pcresl2[1]
     soll = goutpl2.sol
     # Put right preconditioning in the argument list.
-    goutp2 = kl_gmres( u0, RHS, pdeatv, V, eta, pdeptv;
-        pdata = pdata, orth = orth, side = "right")
+    goutp2 = kl_gmres(
+        u0,
+        RHS,
+        pdeatv,
+        V,
+        eta,
+        pdeptv;
+        pdata = pdata,
+        orth = orth,
+        side = "right",
+    )
     pcres2 = goutp2.reshist
     pcres2 /= pcres2[1]
     solr = goutp2.sol
@@ -37,9 +46,14 @@ function gmres_test_pde(n; orth = "cgs2", write = false, eta = 9.8 * 1.e-4)
     solrdel = norm(sollhw - soll, Inf)
     solerr = norm(soll - ue, Inf)
     solerr2 = norm(solr - ue, Inf)
-    pass =( (soldel == 0) && (solrdel == 0) && (solerr < 1.e-2) 
-          && (solerr2 < 1.e-2) && (length(pcresr) == 12 ) && 
-          (length(pcres)==9))
+    pass = (
+        (soldel == 0) &&
+        (solrdel == 0) &&
+        (solerr < 1.e-2) &&
+        (solerr2 < 1.e-2) &&
+        (length(pcresr) == 12) &&
+        (length(pcres) == 9)
+    )
     pass || println("Linear pde test for GMRES fails.")
     if write
         println(soldel, "  ", solrdel, "  ", solerr, "   ", solerr2)

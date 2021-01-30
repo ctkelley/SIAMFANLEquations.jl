@@ -57,26 +57,35 @@ idid = status of the iteration
               
  
 """
-function kl_gmres(x0, b, atv, V, eta, ptv=nothing; 
-            orth = "cgs2", side="left", pdata=nothing)
-#
-# Build some precomputed data to inform KL_atv about preconditioning ...
-#
+function kl_gmres(
+    x0,
+    b,
+    atv,
+    V,
+    eta,
+    ptv = nothing;
+    orth = "cgs2",
+    side = "left",
+    pdata = nothing,
+)
+    #
+    # Build some precomputed data to inform KL_atv about preconditioning ...
+    #
     if side == "right" || ptv == nothing
-       rhs = b
+        rhs = b
     else
-       rhs=ptv(b,pdata)
+        rhs = ptv(b, pdata)
     end
-    Kpdata=(pdata=pdata, side=side, ptv=ptv, atv=atv)
+    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv)
     gout = gmres_base(x0, rhs, Katv, V, eta, Kpdata; orth = orth)
-#
-# Fixup the solution if preconditioning from the right.
-#
-    if side == "left" || ptv == nothing 
-    return gout
+    #
+    # Fixup the solution if preconditioning from the right.
+    #
+    if side == "left" || ptv == nothing
+        return gout
     else
-    sol=ptv(gout.sol,pdata)
-    return (sol = sol, reshist = gout.reshist, lits=gout.lits, idid=gout.idid)
+        sol = ptv(gout.sol, pdata)
+        return (sol = sol, reshist = gout.reshist, lits = gout.lits, idid = gout.idid)
     end
 end
 
@@ -86,23 +95,27 @@ Katv(x,Kpdata)
 Builds a matrix-vector product to hand to gmres_base. Puts the preconditioner
 in there on the correct side.
 """
-function Katv(x,Kpdata)
-pdata=Kpdata.pdata
-ptv=Kpdata.ptv
-atv=Kpdata.atv
-side=Kpdata.side
-sideok = (side == "left") || (side=="right")
-sideok || error("Bad preconditioner side in kl_gmres, input side = ",side, ". Side must be \"left\" or \"right\" ")
-if ptv == nothing
-   y=atv(x,pdata)
-   return y
-elseif side == "left"
-   y=atv(x,pdata)
-   return ptv(y,pdata)
-elseif side == "right"
-   y=ptv(x,pdata)
-   return atv(y,pdata)
-end
+function Katv(x, Kpdata)
+    pdata = Kpdata.pdata
+    ptv = Kpdata.ptv
+    atv = Kpdata.atv
+    side = Kpdata.side
+    sideok = (side == "left") || (side == "right")
+    sideok || error(
+        "Bad preconditioner side in kl_gmres, input side = ",
+        side,
+        ". Side must be \"left\" or \"right\" ",
+    )
+    if ptv == nothing
+        y = atv(x, pdata)
+        return y
+    elseif side == "left"
+        y = atv(x, pdata)
+        return ptv(y, pdata)
+    elseif side == "right"
+        y = ptv(x, pdata)
+        return atv(y, pdata)
+    end
 end
 
 """
@@ -120,14 +133,14 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
     #
     kmax = m - 1
     r = copy(b)
-    T=eltype(V)
-    h = zeros(T,kmax + 1, kmax + 1)
+    T = eltype(V)
+    h = zeros(T, kmax + 1, kmax + 1)
     c = zeros(kmax + 1)
     s = zeros(kmax + 1)
     #
     # Don't do the mat-vec if the intial iterate is zero
     #
-    (norm(x0) == 0.0) || (r .-= atv(x0, pdata) )
+    (norm(x0) == 0.0) || (r .-= atv(x0, pdata))
     #
     #
     rho = norm(r)
@@ -188,14 +201,14 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
     #
     y = h[1:k, 1:k] \ g[1:k]
     qmf = view(V, 1:n, 1:k)
-#    mul!(r, qmf, y)
-#    r .= qmf*y    
-#    x .+= r
-    r.=x0
+    #    mul!(r, qmf, y)
+    #    r .= qmf*y    
+    #    x .+= r
+    r .= x0
     mul!(r, qmf, y, 1.0, 1.0)
-    (rho <= errtol)  || (idid=false)
+    (rho <= errtol) || (idid = false)
     k > 0 || println("GMRES iteration terminates on entry.")
-    return (sol = r, reshist = Float64.(reshist), lits = k, idid=idid)
+    return (sol = r, reshist = Float64.(reshist), lits = k, idid = idid)
 end
 
 function giveapp!(c, s, vin, k)
