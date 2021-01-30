@@ -99,6 +99,8 @@ precomputed data for the function/Jacobian-vector/Preconditioner-vector
 products.  Things will go better if you use this rather than hide the data 
 in global variables within the module for your function/Jacobian
 
+If you use pdata in any of F!, Jvec, or Pvec, you must use in in all of them.
+
 printerr: default = true\n
 I print a helpful message when the solver fails. To suppress that
 message set printerr to false.

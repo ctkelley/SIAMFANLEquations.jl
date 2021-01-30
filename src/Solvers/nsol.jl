@@ -99,6 +99,9 @@ precomputed data for the function/Jacobian.
 Things will go better if you use this rather than hide the data 
 in global variables within the module for your function/Jacobian
 
+If you use pdata in either of F! or J!, you must use in in the 
+calling sequence of both.
+
 jfact: default = klfact (tries to figure out best choice) \n
 If your Jacobian has any special structure, please set jfact
 to the correct choice for a factorization.

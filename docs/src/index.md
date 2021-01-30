@@ -8,18 +8,34 @@ for the book
 __Solving Nonlinear Equations with Iterative Methods:__
 __Solvers and Examples in Julia__
 
-__Testing github actions: Working now. The next tag is the bit test.__
-
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
 This is version 0.3.0. 
 
 This version will feature
-__Chapter 3__, Newton-Krylov solvers. I at work on the examples and
-the GMRES and BiCGStab solvers. I write my own Krylov
-solvers so they will communicate with the nonlinear solvers the way I want
-and so I can do GMRES my way (classical Gram-Schmidt twice!). The nonlinear
-part won't be so bad once the linear solvers do what I want.
+__Chapter 3__, Newton-Krylov solvers. 
+
+I am writing my own Krylov solvers so they will communicate with 
+the nonlinear solvers the way I want and so I can do GMRES my way 
+(classical Gram-Schmidt twice!). 
+
+Version 0.3.0 has
+
+1. GMRES linear solver, __kl_gmres.jl__
+2. Newton-Krylov solver, __nsoli.jl__
+   a) uses the line search from Chapter 2
+3. The examples from FA1 that I plan to keep
+
+Version 0.3.1 will get
+
+0. GMRES(m)
+1. PTC 
+2. BiCGstab linear solver
+
+Version 0.3.2 comes out when the notebook is done and everything works.
+
+Version 0.3.3 happens when the chapter is done for the print book and
+the maps print <--> notebook are complete.
 
 ## Scalar Equations: Chapter 1
 
@@ -155,11 +171,11 @@ or BandedMatrices.
 
 ### Nonlinear systems with iterative linear solvers: Chapter 3
 
-1. The plan was to make this part of nsol and ptcsol. However, the logic
-in Newton-Krylov methods is different enough that I'm makeing nsoli
-and ptcsoli their own codes. 
+1. The logic in Newton-Krylov methods is different enough from that
+of nsol and ptcsol that I'm making nsoli and ptcsoli their own codes. 
 
-2. The GMRES linear solver nsoli.jl is done and the documentation is in here.
+2. The Newton-Krylov linear solver nsoli.jl is done and the documentation 
+is in here. It works with GMRES now.
 Bi-CGSTAB is coming, but PTC and GMRES(m) will come first.
 
 ### Krylov linear solvers. 

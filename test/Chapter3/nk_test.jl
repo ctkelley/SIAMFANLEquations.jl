@@ -93,8 +93,9 @@ function jacvec2d()
     jvs = zeros(2, 3)
     pdata = zeros(2)
     nout = nsol(f!, x0, fv, jv; sham = 1, pdata = pdata)
-    kout = nsoli(f!, x0, fv, jvs; fixedeta = false, eta = 0.9, lmaxit = 2, pdata = pdata)
-    kout2 = nsoli(f!, x0, fv, jvs; fixedeta = true, eta = 0.1, lmaxit = 2, pdata = pdata)
+    kout = nsoli(f!, x0, fv, jvs, JVec; fixedeta = false, eta = 0.9, lmaxit = 2, pdata = pdata)
+    kout2 = nsoli(fv2!, x0, fv, jvs, JVecv2; fixedeta = true, eta = 0.1, 
+                 lmaxit = 2)
     histdiff = norm(nout.history - kout2.history)
     histpass = (histdiff < 1.e-5)
     histpass || println("hist test fails in jacvec2d")
@@ -122,6 +123,36 @@ function f!(fv, x, pdata)
     fv[2] = cos(x[1] + x[2])
 end
 
+
+"""
+fv2!(fv, x)
+
+Function evaluation witout precomputed data for testing.
+"""
+function fv2!(fv, x)
+    fv[1] = x[1] + sin(x[2])
+    fv[2] = cos(x[1] + x[2])
+end
+
+"""
+JVecv2(v, fv, x)
+
+Precondition without precomputed/stored data
+"""
+function JVec(v, fv, x)
+    jvec = zeros(2)
+    p = -sin(x[1] + x[2])
+    jvec[1] = v[1] + cos(x[2]) * v[2]
+    jvec[2] = p * (v[1] + v[2])
+    return pdata
+end
+
+
+"""
+JVec(v, fv, x, pdata)
+
+Precondition with precomputed/stored data
+"""
 function JVec(v, fv, x, pdata)
     jvec = zeros(2)
     p = -sin(x[1] + x[2])
