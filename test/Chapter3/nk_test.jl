@@ -47,7 +47,7 @@ function nksimple()
     #
     x0 = [3.0; 5.0]
     dout = nsol(simple!, x0, FS, FPJ, jsimple!; sham = 1)
-    kout = nsoli(simple!, x0, FS, FPS, Jvsimple; fixedeta = true, eta = 1.e-10, lmaxit = 2)
+    kout = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, eta = 1.e-10, lmaxit = 2)
     vdiverge = krstest(dout, kout)
     vdiverge || println("failure hard nksimple problem")
     return vconverge && vdiverge && shpass
@@ -71,15 +71,6 @@ function krstest(dout, kout)
     solpass || println("solution compare fails in nksimple  ", norm(soldiff, Inf))
     krpass = (fpass && apass && hpass && solpass)
 end
-
-function Jvsimple(v, FS, x)
-    #println(typeof(v))
-    JM = zeros(2, 2)
-    jsimple!(JM, FS, x)
-    Jvec = JM * v
-    return Jvec
-end
-
 
 """
 jacvec2d()
