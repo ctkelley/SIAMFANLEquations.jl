@@ -14,3 +14,17 @@ function jsimple!(JacV, FV, x)
     JacV[2, 1] = exp(x[1] - 1)
     JacV[2, 2] = 2 * x[2]
 end
+
+"""
+JVsimple(v, FV, x)
+
+Jacobian-vector product for simple!. There is, of course, no reason 
+to use Newton-Krylov for this problem other than CI or demonstrating 
+how to call nsoli.jl.
+"""
+function JVsimple(v, FV, x)
+    jvec = zeros(2)
+    jvec[1] = 2.0 * x' * v
+    jvec[2] = v[1] * exp(x[1] - 1.0) + 2.0 * v[2] * x[2]
+    return jvec
+end

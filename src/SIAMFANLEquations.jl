@@ -61,6 +61,7 @@ export
     heqJ!,
     simple!,
     jsimple!,
+    JVsimple,
     heqbos!,
     setc!,
     chandprint,

@@ -23,7 +23,7 @@ Version 0.3.0 has
 
 1. GMRES linear solver, __kl_gmres.jl__
 2. Newton-Krylov solver, __nsoli.jl__
-   a) uses the line search from Chapter 2
+   a) uses the line search from Chapters 1 and 2
 3. The examples from FA1 that I plan to keep
 
 Version 0.3.1 will get
@@ -119,22 +119,31 @@ julia> [nsolout.solhist.-2 nsolout.history]
 
 ## Nonlinear systems with direct linear solvers: Chapter 2
 
+The solvers ```nsoli.jl``` and ```ptcsol.jl solve systems of nonlinear equations
+
+``F(x) = 0``
+
 The ideas from Chapter 1 remain important here. For systems the Newton step is the solution of the linear system
 
 ``F'(x) s = - F(x)``
 
-This chapter is about solving the equation for the Newton step with Gaussian elimination. Infrequent reevaluation of ``F'``means that we also factor ``F'`` infrequently, so the impact of this idea is greater. Even better, there is typically no loss in the nonlinear iteration if we do that factorization in single precision. You an make that happen by giving nsold and ptcsold the single precision storage for the Jacobian. Half precision is also possible, but is a very, very bad idea. 
+This chapter is about solving the equation for the Newton step with Gaussian elimination. Infrequent reevaluation of the Jacobian ``F'``means that we also factor ``F'`` infrequently, so the impact of this idea is greater. Even better, there is typically no loss in the nonlinear iteration if we do that factorization in single precision. You an make that happen by giving nsold and ptcsold the single precision storage for the Jacobian. Half precision is also possible, but is a very, very bad idea. 
 
 Bottom line: __single precision can cut the linear algebra cost in half with no loss in the quality of the solution or the number of nonlinear iterations it takes to get there.__
 
-Here is an extremely simple example from the book. The function
-and Jacobian codes are
+The calling sequence for solving ```F(x) = 0```  with ```nsol.jl```, leaving out the kwargs, is
+
+```julia
+nsol(F!, x0, FS, FPS, J!=diffjac!)
+```
+FS and FPS are arrays for storage of the function and Jacobian. F! is the call to ``F``. The ```!``` signifies that you must overwrite FS with the value of ``F(x)``. J! is the function for Jacobian evaluation. It overwrites the storage you have allocated for the Jacobian. The default is a finite-difference Jacobian.
+
+Here is an extremely simple example from the book. The function and Jacobian codes are
 
 ```julia
 """
 simple!(FV,x)
-This is the function for Figure 2.1 in the
-book
+This is the function for Figure 2.1 in the book. Note that simple! takes two inputs and overwrites the first with the nonlinear residual. This example is in the TestProblems submodule, so you should not have to define simple! and jsimple! if you are using that submodule.
 
 """
 function simple!(FV, x)
@@ -205,26 +214,57 @@ As you can see, not much has happened.
 The methods in this chapter use Krylov itertive solvers to compute
 the Newton step. 
 
+The calling sequence for solving ```F(x) = 0```  with ```nsoli.jl```, leaving out the kwargs, is
+
+```julia
+nsoli(F!, x0, FS, FPS, Jvec=dirder)
+```
+FS and FPS are arrays for storage of the function and the Krylov basis. If you want to take m GMRES iterations with no restarts you must give FPS at least m+1 columns. F! is the call to ``F``, exactly as in Chapter 2. We will do the simple example again with an analytic Jacobian-vector product.
+
+One important kwarg is ```lmaxit```, the maximum number of Krylov iterations. For now FPS must have a least lmaxit+1 columns or the solver will complain. The default is 5, which may change as I get better organized. For the two-dimensional
+
+Another kwarg that needs attention is ```eta```. The default is constant ```eta = .1```. One can turn on Eisenstat-Walker by setting ```fixedeta=false```. In the Eisenstat-Walker case, ```eta``` is the upper bound on the forcing term.
+```julia
+"""
+JVsimple(v, FV, x)
+
+Jacobian-vector product for simple!. There is, of course, no reason to use Newton-Krylov for this problem other than CI or demonstrating how to call nsoli.jl.
+"""
+function JVsimple(v, FV, x)
+    jvec = zeros(2)
+    jvec[1] = 2.0 * x' * v
+    jvec[2] = v[1] * exp(x[1] - 1.0) + 2.0 * v[2] * x[2]
+    return jvec
+end
+```
+So we call the solver with ```eta=1.e-10```  and see that with two GMRES iterations it's the same as what you got from nsol.jl. No surprise.
+```julia
+ulia> x0=[2.0,.5];
+
+julia> FS=zeros(2,);
+
+julia> FPS=zeros(2,3);
+
+julia> kout=nsoli(simple!, x0, FS, FPS, JVsimple; lmaxit=2, eta=1.e-10, fixedeta=true);
+
+julia> kout.history
+6-element Array{Float64,1}:
+ 2.44950e+00
+ 2.17764e+00
+ 7.82402e-01
+ 5.39180e-02
+ 4.28404e-04
+ 3.18612e-08
+```	
+
 ## Overview of the Codes
 
-The core solvers (so far) are 
+The solvers for scalar equations in Chapter 1 are wrappers for the codes from Chapter 2 with the same interface. 
 
-1. nsol.jl is is all variations of Newton's method __except__
-   pseudo transient continuation. The methods are
-   - Newton's method
-   - The Shamanskii method, where the derivative evaluation is
-     done every m iterations. ``m=1`` is Newton and ``m=\infty`` is chord.
-   - I do an Armijo line search for all the methods unless the method is
-     chord or you tell me not to.
-
-2. ptcsol.jl is pseudo-transient continuation.
-
-The solvers for scalar equations are wrappers for the core codes with
-the same interface. The expectation is that the scalar codes do not need
-to manage linear algebra or storage of arrays.
+The solvers from Chapter 3 use Krylov iterative methods for the linear solves. The logic is different enough that it's best to make them stand-alone codes.
 
 ### Scalar Equations: Chapter 1
-There are two codes for the methods in this chapter
+There are three codes for the methods in this chapter
 
 1. nsolsc.jl is all variations of Newton's method __except__ 
    pseudo transient continuation. The methods are
@@ -245,18 +285,24 @@ too simple to mess with much.
 This is the same story as it was for scalar equations, 'ceptin for the
 linear algebra. The linear solvers for this chapter are the matrix
 factorizations that live in LinearAlgebra, SuiteSparse,
-or BandedMatrices. 
+or BandedMatrices. The solvers 
+
+1. nsol.jl is is all variations of Newton's method __except__
+   pseudo transient continuation. The methods are
+   - Newton's method
+   - The Shamanskii method, where the derivative evaluation is
+     done every m iterations. ``m=1`` is Newton and ``m=\infty`` is chord.
+   - I do an Armijo line search for all the methods unless the method is
+     chord or you tell me not to.
+
+2. ptcsol.jl is pseudo-transient continuation.
 
 ### Nonlinear systems with iterative linear solvers: Chapter 3
 
-1. The logic in Newton-Krylov methods is different enough from that
-of nsol and ptcsol that I'm making nsoli and ptcsoli their own codes. 
+1. The Newton-Krylov linear solver is nsoli.jl. The linear solvers are GMRES and BiCGstab. __done:__ GMRES done, __coming soon:__ GMRES(m) and BiCGstab
 
-2. The Newton-Krylov linear solver nsoli.jl is done and the documentation 
-is in here. It works with GMRES now.
-Bi-CGSTAB is coming, but PTC and GMRES(m) will come first.
+2. ptcsoli.jl will be the Newton-Krylov pseudo-transient continuation code. __coming soon__
 
-### Krylov linear solvers. 
+### Anderson Acceleration
 
-1. kl_gmres: GMRES with orthogonalization via classical Gram-Schmidt twice.
-   Restarts are not in there yet.
+### Broyden's Method

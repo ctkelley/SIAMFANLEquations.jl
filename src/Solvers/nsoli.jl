@@ -195,6 +195,7 @@ julia> [nout.history kout.history kout32.history]
 
 
 
+
 """
 function nsoli(
     F!,

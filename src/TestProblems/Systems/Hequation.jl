@@ -76,7 +76,7 @@ Initialize H-equation precomputed data.
 """
 function heqinit(x0::Array{T,1}, c) where {T<:Real}
     n = length(x0)
-    cval = ones(1,)
+    cval = ones(1)
     cval[1] = c
     vsize = (n,)
     bsize = (2 * n,)
