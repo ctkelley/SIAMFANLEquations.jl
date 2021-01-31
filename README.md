@@ -111,9 +111,17 @@ This is version v0.3.0. I will tag this once the Newton-GMRES solver is working 
      
 The plan is, for x > 2.
 
-- v0.x.0 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. Version v0.x.1 means the codes are finished and I have solid drafts of the print book and notebook parts of the chapter. Version v0.x.2 goes out when the codes and notebook for Chapter x are finished. 0.x.y for y > 2 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters.
+- v0.x.0 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. 
 
-- v1.0.0 goes out when the print book is published. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
+- Version v0.x.1 means the codes are finished and I have solid drafts of the print book and notebook parts of the chapter. 
+
+- Version v0.x.2 goes out when the codes and notebook for Chapter x are finished.
+
+- v0.x.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I post the package announcements for v0.x.3.
+
+ - 0.x.y for y > 3 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters. 
+
+v1.0.0 goes out __when the print book is published__. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
 ## Pull Requests
 
@@ -139,7 +147,7 @@ This is a book project and I need to put all changes in by hand so I'll have mus
 
 I have limited bandwidth, __so please do not send me email or open issues about__ ...
 
-   1. Typos in the notebook or the docstrings. This project is far from the final proofreading stage and I want to fix those things in peace. There are many of them and I do not need 100s of emails/issues about that.
+   1. Typos in the notebook or the docstrings. This project is far from the final proofreading stage and I want to fix those things in peace. There are many of them and I do not need 100s of emails/issues about that. If you like hunting typos, open season begins when I announce this project on NA-DIGEST.
    2. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia, am working on it, and getting better. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. There may be something more abstract coming at the end of the project, but that is far away from now.
       1. I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. 
            1.  Fortran + Julia = __Foolia__
@@ -193,9 +201,10 @@ The algorithms, listed by book chapter will be
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsolsc.jl
         - Codes: __Done!__, Notebook: __done!__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
-        - Codes: __Done!, Notebook: __done!__
-   - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsol.jl and ptcsol.jl
-       - Linear solver(s): klgmres.jl and maybe klbicgstab.jl: __20% done__
+        - Codes: __Done!__, Notebook: __done!__
+   - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsoli.jl and ptcsoli.jl
+       - nsoli.jl __done__
+       - Linear solver(s): kl_gmres.jl (__90% done__) and kl_bicgstab.jl:
    - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
    - Chapter 5: Broyden's method: brsol.jl __0% done, but won't take long once I get started. I will do it the right way (ie from (Kel95)).__
    
