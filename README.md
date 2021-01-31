@@ -15,20 +15,19 @@
     - Chapter 3:
        -  nsoli.jl is here. It does Newton-GMRES without restarts for now, but it works and can duplicate the results in my older books.
           - uses __kl_gmres.jl__
-          - H-equation examples from older books work and are heading for the notebook.
-          - PDE example coming soon
+          - H-equation and PDE examples from older books work and are heading for the notebook. 
        -  Fast Poisson Solver preconditioner via FFT (__fish2d.jl__ and __Pfish2d.jl__) live in src/TestProblems/Systems/PDE_Tools.jl
        
  - GMRES Linear Solver
       - Linear solvers live in src/Solvers/LinearSolvers
-      - __kl_gmres.jl__ is a new linear solver and is working
-      - It uses __Orthogonalize!.jl__ which defaults to classical Gram-Schmidt twice
+      - __kl_gmres.jl__ is a new linear solver and is working.
+         - Uses __Orthogonalize!.jl__ which defaults to classical Gram-Schmidt twice.
 
 # What's after 0.3.0?
  
  - 0.3.1 happens when the notebook is closer to finished. 
  
- - One or more ov BiCGstab, restarted GMRES, PTC-Krylov for future versions
+ - One or more of BiCGstab, restarted GMRES, PTC-Krylov for future versions
  
  # v0.3.3 goes out the door when ..
 
