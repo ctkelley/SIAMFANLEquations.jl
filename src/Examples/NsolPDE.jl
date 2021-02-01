@@ -1,5 +1,5 @@
 """
-NsolPDE(n)
+NsolPDE(n; sham=1, resdec=.5, rtol=1.e-7, atol=1.e-10)
 
 Solve the Elliptic PDE using nsol.jl on an n x n grid. You give me
 n and (optionally) sham and resdec and I return the output of nsol.

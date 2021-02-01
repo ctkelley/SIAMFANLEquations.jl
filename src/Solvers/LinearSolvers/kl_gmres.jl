@@ -1,6 +1,6 @@
 """
 kl_gmres(x0, b, atv, V, eta, ptv=nothing; 
-            orth = "cgs2", side="left", pdata=nothing)
+            orth = "cgs2", side="left", lmaxit=-1, pdata=nothing)
 
 Gmres linear solver. Handles preconditioning and (coming soon) restarts. 
 Uses gmres_base which is completely oblivious to these things.
@@ -41,6 +41,10 @@ orth: your choice of the wise default, classical Gram-Schmidt twice,
 
 side: left or right preconditioning. The default is "left".
 
+lmaxit: maximum number of linear iterations. The default is -1, which
+        means that the maximum number of linear iterations is K-1, which
+        is all V will allow without restarts.
+
 Other parameters on the way.
 
 Output:\n
@@ -66,6 +70,7 @@ function kl_gmres(
     ptv = nothing;
     orth = "cgs2",
     side = "left",
+    lmaxit = -1,
     pdata = nothing,
 )
     #
@@ -76,7 +81,13 @@ function kl_gmres(
     else
         rhs = ptv(b, pdata)
     end
-    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv)
+    (n,K) = size(V)
+    lmaxit > 0 || (lmaxit=K-1)
+#
+#   Temporary fix before I get restarts in there
+#
+    lmaxit > K-1 && (lmaxit=K-1)
+    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv, lmaxit=lmaxit)
     gout = gmres_base(x0, rhs, Katv, V, eta, Kpdata; orth = orth)
     #
     # Fixup the solution if preconditioning from the right.
@@ -131,7 +142,9 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
     #
     # Allocate for Givens
     #
-    kmax = m - 1
+#    kmax = m - 1
+    kmax=pdata.lmaxit
+    kmax > m-1 && error("lmaxit error in gmres_base")
     r = copy(b)
     T = eltype(V)
     h = zeros(T, kmax + 1, kmax + 1)
@@ -146,6 +159,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
     rho = norm(r)
     #
     # Initial residual = 0? This can't be good.
+    #
     rho == 0.0 && error("Initial resdiual in kl_gmres is zero. Why?")
     #
     g = zeros(size(c))

@@ -73,6 +73,9 @@ function test_integop(n)
     V = zeros(n, 20)
     Methods = ("cgs1", "mgs1", "mgs2", "cgs2")
     pass = true
+#
+# run through the orthogonalizers
+#
     for orth in Methods
         goutinteg = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, orth = orth)
         errn = norm(goutinteg.sol - ue, Inf)
@@ -83,6 +86,11 @@ function test_integop(n)
         lpass || println("Failure with orth = ", orth)
         pass = pass && lpass
     end
+#
+#  force a failure
+#
+    failout=kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, lmaxit=2);
+    pass = pass && ~failout.idid
     pass || println("Integral operator test fails.")
     return pass
 end
