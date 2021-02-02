@@ -1,6 +1,6 @@
 """
     nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
-               maxit=20, lmaxit=5, lsolver="gmres", eta=.1,
+               maxit=20, lmaxit=-1, lsolver="gmres", eta=.1,
                fixedeta=true, Pvec=nothing, pside="left",
                armmax=10, dx = 1.e-7, armfix=false, pdata = nothing,
                printerr = true, keepsolhist = false, stagnationok=false)
@@ -57,9 +57,11 @@ rtol and atol: relative and absolute error tolerances\n
 maxit: limit on nonlinear iterations\n
 
 lmaxit: limit on linear iterations. If lmaxit > m-1, where FPS has
-m columns, and you need more
-than m-1 linear iterations, then GMRES will restart. The default is 5.
-That default is low because I'm expecting you to have a good preconditioner.\n
+m columns, and you need more than m-1 linear iterations, then GMRES 
+will restart. 
+
+The default is -1. This means that you'll take m-1 iterations, where
+size(V) = (n,m), and get no restarts.
 --> Restarted GMRES is not ready yet.
 
 lsolver: the linear solver, default = "gmres"\n
@@ -206,7 +208,7 @@ function nsoli(
     rtol = 1.e-6,
     atol = 1.e-12,
     maxit = 20,
-    lmaxit = 5,
+    lmaxit = -1,
     lsolver = "gmres",
     eta = 0.1,
     fixedeta = true,
@@ -303,8 +305,8 @@ function nsoli(
         #
         newjac = kout.Lstats.lits
         linok = kout.Lstats.idid
-        linok || println("Linear solver did not meet termination criterion.
-          This does not mean the nonlinear solver will fail.")
+        ke_report=false
+        linok || (ke_report=Krylov_Error(lmaxit, ke_report))
         #
         # Compute the trial point, evaluate F and the residual norm.     
         # The derivative is never old for Newton-Krylov
@@ -341,5 +343,4 @@ function nsoli(
     newtonout =
         NewtonClose(x, FS, ItData.history, stats, idid, errcode, keepsolhist, solhist)
     return newtonout
-    #return (solution=x, functionval=FS, history=ItData.history)
 end

@@ -75,3 +75,12 @@ function Lottery_Winner(resnorm, tol, printerr)
     errcode = -1
     return errcode
 end
+
+
+function Krylov_Error(lmaxit, ke_report)
+if ke_report == false
+println("Linear solver did not meet termination criterion at least once.
+This does not mean the nonlinear solver will fail. lmaxit= ",lmaxit)
+end
+return true
+end

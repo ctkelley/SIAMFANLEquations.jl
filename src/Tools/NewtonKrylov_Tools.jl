@@ -74,7 +74,8 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag)
     #
     #RHS=FS
     #T == Float64 || (RHS=T.(FS))
-    kout = kl_gmres(s0, FS, Jvecg, FPS, etag, Pvecg; pdata = kdata, side = side)
+    kout = kl_gmres(s0, FS, Jvecg, FPS, etag, Pvecg; pdata = kdata, 
+            side = side, lmaxit=lmaxit)
     step = -kout.sol
     reshist = kout.reshist
     lits = kout.lits

@@ -19,7 +19,7 @@ Test nsoli with the simple 2D problem and line search failure and success.
 """
 function nksimple()
     x0 = [2.0; 0.5]
-    FPS = zeros(2, 4)
+    FPS = zeros(2, 3)
     FPJ = zeros(2, 2)
     FS = copy(x0)
     #
@@ -33,7 +33,6 @@ function nksimple()
         FS,
         FPS;
         eta = 1.e-10,
-        lmaxit = 3,
         keepsolhist = true,
         fixedeta = false,
     )
@@ -47,7 +46,8 @@ function nksimple()
     #
     x0 = [3.0; 5.0]
     dout = nsol(simple!, x0, FS, FPJ, jsimple!; sham = 1)
-    kout = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, eta = 1.e-10, lmaxit = 2)
+    kout = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, 
+                eta = 1.e-10)
     vdiverge = krstest(dout, kout)
     vdiverge || println("failure hard nksimple problem")
     return vconverge && vdiverge && shpass
