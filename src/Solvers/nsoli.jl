@@ -128,8 +128,12 @@ where
 
    -- history = the vector of residual norms (||F(x)||) for the iteration
 
-   -- stats = named tuple of the history of (ifun, ijvec, iarm), the number
-of functions/Jacobian-vector prods/steplength reductions at each iteration.
+   -- stats = named tuple of the history of (ifun, ijvec, iarm, ikfail), the 
+number of functions/Jacobian-vector prods/steplength reductions/linear solver
+failures at each iteration. Linear solver failures DO NOT mean that the
+nonlinear solver will fail. You should look at this stat if, for example,
+the line search fails. Increasing the size of FPS and/or lmaxit might
+solve the problem.
 
 I do not count the function values for a finite-difference derivative
 because they count toward a Jacobian-vector product.
@@ -261,10 +265,12 @@ function nsoli(
     resnorm = norm(FS)
     tol = rtol * resnorm + atol
     FPF = []
-    ItData = ItStats(resnorm)
+    ItData = ItStatsK(resnorm)
     newiarm = -1
     newfun = 0
     newjac = 0
+    newikfail = 0
+    ke_report=false
     residratio = 1.0
     armstop = true
     etag = eta
@@ -288,6 +294,7 @@ function nsoli(
         #
         newfun = 0
         newjac = 0
+        newikfail = 0
         #
         #
         # The GMRES solver will do the orthogonalization in lower
@@ -305,8 +312,7 @@ function nsoli(
         #
         newjac = kout.Lstats.lits
         linok = kout.Lstats.idid
-        ke_report=false
-        linok || (ke_report=Krylov_Error(lmaxit, ke_report))
+        linok || (ke_report=Krylov_Error(lmaxit, ke_report); newikfail=1)
         #
         # Compute the trial point, evaluate F and the residual norm.     
         # The derivative is never old for Newton-Krylov
@@ -330,7 +336,7 @@ function nsoli(
         residm = resnorm
         resnorm = AOUT.resnorm
         residratio = resnorm / residm
-        updateStats!(ItData, newfun, newjac, AOUT)
+        updateStatsK!(ItData, newfun, newjac, AOUT, newikfail)
         newiarm = AOUT.aiarm
         itc += 1
         keepsolhist && (@views solhist[:, itc+1] .= x)
@@ -339,7 +345,8 @@ function nsoli(
     solution = x
     functionval = FS
     (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
-    stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
+    stats = (ifun = ItData.ifun, ijac = ItData.ijac, 
+           iarm = ItData.iarm, ikfail=ItData.ikfail)
     newtonout =
         NewtonClose(x, FS, ItData.history, stats, idid, errcode, keepsolhist, solhist)
     return newtonout
