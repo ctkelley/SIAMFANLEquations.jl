@@ -4,6 +4,7 @@
 
 
 # SIAMFANLEquations version 0.3.0
+[changelog](#Changes)
 
 
 This is the package with the solvers and test problems for 
@@ -229,6 +230,8 @@ doi="10.5281/zenodo.4284687"
 ```
 
 ## Changes
+
+### Updates since 0.2.3
 
 -  Elliptic PDE test problem: New PDE example for Chapter 2
    
