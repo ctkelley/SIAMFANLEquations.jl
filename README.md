@@ -22,7 +22,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.2.3) (open source, MIT License, Creative Commons License)
-      - If you're using the Chapter 3 stuff you must should the [IJulia notebook Master Branch](https://github.com/ctkelley/NotebookSIAMFANL). It has the new stuff and is not likely to break things in the older version of the package __today__.
+      - If you're using the Chapter 3 stuff you must the [IJulia notebook Master Branch](https://github.com/ctkelley/NotebookSIAMFANL). It has the new stuff and is not likely to break things in the older version of the package __today__.
    3. This package (MIT License)<br>
    
 ## Readme Contents:
@@ -34,7 +34,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
 - [How to cite this stuff](#Citations)
-- [What's new in this version](#New-Stuff-since-0.2.3)
+- [What's new in this version since 0.2.3](#Changes)
 - [Funding](#Funding) 
 
 ## Package Mission
@@ -228,7 +228,7 @@ doi="10.5281/zenodo.4284687"
 }
 ```
 
-## New Stuff since 0.2.3
+## Changes
 
 -  Elliptic PDE test problem: New PDE example for Chapter 2
    
