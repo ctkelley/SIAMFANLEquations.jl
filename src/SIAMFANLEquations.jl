@@ -117,11 +117,13 @@ export ivpBeam
 export BVP_solve
 export nsolheq
 export NsolPDE
+export NsoliPDE
 
 include("Examples/ptcBeam.jl")
 include("Examples/ivpBeam.jl")
 include("Examples/BVP_solve.jl")
 include("Examples/NsolPDE.jl")
+include("Examples/NsoliPDE.jl")
 include("Examples/Internal/nsolheq.jl")
 end
 

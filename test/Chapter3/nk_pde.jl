@@ -14,7 +14,7 @@ function nk_pde()
     pdata = pdeinit(n)
     # Storage for the Jacobian-vector products
     JV = zeros(n * n, 100)
-    # Call the solver
+    # Call the solver with a finite-difference Jac-Vec
     hout = nsoli(
         pdeF!,
         u0,
@@ -27,36 +27,9 @@ function nk_pde()
         fixedeta = false,
         maxit = 20,
     )
-    hout2 = nsoli(
-        pdeF!,
-        u0,
-        FV,
-        JV,
-        Jvec2d;
-        rtol = rtol,
-        atol = atol,
-        Pvec = Pvec2d,
-        pdata = pdata,
-        eta = .1,
-        fixedeta = false,
-        maxit = 20,
-        pside = "right",
-    )
-    hout3 = nsoli(
-        pdeF!,
-        u0,
-        FV,
-        JV,
-        Jvec2d;
-        rtol = rtol,
-        atol = atol,
-        Pvec = Pvec2d,
-        pdata = pdata,
-        eta = .1,
-        fixedeta = true,
-        maxit = 20,
-        pside = "right",
-    )
+    # Call the solver twice with an analytic Jac-Vec
+    hout2 = NsoliPDE(n; fixedeta=false)
+    hout3 = NsoliPDE(n; fixedeta=true)
     soldiff = (
         norm(hout3.solution - hout.solution, Inf) +
         norm(hout3.solution - hout.solution, Inf)
