@@ -5,35 +5,6 @@
 
 # SIAMFANLEquations version 0.3.0
 
-# New Stuff since 0.2.3
-
--  Elliptic PDE test problem: New PDE example for Chapter 2
-   
-    - Chapter 2: PDE example with __nsoli.jl__ is done. This mess is in the notebooks and in 
-       - src/TestProblems/Systems/EllipticPDE.jl
-       - src/Examples/NsolPDE.jl
-    - Chapter 3:
-       -  nsoli.jl is here. It does Newton-GMRES without restarts for now, but it works and can duplicate the results in my older books.
-          - uses __kl_gmres.jl__
-          - H-equation and PDE examples from older books work and are heading for the notebook. 
-       -  Fast Poisson Solver preconditioner via FFT (__fish2d.jl__ and __Pfish2d.jl__) live in src/TestProblems/Systems/PDE_Tools.jl
-       
- - GMRES Linear Solver
-      - Linear solvers live in src/Solvers/LinearSolvers
-      - __kl_gmres.jl__ is a new linear solver and is working.
-         - Uses __Orthogonalize!.jl__ which defaults to classical Gram-Schmidt twice.
-
-# What's after 0.3.0?
- 
- - 0.3.1 happens when the notebook is closer to finished. 
- 
- - One or more of BiCGstab, restarted GMRES, PTC-Krylov for future versions
- 
- # v0.3.3 goes out the door when ..
-
- - PTC-Krylov + examples are done
- - BiCGSTAB linear solver is done
- - Chapter 3 is finished
 
 This is the package with the solvers and test problems for 
 
@@ -63,6 +34,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
 - [How to cite this stuff](#Citations)
+- [What's new in this version](#New-Stuff-since-0.2.3)
 - [Funding](#Funding) 
 
 ## Package Mission
@@ -255,6 +227,37 @@ url="https://github.com/ctkelley/NotebookSIAMFANL",
 doi="10.5281/zenodo.4284687"
 }
 ```
+
+## New Stuff since 0.2.3
+
+-  Elliptic PDE test problem: New PDE example for Chapter 2
+   
+    - Chapter 2: PDE example with __nsoli.jl__ is done. This mess is in the notebooks and in 
+       - src/TestProblems/Systems/EllipticPDE.jl
+       - src/Examples/NsolPDE.jl
+    - Chapter 3:
+       -  nsoli.jl is here. It does Newton-GMRES without restarts for now, but it works and can duplicate the results in my older books.
+          - uses __kl_gmres.jl__
+          - H-equation and PDE examples from older books work and are heading for the notebook. 
+       -  Fast Poisson Solver preconditioner via FFT (__fish2d.jl__ and __Pfish2d.jl__) live in src/TestProblems/Systems/PDE_Tools.jl
+       
+ - GMRES Linear Solver
+      - Linear solvers live in src/Solvers/LinearSolvers
+      - __kl_gmres.jl__ is a new linear solver and is working.
+         - Uses __Orthogonalize!.jl__ which defaults to classical Gram-Schmidt twice.
+
+### What's after 0.3.0?
+ 
+ - 0.3.1 happens when the notebook is closer to finished. 
+ 
+ - One or more of BiCGstab, restarted GMRES, PTC-Krylov for future versions
+ 
+ ### v0.3.3 goes out the door when ..
+
+ - PTC-Krylov + examples are done
+ - BiCGSTAB linear solver is done
+ - Chapter 3 is finished
+
    
 ## Funding
 
