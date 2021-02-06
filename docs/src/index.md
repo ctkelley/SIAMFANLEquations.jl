@@ -22,8 +22,11 @@ the nonlinear solvers the way I want and so I can do GMRES my way
 Version 0.3.0 has
 
 1. GMRES linear solver, __kl_gmres.jl__
+
 2. Newton-Krylov solver, __nsoli.jl__
+
    a) uses the line search from Chapters 1 and 2
+
 3. The examples from FA1 that I plan to keep
 
 Version 0.3.1 will get
