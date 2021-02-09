@@ -1,7 +1,7 @@
 """
     nsoli(F!, x0, FS, FPS, Jvec=dirder; rtol=1.e-6, atol=1.e-12,
                maxit=20, lmaxit=-1, lsolver="gmres", eta=.1,
-               fixedeta=true, Pvec=nothing, pside="left",
+               fixedeta=true, Pvec=nothing, pside="right",
                armmax=10, dx = 1.e-7, armfix=false, pdata = nothing,
                printerr = true, keepsolhist = false, stagnationok=false)
 )
@@ -84,6 +84,9 @@ Pvec: Preconditioner-vector product. The rules are similar to Jvec
     So, Pv=Pvec(v,x) or Pv=Pvec(v,x,pdata) returns P(x) v where
     P(x) is the preconditioner. You must use x as an input even
     if your preconditioner does not depend on x
+
+pside: apply preconditioner on pside, default = "right". I do not
+      recommend "left". See Chapter 3 for the story on this.
 
 armmax: upper bound on step size reductions in line search\n
 
@@ -217,7 +220,7 @@ function nsoli(
     eta = 0.1,
     fixedeta = true,
     Pvec = nothing,
-    pside = "left",
+    pside = "right",
     armmax = 10,
     dx = 1.e-7,
     armfix = false,
