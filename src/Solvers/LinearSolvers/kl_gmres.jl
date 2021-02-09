@@ -1,6 +1,6 @@
 """
 kl_gmres(x0, b, atv, V, eta, ptv=nothing; 
-            orth = "cgs2", side="left", lmaxit=-1, pdata=nothing)
+            orth = "cgs2", side="right", lmaxit=-1, pdata=nothing)
 
 Gmres linear solver. Handles preconditioning and (coming soon) restarts. 
 Uses gmres_base which is completely oblivious to these things.
@@ -39,7 +39,7 @@ orth: your choice of the wise default, classical Gram-Schmidt twice,
        bad) or a couple variants of modified Gram-Schmidt. mgs2 is what I
        used in my old matlab codes. Not terrible, but far from great.
 
-side: left or right preconditioning. The default is "left".
+side: left or right preconditioning. The default is "right".
 
 lmaxit: maximum number of linear iterations. The default is -1, which
         means that the maximum number of linear iterations is K-1, which
@@ -69,7 +69,7 @@ function kl_gmres(
     eta,
     ptv = nothing;
     orth = "cgs2",
-    side = "left",
+    side = "right",
     lmaxit = -1,
     pdata = nothing,
 )

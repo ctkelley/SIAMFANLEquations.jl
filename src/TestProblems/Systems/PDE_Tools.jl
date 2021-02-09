@@ -155,10 +155,14 @@ end
 """
 Pvec2d(v, u, pdata)
 
+Returns inverse Laplacian * v
+
+u is a dummy argument to make nsoli happy
+
 Preconditioner for nsoli
 """
 function Pvec2d(v, u, pdata)
     fdata = pdata.fdata
-    u = Pfish2d(v, fdata)
-    return u
+    p = Pfish2d(v, fdata)
+    return p
 end
