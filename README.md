@@ -235,14 +235,14 @@ doi="10.5281/zenodo.4284687"
 
 -  Elliptic PDE test problem: New PDE example for Chapter 2
    
-    - Chapter 2: PDE example with __nsoli.jl__ is done. This mess is in the notebooks and in 
+    - Chapter 2: Convection-Diffusion example with __nsol.jl__ is done. This mess is in the notebooks and in 
        - src/TestProblems/Systems/EllipticPDE.jl
        - src/Examples/NsolPDE.jl
     - Chapter 3:
        -  nsoli.jl is here. It does Newton-GMRES without restarts for now, but it works and can duplicate the results in my older books.
           - uses __kl_gmres.jl__
-          - H-equation and PDE examples from older books work and are heading for the notebook. 
-       -  Fast Poisson Solver preconditioner via FFT (__fish2d.jl__ and __Pfish2d.jl__) live in src/TestProblems/Systems/PDE_Tools.jl
+          - H-equation and PDE examples from older books work and are in the notebook. 
+       -  Fast Poisson Solver preconditioner via FFT (__fish2d.jl__, __Pfish2d.jl__, __Pvec2d.jl__) lives in src/TestProblems/Systems/PDE_Tools.jl
        
  - GMRES Linear Solver
       - Linear solvers live in src/Solvers/LinearSolvers
@@ -251,15 +251,11 @@ doi="10.5281/zenodo.4284687"
 
 ### What's after 0.3.0?
  
- - 0.3.1 happens when the notebook is closer to finished. 
+ - 0.3.1 happens when the notebook is closer to finished and PTC-GMRES is working.
  
- - One or more of BiCGstab, restarted GMRES, PTC-Krylov for future versions
- 
- ### v0.3.3 goes out the door when ..
+ - 0.3.2 is for low-storage Krylob solvers (GMRES(m), BiCGSTAB, ...)
 
- - PTC-Krylov + examples are done
- - BiCGSTAB linear solver is done
- - Chapter 3 is finished
+ - 0.3.3 goes out when Chapter 3 is finished
 
    
 ## Funding
