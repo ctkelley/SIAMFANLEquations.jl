@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.3.0
+# SIAMFANLEquations.jl v0.3.1
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -10,32 +10,22 @@ __Solvers and Examples in Julia__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-This is version 0.3.0. 
+This is version 0.3.1. 
 
-This version will feature
-__Chapter 3__, Newton-Krylov solvers. 
+This is part of __Chapter 3__, Newton-Krylov solvers. 
 
 I am writing my own Krylov solvers so they will communicate with 
 the nonlinear solvers the way I want and so I can do GMRES my way 
 (classical Gram-Schmidt twice!). 
 
-Version 0.3.0 has
+Version 0.3.1 has PTC-GMRES
 
-1. GMRES linear solver, __kl_gmres.jl__
+Version 0.3.2 comes out when the low-storage Krylov solvers
 
-2. Newton-Krylov solver, __nsoli.jl__
-
-   a) uses the line search from Chapters 1 and 2
-
-3. The examples from FA1 that I plan to keep
-
-Version 0.3.1 will get
-
-0. GMRES(m)
-1. PTC 
+1. GMRES(m)
 2. BiCGstab linear solver
 
-Version 0.3.2 comes out when the notebook is done and everything works.
+are in there and the notebook section is done.
 
 Version 0.3.3 happens when the chapter is done for the print book and
 the maps print <--> notebook are complete.
