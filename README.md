@@ -235,6 +235,8 @@ doi="10.5281/zenodo.4284687"
 
 -- 0.3.1 happens when the notebook is closer to finished and PTC-GMRES is working.
 
+-- Default side for preconditer is now "right". See section 3.1.3 for the story on this.
+
 ### What's after 0.3.1?
  
  - 0.3.2 is for low-storage Krylob solvers (GMRES(m), BiCGSTAB, ...)
