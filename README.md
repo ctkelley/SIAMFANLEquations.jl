@@ -233,9 +233,11 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.3.0
 
--- 0.3.1 happens when the notebook is closer to finished and PTC-GMRES is working.
+- 0.3.1 happens when the notebook is closer to finished and PTC-GMRES is working.
 
--- Default side for preconditer is now "right". See section 3.1.3 for the story on this.
+- Small things
+   - Default side for preconditer is now __"right"__. See section 3.1.3 for the story on this.
+   - Default forcing term is still constant __eta = .1__. This could change at any time and I've been careful to specify it completely in the examples.
 
 ### What's after 0.3.1?
  
