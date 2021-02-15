@@ -241,7 +241,7 @@ doi="10.5281/zenodo.4284687"
 
 ### What's after 0.3.1?
  
- - 0.3.2 is for low-storage Krylob solvers (GMRES(m), BiCGSTAB, ...)
+ - 0.3.2 is for low-storage Krylov solvers (GMRES(m), BiCGSTAB, ...)
 
  - 0.3.3 goes out when Chapter 3 is finished
 
