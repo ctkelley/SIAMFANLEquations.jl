@@ -40,7 +40,7 @@ function Newton_Krylov_Init(
     return (ItRules, x, n)
 end
 
-function Krylov_Step!(step, x, FS, FPS, ItRules, etag)
+function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt=0)
     #
     # Test for too much, too soon.
     #
@@ -62,11 +62,12 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag)
     fixedeta = ItRules.fixedeta
     s0 = zeros(size(step))
     side = ItRules.pside
-    kdata = (pdata = pdata, dx = dx, xc = x, f = f, FS = FS, Jvec = Jvec, Pvec = Pvec)
     #
     # map the Jacobian-vector and preconditioner-vector products 
     # from nsoli format to what kl_gmres wants to see
     #
+    kdata = (pdata = pdata, dx = dx, xc = x, f = f, FS = FS, 
+             Jvec = Jvec, Pvec = Pvec, pdt=pdt)
     Pvecg = Pvec2
     Jvecg = Jvec2
     Pvec == nothing && (Pvecg = Pvec)
@@ -100,8 +101,9 @@ function Jvec2(v, kdata)
     FS = kdata.FS
     xc = kdata.xc
     JV = kdata.Jvec
+    pdt=kdata.pdt
     pdata = kdata.pdata
-    atv = EvalJV(JV, v, FS, xc, pdata)
+    atv = EvalJV(JV, v, FS, xc, pdt, pdata)
     return atv
 end
 
@@ -115,13 +117,19 @@ function EvalPV(PV, v, xc, pdata)
     return ptv
 end
 
-function EvalJV(JV, v, FS, xc, q::Nothing)
+function EvalJV(JV, v, FS, xc, pdt, q::Nothing)
     atv = JV(v, FS, xc)
+    if pdt > 0
+       atv .= atv + (1.0/pdt)*v
+    end
     return atv
 end
 
-function EvalJV(JV, v, FS, xc, pdata)
+function EvalJV(JV, v, FS, xc, pdt, pdata)
     atv = JV(v, FS, xc, pdata)
+    if pdt > 0
+       atv .= atv + (1.0/pdt)*v
+    end
     return atv
 end
 
@@ -131,11 +139,15 @@ function dirder(v, kdata)
     F = kdata.f
     FS = kdata.FS
     xc = kdata.xc
+    pdt = kdata.pdt
     delx = copy(xc)
     delx .= xc + dx * v
     FPP = copy(xc)
     EvalF!(F, FPP, delx, pdata)
     atv = (FPP - FS) / dx
+    if pdt > 0
+       atv .= atv + (1.0/pdt)*v
+    end
     return atv
 end
 

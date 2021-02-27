@@ -20,11 +20,11 @@ function ptcsolsc_test()
     #
     # Convergence to the right solution
     #
-    ptcdata1 = ptcsolsc(sptest, u0, sptestp; dt0 = 1.0, rtol = 1.e-12)
+    ptcdata1 = ptcsolsc(sptest, u0, sptestp; pdt0 = 1.0, rtol = 1.e-12)
     ptcdata2 = ptcsolsc(
         spitchfork,
         u0;
-        dt0 = 1.0,
+        pdt0 = 1.0,
         rtol = 1.e-12,
         pdata = lambda,
         keepsolhist = false,
@@ -39,7 +39,7 @@ function ptcsolsc_test()
     solok = (abs(ptcdata1.solution - ustable) < 1.e-10)
     funok = (abs(ptcdata1.functionval) < 1.e-12)
     histok = (length(ptcfun) == 18)
-    ptcdataf = ptcsolsc(sptest, u0; dt0 = 0.1, rtol = 1.e-12)
+    ptcdataf = ptcsolsc(sptest, u0; pdt0 = 0.1, rtol = 1.e-12)
     errcode = ptcdataf.errcode
     failok = ~ptcdataf.idid && (errcode == 10)
     ptcok = fdok && solok && funok && histok && failok && secok

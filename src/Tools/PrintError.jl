@@ -18,17 +18,17 @@ function NewtonError(resfail, iline, resnorm, toosoon, tol, itc, maxit, armmax, 
 end
 
 """
-PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
+PTCError(resnorm, maxit, pdt0, toosoon, tol, printerr)
 """
-function PTCError(resnorm, maxit, dt0, toosoon, tol, printerr)
+function PTCError(resnorm, maxit, pdt0, toosoon, tol, printerr)
     ~toosoon || (errcode = Lottery_Winner(resnorm, tol, printerr))
     #if toosoon
     #errcode = Lottery_Winner(resnorm, tol, printerr)
     #else
     if printerr && ~toosoon
-        println("PTC failure; increase maxit and/or dt0")
+        println("PTC failure; increase maxit and/or pdt0")
         println("Residual norm =", "  ", resnorm)
-        println("Current values: maxit  =  ", maxit, ",  dt0 = ", dt0)
+        println("Current values: maxit  =  ", maxit, ",  pdt0 = ", pdt0)
         println("Give the history array a look to see what's happening.")
         println("  ")
     end

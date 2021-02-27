@@ -66,14 +66,15 @@ end
 # These functions work fine with both scalar and vector equations.
 #
 
-function PTCinit(x0, dx, F!, J!, dt0, maxit, pdata, jfact)
+function PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact)
     #
     #   Initialize the iteration.
     #
     n = length(x0)
     x = copy(x0)
     ItRules =
-        (dx = dx, f = F!, fp = J!, dt0 = dt0, maxit = maxit, pdata = pdata, fact = jfact)
+        (dx = dx, f = F!, fp = J!, pdt0 = pdt0, maxit = maxit,  
+             pdata = pdata, fact = jfact)
     return (ItRules, x, n)
 end
 
@@ -91,13 +92,13 @@ PTCOK: Figure out idid and errcode
 """
 function PTCOK(resnorm, tol, toosoon, ItRules, printerr)
     maxit = ItRules.maxit
-    dt0 = ItRules.dt0
+    pdt0 = ItRules.pdt0
     errcode = 0
     resfail = (resnorm > tol)
     idid = ~(resfail || toosoon)
     errcode = 0
     if ~idid
-        (errcode = PTCError(resnorm, maxit, dt0, toosoon, tol, printerr))
+        (errcode = PTCError(resnorm, maxit, pdt0, toosoon, tol, printerr))
     end
     return (idid, errcode)
 end

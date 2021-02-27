@@ -1,6 +1,6 @@
 """
 ptcsol(F!, x0, FS, FPS, J! = diffjac!; rtol=1.e-6, atol=1.e-12,
-               maxit=20, dt0=1.e-6, dx=1.e-7, pdata = nothing, jfact = klfact,
+               maxit=20, pdt0=1.e-6, dx=1.e-7, pdata = nothing, jfact = klfact,
                printerr = true, keepsolhist = false)
 
 C. T. Kelley, 2020
@@ -54,12 +54,12 @@ Keyword Arguments (kwargs):\n
 
 rtol and atol: relative and absolute error tolerances\n
 
-dt0: initial time step. The default value of 1.e-3 is a bit conservative
+pdt0: initial pseudo time step. The default value of 1.e-3 is a bit conservative
 and is one option you really should play with. Look at the example
 where I set it to 1.0!\n
 
 maxit: limit on nonlinear iterations, default=100. \n
-This is coupled to dt0. If your choice of dt0 is too small (conservative)
+This is coupled to pdt0. If your choice of pdt0 is too small (conservative)
 then you'll need many iterations to converge and will need a larger
 value of maxit
 
@@ -115,18 +115,16 @@ where
 solution = converged result
 functionval = F(solution)
 history = the vector of residual norms (||F(x)||) for the iteration
-stats = named tuple of the history of (ifun, ijac, iarm), the number
-of functions/derivatives/steplength reductions at each iteration.
 
-I do not count the function values for a finite-difference derivative
-because they count toward a Jacobian evaluation. 
+Unlike nsol, nsoli, or even ptcsoli, ptcsol has a fixed cost per 
+iteation of one function, one Jacobian, and one Factorization. Hence
+iteration statistics are not interesting and not in the output. 
 
 idid=true if the iteration succeeded and false if not.
 
 errcode = 0 if if the iteration succeeded
         = -1 if the initial iterate satisfies the termination criteria
         = 10 if no convergence after maxit iterations
-        = 1  if the line search failed
 
 solhist:\n
 This is the entire history of the iteration if you've set
@@ -145,7 +143,7 @@ function ptcsol(
     rtol = 1.e-6,
     atol = 1.e-12,
     maxit = 20,
-    dt0 = 1.e-6,
+    pdt0 = 1.e-6,
     dx = 1.e-7,
     pdata = nothing,
     jfact = klfact,
@@ -159,7 +157,7 @@ function ptcsol(
     #   As with the other codes, ItRules packages all the details of
     #   the problem so it's easy to pass them around. 
     #
-    (ItRules, x, n) = PTCinit(x0, dx, F!, J!, dt0, maxit, pdata, jfact)
+    (ItRules, x, n) = PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact)
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     #
     # First Evaluation of the function. Initialize the iteration history.
@@ -181,12 +179,13 @@ function ptcsol(
     #
     # The main loop stops on convergence or too many iterations.
     #
-    dt = dt0
+    pdt = pdt0
     while resnorm > tol && itc < maxit
         #   
-        # Evaluate and factor the Jacobian; update x, F(x), and dt.  
+        # Evaluate and factor the Jacobian; update x, F(x), and pdt.  
         #
-        (x, dt, FS, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, resnorm, dt)
+        (x, pdt, FS, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, 
+                resnorm, pdt)
         #
         # Keep the books
         #

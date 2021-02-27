@@ -10,11 +10,14 @@ function beam_test()
     stepnum = 5
     (t, se, xe, fhist, fhistt) = ivpBeam(n, dt, stepnum)
     beamtdout = (length(fhist) == 6) && (norm(fhistt, Inf) < 5.e-5)
+    beamtdout || println("error in beam_test beamtdout")
     (pout, nout) = ptcBeam(10, 100)
     nsolp = norm(pout.solution)
     nsoln = norm(nout.solution)
     itp = length(pout.history)
     pnormok = (nsolp > 5.0) && (nsoln < 1.e-15)
+    pnormok || println("error in beam_test pnromok")
     presok = (itp < 100) && (pout.history[itp] < 1.e-10)
+    presok || println("error in beam_test presok")
     return beamtdout && pnormok && presok
 end

@@ -62,14 +62,24 @@ end
 beaminit(n,dt,lambda=20.0)
 
 Set up the beam problem with n interior grid points.
+
+dt is only needed for the temporal integration examples
 """
 
 function beaminit(n, dt, lambda = 20.0)
+#
+# pdtval is a place to store the current pseudo-time step. I need this
+# for preconditioning. You MUST have this in your pdata because ptcsoli
+# writes to it:  pdata.pdtval[1]=pdt
+# So it has to be there in exactly this way.
+#
+    pdtval=zeros(1)
     D2 = Lap1d(n)
     dx = 1.0 / (n + 1)
     x = collect(dx:dx:1.0-dx)
     UN = zeros(size(x))
-    bdata = (D2 = D2, x = x, dx = dx, dt = dt, lambda = lambda, UN = UN)
+    bdata = (D2 = D2, x = x, dx = dx, dt = dt, lambda = lambda, UN = UN, 
+             pdtval=pdtval)
 end
 
 """
