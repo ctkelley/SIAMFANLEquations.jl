@@ -339,7 +339,7 @@ function nsoli(
         residm = resnorm
         resnorm = AOUT.resnorm
         residratio = resnorm / residm
-        updateStatsK!(ItData, newfun, newjac, AOUT, newikfail)
+        updateStats!(ItData, newfun, newjac, AOUT, newikfail)
         newiarm = AOUT.aiarm
         itc += 1
         keepsolhist && (@views solhist[:, itc+1] .= x)

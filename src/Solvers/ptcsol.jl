@@ -166,8 +166,8 @@ function ptcsol(
     #    
     FS = EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
-    ithist = [resnorm]
     tol = rtol * resnorm + atol
+    ItData=ItStatsPTC(resnorm)
     #
     # Preallocate a vector for the step
     #
@@ -189,11 +189,11 @@ function ptcsol(
         #
         # Keep the books
         #
-        append!(ithist, resnorm)
+        updateStats!(ItData, resnorm)
         itc += 1
         ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     (idid, errcode) = PTCOK(resnorm, tol, toosoon, ItRules, printerr)
-    itout = PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist)
+    itout = PTCClose(x, FS, ItData, idid, errcode, keepsolhist, solhist)
     return (itout)
 end

@@ -107,13 +107,14 @@ end
 """
 PTCOKClose: package the output of ptcsol
 """
-function PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist = [])
+function PTCClose(x, FS, ItData::ItStatsPTC, 
+            idid, errcode, keepsolhist, solhist = [])
     if keepsolhist
-        sizehist = length(ithist)
+        sizehist = length(ItData.history)
         return (
             solution = x,
             functionval = FS,
-            history = ithist,
+            history = ItData.history,
             idid = idid,
             errcode = errcode,
             solhist = solhist[:, 1:sizehist],
@@ -122,7 +123,7 @@ function PTCClose(x, FS, ithist, idid, errcode, keepsolhist, solhist = [])
         return (
             solution = x,
             functionval = FS,
-            history = ithist,
+            history = ItData.history,
             idid = idid,
             errcode = errcode,
         )
