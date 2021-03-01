@@ -381,8 +381,7 @@ function nsol(
     solution = x
     functionval = FS
     (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
-    stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
-    newtonout =
-        NewtonClose(x, FS, ItData.history, stats, idid, errcode, keepsolhist, solhist)
+    newtonout = CloseIteration(x, FS, ItData, idid, 
+                  errcode, keepsolhist, solhist)
     return newtonout
 end

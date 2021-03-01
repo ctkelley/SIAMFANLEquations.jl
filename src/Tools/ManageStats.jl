@@ -1,3 +1,6 @@
+#
+# Keep the books for nsol and secant
+#
 mutable struct ItStats{T<:Real}
     ifun::Array{Int64,1}
     ijac::Array{Int64,1}
@@ -5,17 +8,7 @@ mutable struct ItStats{T<:Real}
     history::Array{T,1}
 end
 
-mutable struct ItStatsK{T<:Real}
-    ifun::Array{Int64,1}
-    ijac::Array{Int64,1}
-    iarm::Array{Int64,1}
-    ikfail::Array{Int64,1}
-    history::Array{T,1}
-end
 
-mutable struct ItStatsPTC{T<:Real}
-    history::Array{T,1}
-end
 
 #
 # initfun = 1 unless it's the scalar secant method
@@ -35,12 +28,24 @@ function updateStats!(ItData::ItStats, newfun, newjac, AOUT)
     append!(ItData.history, resnorm)
 end
 
+function CollectStats(ItData::ItStats)
+stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
+return stats
+end
+
 #
-# initfun = 1 unless it's the scalar secant method
-#             then it's 2
+# Keep the books for nsoli
 #
-function ItStatsK(hist, initfun = 1)
-    ItStatsK([initfun], [0], [0], [0], [hist])
+mutable struct ItStatsK{T<:Real}
+    ifun::Array{Int64,1}
+    ijac::Array{Int64,1}
+    iarm::Array{Int64,1}
+    ikfail::Array{Int64,1}
+    history::Array{T,1}
+end
+
+function ItStatsK(hist)
+    ItStatsK([1], [0], [0], [0], [hist])
 end
 
 function updateStats!(ItData::ItStatsK, newfun, newjac, AOUT, newikfail)
@@ -54,9 +59,19 @@ function updateStats!(ItData::ItStatsK, newfun, newjac, AOUT, newikfail)
     append!(ItData.history, resnorm)
 end
 
+function CollectStats(ItData::ItStatsK)
+stats = (ifun = ItData.ifun, ijac = ItData.ijac,
+           iarm = ItData.iarm, ikfail=ItData.ikfail)
+return stats
+end
+
 #
 # Keep stats for PTC
 #
+mutable struct ItStatsPTC{T<:Real}
+    history::Array{T,1}
+end
+
 function ItStatsPTC(hist)
     ItStatsPTC([hist])
 end
@@ -65,4 +80,8 @@ function updateStats!(ItData::ItStatsPTC, resnorm)
     append!(ItData.history, resnorm)
 end
 
+function CollectStats(ItData::ItStatsPTC)
+stats = []
+return stats
+end
 

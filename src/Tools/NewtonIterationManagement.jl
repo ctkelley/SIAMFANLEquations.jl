@@ -104,3 +104,36 @@ function NewtonClose(x, FS, ithist, stats, idid, errcode, keepsolhist, solhist =
         )
     end
 end
+
+"""
+CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist = [])
+
+Collect the solution, function value, iteration stats and send them back.
+"""
+function CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist = [])
+stats=CollectStats(ItData)
+ithist=ItData.history
+    if keepsolhist
+        sizehist = length(ithist)
+        return (
+            solution = x,
+            functionval = FS,
+            history = ithist,
+            stats = stats,
+            idid = idid,
+            errcode = errcode,
+            solhist = solhist[:, 1:sizehist],
+        )
+    else
+        return (
+            solution = x,
+            functionval = FS,
+            history = ithist,
+            stats = stats,
+            idid = idid,
+            errcode = errcode,
+        )
+    end
+end
+
+

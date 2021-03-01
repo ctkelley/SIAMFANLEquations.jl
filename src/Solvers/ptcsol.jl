@@ -194,6 +194,7 @@ function ptcsol(
         ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     (idid, errcode) = PTCOK(resnorm, tol, toosoon, ItRules, printerr)
-    itout = PTCClose(x, FS, ItData, idid, errcode, keepsolhist, solhist)
+#    itout = PTCClose(x, FS, ItData, idid, errcode, keepsolhist, solhist)
+    itout = CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist)
     return (itout)
 end

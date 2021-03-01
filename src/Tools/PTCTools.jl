@@ -102,30 +102,3 @@ function PTCOK(resnorm, tol, toosoon, ItRules, printerr)
     end
     return (idid, errcode)
 end
-
-
-"""
-PTCOKClose: package the output of ptcsol
-"""
-function PTCClose(x, FS, ItData::ItStatsPTC, 
-            idid, errcode, keepsolhist, solhist = [])
-    if keepsolhist
-        sizehist = length(ItData.history)
-        return (
-            solution = x,
-            functionval = FS,
-            history = ItData.history,
-            idid = idid,
-            errcode = errcode,
-            solhist = solhist[:, 1:sizehist],
-        )
-    else
-        return (
-            solution = x,
-            functionval = FS,
-            history = ItData.history,
-            idid = idid,
-            errcode = errcode,
-        )
-    end
-end
