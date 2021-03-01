@@ -1,4 +1,10 @@
 #
+# The functions and data structures in this file organize the
+# iteration statistics and report the results after the iteration
+# is complete
+#
+
+#
 # Keep the books for nsol and secant
 #
 mutable struct ItStats{T<:Real}
@@ -29,8 +35,8 @@ function updateStats!(ItData::ItStats, newfun, newjac, AOUT)
 end
 
 function CollectStats(ItData::ItStats)
-stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
-return stats
+    stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
+    return stats
 end
 
 #
@@ -60,9 +66,9 @@ function updateStats!(ItData::ItStatsK, newfun, newjac, AOUT, newikfail)
 end
 
 function CollectStats(ItData::ItStatsK)
-stats = (ifun = ItData.ifun, ijac = ItData.ijac,
-           iarm = ItData.iarm, ikfail=ItData.ikfail)
-return stats
+    stats =
+        (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm, ikfail = ItData.ikfail)
+    return stats
 end
 
 #
@@ -81,7 +87,38 @@ function updateStats!(ItData::ItStatsPTC, resnorm)
 end
 
 function CollectStats(ItData::ItStatsPTC)
-stats = []
-return stats
+    stats = []
+    return stats
+end
+
+"""
+CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist = [])
+
+Collect the solution, function value, iteration stats and send them back.
+"""
+function CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist = [])
+    stats = CollectStats(ItData)
+    ithist = ItData.history
+    if keepsolhist
+        sizehist = length(ithist)
+        return (
+            solution = x,
+            functionval = FS,
+            history = ithist,
+            stats = stats,
+            idid = idid,
+            errcode = errcode,
+            solhist = solhist[:, 1:sizehist],
+        )
+    else
+        return (
+            solution = x,
+            functionval = FS,
+            history = ithist,
+            stats = stats,
+            idid = idid,
+            errcode = errcode,
+        )
+    end
 end
 

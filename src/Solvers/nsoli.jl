@@ -241,7 +241,7 @@ function nsoli(
     Named tuple with the iteration data. This makes communiction
     with the linear solvers and the line search easier.
     =#
-    (ItRules, x, n) = Newton_Krylov_Init(
+    (ItRules, x, n, solhist) = Newton_Krylov_Init(
         x0,
         dx,
         F!,
@@ -257,8 +257,9 @@ function nsoli(
         lmaxit,
         printerr,
         pdata,
+        keepsolhist
     )
-    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
+#    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     #
     # First Evaluation of the function. Initialize the iteration stats.
     # Fix the tolerances for convergence and define the derivative FPF
@@ -273,7 +274,7 @@ function nsoli(
     newfun = 0
     newjac = 0
     newikfail = 0
-    ke_report=false
+    ke_report = false
     residratio = 1.0
     armstop = true
     etag = eta
@@ -315,7 +316,7 @@ function nsoli(
         #
         newjac = kout.Lstats.lits
         linok = kout.Lstats.idid
-        linok || (ke_report=Krylov_Error(lmaxit, ke_report); newikfail=1)
+        linok || (ke_report = Krylov_Error(lmaxit, ke_report); newikfail = 1)
         #
         # Compute the trial point, evaluate F and the residual norm.     
         # The derivative is never old for Newton-Krylov
@@ -345,10 +346,9 @@ function nsoli(
         keepsolhist && (@views solhist[:, itc+1] .= x)
         #        ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
-#    solution = x
-#    functionval = FS
+    #    solution = x
+    #    functionval = FS
     (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
-    newtonout = CloseIteration(x, FS, ItData, idid, errcode, 
-                  keepsolhist, solhist)
+    newtonout = CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist)
     return newtonout
 end

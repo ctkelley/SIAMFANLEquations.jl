@@ -1,46 +1,11 @@
-function Newton_Krylov_Init(
-    x0,
-    dx,
-    F!,
-    Jvec,
-    Pvec,
-    pside,
-    lsolver,
-    eta,
-    fixedeta,
-    armmax,
-    armfix,
-    maxit,
-    lmaxit,
-    printerr,
-    pdata,
-)
-    #
-    #   Initialize the iteration.
-    #
-    eta > 0 || error("eta must be positive")
-    n = length(x0)
-    x = copy(x0)
-    ItRules = (
-        dx = dx,
-        f = F!,
-        Jvec = Jvec,
-        Pvec = Pvec,
-        pside = pside,
-        lsolver = lsolver,
-        eta = eta,
-        fixedeta = fixedeta,
-        lmaxit = lmaxit,
-        armmax = armmax,
-        armfix = armfix,
-        maxit = maxit,
-        printerr = printerr,
-        pdata = pdata,
-    )
-    return (ItRules, x, n)
-end
+"""
+Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
 
-function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt=0)
+Take a Newton-Krylov step. This function does lots of its work
+mapping nonlinear problems to linear solvers. Only then do I get
+to deploy the Krylov linear solvers.
+"""
+function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
     #
     # Test for too much, too soon.
     #
@@ -66,8 +31,16 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt=0)
     # map the Jacobian-vector and preconditioner-vector products 
     # from nsoli format to what kl_gmres wants to see
     #
-    kdata = (pdata = pdata, dx = dx, xc = x, f = f, FS = FS, 
-             Jvec = Jvec, Pvec = Pvec, pdt=pdt)
+    kdata = (
+        pdata = pdata,
+        dx = dx,
+        xc = x,
+        f = f,
+        FS = FS,
+        Jvec = Jvec,
+        Pvec = Pvec,
+        pdt = pdt,
+    )
     Pvecg = Pvec2
     Jvecg = Jvec2
     Pvec == nothing && (Pvecg = Pvec)
@@ -75,8 +48,17 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt=0)
     #
     #RHS=FS
     #T == Float64 || (RHS=T.(FS))
-    kout = kl_gmres(s0, FS, Jvecg, FPS, etag, Pvecg; pdata = kdata, 
-            side = side, lmaxit=lmaxit)
+    kout = kl_gmres(
+        s0,
+        FS,
+        Jvecg,
+        FPS,
+        etag,
+        Pvecg;
+        pdata = kdata,
+        side = side,
+        lmaxit = lmaxit,
+    )
     step = -kout.sol
     reshist = kout.reshist
     lits = kout.lits
@@ -101,7 +83,7 @@ function Jvec2(v, kdata)
     FS = kdata.FS
     xc = kdata.xc
     JV = kdata.Jvec
-    pdt=kdata.pdt
+    pdt = kdata.pdt
     pdata = kdata.pdata
     atv = EvalJV(JV, v, FS, xc, pdt, pdata)
     return atv
@@ -120,7 +102,7 @@ end
 function EvalJV(JV, v, FS, xc, pdt, q::Nothing)
     atv = JV(v, FS, xc)
     if pdt > 0
-       atv .= atv + (1.0/pdt)*v
+        atv .= atv + (1.0 / pdt) * v
     end
     return atv
 end
@@ -128,7 +110,7 @@ end
 function EvalJV(JV, v, FS, xc, pdt, pdata)
     atv = JV(v, FS, xc, pdata)
     if pdt > 0
-       atv .= atv + (1.0/pdt)*v
+        atv .= atv + (1.0 / pdt) * v
     end
     return atv
 end
@@ -146,7 +128,7 @@ function dirder(v, kdata)
     EvalF!(F, FPP, delx, pdata)
     atv = (FPP - FS) / dx
     if pdt > 0
-       atv .= atv + (1.0/pdt)*v
+        atv .= atv + (1.0 / pdt) * v
     end
     return atv
 end
@@ -165,13 +147,13 @@ function forcing(itc, residratio, etag, ItRules, tol, resnorm)
     else
         etaRes = gamma * (etag^2)
         etaA = gamma * (residratio^2)
-        etaflim=.5*tol/resnorm
+        etaflim = 0.5 * tol / resnorm
         if etaRes <= 0.1
             etasafe = min(etamax, etaA)
         else
             etasafe = min(etamax, max(etaA, etaRes))
         end
-        etag=min(etamax, max(etasafe, etaflim))
+        etag = min(etamax, max(etasafe, etaflim))
     end
     return etag
 end

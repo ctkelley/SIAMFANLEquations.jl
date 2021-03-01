@@ -224,3 +224,19 @@ function difffp(x, f, fc, h, pdata)
     #    df = (f(x + h) - fc) / h
     return df
 end
+
+
+"""
+test_evaljac(ItRules, itc, newiarm, residratio)
+
+Figures out if it's time to reevaluate and refacto the Jacbian in
+Newton's method.
+"""
+function test_evaljac(ItRules, itc, newiarm, residratio)
+    solver = ItRules.solver
+    sham = ItRules.sham
+    resdec = ItRules.resdec
+    evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
+    chordinit = (solver == "chord") && itc == 0
+    evaljac = (evaljacit && solver == "newton") || chordinit || solver == "secant"
+end

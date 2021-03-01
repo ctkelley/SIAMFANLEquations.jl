@@ -126,8 +126,8 @@ function secant(
     resnorm = abs(fc)
     jfact = nothing
     stagflag = stagnationok && (armmax == 0)
-    (ItRules, x, n) =
-        Secantinit(x0, dx, f, solver, armmax, armfix, maxit, printerr, pdata, jfact)
+    (ItRules, x, n) = Secantinit(x0, dx, f, solver, 
+                armmax, armfix, maxit, printerr, pdata, jfact)
     #
     # Initialize the iteration statistics
     #
@@ -195,12 +195,9 @@ function secant(
         updateStats!(ItData, newfun, newjac, AOUT)
         #
         itc += 1
+        ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
-    solution = x
-    fval = fc
     (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
-    stats = (ifun = ItData.ifun, ijac = ItData.ijac, iarm = ItData.iarm)
-    newtonout =
-        NewtonClose(x, fval, ItData.history, stats, idid, errcode, keepsolhist, solhist)
+    newtonout = CloseIteration(x, fc, ItData, idid, errcode, keepsolhist, solhist)
     return newtonout
 end

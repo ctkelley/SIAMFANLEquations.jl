@@ -157,8 +157,8 @@ function ptcsol(
     #   As with the other codes, ItRules packages all the details of
     #   the problem so it's easy to pass them around. 
     #
-    (ItRules, x, n) = PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact)
-    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
+    (ItRules, x, n, solhist) = PTCinit(x0, dx, F!, J!, pdt0, maxit, 
+                     pdata, jfact, keepsolhist)
     #
     # First Evaluation of the function. Initialize the iteration history.
     # Fix the tolerances for convergence and define the derivative FPF
@@ -167,7 +167,7 @@ function ptcsol(
     FS = EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     tol = rtol * resnorm + atol
-    ItData=ItStatsPTC(resnorm)
+    ItData = ItStatsPTC(resnorm)
     #
     # Preallocate a vector for the step
     #
@@ -184,8 +184,7 @@ function ptcsol(
         #   
         # Evaluate and factor the Jacobian; update x, F(x), and pdt.  
         #
-        (x, pdt, FS, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, 
-                resnorm, pdt)
+        (x, pdt, FS, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, resnorm, pdt)
         #
         # Keep the books
         #
@@ -194,7 +193,7 @@ function ptcsol(
         ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     (idid, errcode) = PTCOK(resnorm, tol, toosoon, ItRules, printerr)
-#    itout = PTCClose(x, FS, ItData, idid, errcode, keepsolhist, solhist)
+    #    itout = PTCClose(x, FS, ItData, idid, errcode, keepsolhist, solhist)
     itout = CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist)
     return (itout)
 end

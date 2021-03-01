@@ -264,7 +264,7 @@ function nsol(
     Shamanskii tells me to, at the first iteration (duh!), and when
     the rate of residual reduction is below the target value of resdec.
     =#
-    (ItRules, x, n) = Newtoninit(
+    (ItRules, x, n, solhist) = Newtoninit(
         x0,
         dx,
         F!,
@@ -278,8 +278,9 @@ function nsol(
         printerr,
         pdata,
         jfact,
+        keepsolhist
     )
-    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
+#    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     #
     # First Evaluation of the function. Initialize the iteration stats.
     # Fix the tolerances for convergence and define the derivative FPF
@@ -378,10 +379,7 @@ function nsol(
         itc += 1
         ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
-    solution = x
-    functionval = FS
     (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
-    newtonout = CloseIteration(x, FS, ItData, idid, 
-                  errcode, keepsolhist, solhist)
+    newtonout = CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist)
     return newtonout
 end

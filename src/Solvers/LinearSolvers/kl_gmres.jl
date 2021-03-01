@@ -81,13 +81,13 @@ function kl_gmres(
     else
         rhs = ptv(b, pdata)
     end
-    (n,K) = size(V)
-    lmaxit > 0 || (lmaxit=K-1)
-#
-#   Temporary fix before I get restarts in there
-#
-    lmaxit > K-1 && (lmaxit=K-1)
-    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv, lmaxit=lmaxit)
+    (n, K) = size(V)
+    lmaxit > 0 || (lmaxit = K - 1)
+    #
+    #   Temporary fix before I get restarts in there
+    #
+    lmaxit > K - 1 && (lmaxit = K - 1)
+    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv, lmaxit = lmaxit)
     gout = gmres_base(x0, rhs, Katv, V, eta, Kpdata; orth = orth)
     #
     # Fixup the solution if preconditioning from the right.
@@ -142,9 +142,9 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
     #
     # Allocate for Givens
     #
-#    kmax = m - 1
-    kmax=pdata.lmaxit
-    kmax > m-1 && error("lmaxit error in gmres_base")
+    #    kmax = m - 1
+    kmax = pdata.lmaxit
+    kmax > m - 1 && error("lmaxit error in gmres_base")
     r = copy(b)
     T = eltype(V)
     h = zeros(T, kmax + 1, kmax + 1)

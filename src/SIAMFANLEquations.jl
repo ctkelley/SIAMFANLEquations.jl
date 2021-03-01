@@ -20,8 +20,7 @@ export EvalF!
 export solhistinit
 #
 # for test of ptcsoli
-#
-export dirder
+# export dirder
 export Krylov_Step!
 export forcing
 export PTCOK
@@ -31,6 +30,8 @@ include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
 include("Tools/FunctionJacobianEvals.jl")
 include("Tools/ManageStats.jl")
+include("Tools/IterationInit.jl")
+include("Tools/ErrorTest.jl")
 include("Tools/NewtonKrylov_Tools.jl")
 include("Tools/PTCTools.jl")
 include("Solvers/Chapter1/nsolsc.jl")
@@ -42,8 +43,6 @@ include("Solvers/nsoli.jl")
 include("Solvers/LinearSolvers/kl_gmres.jl")
 include("Solvers/LinearSolvers/Orthogonalize!.jl")
 include("PlotsTables/printhist.jl")
-include("Tools/test_evaljac.jl")
-include("Tools/NewtonIterationManagement.jl")
 
 module TestProblems
 using LinearAlgebra
