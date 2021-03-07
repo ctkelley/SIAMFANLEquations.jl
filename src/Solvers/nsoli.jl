@@ -131,7 +131,7 @@ where
 
    -- history = the vector of residual norms (||F(x)||) for the iteration
 
-   -- stats = named tuple of the history of (ifun, ijvec, iarm, ikfail), the 
+   -- stats = named tuple of the history of (ifun, ijac, iarm, ikfail), the 
 number of functions/Jacobian-vector prods/steplength reductions/linear solver
 failures at each iteration. Linear solver failures DO NOT mean that the
 nonlinear solver will fail. You should look at this stat if, for example,

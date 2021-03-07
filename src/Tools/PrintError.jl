@@ -1,3 +1,8 @@
+#
+# The functions in this file manage error messages.
+# I'm trying to give you useful hints if the iteration fails. These hints
+# may become move detailed/verbose/bloviated over time.
+#
 """
 NewtonError(resfail, iline, resnorm, toosoon, itc, maxit, armmax, printerr)
 Figure out what error message to print if the iteration fails.

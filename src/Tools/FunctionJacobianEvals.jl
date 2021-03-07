@@ -1,3 +1,9 @@
+#
+# The functions in this file manage Jacobian evaluations and
+# factorizations and function evaluations. The function evaluation bits
+# are used in the Newton-Krylov solvers too.
+#
+
 """
 PrepareJac!(FPS, FS, x, ItRules, dt=0) 
 

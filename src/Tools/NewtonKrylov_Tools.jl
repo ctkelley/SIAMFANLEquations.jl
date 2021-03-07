@@ -1,3 +1,7 @@
+#
+# The functions in this file manage the Newton-Krylov step and
+# the Jacobian/preconditioner - vector products. 
+#
 """
 Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
 
