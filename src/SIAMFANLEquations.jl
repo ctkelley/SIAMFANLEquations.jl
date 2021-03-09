@@ -9,6 +9,7 @@ using Printf
 export nsolsc
 export ptcsolsc
 export ptcsol
+export ptcsoli
 export nsol
 export nsoli
 export nofact
@@ -34,10 +35,12 @@ include("Tools/IterationInit.jl")
 include("Tools/ErrorTest.jl")
 include("Tools/NewtonKrylov_Tools.jl")
 include("Tools/PTCTools.jl")
+include("Tools/PTCToolsi.jl")
 include("Solvers/Chapter1/nsolsc.jl")
 include("Solvers/Chapter1/ptcsolsc.jl")
 include("Solvers/Chapter1/secant.jl")
 include("Solvers/ptcsol.jl")
+include("Solvers/ptcsoli.jl")
 include("Solvers/nsol.jl")
 include("Solvers/nsoli.jl")
 include("Solvers/LinearSolvers/kl_gmres.jl")
@@ -119,6 +122,7 @@ using SIAMFANLEquations.TestProblems
 using LinearAlgebra
 using BandedMatrices
 
+export ptciBeam
 export ptcBeam
 export ivpBeam
 export BVP_solve
@@ -126,6 +130,7 @@ export nsolheq
 export NsolPDE
 export NsoliPDE
 
+include("Examples/ptciBeam.jl")
 include("Examples/ptcBeam.jl")
 include("Examples/ivpBeam.jl")
 include("Examples/BVP_solve.jl")
