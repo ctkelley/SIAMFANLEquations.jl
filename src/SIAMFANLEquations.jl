@@ -25,7 +25,7 @@ export solhistinit
 export Krylov_Step!
 export forcing
 export PTCOK
-export PTCClose
+#export PTCClose
 
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
