@@ -1,30 +1,3 @@
-#
-# Keep the books for PTC-Krylov
-#
-mutable struct ItStatsPTCK{T<:Real}
-    ifun::Array{Int64,1}
-    ijac::Array{Int64,1}
-    ikfail::Array{Int64,1}
-    history::Array{T,1}
-end
-
-function ItStatsPTCK(hist)
-    ItStatsPTCK([1], [0], [0], [hist])
-end
-
-function updateStats!(ItData::ItStatsPTCK, resnorm, newjac, newikfail)
-    append!(ItData.history, resnorm)
-    append!(ItData.ifun, 1)
-    append!(ItData.ijac, newjac)
-    append!(ItData.ikfail, newikfail)
-end
-
-function CollectStats(ItData::ItStatsPTCK)
-    stats = (ifun = ItData.ifun, ijac = ItData.ijac, ikfail = ItData.ikfail)
-    return stats
-end
-
-
 function PTCKrylovinit(
     x0,
     dx,
