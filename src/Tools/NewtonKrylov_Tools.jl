@@ -21,8 +21,6 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
     n == nk || error("Krylov vectors wrong length")
     lmaxit < mk || error("Restarts not enabled yet")
     lsolver == "gmres" || error(lsolver, " ", "not supported")
-    #T == Float64 || error("Mixed precision not supported yet. Must figure
-    #out RHS scaling.")
     Jvec = ItRules.Jvec
     Pvec = ItRules.Pvec
     pdata = ItRules.pdata
