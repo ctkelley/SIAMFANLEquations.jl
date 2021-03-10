@@ -103,17 +103,19 @@ end
 
 function EvalJV(JV, v, FS, xc, pdt, q::Nothing)
     atv = JV(v, FS, xc)
-    if pdt > 0
-        atv .= atv + (1.0 / pdt) * v
-    end
+    ptcmv!(atv, v, pdt)
+#    if pdt > 0
+#        atv .= atv + (1.0 / pdt) * v
+#    end
     return atv
 end
 
 function EvalJV(JV, v, FS, xc, pdt, pdata)
     atv = JV(v, FS, xc, pdata)
-    if pdt > 0
-        atv .= atv + (1.0 / pdt) * v
-    end
+    ptcmv!(atv, v, pdt)
+#    if pdt > 0
+#        atv .= atv + (1.0 / pdt) * v
+#    end
     return atv
 end
 
@@ -129,10 +131,16 @@ function dirder(v, kdata)
     FPP = copy(xc)
     EvalF!(F, FPP, delx, pdata)
     atv = (FPP - FS) / dx
-    if pdt > 0
-        atv .= atv + (1.0 / pdt) * v
-    end
+    ptcmv!(atv, v, pdt)
+#    if pdt > 0
+#        atv .= atv + (1.0 / pdt) * v
+#    end
     return atv
+end
+
+function ptcmv!(atv, v, pdt)
+(pdt == 0.0) || (atv .= atv + (1.0 / pdt) * v)
+#return atv
 end
 
 """
