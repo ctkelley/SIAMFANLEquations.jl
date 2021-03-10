@@ -11,6 +11,7 @@ pages = Any[
        "functions/nsol.md",
        "functions/ptcsol.md",
        "functions/nsoli.md",
+       "functions/ptcsoli.md",
        ],
      "Scalar Equations" => Any[
        "functions/nsolsc.md",
