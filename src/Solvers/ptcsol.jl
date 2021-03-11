@@ -117,7 +117,7 @@ functionval = F(solution)
 history = the vector of residual norms (||F(x)||) for the iteration
 
 Unlike nsol, nsoli, or even ptcsoli, ptcsol has a fixed cost per 
-iteation of one function, one Jacobian, and one Factorization. Hence
+iteration of one function, one Jacobian, and one Factorization. Hence
 iteration statistics are not interesting and not in the output. 
 
 idid=true if the iteration succeeded and false if not.
@@ -131,6 +131,43 @@ This is the entire history of the iteration if you've set
 keepsolhist=true\n 
 solhist is an N x K array where N is the length of x and K is the number
 of iteration + 1. So, for scalar equations, it's a row vector.
+
+# Example
+
+#### We will do the buckling beam problem. You'll need to use TestProblems for
+this to work.
+
+```jldoctest
+julia> using SIAMFANLEquations.TestProblems
+
+julia> n=63; maxit=1000; pdt = 0.01; lambda = 20.0;
+
+julia> bdata = beaminit(n, 0.0, lambda);
+
+julia> x = bdata.x; u0 = x .* (1.0 .- x) .* (2.0 .- x); u0 .*= exp.(-10.0 * u0);
+
+
+julia> FS = copy(u0); FPS = copy(bdata.D2);
+
+julia> pout = ptcsol( FBeam!, u0, FS, FPS, BeamJ!; rtol = 1.e-10, pdata = bdata,
+                pdt0 = pdt, maxit = maxit);
+
+julia> # It takes a few iterations to get there.
+       length(pout.history)
+25
+
+julia> [pout.history[1:5] pout.history[21:25]]
+5×2 Array{Float64,2}:
+ 6.31230e+01  9.75412e-01
+ 7.52624e+00  8.35295e-02
+ 8.31545e+00  6.58797e-04
+ 3.15455e+01  4.12697e-08
+ 3.66566e+01  6.75094e-12
+
+julia> # We get the nonnegative stedy state.
+       norm(pout.solution,Inf)
+2.19086e+00
+```
 
 
 """

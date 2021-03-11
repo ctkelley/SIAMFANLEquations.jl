@@ -59,6 +59,93 @@ idid = status of the iteration
        true -> converged 
        false -> failed to converge
               
+# Examples: In these examples you have the matrix and use 
+```
+function atv(x, A)
+    return A * x
+end
+to compute the matvec.
+```
+
+#### Three dimensional problem. Will converge in the correct three iterations
+only if you orthogonalize with CGS twice. 
+
+```jldoctest
+julia> function atv(x, A)
+           return A * x
+       end
+atv (generic function with 1 method)
+
+julia> A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4];
+
+julia> V = zeros(3, 10); b = [1.0; 1.0; 1.0]; x0 = zeros(3);
+
+julia> gout = kl_gmres(x0, b, atv, V, 1.e-10; pdata = A);
+
+julia> gout.reshist
+4-element Array{Float64,1}:
+ 1.73205e+00
+ 1.41421e+00
+ 6.72673e-02
+ 1.97712e-34
+
+julia> norm(b - A*gout.sol,Inf)
+1.28536e-10
+```
+
+#### Integral equation. Notice that pdata has the kernel of the 
+operator and we do the matvec directly. Just like the previous example.
+We put the grid information and, for this artifical example, the solution
+in the precoputed data.
+
+```jldoctest
+julia> function integop(u, pdata)
+           K = pdata.K
+           return u - K * u
+       end
+integop (generic function with 1 method)
+
+julia> function integopinit(n)
+           h = 1 / n
+           X = collect(0.5*h:h:1.0-0.5*h)
+           K = [ker(x, y) for x in X, y in X]
+           K .*= h
+           sol = [usol(x) for x in X]
+           f = sol - K * sol
+           pdata = (K = K, xe = sol, f = f)
+           return pdata
+       end
+integopinit (generic function with 1 method)
+
+julia> function usol(x)
+           return exp.(x) .* log.(2.0 * x .+ 1.0)
+       end
+usol (generic function with 1 method)
+
+julia> function ker(x, y)
+           ker = 0.1 * sin(x + exp(y))
+       end
+ker (generic function with 1 method)
+
+julia> n=100; pdata = integopinit(n); ue = pdata.xe; f=pdata.f;
+
+julia> u0 = zeros(size(f)); V = zeros(n, 20); V32=zeros(Float32,n,20);
+
+julia> gout = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata);
+
+julia> gout32 = kl_gmres(u0, f, integop, V32, 1.e-10; pdata = pdata);
+
+julia> [norm(gout.sol-ue,Inf) norm(gout32.sol-ue,Inf)]
+1×2 Array{Float64,2}:
+ 4.44089e-16  2.93700e-07
+
+julia> [gout.reshist gout32.reshist]
+4×2 Array{Float64,2}:
+ 1.48252e+01  1.48252e+01
+ 5.52337e-01  5.52337e-01
+ 1.77741e-03  1.77742e-03
+ 1.29876e-19  8.73568e-11
+```
  
 """
 function kl_gmres(
@@ -73,7 +160,7 @@ function kl_gmres(
     lmaxit = -1,
     pdata = nothing,
 )
-    #
+    
     # Build some precomputed data to inform KL_atv about preconditioning ...
     #
     if side == "right" || ptv == nothing

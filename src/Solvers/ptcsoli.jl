@@ -184,6 +184,48 @@ keepsolhist=true\n
 solhist is an N x K array where N is the length of x and K is the number
 of iteration + 1. So, for scalar equations, it's a row vector.
 
+# Example:
+#### We will do the buckling beam problem. You'll need to use TestProblems for
+this to work. The preconditioner is a solver for the high order term.
+
+```jldoctest
+julia> using SIAMFANLEquations.TestProblems
+
+julia> function PreCondBeam(v, x, bdata)
+          J = bdata.D2
+          ptv = J\v
+       end
+PreCondBeam (generic function with 1 method)
+
+julia> n=63; maxit=1000; pdt0 = 0.01; lambda = 20.0;
+
+julia> bdata = beaminit(n, 0.0, lambda);
+
+julia> x = bdata.x; u0 = x .* (1.0 .- x) .* (2.0 .- x); u0 .*= exp.(-10.0 * u0);
+
+
+julia> FS = copy(u0); FPJV=zeros(n,20);
+
+julia> pout = ptcsoli( FBeam!, u0, FS, FPJV; pdt0 = pdt0, pdata = bdata,
+       eta = 1.e-2, rtol = 1.e-10, maxit = maxit, Pvec = PreCondBeam);
+
+julia> # It takes a few iterations to get there.
+       length(pout.history)
+25
+
+julia> [pout.history[1:5] pout.history[21:25]]
+5×2 Array{Float64,2}:
+ 6.31230e+01  1.79578e+00
+ 7.45926e+00  2.65964e-01
+ 8.73598e+00  6.58278e-03
+ 2.91936e+01  8.35069e-06
+ 3.47969e+01  5.11594e-09
+
+julia> # We get the nonnegative stedy state.
+       norm(pout.solution,Inf)
+2.19086e+00
+
+```
 
 """
 function ptcsoli(

@@ -17,10 +17,10 @@ function gmres_test()
 end
 
 function test3x3()
-    A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4]
-    V = zeros(3, 10)
-    b = [1.0; 1.0; 1.0]
-    x0 = zeros(3)
+    A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4];
+    V = zeros(3, 10);
+    b = [1.0; 1.0; 1.0];
+    x0 = zeros(3);
     eta = 1.e-10
     passgm = true
     R = []
@@ -102,7 +102,7 @@ end
 
 function integop(u, pdata)
     K = pdata.K
-    f = pdata.f
+#    f = pdata.f
     return u - K * u
 end
 
