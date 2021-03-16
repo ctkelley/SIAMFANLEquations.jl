@@ -165,10 +165,15 @@ function kl_gmres(
     
     # Build some precomputed data to inform KL_atv about preconditioning ...
     #
+    y0=copy(x0)
+    rhs=zeros(size(b))
     if side == "right" || ptv == nothing
-        rhs = b
+#        rhs .= b
+rhs=copy(b)
     else
-        rhs = ptv(b, pdata)
+rhs=copy(b)
+rhs .= ptv(rhs, pdata)
+#        rhs .= ptv(b, pdata)
     end
     (n, K) = size(V)
     K > 1 || error("Must allocate for GMRES iterations")
@@ -179,25 +184,28 @@ function kl_gmres(
     ip=1
     idid=false
     Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv)
-             
+    qdata=Kpdata.pdata
     gout=[]
     while ip <= length(itvec) && idid==false
-    localout = gmres_base(x0, rhs, Katv, V, eta, Kpdata; 
+    localout = gmres_base(y0, rhs, Katv, V, eta, Kpdata; 
                          lmaxit=itvec[ip], orth = orth)
     idid=localout.idid
     gout=outup(gout, localout, ip, klmaxit)
     reslen=length(localout.reshist)
-    idid || (x0=gout.sol; eta = eta*localout.rho0/localout.reshist[reslen])
+    idid || (y0.=localout.sol; 
+           eta = eta*localout.rho0/localout.reshist[reslen])
     ip += 1
     end
     #
     # Fixup the solution if preconditioning from the right.
     #
     if side == "left" || ptv == nothing
-        return gout
+        return (sol = gout.sol, reshist = gout.reshist, lits = gout.lits, 
+              idid = gout.idid)
     else
         sol = ptv(gout.sol, pdata)
-        return (sol = sol, reshist = gout.reshist, lits = gout.lits, idid = gout.idid)
+        return (sol = sol, reshist = gout.reshist, lits = gout.lits, 
+               idid = gout.idid)
     end
 end
 
@@ -208,6 +216,7 @@ Builds a matrix-vector product to hand to gmres_base. Puts the preconditioner
 in there on the correct side.
 """
 function Katv(x, Kpdata)
+    y=copy(x)
     pdata = Kpdata.pdata
     ptv = Kpdata.ptv
     atv = Kpdata.atv
@@ -231,14 +240,14 @@ function Katv(x, Kpdata)
 end
 
 """
-gmres_base(x0, b, atv, V, eta, pdata; orth="mgs1", lmaxit=-1)
+gmres_base(x0, b, atv, V, eta, pdata; orth="cgs2", lmaxit=-1)
 
 Base GMRES solver. This is GMRES(m) with no restarts and no preconditioning.
 The idea for the future is that it'll be called by kl_gmres (linear
 solver) which
 is the backend of klgmres.
 """
-function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1", lmaxit=-1)
+function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
           
     (n, m) = size(V)
     #
@@ -279,7 +288,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1", lmaxit=-1)
     #
     # Showtime!
     #
-    @views V[:, 1] = r / rho
+    @views V[:, 1] .= r / rho
     beta = rho
     while (rho > errtol) && (k < kmax)
         k += 1
