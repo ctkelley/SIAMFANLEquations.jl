@@ -233,17 +233,20 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.3.0
 
-- 0.3.1 happens when the notebook is closer to finished and PTC-GMRES is working.
-
+- 0.3.1 happens when the notebook is closer to finished. As of 3/16/21
+  - ptcsoli is working and covered by CI. A few examples are done.
+  - restarted GMRES is working and in CI, but the nsoli + restarted GMRES still needs testing
+  - There's a lot of writing to be done before I can push 0.3.1
+  
 - Small things
    - Default side for preconditer is now __"right"__. See section 3.1.3 for the story on this.
    - Default forcing term is still constant __eta = .1__. This could change at any time and I've been careful to specify it completely in the examples.
 
 ### What's after 0.3.1?
  
- - 0.3.2 is for low-storage Krylov solvers (GMRES(m), BiCGSTAB, ...)
+ - 0.3.2 goes out when the writing is mostly done and BiCGSTAB is finished. 
 
- - 0.3.3 goes out when Chapter 3 is finished
+ - 0.3.3 goes out when Chapter 3 is finished. I'm hoping for early May. 
 
    
 ## Funding
