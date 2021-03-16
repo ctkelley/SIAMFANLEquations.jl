@@ -9,10 +9,11 @@ This is for CI only. Nothing to see here. Move along.
 function gmres_test()
     pass3 = test3x3()
     passint = test_integop(40)
+    passint_rs = test_integop_restart(40)
     passr1 = testR1()
     passorth = orth_test()
     passqr = qr_test()
-    passgm = pass3 && passint && passr1
+    passgm = pass3 && passint && passr1 && passint_rs
     return passgm
 end
 
@@ -94,6 +95,34 @@ function test_integop(n)
     pass || println("Integral operator test fails.")
     return pass
 end
+
+
+#
+# Test integral equation with restarted GMRES
+#
+function test_integop_restart(n)
+    pdata = integopinit(n)
+    f = pdata.f
+    ue = pdata.xe
+    u0 = zeros(size(f))
+    V = zeros(n, 3); V32 = zeros(Float32, n, 3)
+    gout = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, lmaxit=20);
+    gout32 = kl_gmres(u0, f, integop, V32, 1.e-10; pdata = pdata, lmaxit=20);
+    dhist=norm(gout.reshist-gout32.reshist,Inf);
+    lhist=length(gout.reshist)
+    gerr=norm(gout.sol-pdata.xe,Inf)
+    g32err=norm(gout32.sol-pdata.xe,Inf)
+    histpass = dhist < 1.e-7
+    histpass || println("restart history wrong size")
+    errpass = (gerr < 1.e-10) && (g32err < 1.e-10)
+    errpass || println("restart error too large")
+    lenpass = (lhist == 6)
+    lenpass || println("restart history wrong length")
+    return histpass && errpass && lenpass
+end
+
+    
+
 
 function atv(x, A)
     return A * x

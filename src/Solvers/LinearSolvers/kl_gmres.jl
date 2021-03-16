@@ -43,7 +43,9 @@ side: left or right preconditioning. The default is "right".
 
 lmaxit: maximum number of linear iterations. The default is -1, which
         means that the maximum number of linear iterations is K-1, which
-        is all V will allow without restarts.
+        is all V will allow without restarts. If lmaxit > K-1, then the
+        iteration will restart until you consume lmaxit iterations or
+        terminate successfully.
 
 Other parameters on the way.
 
@@ -169,13 +171,25 @@ function kl_gmres(
         rhs = ptv(b, pdata)
     end
     (n, K) = size(V)
+    K > 1 || error("Must allocate for GMRES iterations")
+    klmaxit = lmaxit
     lmaxit > 0 || (lmaxit = K - 1)
     #
-    #   Temporary fix before I get restarts in there
-    #
-    lmaxit > K - 1 && (lmaxit = K - 1)
-    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv, lmaxit = lmaxit)
-    gout = gmres_base(x0, rhs, Katv, V, eta, Kpdata; orth = orth)
+    itvec = maxitvec(K, lmaxit)
+    ip=1
+    idid=false
+    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv)
+             
+    gout=[]
+    while ip <= length(itvec) && idid==false
+    localout = gmres_base(x0, rhs, Katv, V, eta, Kpdata; 
+                         lmaxit=itvec[ip], orth = orth)
+    idid=localout.idid
+    gout=outup(gout, localout, ip, klmaxit)
+    reslen=length(localout.reshist)
+    idid || (x0=gout.sol; eta = eta*localout.rho0/localout.reshist[reslen])
+    ip += 1
+    end
     #
     # Fixup the solution if preconditioning from the right.
     #
@@ -217,20 +231,22 @@ function Katv(x, Kpdata)
 end
 
 """
-gmres_base(x0, b, atv, V, eta, pdata; orth="mgs1")
+gmres_base(x0, b, atv, V, eta, pdata; orth="mgs1", lmaxit=-1)
 
 Base GMRES solver. This is GMRES(m) with no restarts and no preconditioning.
 The idea for the future is that it'll be called by kl_gmres (linear
 solver) which
 is the backend of klgmres.
 """
-function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
+function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1", lmaxit=-1)
+          
     (n, m) = size(V)
     #
     # Allocate for Givens
     #
     #    kmax = m - 1
-    kmax = pdata.lmaxit
+    kmax = m 
+    lmaxit == -1 || (kmax=lmaxit)
     kmax > m - 1 && error("lmaxit error in gmres_base")
     r = copy(b)
     T = eltype(V)
@@ -243,7 +259,8 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
     (norm(x0) == 0.0) || (r .-= atv(x0, pdata))
     #
     #
-    rho = norm(r)
+    rho0 = norm(r)
+    rho=rho0
     #
     # Initial residual = 0? This can't be good.
     #
@@ -309,7 +326,8 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "mgs1")
     mul!(r, qmf, y, 1.0, 1.0)
     (rho <= errtol) || (idid = false)
     k > 0 || println("GMRES iteration terminates on entry.")
-    return (sol = r, reshist = Float64.(reshist), lits = k, idid = idid)
+    return (rho0=rho0, sol = r, reshist = Float64.(reshist), 
+        lits = k, idid = idid)
 end
 
 function giveapp!(c, s, vin, k)
@@ -321,3 +339,45 @@ function giveapp!(c, s, vin, k)
     end
     return vin
 end
+
+#
+# The functions maxitvec and outup manage the restarts.
+# There is no reason to look at them or fiddle with them.
+#
+
+function maxitvec(K, lmaxit)
+levels=Int.(ceil(lmaxit/(K-1)))
+itvec=ones(Int,levels);
+itvec[1:levels-1] .= K-1;
+remainder=lmaxit-(levels-1)*(K-1) ;
+itvec[levels]=remainder
+return itvec
+end
+
+function outup(gout, localout, ip, klmaxit)
+idid = localout.idid
+sol = localout.sol
+#
+# If I'm doing restarts I won't store the last residual
+# unless the iteration is successful. The reason is that
+# I will add that residual to the list when I restart.
+#
+if idid || klmaxit==-1
+    lreshist=localout.reshist
+else
+   lk=length(localout.reshist)
+   lreshist=localout.reshist[1:lk-1]
+end
+if ip == 1
+  reshist=lreshist
+  lits = localout.lits
+else
+   reshist = gout.reshist 
+   append!(reshist,lreshist)
+   lits = gout.lits + localout.lits
+end
+   gout = (sol = sol, reshist = reshist, lits = lits, 
+                   idid = idid)
+return gout
+end
+
