@@ -46,7 +46,7 @@ function gmres_test_pde(n; orth = "cgs2", write = false, eta = 9.8 * 1.e-4)
     solrdel = norm(sollhw - soll, Inf)
     solerr = norm(soll - ue, Inf)
     solerr2 = norm(solr - ue, Inf)
-    pass = (
+    passfull = (
         (soldel == 0) &&
         (solrdel == 0) &&
         (solerr < 1.e-2) &&
@@ -54,10 +54,30 @@ function gmres_test_pde(n; orth = "cgs2", write = false, eta = 9.8 * 1.e-4)
         (length(pcresr) == 12) &&
         (length(pcres) == 9)
     )
-    pass || println("Linear pde test for GMRES fails.")
     if write
         println(soldel, "  ", solrdel, "  ", solerr, "   ", solerr2)
     end
+    passfull || println("Linear pde test for GMRES fails.")
+# Now for some restarts ...
+    V=zeros(n*n,5)
+    goutpl = kl_gmres(u0, RHS, pdeatv, V, eta, pdeptv;
+           pdata = pdata, orth = orth, side = "left", lmaxit=20)
+    goutpr = kl_gmres(u0, RHS, pdeatv, V, eta, pdeptv;
+           pdata = pdata, orth = orth, side = "right", lmaxit=20)
+    soldelr=norm(goutpl.sol - goutpr.sol,Inf)
+    solerrr=norm(goutpr.sol-ue)
+    solerrl=norm(goutpl.sol-ue)
+    numitsr=length(goutpr.reshist)
+    numitsl=length(goutpl.reshist)
+    pass_res= (
+        (soldelr < 1.e-3) &&
+        (solerr < 1.e-2) &&
+        (solerr2 < 1.e-2) &&
+        (numitsr == 16) &&
+        (numitsl == 13)
+    )
+    pass_res || println("Linear pde test for GMRES(m) fails.")
+    pass = passfull && pass_res
     return pass
 end
 

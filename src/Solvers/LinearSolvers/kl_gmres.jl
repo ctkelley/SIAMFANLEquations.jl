@@ -164,19 +164,17 @@ function kl_gmres(
 )
     
     # Build some precomputed data to inform KL_atv about preconditioning ...
-    #
+    # Do not overwrite the initial iterate or the right hand side.
     y0=copy(x0)
-    rhs=zeros(size(b))
     if side == "right" || ptv == nothing
-#        rhs .= b
-rhs=copy(b)
+        rhs=copy(b)
     else
-rhs=copy(b)
-rhs .= ptv(rhs, pdata)
-#        rhs .= ptv(b, pdata)
+        rhs=copy(b)
+        rhs .= ptv(rhs, pdata)
     end
     (n, K) = size(V)
-    K > 1 || error("Must allocate for GMRES iterations")
+    K > 1 || error("Must allocate for GMRES iterations. V must have 
+                   at least two columns")
     klmaxit = lmaxit
     lmaxit > 0 || (lmaxit = K - 1)
     #
@@ -184,7 +182,6 @@ rhs .= ptv(rhs, pdata)
     ip=1
     idid=false
     Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv)
-    qdata=Kpdata.pdata
     gout=[]
     while ip <= length(itvec) && idid==false
     localout = gmres_base(y0, rhs, Katv, V, eta, Kpdata; 
@@ -192,6 +189,10 @@ rhs .= ptv(rhs, pdata)
     idid=localout.idid
     gout=outup(gout, localout, ip, klmaxit)
     reslen=length(localout.reshist)
+#
+# Update the termination criterion and the initial iterate for
+# a restart.
+#
     idid || (y0.=localout.sol; 
            eta = eta*localout.rho0/localout.reshist[reslen])
     ip += 1
