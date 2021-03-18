@@ -146,8 +146,6 @@ function Pfish2d(v, fdata)
     n = Int(sqrt(n2))
     (n * n == n2) || error("input to Pfish2d not a square array")
     v2 = reshape(v, (n, n))
-#    u2 = fish2d(v2, fdata)
-#    u = reshape(u2, (n2,))
     u = fish2d(v2, fdata)
     u = reshape(u, (n2,))
     return u
