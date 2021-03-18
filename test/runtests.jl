@@ -1,4 +1,3 @@
-# Test for 1.6
 using SIAMFANLEquations
 using SIAMFANLEquations.TestProblems
 using SIAMFANLEquations.Examples
