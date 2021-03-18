@@ -1,3 +1,4 @@
+# Test for 1.6
 using SIAMFANLEquations
 using SIAMFANLEquations.TestProblems
 using SIAMFANLEquations.Examples
@@ -14,7 +15,7 @@ include("Chapter2/pde_lin_test.jl")
 include("Chapter2/nsolpde_test.jl")
 include("Chapter3/gmres_test.jl")
 include("Chapter3/Krylov_pde_test.jl")
-include("Chapter3/ptcKrylovtest.jl")
+include("Chapter3/ptcKrylovTest.jl")
 include("Chapter3/nk_test.jl")
 include("Chapter3/nk_pde.jl")
 include("Chapter3/nk_heq.jl")
