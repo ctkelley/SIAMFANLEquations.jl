@@ -62,7 +62,6 @@ will restart.
 
 The default is -1. This means that you'll take m-1 iterations, where
 size(V) = (n,m), and get no restarts.
---> Restarted GMRES is not ready yet.
 
 lsolver: the linear solver, default = "gmres"\n
 Your choices will be "gmres" or "bicgstab". However,
@@ -294,8 +293,6 @@ function nsoli(
     #
     while resnorm > tol && itc < maxit && (armstop || stagnationok)
         #   
-        # Evaluate and factor the Jacobian.   
-        #
         newfun = 0
         newjac = 0
         newikfail = 0

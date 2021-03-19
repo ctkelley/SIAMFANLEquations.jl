@@ -83,16 +83,14 @@ function fish2d(f, fdata)
     u = ST * u
     u = u'
     u1 = reshape(u, (nx * nx,))
-    u1 .= T \ u1
-    u = reshape(u1, (nx, nx))
-    #u .= u'; u = ST*u; u ./=(2*nx+2);
-    v .= u'
-    v = ST * v
-    v ./= (2 * nx + 2)
-    #return u
-    return v
+    v1 = reshape(v, (nx * nx,))
+    v1 .= u1
+    ldiv!(u1, T, v1)
+    u = u'
+    u .= ST * u
+    u ./= (2 * nx + 2)
+    return u
 end
-
 
 """
 fishinit(n)
@@ -108,8 +106,10 @@ function fishinit(n)
     zstore = zeros(n, n)
     ST = FFTW.plan_r2r!(zstore, FFTW.RODFT00, 1)
     uhat = zeros(n, n)
-    T = newT(n)
-    fdata = (ST = ST, uhat = uhat, utmp = zstore, T = T)
+    fishu = zeros(n, n)
+    TD = newT(n)
+    T = lu!(TD)
+    fdata = (ST = ST, uhat = uhat, utmp = zstore, T = T, fishu=fishu)
     return fdata
 end
 

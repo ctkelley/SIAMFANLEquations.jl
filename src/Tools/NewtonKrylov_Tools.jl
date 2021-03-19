@@ -19,7 +19,7 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
     (nk, mk) = size(FPS)
     n = length(step)
     n == nk || error("Krylov vectors wrong length")
-    lmaxit < mk || error("Restarts not enabled yet")
+#    lmaxit < mk || error("Restarts not enabled yet")
     lsolver == "gmres" || error(lsolver, " ", "not supported")
     Jvec = ItRules.Jvec
     Pvec = ItRules.Pvec
