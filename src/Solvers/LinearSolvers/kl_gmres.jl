@@ -181,7 +181,8 @@ function kl_gmres(
     itvec = maxitvec(K, lmaxit)
     ip=1
     idid=false
-    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv)
+    linsol=zeros(size(b))
+    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv, linsol=linsol)
     gout=[]
     while ip <= length(itvec) && idid==false
     localout = gmres_base(y0, rhs, Katv, V, eta, Kpdata; 
@@ -217,7 +218,8 @@ Builds a matrix-vector product to hand to gmres_base. Puts the preconditioner
 in there on the correct side.
 """
 function Katv(x, Kpdata)
-    y=copy(x)
+#    y=copy(x)
+    y=Kpdata.linsol
     pdata = Kpdata.pdata
     ptv = Kpdata.ptv
     atv = Kpdata.atv
@@ -229,13 +231,13 @@ function Katv(x, Kpdata)
         ". Side must be \"left\" or \"right\" ",
     )
     if ptv == nothing
-        y = atv(x, pdata)
+        y .= atv(x, pdata)
         return y
     elseif side == "left"
-        y = atv(x, pdata)
+        y .= atv(x, pdata)
         return ptv(y, pdata)
     elseif side == "right"
-        y = ptv(x, pdata)
+        y .= ptv(x, pdata)
         return atv(y, pdata)
     end
 end
