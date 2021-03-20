@@ -167,8 +167,10 @@ function kl_gmres(
     # Do not overwrite the initial iterate or the right hand side.
     y0=copy(x0)
     if side == "right" || ptv == nothing
+        itsleft = false
         rhs=copy(b)
     else
+        itsleft = true
         rhs=copy(b)
         rhs .= ptv(rhs, pdata)
     end
@@ -195,6 +197,7 @@ function kl_gmres(
 # a restart.
 #
     idid || (y0.=localout.sol; 
+# rhs .=b; !itsleft || (rhs .= ptv(rhs, pdata) );
            eta = eta*localout.rho0/localout.reshist[reslen])
     ip += 1
     end
@@ -261,6 +264,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     lmaxit == -1 || (kmax=lmaxit)
     kmax > m - 1 && error("lmaxit error in gmres_base")
     r = copy(b)
+#r = b
     T = eltype(V)
     h = zeros(T, kmax + 1, kmax + 1)
     c = zeros(kmax + 1)
