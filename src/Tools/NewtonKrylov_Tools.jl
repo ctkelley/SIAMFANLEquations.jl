@@ -27,7 +27,12 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
     dx = ItRules.dx
     f = ItRules.f
     fixedeta = ItRules.fixedeta
-    s0 = zeros(size(step))
+#    s0 = zeros(size(step))
+#
+#   Initial iterate for step is zero.
+#
+    s0 = step
+    s0 .*= 0.0
     side = ItRules.pside
     #
     # map the Jacobian-vector and preconditioner-vector products 
@@ -61,7 +66,7 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
         side = side,
         lmaxit = lmaxit,
     )
-    step = -kout.sol
+    step .= -kout.sol
     reshist = kout.reshist
     lits = kout.lits
     idid = kout.idid
