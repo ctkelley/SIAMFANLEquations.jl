@@ -211,6 +211,9 @@ function kl_gmres(
     Kpdata = (pdata = pdata, side = side, ptv = ptv, 
               atv = atv, linsol=linsol, restmp=restmp)
     gout=[]
+#
+# Restarted GMRES loop. 
+#
     while ip <= length(itvec) && idid==false
     localout = gmres_base(y0, rhs, Katv, V, eta, Kpdata; 
                          lmaxit=itvec[ip], orth = orth)
@@ -218,23 +221,22 @@ function kl_gmres(
     gout=outup(gout, localout, ip, klmaxit)
     reslen=length(localout.reshist)
 #
-# Update the termination criterion and the initial iterate for
-# a restart.
+# Update the termination criterion for the restart.
+# gmres_base overwrites y0 with the solution
 #
-    idid || (y0.=localout.sol; 
-           eta = eta*localout.rho0/localout.reshist[reslen])
+    etanew = eta*localout.rho0/localout.reshist[reslen]
+    idid || (eta = etanew)
     ip += 1
     end
     #
     # Fixup the solution if preconditioning from the right.
     #
+    sol=y0
     if side == "left" || ptv == nothing
-        return (sol = gout.sol, reshist = gout.reshist, lits = gout.lits, 
+        return (sol = sol, reshist = gout.reshist, lits = gout.lits, 
               idid = gout.idid)
     else
-#        sol = y0
-#        gout.sol .= ptv(gout.sol, pdata)
-        sol = ptv(gout.sol, pdata)
+        sol .= ptv(sol, pdata)
         return (sol = sol, reshist = gout.reshist, lits = gout.lits, 
                idid = gout.idid)
     end
@@ -276,8 +278,10 @@ gmres_base(x0, b, atv, V, eta, pdata; orth="cgs2", lmaxit=-1)
 
 Base GMRES solver. This is GMRES(m) with no restarts and no preconditioning.
 The idea for the future is that it'll be called by kl_gmres (linear
-solver) which
-is the backend of klgmres.
+solver) which is the backend of klgmres.
+
+gmres_base overwrites x0 with the solution. This is one of many reasons
+that you should not invoke it directly.
 """
 function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
           
@@ -371,8 +375,8 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     mul!(sol, qmf, y, 1.0, 1.0)
     (rho <= errtol) || (idid = false)
     k > 0 || println("GMRES iteration terminates on entry.")
-#    return (rho0=rho0, sol = r, reshist = Float64.(reshist), 
-    return (rho0=rho0, sol = sol, reshist = Float64.(reshist), 
+#    return (rho0=rho0, sol = sol, reshist = Float64.(reshist), 
+    return (rho0=rho0, reshist = Float64.(reshist), 
         lits = k, idid = idid)
 end
 
@@ -402,7 +406,7 @@ end
 
 function outup(gout, localout, ip, klmaxit)
 idid = localout.idid
-sol = localout.sol
+#sol = localout.sol
 #
 # If I'm doing restarts I won't store the last residual
 # unless the iteration is successful. The reason is that
@@ -422,7 +426,8 @@ else
    append!(reshist,lreshist)
    lits = gout.lits + localout.lits
 end
-   gout = (sol = sol, reshist = reshist, lits = lits, 
+#   gout = (sol = sol, reshist = reshist, lits = lits, 
+   gout = (reshist = reshist, lits = lits, 
                    idid = idid)
 return gout
 end
