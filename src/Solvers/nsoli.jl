@@ -306,7 +306,7 @@ function nsoli(
         step .*= 0.0
         etag = forcing(itc, residratio, etag, ItRules, tol, resnorm)
         kout = Krylov_Step!(step, x, FS, FPS, ItRules, etag)
-        step = kout.step
+        step .= kout.step
         #
         # For GMRES you get 1 jac-vec per iteration and there is no jac-vec
         # for the initial inner iterate of zero
