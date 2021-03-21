@@ -163,15 +163,19 @@ function kl_gmres(
     pdata = nothing,
 )
     
-    # Build some precomputed data to inform KL_atv about preconditioning ...
+    # Build some precomputed data to inform KL_atv about 
+    # preconditioning ...
     # Do not overwrite the initial iterate or the right hand side.
     y0=copy(x0)
+    rhs=copy(b)
+    # gmres_base needs two vectors
+    linsol=zeros(size(b))
+    restmp=zeros(size(b))
+    #
     if side == "right" || ptv == nothing
         itsleft = false
-        rhs=copy(b)
     else
         itsleft = true
-        rhs=copy(b)
         rhs .= ptv(rhs, pdata)
     end
     (n, K) = size(V)
@@ -183,8 +187,8 @@ function kl_gmres(
     itvec = maxitvec(K, lmaxit)
     ip=1
     idid=false
-    linsol=zeros(size(b))
-    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv, linsol=linsol)
+    Kpdata = (pdata = pdata, side = side, ptv = ptv, 
+              atv = atv, linsol=linsol, restmp=restmp)
     gout=[]
     while ip <= length(itvec) && idid==false
     localout = gmres_base(y0, rhs, Katv, V, eta, Kpdata; 
@@ -196,8 +200,7 @@ function kl_gmres(
 # Update the termination criterion and the initial iterate for
 # a restart.
 #
-    idid || (y0.=localout.sol; 
-# rhs .=b; !itsleft || (rhs .= ptv(rhs, pdata) );
+    idid || (y0.=localout.sol;
            eta = eta*localout.rho0/localout.reshist[reslen])
     ip += 1
     end
@@ -263,8 +266,8 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     kmax = m 
     lmaxit == -1 || (kmax=lmaxit)
     kmax > m - 1 && error("lmaxit error in gmres_base")
-    r = copy(b)
-#r = b
+    r = pdata.restmp
+    r .= b
     T = eltype(V)
     h = zeros(T, kmax + 1, kmax + 1)
     c = zeros(kmax + 1)
@@ -296,6 +299,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     # Showtime!
     #
     @views V[:, 1] .= r / rho
+#    @views V[:, 1] ./=  rho
     beta = rho
     while (rho > errtol) && (k < kmax)
         k += 1
@@ -338,11 +342,14 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     #    mul!(r, qmf, y)
     #    r .= qmf*y    
     #    x .+= r
-    r .= x0
-    mul!(r, qmf, y, 1.0, 1.0)
+#    r .= x0
+#   mul!(r, qmf, y, 1.0, 1.0)
+    sol = x0
+    mul!(sol, qmf, y, 1.0, 1.0)
     (rho <= errtol) || (idid = false)
     k > 0 || println("GMRES iteration terminates on entry.")
-    return (rho0=rho0, sol = r, reshist = Float64.(reshist), 
+#    return (rho0=rho0, sol = r, reshist = Float64.(reshist), 
+    return (rho0=rho0, sol = sol, reshist = Float64.(reshist), 
         lits = k, idid = idid)
 end
 
