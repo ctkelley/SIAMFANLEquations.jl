@@ -23,6 +23,7 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
     lsolver == "gmres" || error(lsolver, " ", "not supported")
     Jvec = ItRules.Jvec
     Pvec = ItRules.Pvec
+    kl_store = ItRules.kl_store
     pdata = ItRules.pdata
     dx = ItRules.dx
     f = ItRules.f
@@ -62,6 +63,7 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
         FPS,
         etag,
         Pvecg;
+        kl_store = kl_store,
         pdata = kdata,
         side = side,
         lmaxit = lmaxit,

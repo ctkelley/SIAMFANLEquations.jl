@@ -82,6 +82,7 @@ end
 
 """
 Newton_Krylov_Init( x0, dx, F!, Jvec, Pvec, pside, lsolver, eta,
+    fixedeta, armmax, armfix, maxit, lmaxit, printerr, pdata, keepsolhist)
 
 Newton_Krylov_Init: set up nsoli
 """
@@ -93,6 +94,8 @@ function Newton_Krylov_Init( x0, dx, F!, Jvec, Pvec, pside, lsolver, eta,
     eta > 0 || error("eta must be positive")
     n = length(x0)
     x = copy(x0)
+    tmp1=zeros(n,); tmp2=zeros(n,); tmp3=zeros(n,); tmp4=zeros(n,);
+    kl_store = (tmp1, tmp2, tmp3, tmp4)
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     ItRules = (
         dx = dx,
@@ -101,6 +104,7 @@ function Newton_Krylov_Init( x0, dx, F!, Jvec, Pvec, pside, lsolver, eta,
         Pvec = Pvec,
         pside = pside,
         lsolver = lsolver,
+        kl_store = kl_store,
         eta = eta,
         fixedeta = fixedeta,
         lmaxit = lmaxit,

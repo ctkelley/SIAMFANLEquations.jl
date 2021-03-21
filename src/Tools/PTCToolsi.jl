@@ -20,6 +20,8 @@ function PTCKrylovinit(
     #
     n = length(x0)
     x = copy(x0)
+    tmp1=zeros(n,); tmp2=zeros(n,); tmp3=zeros(n,); tmp4=zeros(n,);
+    kl_store = (tmp1, tmp2, tmp3, tmp4)
     ItRules = (
         dx = dx,
         f = F!,
@@ -29,6 +31,7 @@ function PTCKrylovinit(
         PvecKnowspdt = PvecKnowspdt,
         pside = pside,
         lsolver = lsolver,
+        kl_store=kl_store,
         eta = eta,
         fixedeta = fixedeta,
         lmaxit = lmaxit,

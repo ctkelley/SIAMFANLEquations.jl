@@ -1,5 +1,5 @@
 """
-kl_gmres(x0, b, atv, V, eta, ptv=nothing; gmstore=zeros(1,1); 
+kl_gmres(x0, b, atv, V, eta, ptv=nothing; kl_store=zeros(1,1); 
              orth = "cgs2", side="right", lmaxit=-1, pdata=nothing)
 
 Gmres linear solver. Handles preconditioning and (coming soon) restarts. 
@@ -31,14 +31,15 @@ ptv:  preconditioner-vector product, which will also use pdata. The
 
 Keyword arguments
 
-gmstore: You have the option of giving me a N x 4 Float64 array
-         for the vectores gmres needs to store copies of x0 and b,
+kl_store: You may at some point have the option of giving me some room
+         for the vectors gmres needs to store copies of x0 and b,
          which I will not overwrite and a couple of vectors I use
          in the iteration. If you're only doing a linear solve, it
          does no harm to let me allocate those vectores in kl_gmres.
          If the solver is inside a loop, you should allocate this
          storage. nsoli and ptscoli allocate this without your having
-         to do anything.
+         to do anything. Right now I'm not clear on an efficient way
+         to do this.
 
 pdata: precomputed data. The default is nothing, but that ain't gonna
         work well for nonlinear equations.
@@ -166,7 +167,7 @@ function kl_gmres(
     V,
     eta,
     ptv = nothing;
-    gmstore = zeros(1,1),
+    kl_store = nothing,
     orth = "cgs2",
     side = "right",
     lmaxit = -1,
@@ -177,13 +178,13 @@ function kl_gmres(
     # preconditioning ...
     # Do not overwrite the initial iterate or the right hand side.
     n=length(x0)
-    (mg, ng) = size(gmstore)
-    if (mg == n) || (ng == 4)
-    y0=@views gmstore[:,1]
-    rhs=@views gmstore[:,2]
+    if kl_store != nothing
+    y0=kl_store[1]
+    y0.=x0
+    rhs=kl_store[2]
     rhs .= b
-    linsol=@views gmstore[:,3]
-    restmp=@views gmstore[:,4]
+    linsol=kl_store[3]
+    restmp=kl_store[4]
     else
     y0=copy(x0)
     rhs=copy(b)
@@ -220,7 +221,7 @@ function kl_gmres(
 # Update the termination criterion and the initial iterate for
 # a restart.
 #
-    idid || (y0.=localout.sol;
+    idid || (y0.=localout.sol; 
            eta = eta*localout.rho0/localout.reshist[reslen])
     ip += 1
     end
