@@ -224,8 +224,7 @@ function kl_gmres(
 # Update the termination criterion for the restart.
 # gmres_base overwrites y0 with the solution
 #
-    etanew = eta*localout.rho0/localout.reshist[reslen]
-    idid || (eta = etanew)
+    idid || (eta = eta*localout.rho0/localout.reshist[reslen])
     ip += 1
     end
     #
@@ -326,7 +325,6 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     # Showtime!
     #
     @views V[:, 1] .= r / rho
-#    @views V[:, 1] ./=  rho
     beta = rho
     while (rho > errtol) && (k < kmax)
         k += 1
@@ -369,13 +367,11 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     #    mul!(r, qmf, y)
     #    r .= qmf*y    
     #    x .+= r
-#    r .= x0
-#   mul!(r, qmf, y, 1.0, 1.0)
-    sol = x0
-    mul!(sol, qmf, y, 1.0, 1.0)
+#    sol = x0
+#    mul!(sol, qmf, y, 1.0, 1.0)
+    mul!(x0, qmf, y, 1.0, 1.0)
     (rho <= errtol) || (idid = false)
     k > 0 || println("GMRES iteration terminates on entry.")
-#    return (rho0=rho0, sol = sol, reshist = Float64.(reshist), 
     return (rho0=rho0, reshist = Float64.(reshist), 
         lits = k, idid = idid)
 end
@@ -406,7 +402,6 @@ end
 
 function outup(gout, localout, ip, klmaxit)
 idid = localout.idid
-#sol = localout.sol
 #
 # If I'm doing restarts I won't store the last residual
 # unless the iteration is successful. The reason is that
@@ -426,7 +421,6 @@ else
    append!(reshist,lreshist)
    lits = gout.lits + localout.lits
 end
-#   gout = (sol = sol, reshist = reshist, lits = lits, 
    gout = (reshist = reshist, lits = lits, 
                    idid = idid)
 return gout
