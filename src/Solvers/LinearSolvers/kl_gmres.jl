@@ -301,7 +301,9 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     #
     # Don't do the mat-vec if the intial iterate is zero
     #
+    y=pdata.linsol
     (norm(x0) == 0.0) || (r .-= atv(x0, pdata))
+#    (norm(x0) == 0.0) || (y .= atv(x0, pdata); r .-=y;)
     #
     #
     rho0 = norm(r)
@@ -377,7 +379,6 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
 end
 
 function giveapp!(c, s, vin, k)
-    nv = length(vin)
     for i = 1:k
         w1 = c[i] * vin[i] - s[i] * vin[i+1]
         w2 = s[i] * vin[i] + c[i] * vin[i+1]
