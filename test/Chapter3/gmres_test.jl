@@ -1,7 +1,7 @@
 """
 gmres_test.jl
 
-Tests the linear GMRES code, klgmres. 
+Tests the linear GMRES code, kl_gmres. 
 
 This is for CI only. Nothing to see here. Move along.
 """
