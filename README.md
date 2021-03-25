@@ -231,7 +231,9 @@ doi="10.5281/zenodo.4284687"
 
 ## Changes
 
-### Updates since 0.3.0
+### Updates since 0.2.3
+
+- **0.3.0 is the current release.** It has Newton-GMRES (nsoli.jl) and GMRES (kl_gmres). 
 
 - 0.3.1 happens when the notebook is closer to finished. As of 3/16/21
   - ptcsoli is working and covered by CI. A few examples are done.
