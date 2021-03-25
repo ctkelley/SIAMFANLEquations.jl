@@ -23,7 +23,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.2.3) (open source, MIT License, Creative Commons License)
-      - If you're using the Chapter 3 stuff you must the [IJulia notebook Master Branch](https://github.com/ctkelley/NotebookSIAMFANL). It has the new stuff and is not likely to break things in the older version of the package __today__.
+      - If you're using the Chapter 3 stuff in the notebook you must the [IJulia notebook Master Branch](https://github.com/ctkelley/NotebookSIAMFANL). It has the new stuff and is not likely to break things in the older version of the package __today__.
    3. This package (MIT License)<br>
    
 ## Readme Contents:
@@ -235,7 +235,7 @@ doi="10.5281/zenodo.4284687"
 
 - 0.3.1 happens when the notebook is closer to finished. As of 3/16/21
   - ptcsoli is working and covered by CI. A few examples are done.
-  - restarted GMRES is working and in CI, but the nsoli + restarted GMRES still needs testing
+  - restarted GMRES is working and in CI; need a few more examples for the notebook/real book
   - There's a lot of writing to be done before I can push 0.3.1
   
 - Small things
@@ -247,6 +247,12 @@ doi="10.5281/zenodo.4284687"
  - 0.3.2 goes out when the writing is mostly done and BiCGSTAB is finished. 
 
  - 0.3.3 goes out when Chapter 3 is finished. I'm hoping for early May. 
+
+ - 0.4.0 is Anderson acceleration.
+
+- 0.5.0 is Broyden's method
+
+- 0.6.0 is the version I'll announce on NA-Digest, exepect 0.5.x for x=0, ..., 9 before this happens.
 
    
 ## Funding
