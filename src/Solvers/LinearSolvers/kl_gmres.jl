@@ -2,7 +2,7 @@
 kl_gmres(x0, b, atv, V, eta, ptv=nothing; kl_store=zeros(1,1); 
              orth = "cgs2", side="right", lmaxit=-1, pdata=nothing)
 
-Gmres linear solver. Handles preconditioning and (coming soon) restarts. 
+Gmres linear solver. Handles preconditioning and restarts. 
 Uses gmres_base which is completely oblivious to these things.
 
 The deal is
@@ -21,7 +21,9 @@ atv:  matrix-vector product which depends on precomputed data pdta
 
 V:  Preallocated n x K array for the Krylov vectors. I store the initial
     normalized residual in column 1, so  you have at most K-1 iterations
-    before gmres\\_base returns a failure. kl\\_gmres will handle the restarts.
+    before gmres\\_base returns a failure. kl\\_gmres will handle the 
+    restarts and, if lmaxit > 0, keep going until you hit lmaxit GMRES
+    iterations.
 
 eta: Termination happens when ||b - Ax|| <= eta || b ||
 
