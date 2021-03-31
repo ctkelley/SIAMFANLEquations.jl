@@ -1,8 +1,8 @@
 """
 NsoliPDE(n; fixedeta=true, eta=.1)
 
-Solve the Elliptic PDE using nsol.jl on an n x n grid. You give me
-n and (optionally) sham and resdec and I return the output of nsol.
+Solve the Elliptic PDE using nsoli.jl on an n x n grid. You give me
+n and (optionally) the iteration paramaters and I return the output of nsoli.
 """
 function NsoliPDE(
     n;

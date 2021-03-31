@@ -1,7 +1,7 @@
 """
 nk_pde(n)
 
-Solve the Elliptic PDE using nsol.jl on an n x n grid. 
+Solve the Elliptic PDE using nsoli.jl on an n x n grid. 
 """
 function nk_pde()
     # Get some room for the residual
