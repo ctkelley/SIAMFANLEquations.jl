@@ -73,7 +73,9 @@ idid = status of the iteration
        true -> converged 
        false -> failed to converge
               
-# Examples: In these examples you have the matrix and use 
+# Examples: 
+
+In these examples you have the matrix and use 
 ```
 function atv(x, A)
     return A * x
