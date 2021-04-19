@@ -254,7 +254,7 @@ doi="10.5281/zenodo.4284687"
 
 - 0.5.0 is Broyden's method
 
-- 0.6.0 is the version I'll announce on NA-Digest, exepect 0.5.x for x=0, ..., 9 before this happens.
+- 0.6.0 is the version I'll announce on NA-Digest, expect 0.5.x for x=0, ..., 9 before this happens.
 
    
 ## Funding
