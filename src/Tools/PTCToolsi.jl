@@ -45,7 +45,7 @@ end
 """
 PTCUpdatei(FPS::AbstractArray, FS, x, ItRules, step, residm, pdt)
 
-Updates the PTC-Kyrlov iteration. This is a much simpler algorithm 
+Updates the PTC-Krylov iteration. This is a much simpler algorithm 
 than Newton-Krylov. In particular, there is no line search to manage.
 
 Do not mess with this function!

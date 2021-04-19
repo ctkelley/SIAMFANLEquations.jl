@@ -35,12 +35,24 @@ function ptciBeam(n=63, pdt0=1.e-2, PvecKnowspdt=true,
 return pout
 end
 
+
+
+"""
+ptvbeampdt(v, x, bdata)
+
+Precondition buckling beam problem with dt-aware preconditioner.
+"""
 function ptvbeampdt(v, x, bdata)
     pdt = bdata.pdtval[1]
     J = bdata.D2 + (1.0 / pdt) * I
     ptv = J \ v
 end
 
+"""
+ptvbeamp(v, x, bdata)
+
+Precondition buckling beam problem with inverse of high-order term.
+"""
 function ptvbeam(v, x, bdata)
     J = bdata.D2
     ptv = J \ v
