@@ -248,7 +248,7 @@ doi="10.5281/zenodo.4284687"
  
  - 0.3.2 goes out when the writing is mostly done and BiCGSTAB is finished. 
 
- - 0.3.3 goes out when Chapter 3 is finished. I'm hoping for early May. 
+ - 0.3.3 goes out when Chapter 3 is finished. I'm hoping for sometime in May. 
 
  - 0.4.0 is Anderson acceleration.
 
