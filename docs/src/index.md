@@ -18,14 +18,10 @@ I am writing my own Krylov solvers so they will communicate with
 the nonlinear solvers the way I want and so I can do GMRES my way 
 (classical Gram-Schmidt twice!). 
 
-Version 0.3.1 has PTC-GMRES
+Version 0.3.1 has PTC-GMRES and GMRES(m)
 
-Version 0.3.2 comes out when the low-storage Krylov solvers
-
-1. GMRES(m)
-2. BiCGstab linear solver
-
-are in there and the notebook section is done.
+Version 0.3.2 comes out when BiCGstab is done and the notebook section
+is done.
 
 Version 0.3.3 happens when the chapter is done for the print book and
 the maps print <--> notebook are complete.
