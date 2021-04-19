@@ -52,7 +52,8 @@ Do not mess with this function!
 
 
 """
-function PTCUpdatei(FPS::AbstractArray, FS, x, ItRules, step, residm, pdt, etag)
+#function PTCUpdatei(FPS::AbstractArray, FS, x, ItRules, step, residm, pdt, etag)
+function PTCUpdatei(FPS, FS, x, ItRules, step, residm, pdt, etag)
     T = eltype(FPS)
     F! = ItRules.f
     pdata = ItRules.pdata

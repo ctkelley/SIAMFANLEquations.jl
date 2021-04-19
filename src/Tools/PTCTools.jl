@@ -1,5 +1,5 @@
 """
-PTCUpdate(FPS::AbstractArray, FS, x, ItRules, step, residm, dt)
+PTCUpdate(FPS, FS, x, ItRules, step, residm, dt)
 
 Updates the PTC iteration. This is a much simpler algorithm that Newton.
 We update the Jacobian every iteration and there is no line search

@@ -73,7 +73,7 @@ Lottery_Winner(resnorm, tol)
 """
 function Lottery_Winner(resnorm, tol, printerr)
     if printerr
-        println("Congratulations, your initial iterate met the teremination criteria.")
+        println("Congratulations, your initial iterate met the termination criteria.")
         println("Residual norm = ", resnorm, " Tolerance = ", tol)
         println("  ")
     end
