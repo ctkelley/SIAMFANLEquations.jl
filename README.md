@@ -78,9 +78,10 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.3.1. I will tag this once PTC-Krylo
+This is version v0.3.1. 
       
 - nsol.jl, ptcsol.jl (Newton and pseudo-transient continuation) codes are stable. The scalar codes nsolsc.jl and ptcsol.jl are also stable.
+- kl_gmres.jl, the GMRES linear solver, is stable.
      
 The plan is, for x > 2.
 
@@ -177,7 +178,10 @@ The algorithms, listed by book chapter will be
         - Codes: __Done!__, Notebook: __done!__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsoli.jl and ptcsoli.jl
        - nsoli.jl __done__
-       - Linear solver(s): kl_gmres.jl (__90% done__) and kl_bicgstab.jl:
+       - ptcsoli.jl __done__
+       - Linear solver(s): kl_gmres.jl __done__ and kl_bicgstab.jl:
+       - Notebook: print book -> notebook __90% done__ only bicgstab is missing
+          - notebook -> printbook, __10% done__, writing left to do.
    - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
    - Chapter 5: Broyden's method: brsol.jl __0% done, but won't take long once I get started. I will do it the right way (ie from (Kel95)).__
    
@@ -233,12 +237,13 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.2.3
 
-- **0.3.0 is the current release.** It has Newton-GMRES (nsoli.jl) and GMRES (kl_gmres). 
+- **0.3.1 is the current release.** It has Newton-GMRES (nsoli.jl) Pseudo Transient GMRES, and GMRES (kl_gmres). 
 
-- 0.3.1 happens when the notebook is closer to finished. As of 3/16/21
-  - ptcsoli is working and covered by CI. A few examples are done.
-  - restarted GMRES is working and in CI; need a few more examples for the notebook/real book
-  - There's a lot of writing to be done before I can push 0.3.1
+- 0.3.1 has this new stuff since 0.3.0
+  - ptcsoli is working and covered by CI. 
+  - restarted GMRES is working and in CI.
+  - Notebook in much better shape, print book -> notebook mostly done.
+  
   
 - Small things
    - Default side for preconditer is now __"right"__. See section 3.1.3 for the story on this.
