@@ -23,6 +23,8 @@ You may dimension it as (n,) or (n,1). (n,) is best, but the
 solvers can deal with it either way.
 
 - FPS: preallocated storage for Jacobian. It is an N x N matrix\n
+  If FPS is sparse, you __must__ allocate storage for the diagonal so
+  I will have room to put 1/dt in there.
 
 - J!: Jacobian evaluation, the ! indicates that J! overwrites FPS, your
     preallocated storage for the Jacobian. If you leave this out the
