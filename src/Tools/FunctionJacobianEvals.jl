@@ -5,7 +5,10 @@
 #
 
 """
-PrepareJac!(FPS, FS, x, ItRules, dt=0) 
+For nsoli I use
+PrepareJac!(FPS, FS, x, ItRules)
+and for ptcsoli
+PrepareJac!(FPS, FS, x, ItRules, dt) 
 
 Compute the Jacobian and perform the factorization. If know something
 about the Jacobian, you can tell me what factorization to use. 
@@ -13,7 +16,19 @@ about the Jacobian, you can tell me what factorization to use.
 For example, if your Jacobian is spd, fact=cholesky! would work well.
 
 """
-function PrepareJac!(FPS, FS, x, ItRules, dt = 0)
+function PrepareJac!(FPS, FS, x, ItRules)
+    F! = ItRules.f
+    J! = ItRules.fp
+    dx = ItRules.dx
+    fact = ItRules.fact
+    pdata = ItRules.pdata
+    EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
+    TF = fact(FPS)
+    return TF
+end
+
+function PrepareJac!(FPS, FS, x, ItRules, dt)
+    dt > 0 || error("dt must be > 0 in PTC")
     F! = ItRules.f
     J! = ItRules.fp
     dx = ItRules.dx
@@ -23,6 +38,7 @@ function PrepareJac!(FPS, FS, x, ItRules, dt = 0)
     TF = fact(FPS)
     return TF
 end
+
 
 """
 PrepareJac!(fc, fm::Real, x, xm, ItRules, dt=0)
@@ -135,7 +151,6 @@ evaluates the Jacobian before the factorization in PrepareJac!
 
 """
 
-#function EvalJ!(FPS, FS, x, F!, J!, dx, pdata, dt = 0)
 function EvalJ!(FPS, FS, x, F!, J!, dx, pdata, dt)
     if J! != diffjac!
         JV!(FPS, FS, x, J!, pdata)
