@@ -16,7 +16,6 @@ for a reason. FPF and FPS do not have the same type, even though they
 share storage. So, FPS=PrepareJac!(FPS, FS, ...) will break things.
 
 """
-#function PTCUpdate(FPS::AbstractArray, FS, x, ItRules, step, residm, dt)
 function PTCUpdate(FPS, FS, x, ItRules, step, residm, dt)
     T = eltype(FPS)
     F! = ItRules.f

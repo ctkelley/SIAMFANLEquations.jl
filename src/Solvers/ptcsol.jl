@@ -188,6 +188,7 @@ function ptcsol(
     jfact = klfact,
     printerr = true,
     keepsolhist = false,
+    jknowsdt = false
 )
     itc = 0
     idid = true
@@ -197,7 +198,7 @@ function ptcsol(
     #   the problem so it's easy to pass them around. 
     #
     (ItRules, x, n, solhist) = PTCinit(x0, dx, F!, J!, pdt0, maxit, 
-                     pdata, jfact, keepsolhist)
+                     pdata, jfact, keepsolhist, jknowsdt)
     #
     # First Evaluation of the function. Initialize the iteration history.
     # Fix the tolerances for convergence and define the derivative FPF

@@ -38,7 +38,7 @@ function Newtoninit(
         maxit = maxit,
         printerr = printerr,
         pdata = pdata,
-        fact = jfact,
+        fact = jfact
     )
     return (ItRules, x, n, solhist)
 end
@@ -68,7 +68,8 @@ PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist)
 
 PTCinit: get organized for PTC 
 """
-function PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist)
+function PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist,
+                  jknowsdt=false)
     #
     #   Initialize the iteration.
     #
@@ -76,7 +77,8 @@ function PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist)
     x = copy(x0)
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     ItRules =
-        (dx = dx, f = F!, fp = J!, pdt0 = pdt0, maxit = maxit, pdata = pdata, fact = jfact)
+        (dx = dx, f = F!, fp = J!, pdt0 = pdt0, maxit = maxit, 
+          pdata = pdata, fact = jfact, jknowsdt=jknowsdt)
     return (ItRules, x, n, solhist)
 end
 

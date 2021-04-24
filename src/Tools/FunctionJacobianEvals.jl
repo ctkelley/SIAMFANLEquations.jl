@@ -135,7 +135,8 @@ evaluates the Jacobian before the factorization in PrepareJac!
 
 """
 
-function EvalJ!(FPS, FS, x, F!, J!, dx, pdata, dt = 0)
+#function EvalJ!(FPS, FS, x, F!, J!, dx, pdata, dt = 0)
+function EvalJ!(FPS, FS, x, F!, J!, dx, pdata, dt)
     if J! != diffjac!
         JV!(FPS, FS, x, J!, pdata)
     else
@@ -145,6 +146,15 @@ function EvalJ!(FPS, FS, x, F!, J!, dx, pdata, dt = 0)
         FPS .= FPS + (1.0 / dt) * I
     end
 end
+
+function EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
+    if J! != diffjac!
+        JV!(FPS, FS, x, J!, pdata)
+    else
+        diffjac!(FPS, FS, F!, x, dx, pdata)
+    end
+end
+
 
 """
    diffjac!(FPS::Array{T,2}, FS, F!, x, dx, pdata) where T <: Real
