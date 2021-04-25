@@ -1,7 +1,7 @@
 """
 ptcsol(F!, x0, FS, FPS, J! = diffjac!; rtol=1.e-6, atol=1.e-12,
                maxit=20, pdt0=1.e-6, dx=1.e-7, pdata = nothing, jfact = klfact,
-               printerr = true, keepsolhist = false)
+               printerr = true, keepsolhist = false, jknowsdt = false)
 
 C. T. Kelley, 2020
 
@@ -33,6 +33,12 @@ solvers can deal with it either way.
     (FP,FV, x) must be the argument list, even if FP does not need FV.
     One reason for this is that the finite-difference Jacobian
     does and that is the default in the solver.
+
+    You may have a better way to add (1/dt) I to your Jacobian. If you
+    want to do this yourself then your Jacobian function should be
+    FP=J!(FP,FV,x,dt) or FP=J!(FP,FV,x,dt,pdata) and return
+    F'(x) + (1.0/dt)*I. \n
+    You will also have to set the kwarg __jknowsdt__ to true.
 
 - Precision: Lemme tell ya 'bout precision. I designed this code for 
     full precision
@@ -108,6 +114,13 @@ keepsolhist: default = false\n
 Set this to true to get the history of the iteration in the output
 tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
+
+jknowsdt: default = false\n
+Set this to true if your Jacobian evaluation function retursn
+F'(x) + (1/dt) I. You'll also need to follow the rules above for
+the Jacobian evaluation function. I do not recommend this and if
+your Jacobian is anything other than a matrix I can't promise
+anything. I've tested this for matrix outputs only.
 
 Output:\n
 A named tuple (solution, functionval, history, stats, idid,

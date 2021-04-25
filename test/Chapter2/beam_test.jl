@@ -12,6 +12,11 @@ function beam_test()
     beamtdout = (length(fhist) == 6) && (norm(fhistt, Inf) < 5.e-5)
     beamtdout || println("error in beam_test beamtdout")
     (pout, nout) = ptcBeam(10, 100)
+    pout2 = ptcBeam(10,100; jknowsdt=true)
+    kdtdiff=norm(pout.solution-pout2.solution,Inf) + 
+     norm(pout2.history-pout.history,Inf)
+    kdtok=(kdtdiff < 1.e-14)
+    kdtok || println("error is knowsdt test")
     nsolp = norm(pout.solution)
     nsoln = norm(nout.solution)
     itp = length(pout.history)
@@ -19,5 +24,5 @@ function beam_test()
     pnormok || println("error in beam_test pnromok")
     presok = (itp < 100) && (pout.history[itp] < 1.e-10)
     presok || println("error in beam_test presok")
-    return beamtdout && pnormok && presok
+    return beamtdout && pnormok && presok && kdtok
 end

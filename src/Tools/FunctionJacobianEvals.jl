@@ -33,8 +33,9 @@ function PrepareJac!(FPS, FS, x, ItRules, dt)
     J! = ItRules.fp
     dx = ItRules.dx
     fact = ItRules.fact
+    jknowsdt = ItRules.jknowsdt
     pdata = ItRules.pdata
-    EvalJ!(FPS, FS, x, F!, J!, dx, pdata, dt)
+    EvalJ!(FPS, FS, x, F!, J!, dx, dt, pdata, jknowsdt)
     TF = fact(FPS)
     return TF
 end
@@ -130,7 +131,12 @@ end
 
 
 """
+If you let me handle dt in PTC 
 JV!(FPS, FS, x, J!, pdata)
+
+
+If you put the (1/dt) * I in the Jacobian yourself
+JV!(FPS, FS, x, dt, J!, pdata)
 
 This is a wrapper for the Jacobian evaluation that figures out if
 you are using precomputed data or not. No reason to get excited
@@ -140,25 +146,43 @@ function JV!(FPS, FS, x, J!, pdata)
     J!(FPS, FS, x, pdata)
 end
 
+function JV!(FPS, FS, x, dt, J!, pdata)
+    J!(FPS, FS, x, dt, pdata)
+end
+
+function JV!(FPS, FS, x, dt, J!, q::Nothing)
+    J!(FPS, FS, x, dt)
+end
+
 function JV!(FPS, FS, x, J!, q::Nothing)
     J!(FPS, FS, x)
 end
 
+
 """
-EvalJ!(FPS, FS, x, F!, J!, dx, pdata,dt=0)
+for Newton
+EvalJ!(FPS, FS, x, F!, J!, dx, pdata) 
+
+for PTC
+EvalJ!(FPS, FS, x, F!, J!, dx, dt, pdata) 
 
 evaluates the Jacobian before the factorization in PrepareJac!
 
 """
 
-function EvalJ!(FPS, FS, x, F!, J!, dx, pdata, dt)
-    if J! != diffjac!
-        JV!(FPS, FS, x, J!, pdata)
+function EvalJ!(FPS, FS, x, F!, J!, dx, dt, pdata, jknowsdt)
+#    if J! != diffjac!
+#        JV!(FPS, FS, x, J!, pdata)
+#    else
+#        diffjac!(FPS, FS, F!, x, dx, pdata)
+#    end
+    if jknowsdt
+    FPS=JV!(FPS, FS, x, dt, J!, pdata)
     else
-        diffjac!(FPS, FS, F!, x, dx, pdata)
-    end
+    EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
     if dt > 0
         FPS .= FPS + (1.0 / dt) * I
+    end
     end
 end
 
