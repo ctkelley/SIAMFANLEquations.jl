@@ -180,9 +180,7 @@ function EvalJ!(FPS, FS, x, F!, J!, dx, dt, pdata, jknowsdt)
     FPS=JV!(FPS, FS, x, dt, J!, pdata)
     else
     EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
-    if dt > 0
-        FPS .= FPS + (1.0 / dt) * I
-    end
+    FPS .= FPS + (1.0 / dt) * I
     end
 end
 

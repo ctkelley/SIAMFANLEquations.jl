@@ -12,6 +12,7 @@ include("Chapter2/bvp_test.jl")
 include("Chapter2/beam_test.jl")
 include("Chapter2/pde_lin_test.jl")
 include("Chapter2/nsolpde_test.jl")
+include("Chapter2/knowsdt_test.jl")
 include("Chapter3/gmres_test.jl")
 include("Chapter3/Krylov_pde_test.jl")
 include("Chapter3/ptcKrylovTest.jl")
@@ -29,6 +30,7 @@ end
     @test heq_lu_test()
     @test pde_lin_test(31)
     @test nsolpde_test(31)
+    @test knowsdt_test()
 end
 @testset "Newton-Krylov solvers: Chapter 3" begin
     @test nk_test()
