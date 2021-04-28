@@ -1,5 +1,5 @@
 """
-kl_gmres(x0, b, atv, V, eta, ptv=nothing; kl_store=zeros(1,1); 
+kl\\_gmres(x0, b, atv, V, eta, ptv=nothing; kl_store=zeros(1,1); 
              orth = "cgs2", side="right", lmaxit=-1, pdata=nothing)
 
 Gmres linear solver. Handles preconditioning and restarts. 
@@ -33,11 +33,11 @@ ptv:  preconditioner-vector product, which will also use pdata. The
 
 Keyword arguments
 
-kl_store: You may at some point have the option of giving me some room
+kl\\_store: You may at some point have the option of giving me some room
          for the vectors gmres needs to store copies of x0 and b,
          which I will not overwrite and a couple of vectors I use
          in the iteration. If you're only doing a linear solve, it
-         does no harm to let me allocate those vectores in kl_gmres.
+         does no harm to let me allocate those vectores in kl\\_gmres.
          If the solver is inside a loop, you should allocate this
          storage. nsoli and ptscoli allocate this without your having
          to do anything. Right now I'm not clear on an efficient way
