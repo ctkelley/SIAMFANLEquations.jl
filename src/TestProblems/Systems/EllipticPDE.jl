@@ -25,13 +25,13 @@ function pdeF!(FV, u, pdata)
     CV = pdata.CV
     rhs = pdata.RHS
     p1 = pdata.jvect1
-#    FV .= D2 * u + 20.0 * u .* (CV * u) - rhs
-#    FV .= D2*u
-#    p1 .= CV*u
+    #    FV .= D2 * u + 20.0 * u .* (CV * u) - rhs
+    #    FV .= D2*u
+    #    p1 .= CV*u
     mul!(FV, D2, u)
     mul!(p1, CV, u)
     p1 .*= 20.0
-    p1 .*=u
+    p1 .*= u
     FV .+= p1
     FV .-= rhs
 end
@@ -78,14 +78,14 @@ function Jvec2d(v, FS, u, pdata)
     CT = pdata.CT
     jvec = pdata.jvec
     p1 = pdata.jvect1
-#    jvec .= D2 * v
-#    p1 .= CV * u
+    #    jvec .= D2 * v
+    #    p1 .= CV * u
     mul!(jvec, D2, v)
     mul!(p1, CV, u)
-    p1 .*=20.0
+    p1 .*= 20.0
     p1 .*= v
     jvec .+= p1
-#    p1 .= CV * v
+    #    p1 .= CV * v
     mul!(p1, CV, v)
     p1 .*= 20.0
     p1 .*= u
@@ -130,11 +130,11 @@ function pdeinit(n)
     # The right side of the equation
     RHS = d2v + 20.0 * uv .* (dxv + dyv)
     # preallocate a few vectors
-    jvec = zeros(n2,)
-    jvect1 = zeros(n2,)
+    jvec = zeros(n2)
+    jvect1 = zeros(n2)
     # Pack it and ship it.
-    pdedata = (D2 = D2, CV = CV, CT = CT, RHS = RHS, jvec, jvect1,
-               fdata = fdata, uexact = uexact)
+    pdedata =
+        (D2 = D2, CV = CV, CT = CT, RHS = RHS, jvec, jvect1, fdata = fdata, uexact = uexact)
 end
 
 """

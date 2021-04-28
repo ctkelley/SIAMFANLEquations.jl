@@ -171,16 +171,16 @@ evaluates the Jacobian before the factorization in PrepareJac!
 """
 
 function EvalJ!(FPS, FS, x, F!, J!, dx, dt, pdata, jknowsdt)
-#    if J! != diffjac!
-#        JV!(FPS, FS, x, J!, pdata)
-#    else
-#        diffjac!(FPS, FS, F!, x, dx, pdata)
-#    end
+    #    if J! != diffjac!
+    #        JV!(FPS, FS, x, J!, pdata)
+    #    else
+    #        diffjac!(FPS, FS, F!, x, dx, pdata)
+    #    end
     if jknowsdt
-    FPS=JV!(FPS, FS, x, dt, J!, pdata)
+        FPS = JV!(FPS, FS, x, dt, J!, pdata)
     else
-    EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
-    FPS .= FPS + (1.0 / dt) * I
+        EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
+        FPS .= FPS + (1.0 / dt) * I
     end
 end
 

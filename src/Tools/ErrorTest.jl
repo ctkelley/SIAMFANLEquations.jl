@@ -36,4 +36,3 @@ function PTCOK(resnorm, tol, toosoon, ItRules, printerr)
     end
     return (idid, errcode)
 end
-

@@ -6,12 +6,11 @@ Solves the buckling beam problem with ptcsoli. You can play
 - pseudo time step dependent preconditioning
 - relationship of pdt0 to n (hint, it's not mesh-independent)
 """
-function ptciBeam(n=63, pdt0=1.e-2, PvecKnowspdt=true, 
-                 pside="right")
+function ptciBeam(n = 63, pdt0 = 1.e-2, PvecKnowspdt = true, pside = "right")
     lambda = 20.0
     maxit = 1000
-    pdt0 = .01
-    PvecKnowspdt ? Pvec=ptvbeampdt : Pvec = ptvbeam
+    pdt0 = 0.01
+    PvecKnowspdt ? Pvec = ptvbeampdt : Pvec = ptvbeam
     bdata = beaminit(n, 0.0, lambda)
     x = bdata.x
     u0 = x .* (1.0 .- x) .* (2.0 .- x)
@@ -29,10 +28,10 @@ function ptciBeam(n=63, pdt0=1.e-2, PvecKnowspdt=true,
         rtol = 1.e-10,
         maxit = maxit,
         Pvec = Pvec,
-        PvecKnowspdt=PvecKnowspdt,
-        pside = pside
+        PvecKnowspdt = PvecKnowspdt,
+        pside = pside,
     )
-return pout
+    return pout
 end
 
 
@@ -57,7 +56,3 @@ function ptvbeam(v, x, bdata)
     J = bdata.D2
     ptv = J \ v
 end
-
-
-
-

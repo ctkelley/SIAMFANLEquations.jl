@@ -20,7 +20,10 @@ function PTCKrylovinit(
     #
     n = length(x0)
     x = copy(x0)
-    tmp1=zeros(n,); tmp2=zeros(n,); tmp3=zeros(n,); tmp4=zeros(n,);
+    tmp1 = zeros(n)
+    tmp2 = zeros(n)
+    tmp3 = zeros(n)
+    tmp4 = zeros(n)
     kl_store = (tmp1, tmp2, tmp3, tmp4)
     ItRules = (
         dx = dx,
@@ -31,7 +34,7 @@ function PTCKrylovinit(
         PvecKnowspdt = PvecKnowspdt,
         pside = pside,
         lsolver = lsolver,
-        kl_store=kl_store,
+        kl_store = kl_store,
         eta = eta,
         fixedeta = fixedeta,
         lmaxit = lmaxit,
@@ -61,12 +64,12 @@ function PTCUpdatei(FPS, FS, x, ItRules, step, residm, pdt, etag)
     #
     #    step .= -(FPF \ FS)
     step .*= 0.0
-#
-#   If the preconditioner can use pdt, tell it what pdt is.
-#
+    #
+    #   If the preconditioner can use pdt, tell it what pdt is.
+    #
     PvecKnowspdt = ItRules.PvecKnowspdt
     pdt2pdata(PvecKnowspdt, pdt, pdata)
-#
+    #
     kout = Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt)
     Lstats = kout.Lstats
     step = kout.step
@@ -92,14 +95,17 @@ put the value where it's supposed to be inside the precomputed data.
 I also check that this has been done right and complain if not.
 """
 function pdt2pdata(PvecKnowspdt, pdt, pdata)
-PvecKnowspdt || return
-# Once you're here you've told me that the preconditioner is pdt-aware.
-# I will look for the array pdtval before I write to it.
-T=typeof(pdata)
-Pnames = fieldnames(T)
-valok = false
-for ip in Pnames
-   valok = valok || :pdtval == ip
-end
-valok ?  (pdata.pdtval[1] = pdt) :  error("PvecKnowspdt is set to true, but there the array pdtval is not a field of pdata. Check the docstrings.")
+    PvecKnowspdt || return
+    # Once you're here you've told me that the preconditioner is pdt-aware.
+    # I will look for the array pdtval before I write to it.
+    T = typeof(pdata)
+    Pnames = fieldnames(T)
+    valok = false
+    for ip in Pnames
+        valok = valok || :pdtval == ip
+    end
+    valok ? (pdata.pdtval[1] = pdt) :
+    error(
+        "PvecKnowspdt is set to true, but there the array pdtval is not a field of pdata. Check the docstrings.",
+    )
 end

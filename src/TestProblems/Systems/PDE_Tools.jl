@@ -109,7 +109,7 @@ function fishinit(n)
     fishu = zeros(n, n)
     TD = newT(n)
     T = lu!(TD)
-    fdata = (ST = ST, uhat = uhat, utmp = zstore, T = T, fishu=fishu)
+    fdata = (ST = ST, uhat = uhat, utmp = zstore, T = T, fishu = fishu)
     return fdata
 end
 

@@ -18,7 +18,7 @@ function Newtoninit(
     printerr,
     pdata,
     jfact,
-    keepsolhist
+    keepsolhist,
 )
     #
     #   Initialize the iteration.
@@ -38,7 +38,7 @@ function Newtoninit(
         maxit = maxit,
         printerr = printerr,
         pdata = pdata,
-        fact = jfact
+        fact = jfact,
     )
     return (ItRules, x, n, solhist)
 end
@@ -68,17 +68,23 @@ PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist)
 
 PTCinit: get organized for PTC 
 """
-function PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist,
-                  jknowsdt=false)
+function PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist, jknowsdt = false)
     #
     #   Initialize the iteration.
     #
     n = length(x0)
     x = copy(x0)
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
-    ItRules =
-        (dx = dx, f = F!, fp = J!, pdt0 = pdt0, maxit = maxit, 
-          pdata = pdata, fact = jfact, jknowsdt=jknowsdt)
+    ItRules = (
+        dx = dx,
+        f = F!,
+        fp = J!,
+        pdt0 = pdt0,
+        maxit = maxit,
+        pdata = pdata,
+        fact = jfact,
+        jknowsdt = jknowsdt,
+    )
     return (ItRules, x, n, solhist)
 end
 
@@ -88,15 +94,34 @@ Newton_Krylov_Init( x0, dx, F!, Jvec, Pvec, pside, lsolver, eta,
 
 Newton_Krylov_Init: set up nsoli
 """
-function Newton_Krylov_Init( x0, dx, F!, Jvec, Pvec, pside, lsolver, eta,
-    fixedeta, armmax, armfix, maxit, lmaxit, printerr, pdata, keepsolhist)
+function Newton_Krylov_Init(
+    x0,
+    dx,
+    F!,
+    Jvec,
+    Pvec,
+    pside,
+    lsolver,
+    eta,
+    fixedeta,
+    armmax,
+    armfix,
+    maxit,
+    lmaxit,
+    printerr,
+    pdata,
+    keepsolhist,
+)
     #
     #   Initialize the iteration.
     #
     eta > 0 || error("eta must be positive")
     n = length(x0)
     x = copy(x0)
-    tmp1=zeros(n,); tmp2=zeros(n,); tmp3=zeros(n,); tmp4=zeros(n,);
+    tmp1 = zeros(n)
+    tmp2 = zeros(n)
+    tmp3 = zeros(n)
+    tmp4 = zeros(n)
     kl_store = (tmp1, tmp2, tmp3, tmp4)
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     ItRules = (
@@ -134,4 +159,3 @@ function solhistinit(n, maxit, x)
     @views solhist[:, 1] .= x
     return solhist
 end
-

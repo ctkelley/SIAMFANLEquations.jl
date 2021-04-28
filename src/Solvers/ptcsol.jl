@@ -8,6 +8,9 @@ C. T. Kelley, 2020
 Julia versions of the nonlinear solvers from my SIAM books. 
 Herewith: some new stuff ==> ptcsol
 
+PTC finds the steady-state solution of u' = -F(u), u(0) = u_0.
+The - sign is a convention.
+
 You must allocate storage for the function and Jacobian in advance
 --> in the calling program <-- ie. in FS and FPS
 
@@ -201,7 +204,7 @@ function ptcsol(
     jfact = klfact,
     printerr = true,
     keepsolhist = false,
-    jknowsdt = false
+    jknowsdt = false,
 )
     itc = 0
     idid = true
@@ -210,8 +213,8 @@ function ptcsol(
     #   As with the other codes, ItRules packages all the details of
     #   the problem so it's easy to pass them around. 
     #
-    (ItRules, x, n, solhist) = PTCinit(x0, dx, F!, J!, pdt0, maxit, 
-                     pdata, jfact, keepsolhist, jknowsdt)
+    (ItRules, x, n, solhist) =
+        PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist, jknowsdt)
     #
     # First Evaluation of the function. Initialize the iteration history.
     # Fix the tolerances for convergence and define the derivative FPF

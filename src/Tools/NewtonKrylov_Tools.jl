@@ -19,7 +19,7 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
     (nk, mk) = size(FPS)
     n = length(step)
     n == nk || error("Krylov vectors wrong length")
-#    lmaxit < mk || error("Restarts not enabled yet")
+    #    lmaxit < mk || error("Restarts not enabled yet")
     lsolver == "gmres" || error(lsolver, " ", "not supported")
     Jvec = ItRules.Jvec
     Pvec = ItRules.Pvec
@@ -28,10 +28,10 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
     dx = ItRules.dx
     f = ItRules.f
     fixedeta = ItRules.fixedeta
-#    s0 = zeros(size(step))
-#
-#   Initial iterate for step is zero.
-#
+    #    s0 = zeros(size(step))
+    #
+    #   Initial iterate for step is zero.
+    #
     s0 = step
     s0 .*= 0.0
     side = ItRules.pside
@@ -111,18 +111,18 @@ end
 function EvalJV(JV, v, FS, xc, pdt, q::Nothing)
     atv = JV(v, FS, xc)
     ptcmv!(atv, v, pdt)
-#    if pdt > 0
-#        atv .= atv + (1.0 / pdt) * v
-#    end
+    #    if pdt > 0
+    #        atv .= atv + (1.0 / pdt) * v
+    #    end
     return atv
 end
 
 function EvalJV(JV, v, FS, xc, pdt, pdata)
     atv = JV(v, FS, xc, pdata)
     ptcmv!(atv, v, pdt)
-#    if pdt > 0
-#        atv .= atv + (1.0 / pdt) * v
-#    end
+    #    if pdt > 0
+    #        atv .= atv + (1.0 / pdt) * v
+    #    end
     return atv
 end
 
@@ -139,15 +139,15 @@ function dirder(v, kdata)
     EvalF!(F, FPP, delx, pdata)
     atv = (FPP - FS) / dx
     ptcmv!(atv, v, pdt)
-#    if pdt > 0
-#        atv .= atv + (1.0 / pdt) * v
-#    end
+    #    if pdt > 0
+    #        atv .= atv + (1.0 / pdt) * v
+    #    end
     return atv
 end
 
 function ptcmv!(atv, v, pdt)
-(pdt == 0.0) || (atv .= atv + (1.0 / pdt) * v)
-#return atv
+    (pdt == 0.0) || (atv .= atv + (1.0 / pdt) * v)
+    #return atv
 end
 
 """

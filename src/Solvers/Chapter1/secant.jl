@@ -126,8 +126,8 @@ function secant(
     resnorm = abs(fc)
     jfact = nothing
     stagflag = stagnationok && (armmax == 0)
-    (ItRules, x, n) = Secantinit(x0, dx, f, solver, 
-                armmax, armfix, maxit, printerr, pdata, jfact)
+    (ItRules, x, n) =
+        Secantinit(x0, dx, f, solver, armmax, armfix, maxit, printerr, pdata, jfact)
     #
     # Initialize the iteration statistics
     #

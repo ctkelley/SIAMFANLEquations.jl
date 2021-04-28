@@ -149,4 +149,3 @@ function CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist = [])
         )
     end
 end
-

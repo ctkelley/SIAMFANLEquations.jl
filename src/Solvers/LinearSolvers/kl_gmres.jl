@@ -177,24 +177,24 @@ function kl_gmres(
     lmaxit = -1,
     pdata = nothing,
 )
-    
+
     # Build some precomputed data to inform KL_atv about 
     # preconditioning ...
     # Do not overwrite the initial iterate or the right hand side.
-    n=length(x0)
+    n = length(x0)
     if kl_store != nothing
-    y0=kl_store[1]
-    y0.=x0
-    rhs=kl_store[2]
-    rhs .= b
-    linsol=kl_store[3]
-    restmp=kl_store[4]
+        y0 = kl_store[1]
+        y0 .= x0
+        rhs = kl_store[2]
+        rhs .= b
+        linsol = kl_store[3]
+        restmp = kl_store[4]
     else
-    y0=copy(x0)
-    rhs=copy(b)
-    # gmres_base needs two vectors
-    linsol=zeros(size(b))
-    restmp=zeros(size(b))
+        y0 = copy(x0)
+        rhs = copy(b)
+        # gmres_base needs two vectors
+        linsol = zeros(size(b))
+        restmp = zeros(size(b))
     end
     #
     if side == "right" || ptv == nothing
@@ -210,38 +210,36 @@ function kl_gmres(
     lmaxit > 0 || (lmaxit = K - 1)
     #
     itvec = maxitvec(K, lmaxit)
-    ip=1
-    idid=false
-    Kpdata = (pdata = pdata, side = side, ptv = ptv, 
-              atv = atv, linsol=linsol, restmp=restmp)
-    gout=[]
-#
-# Restarted GMRES loop. 
-#
-    while ip <= length(itvec) && idid==false
-    localout = gmres_base(y0, rhs, Katv, V, eta, Kpdata; 
-                         lmaxit=itvec[ip], orth = orth)
-    idid=localout.idid
-    gout=outup(gout, localout, ip, klmaxit)
-    reslen=length(localout.reshist)
-#
-# Update the termination criterion for the restart.
-# gmres_base overwrites y0 with the solution
-#
-    idid || (eta = eta*localout.rho0/localout.reshist[reslen])
-    ip += 1
+    ip = 1
+    idid = false
+    Kpdata =
+        (pdata = pdata, side = side, ptv = ptv, atv = atv, linsol = linsol, restmp = restmp)
+    gout = []
+    #
+    # Restarted GMRES loop. 
+    #
+    while ip <= length(itvec) && idid == false
+        localout =
+            gmres_base(y0, rhs, Katv, V, eta, Kpdata; lmaxit = itvec[ip], orth = orth)
+        idid = localout.idid
+        gout = outup(gout, localout, ip, klmaxit)
+        reslen = length(localout.reshist)
+        #
+        # Update the termination criterion for the restart.
+        # gmres_base overwrites y0 with the solution
+        #
+        idid || (eta = eta * localout.rho0 / localout.reshist[reslen])
+        ip += 1
     end
     #
     # Fixup the solution if preconditioning from the right.
     #
-    sol=y0
+    sol = y0
     if side == "left" || ptv == nothing
-        return (sol = sol, reshist = gout.reshist, lits = gout.lits, 
-              idid = gout.idid)
+        return (sol = sol, reshist = gout.reshist, lits = gout.lits, idid = gout.idid)
     else
         sol .= ptv(sol, pdata)
-        return (sol = sol, reshist = gout.reshist, lits = gout.lits, 
-               idid = gout.idid)
+        return (sol = sol, reshist = gout.reshist, lits = gout.lits, idid = gout.idid)
     end
 end
 
@@ -252,8 +250,8 @@ Builds a matrix-vector product to hand to gmres_base. Puts the preconditioner
 in there on the correct side.
 """
 function Katv(x, Kpdata)
-#    y=copy(x)
-    y=Kpdata.linsol
+    #    y=copy(x)
+    y = Kpdata.linsol
     pdata = Kpdata.pdata
     ptv = Kpdata.ptv
     atv = Kpdata.atv
@@ -286,15 +284,15 @@ solver) which is the backend of klgmres.
 gmres_base overwrites x0 with the solution. This is one of many reasons
 that you should not invoke it directly.
 """
-function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
-          
+function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
+
     (n, m) = size(V)
     #
     # Allocate for Givens
     #
     #    kmax = m - 1
-    kmax = m 
-    lmaxit == -1 || (kmax=lmaxit)
+    kmax = m
+    lmaxit == -1 || (kmax = lmaxit)
     kmax > m - 1 && error("lmaxit error in gmres_base")
     r = pdata.restmp
     r .= b
@@ -305,13 +303,13 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     #
     # Don't do the mat-vec if the intial iterate is zero
     #
-    y=pdata.linsol
+    y = pdata.linsol
     (norm(x0) == 0.0) || (r .-= atv(x0, pdata))
-#    (norm(x0) == 0.0) || (y .= atv(x0, pdata); r .-=y;)
+    #    (norm(x0) == 0.0) || (y .= atv(x0, pdata); r .-=y;)
     #
     #
     rho0 = norm(r)
-    rho=rho0
+    rho = rho0
     #
     # Initial residual = 0? This can't be good.
     #
@@ -373,13 +371,12 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit=-1)
     #    mul!(r, qmf, y)
     #    r .= qmf*y    
     #    x .+= r
-#    sol = x0
-#    mul!(sol, qmf, y, 1.0, 1.0)
+    #    sol = x0
+    #    mul!(sol, qmf, y, 1.0, 1.0)
     mul!(x0, qmf, y, 1.0, 1.0)
     (rho <= errtol) || (idid = false)
     k > 0 || println("GMRES iteration terminates on entry.")
-    return (rho0=rho0, reshist = Float64.(reshist), 
-        lits = k, idid = idid)
+    return (rho0 = rho0, reshist = Float64.(reshist), lits = k, idid = idid)
 end
 
 function giveapp!(c, s, vin, k)
@@ -397,37 +394,35 @@ end
 #
 
 function maxitvec(K, lmaxit)
-levels=Int.(ceil(lmaxit/(K-1)))
-itvec=ones(Int,levels);
-itvec[1:levels-1] .= K-1;
-remainder=lmaxit-(levels-1)*(K-1) ;
-itvec[levels]=remainder
-return itvec
+    levels = Int.(ceil(lmaxit / (K - 1)))
+    itvec = ones(Int, levels)
+    itvec[1:levels-1] .= K - 1
+    remainder = lmaxit - (levels - 1) * (K - 1)
+    itvec[levels] = remainder
+    return itvec
 end
 
 function outup(gout, localout, ip, klmaxit)
-idid = localout.idid
-#
-# If I'm doing restarts I won't store the last residual
-# unless the iteration is successful. The reason is that
-# I will add that residual to the list when I restart.
-#
-if idid || klmaxit==-1
-    lreshist=localout.reshist
-else
-   lk=length(localout.reshist)
-   lreshist=localout.reshist[1:lk-1]
+    idid = localout.idid
+    #
+    # If I'm doing restarts I won't store the last residual
+    # unless the iteration is successful. The reason is that
+    # I will add that residual to the list when I restart.
+    #
+    if idid || klmaxit == -1
+        lreshist = localout.reshist
+    else
+        lk = length(localout.reshist)
+        lreshist = localout.reshist[1:lk-1]
+    end
+    if ip == 1
+        reshist = lreshist
+        lits = localout.lits
+    else
+        reshist = gout.reshist
+        append!(reshist, lreshist)
+        lits = gout.lits + localout.lits
+    end
+    gout = (reshist = reshist, lits = lits, idid = idid)
+    return gout
 end
-if ip == 1
-  reshist=lreshist
-  lits = localout.lits
-else
-   reshist = gout.reshist 
-   append!(reshist,lreshist)
-   lits = gout.lits + localout.lits
-end
-   gout = (reshist = reshist, lits = lits, 
-                   idid = idid)
-return gout
-end
-

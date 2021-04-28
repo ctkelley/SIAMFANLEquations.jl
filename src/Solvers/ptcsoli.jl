@@ -27,6 +27,9 @@ C. T. Kelley, 2021
 Julia versions of the nonlinear solvers from my SIAM books. 
 Herewith: some new stuff ==> ptcsoli
 
+PTC finds the steady-state solution of u' = -F(u), u(0) = u_0.
+The - sign is a convention.
+
 You must allocate storage for the function and Krylov basis in advance
 --> in the calling program <-- ie. in FS and FPS
 

@@ -7,7 +7,7 @@ C. T. Kelley, 2020
 Scalar pseudo-transient continuation solver. PTC is designed to find
 stable steady state solutions of 
 
-dx/pdt = - f(x)
+dx/dt = - f(x)
 
 The scalar code is a simple wrapper around a call to ptcsol.jl, the 
 PTC solver for systems.

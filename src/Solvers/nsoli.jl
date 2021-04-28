@@ -256,9 +256,9 @@ function nsoli(
         lmaxit,
         printerr,
         pdata,
-        keepsolhist
+        keepsolhist,
     )
-#    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
+    #    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     #
     # First Evaluation of the function. Initialize the iteration stats.
     # Fix the tolerances for convergence and define the derivative FPF
