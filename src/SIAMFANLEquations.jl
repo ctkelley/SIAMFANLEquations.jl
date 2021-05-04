@@ -16,6 +16,7 @@ export nofact
 export secant
 export armijosc
 export kl_gmres
+export Katv
 export Orthogonalize!
 export EvalF!
 export solhistinit

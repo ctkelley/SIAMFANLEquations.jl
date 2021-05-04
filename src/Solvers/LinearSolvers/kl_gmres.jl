@@ -83,7 +83,9 @@ end
 to compute the matvec.
 ```
 
-#### Three dimensional problem. Will converge in the correct three iterations
+#### Three dimensional problem. 
+
+Will converge in the correct three iterations
 only if you orthogonalize with CGS twice. 
 
 ```jldoctest
@@ -246,8 +248,8 @@ end
 """
 Katv(x,Kpdata)
 
-Builds a matrix-vector product to hand to gmres_base. Puts the preconditioner
-in there on the correct side.
+Builds a matrix-vector product to hand to gmres_base or bicgstab_base. 
+Puts the preconditioner in there on the correct side.
 """
 function Katv(x, Kpdata)
     #    y=copy(x)
@@ -258,7 +260,7 @@ function Katv(x, Kpdata)
     side = Kpdata.side
     sideok = (side == "left") || (side == "right")
     sideok || error(
-        "Bad preconditioner side in kl_gmres, input side = ",
+        "Bad preconditioner side in Krylov solver, input side = ",
         side,
         ". Side must be \"left\" or \"right\" ",
     )
