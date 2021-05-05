@@ -288,9 +288,9 @@ or BandedMatrices. The solvers
 
 ### Nonlinear systems with iterative linear solvers: Chapter 3
 
-1. The Newton-Krylov linear solver is nsoli.jl. The linear solvers are GMRES and BiCGstab. __done:__ GMRES done, __coming soon:__ GMRES(m) and BiCGstab
+1. The Newton-Krylov linear solver is nsoli.jl. The linear solvers are GMRES and BiCGstab. __done:__ GMRES and GMRES(m) done, __almost done:__ BiCGstab
 
-2. ptcsoli.jl will be the Newton-Krylov pseudo-transient continuation code. __coming soon__
+2. ptcsoli.jl is the Newton-Krylov pseudo-transient continuation code. 
 
 ### Anderson Acceleration
 
