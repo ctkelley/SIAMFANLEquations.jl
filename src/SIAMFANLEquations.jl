@@ -16,6 +16,7 @@ export nofact
 export secant
 export armijosc
 export kl_gmres
+export kl_bicgstab
 export Katv
 export Orthogonalize!
 export EvalF!
@@ -45,6 +46,7 @@ include("Solvers/ptcsoli.jl")
 include("Solvers/nsol.jl")
 include("Solvers/nsoli.jl")
 include("Solvers/LinearSolvers/kl_gmres.jl")
+include("Solvers/LinearSolvers/kl_bicgstab.jl")
 include("Solvers/LinearSolvers/Orthogonalize!.jl")
 include("PlotsTables/printhist.jl")
 

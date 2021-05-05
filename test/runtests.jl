@@ -40,5 +40,6 @@ end
 @testset "Krylov solvers: Chapter 3" begin
     @test gmres_test()
     @test gmres_test_pde(31)
+    @test bicgstab_test_pde(31)
     @test ptcKrylovTest()
 end
