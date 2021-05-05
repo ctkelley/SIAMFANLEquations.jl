@@ -63,7 +63,7 @@ function kl_bicgstab( x0, b, atv, eta, ptv = nothing; lmaxit = 10,
     linsol = copy(b)
     y0 = copy(x0)
     Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv, linsol = linsol)
-    bout = kl_bicgstab_base(y0, rhs, Katv, eta; 
+    bout = bicgstab_base(y0, rhs, Katv, eta; 
               lmaxit = lmaxit, pdata = Kpdata)
     if side == "left" || ptv == nothing
         return bout
