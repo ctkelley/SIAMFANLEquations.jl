@@ -177,9 +177,9 @@ The algorithms, listed by book chapter will be
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
         - Codes: __Done!__, Notebook: __done!__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsoli.jl and ptcsoli.jl
-       - nsoli.jl __done__
-       - ptcsoli.jl __done__
-       - Linear solver(s): kl_gmres.jl __done__ and kl_bicgstab.jl:
+       - nsoli.jl __done__ except for hook to bicgstab
+       - ptcsoli.jl __done__ except for hook to bicgstab
+       - Linear solver(s): kl_gmres.jl __done__ and kl_bicgstab.jl __90% done__:
        - Notebook: print book -> notebook __90% done__ only bicgstab is missing
           - notebook -> printbook, __10% done__, writing left to do.
    - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
@@ -242,6 +242,7 @@ doi="10.5281/zenodo.4284687"
 - 0.3.1 has this new stuff since 0.3.0
   - ptcsoli is working and covered by CI. 
   - restarted GMRES is working and in CI.
+  - BiCGSTAB is working and in CI __90% done__
   - Notebook in much better shape, print book -> notebook mostly done.
   
   
@@ -251,7 +252,7 @@ doi="10.5281/zenodo.4284687"
 
 ### What's after 0.3.1?
  
- - 0.3.2 goes out when the writing is mostly done and BiCGSTAB is finished. 
+ - 0.3.2 goes out when the writing is mostly done. 
 
  - 0.3.3 goes out when Chapter 3 is finished. I'm hoping for sometime in May. 
 
