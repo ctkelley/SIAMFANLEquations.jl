@@ -1,5 +1,5 @@
 """
-kl\\_bicgstab( x0, b, atv, eta, ptv = nothing; lmaxit = 10, 
+kl\\_bicgstab( x0, b, atv, V, eta, ptv = nothing; lmaxit = 10, 
       pdata = nothing, side = "right",)
 
 BiCGSTAB linear solver. Deals with preconditioning. 
@@ -23,7 +23,8 @@ atv:  matrix-vector product which depends on precomputed data pdta
       A is the precomputed data.
       API for atv is av=atv(v,pdata)
 
-V:  Preallocated n x ? array, maybe, but it ain't in there yet
+V:  Preallocated n x ? array. You must have this as an argument even
+if it's empty
 
 eta: Termination happens when ||b - Ax|| <= eta || b ||
 
@@ -32,10 +33,6 @@ ptv:  preconditioner-vector product, which will also use pdata. The
       API for ptv is px=ptv(x,pdat) just like kl\\_gmres
 
 Keyword arguments
-
-kl\\_store: You may at some point have the option of giving me some room
-         for the vectors BiCGSTAB needs to do its work. Look a few lines up
-         to see how I have not figured out what V is for.
 
 pdata: precomputed data. The default is nothing, but that ain't gonna
         work well for nonlinear equations.
@@ -51,7 +48,7 @@ This part is not finished. Watch this space.
 
 
 """
-function kl_bicgstab( x0, b, atv, eta, ptv = nothing; lmaxit = 10, 
+function kl_bicgstab( x0, b, atv, V, eta, ptv = nothing; lmaxit = 10, 
       pdata = nothing, side = "right",)
     rhs = copy(b)
     if side == "right" || ptv == nothing
