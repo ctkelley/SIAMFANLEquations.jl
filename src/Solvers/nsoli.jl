@@ -310,9 +310,11 @@ function nsoli(
         step .= kout.step
         #
         # For GMRES you get 1 jac-vec per iteration and there is no jac-vec
-        # for the initial inner iterate of zero
+        # for the initial inner iterate of zero. For BiCGSTAB it's two 
+        # jac-vecs per iteration.
         #
         newjac = kout.Lstats.lits
+        (lsolver == "gmres") || (newjac *= 2)
         linok = kout.Lstats.idid
         linok || (ke_report = Krylov_Error(lmaxit, ke_report); newikfail = 1)
         #

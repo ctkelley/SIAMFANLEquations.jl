@@ -10,7 +10,7 @@ function gmres_test_pde(n; orth = "cgs2", write = false, eta = 9.8 * 1.e-4)
     ue = pdata.ue
     b = Pfish2d(RHS, fdata)
     u0 = zeros(n * n)
-    V = zeros(n * n, 20)
+    V = zeros(n * n,20)
     # Solve with left preconditioning hard-wired in
     goutp = kl_gmres(u0, b, pdelpatv, V, eta; pdata = pdata, orth = orth)
     pcres = goutp.reshist
@@ -91,7 +91,7 @@ function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
     pdata = pdegminit(n)
     RHS = pdata.RHS
     ue = pdata.ue
-    V = zeros(n, 5)
+    V = zeros(n*n)
     u0 = zeros(n * n)
 #
     # Solve with left preconditioning hard-wired in

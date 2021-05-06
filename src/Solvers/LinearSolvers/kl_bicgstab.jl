@@ -23,8 +23,8 @@ atv:  matrix-vector product which depends on precomputed data pdta
       A is the precomputed data.
       API for atv is av=atv(v,pdata)
 
-V:  Preallocated n x ? array. You must have this as an argument even
-if it's empty
+V: a vector for me to store a Jacobian-vector product. It goes where 
+   FPS would go in gmres
 
 eta: Termination happens when ||b - Ax|| <= eta || b ||
 
@@ -50,7 +50,8 @@ This part is not finished. Watch this space.
 """
 function kl_bicgstab( x0, b, atv, V, eta, ptv = nothing; lmaxit = 10, 
       pdata = nothing, side = "right",)
-    rhs = copy(b)
+    rhs = V
+    rhs .= b
     if side == "right" || ptv == nothing
         itsleft = false
     else
