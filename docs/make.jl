@@ -20,6 +20,7 @@ pages = Any[
        ],
      "Linear Solvers" => Any[
        "functions/kl_gmres.md",
+       "functions/kl_bicgstab.md",
        ]
 ]
 )
