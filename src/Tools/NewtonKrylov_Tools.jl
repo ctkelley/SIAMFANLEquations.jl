@@ -173,3 +173,23 @@ function forcing(itc, residratio, etag, ItRules, tol, resnorm)
     end
     return etag
 end
+
+"""
+kstore(n, lsolver)
+
+Preallocates the vectors a Krylov method uses internally. 
+"""
+function kstore(n, lsolver)
+tmp1 = zeros(n)
+tmp2 = zeros(n)
+tmp3 = zeros(n)
+tmp4 = zeros(n)
+if lsolver=="gmres"
+return (tmp1, tmp2, tmp3, tmp4)
+else
+tmp5 = zeros(n)
+tmp6 = zeros(n)
+tmp7 = zeros(n)
+return (tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7)
+end
+end

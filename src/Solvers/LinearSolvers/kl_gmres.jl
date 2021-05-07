@@ -1,5 +1,5 @@
 """
-kl\\_gmres(x0, b, atv, V, eta, ptv=nothing; kl_store=zeros(1,1); 
+kl\\_gmres(x0, b, atv, V, eta, ptv=nothing; kl_store=nothing; 
              orth = "cgs2", side="right", lmaxit=-1, pdata=nothing)
 
 Gmres linear solver. Handles preconditioning and restarts. 
@@ -17,7 +17,7 @@ atv:  matrix-vector product which depends on precomputed data pdta
       an optional argument, even if it's nothing (at least for now). 
       If your mat-vec is just A*v, you have to write a function where 
       A is the precomputed data.
-      API for atv is av=atv(v,pdata)
+      API for atv is ```av=atv(v,pdata)```
 
 V:  Preallocated n x K array for the Krylov vectors. I store the initial
     normalized residual in column 1, so  you have at most K-1 iterations
@@ -33,15 +33,14 @@ ptv:  preconditioner-vector product, which will also use pdata. The
 
 Keyword arguments
 
-kl\\_store: You may at some point have the option of giving me some room
+kl\\_store: You have the option of giving me some room
          for the vectors gmres needs to store copies of x0 and b,
          which I will not overwrite and a couple of vectors I use
          in the iteration. If you're only doing a linear solve, it
          does no harm to let me allocate those vectores in kl\\_gmres.
-         If the solver is inside a loop, you should allocate this
-         storage. nsoli and ptscoli allocate this without your having
-         to do anything. Right now I'm not clear on an efficient way
-         to do this.
+         The way to do this is ```kl_store=kstore(n,"gmres")``` where n
+         is the number of unknows. I call this myself in the initialization
+         phase if you don't do it ahead of me.
 
 pdata: precomputed data. The default is nothing, but that ain't gonna
         work well for nonlinear equations.
@@ -184,20 +183,16 @@ function kl_gmres(
     # preconditioning ...
     # Do not overwrite the initial iterate or the right hand side.
     n = length(x0)
-    if kl_store != nothing
+    # Get the vectors GMRES needs internally and make room to
+    # copy the initial iterate and right side
+    (kl_store !== nothing) || (kl_store=kstore(n,"gmres"))
         y0 = kl_store[1]
         y0 .= x0
         rhs = kl_store[2]
         rhs .= b
+    # Two vectors for internals
         linsol = kl_store[3]
         restmp = kl_store[4]
-    else
-        y0 = copy(x0)
-        rhs = copy(b)
-        # gmres_base needs two vectors
-        linsol = zeros(size(b))
-        restmp = zeros(size(b))
-    end
     #
     if side == "right" || ptv == nothing
         itsleft = false

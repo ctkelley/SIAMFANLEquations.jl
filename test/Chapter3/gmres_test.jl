@@ -29,8 +29,10 @@ function test3x3()
     Methods = ("cgs1", "mgs1", "mgs2", "cgs2")
     TestC = (false, true, true, true)
     i = 1
+    kl_store=kstore(3,"gmres")
     for orth in Methods
-        gout = kl_gmres(x0, b, atv, V, 1.e-10; pdata = A, orth = orth)
+        gout = kl_gmres(x0, b, atv, V, 1.e-10; pdata = A, orth = orth,
+                       kl_store=kl_store)
         ithist = gout.reshist
         lhist = length(ithist)
         push!(R, ithist)

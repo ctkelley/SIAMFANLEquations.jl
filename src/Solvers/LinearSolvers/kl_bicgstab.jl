@@ -1,6 +1,6 @@
 """
 kl\\_bicgstab( x0, b, atv, V, eta, ptv = nothing; lmaxit = 10, 
-      pdata = nothing, side = "right",)
+      pdata = nothing, side = "right",kl_store=nothing)
 
 BiCGSTAB linear solver. Deals with preconditioning. 
 Uses bicgstab\\_base with is oblivious to that.
@@ -49,7 +49,7 @@ This part is not finished. Watch this space.
 
 """
 function kl_bicgstab( x0, b, atv, V, eta, ptv = nothing; lmaxit = 10, 
-      pdata = nothing, side = "right",)
+      pdata = nothing, side = "right",kl_store=nothing)
     rhs = V
     rhs .= b
     if side == "right" || ptv == nothing
@@ -58,9 +58,16 @@ function kl_bicgstab( x0, b, atv, V, eta, ptv = nothing; lmaxit = 10,
         itsleft = true
         rhs .= ptv(rhs, pdata)
     end
-    linsol = copy(b)
-    y0 = copy(x0)
-    Kpdata = (pdata = pdata, side = side, ptv = ptv, atv = atv, linsol = linsol)
+    n=length(x0)
+    kl_store=kstore(n,"bicgstab")
+    linsol = kl_store[1]
+#    linsol .= b
+    y0 = kl_store[2]
+    y0 .= x0
+#    linsol = copy(b)
+#    y0 = copy(x0)
+    Kpdata = (pdata = pdata, side = side, ptv = ptv, 
+              atv = atv, linsol = linsol,kl_store=kl_store)
     bout = bicgstab_base(y0, rhs, Katv, eta; 
               lmaxit = lmaxit, pdata = Kpdata)
     if side == "left" || ptv == nothing
@@ -90,10 +97,15 @@ function bicgstab_base(x0, rhs, atv, eta; lmaxit = 10, pdata = nothing)
     omega = 1.0
     r0 = copy(r)
     rnorm = norm(r0)
-    v = zeros(size(x0))
-    p = zeros(size(x0))
-    s = zeros(size(x0))
-    t = zeros(size(x0))
+    kl_store = pdata.kl_store
+    v = kl_store[3]
+    p = kl_store[4]
+    s = kl_store[5]
+    t = kl_store[6]
+#    v = zeros(size(x0))
+#    p = zeros(size(x0))
+#    s = zeros(size(x0))
+#    t = zeros(size(x0))
     tol = eta * norm(rhs)
     k = 0
     reshist = []

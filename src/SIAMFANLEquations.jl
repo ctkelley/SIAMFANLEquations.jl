@@ -18,6 +18,7 @@ export armijosc
 export kl_gmres
 export kl_bicgstab
 export Katv
+export kstore
 export Orthogonalize!
 export EvalF!
 export solhistinit

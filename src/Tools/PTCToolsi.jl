@@ -20,11 +20,12 @@ function PTCKrylovinit(
     #
     n = length(x0)
     x = copy(x0)
-    tmp1 = zeros(n)
-    tmp2 = zeros(n)
-    tmp3 = zeros(n)
-    tmp4 = zeros(n)
-    kl_store = (tmp1, tmp2, tmp3, tmp4)
+#    tmp1 = zeros(n)
+#    tmp2 = zeros(n)
+#    tmp3 = zeros(n)
+#    tmp4 = zeros(n)
+#    kl_store = (tmp1, tmp2, tmp3, tmp4)
+    kl_store = kstore(n, lsolver)
     ItRules = (
         dx = dx,
         f = F!,
