@@ -64,11 +64,11 @@ function Secantinit(x0, dx, f, solver, armmax, armfix, maxit, printerr, pdata, j
 end
 
 """
-PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist)
+PTCinit(x0, dx, F!, J!, delta0, maxit, pdata, jfact, keepsolhist)
 
 PTCinit: get organized for PTC 
 """
-function PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist, jknowsdt = false)
+function PTCinit(x0, dx, F!, J!, delta0, maxit, pdata, jfact, keepsolhist, jknowsdt = false)
     #
     #   Initialize the iteration.
     #
@@ -79,7 +79,7 @@ function PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist, jknowsd
         dx = dx,
         f = F!,
         fp = J!,
-        pdt0 = pdt0,
+        delta0 = delta0,
         maxit = maxit,
         pdata = pdata,
         fact = jfact,

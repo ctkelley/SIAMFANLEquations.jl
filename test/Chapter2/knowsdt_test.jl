@@ -17,11 +17,11 @@ u0=[.1;10.0]
 FU=zeros(2,)
 JV=zeros(2,2)
 # Jacobian does not know about dt + finite difference
-pout=ptcsol(Fode!,u0,FU,JV; pdt0=.01, maxit=100)
+pout=ptcsol(Fode!,u0,FU,JV; delta0=.01, maxit=100)
 # Analytc Jacobian does not know about dt
-pout2=ptcsol(Fode!,u0,FU,JV,Jval!; pdt0=.01, maxit=100)
+pout2=ptcsol(Fode!,u0,FU,JV,Jval!; delta0=.01, maxit=100)
 # Analytc Jacobian knows about dt
-pout3=ptcsol(Fode!,u0,FU,JV,Jval2!; pdt0=.01, maxit=100, jknowsdt=true)
+pout3=ptcsol(Fode!,u0,FU,JV,Jval2!; delta0=.01, maxit=100, jknowsdt=true)
 #
 # Collect the output and figure out if you did things right.
 #

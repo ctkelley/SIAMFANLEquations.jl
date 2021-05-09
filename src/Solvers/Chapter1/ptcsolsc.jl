@@ -1,6 +1,6 @@
 """
 ptcsolsc(f, x0, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=100,
-        pdt0=1.e-6, dx=1.e-7, pdata=nothing, printerr = true, keepsolhist=true)
+        delta0=1.e-6, dx=1.e-7, pdata=nothing, printerr = true, keepsolhist=true)
 
 C. T. Kelley, 2020
 
@@ -26,11 +26,11 @@ Keyword Arguments:\n
 rtol, atol: real and absolute error tolerances\n
 
 maxit: upper bound on number of nonlinear iterations. This is 
-coupled to pdt0. If your choice of pdt0 is too small (conservative)
+coupled to delta0. If your choice of delta0 is too small (conservative)
 then you'll need many iterations to converge and will need a larger
 value of maxit.
 
-pdt0: initial pseudo time step. The default value of 1.e-3 is a bit 
+delta0: initial pseudo time step. The default value of 1.e-3 is a bit 
 conservative and is one option you really should play with. Look at the example
 where I set it to 1.0!\n
 
@@ -56,7 +56,7 @@ Only turn it on if you have use for the data, which can get REALLY LARGE.
 Output: A tuple (solution, functionval, history, idid, errcode, solhist) where
 history is the array of absolute function values |f(x)|
 of residual norms and time steps. Unless something has gone badly wrong,
-pdt approx |f(x_0)|/|f(x)|.
+delta approx |f(x_0)|/|f(x)|.
 
 idid=true if the iteration succeeded and false if not.
 
@@ -71,12 +71,12 @@ is the number of iteration + 1. So, for scalar equations (N=1), solhist
 is a row vector. Hence I use [ptcout.solhist' ptcout.history] in the
 example below.
 
-If the iteration fails it's time to play with the tolerances, pdt0, and maxit.
+If the iteration fails it's time to play with the tolerances, delta0, and maxit.
 You are certain to fail if there is no stable solution to the equation.
 
 # Examples
 ```jldoctest
-julia> ptcout=ptcsolsc(sptest,.2;pdt0=2.0,rtol=1.e-3,atol=1.e-3);
+julia> ptcout=ptcsolsc(sptest,.2;delta0=2.0,rtol=1.e-3,atol=1.e-3);
 
 julia> [ptcout.solhist' ptcout.history]
 7×2 Array{Float64,2}:
@@ -97,7 +97,7 @@ function ptcsolsc(
     rtol = 1.e-6,
     atol = 1.e-12,
     maxit = 100,
-    pdt0 = 1.e-3,
+    delta0 = 1.e-3,
     dx = 1.e-7,
     pdata = nothing,
     printerr = true,
@@ -119,7 +119,7 @@ function ptcsolsc(
         rtol = rtol,
         atol = atol,
         maxit = maxit,
-        pdt0 = pdt0,
+        delta0 = delta0,
         dx = dx,
         pdata = pdata,
         printerr = printerr,

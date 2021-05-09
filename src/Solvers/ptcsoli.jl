@@ -13,9 +13,9 @@ function ptcsoli(
     eta = 0.1,
     fixedeta = true,
     Pvec = nothing,
-    PvecKnowspdt = false, 
+    PvecKnowsdelta = false, 
     pside = "right",
-    pdt0 = 1.e-6,
+    delta0 = 1.e-6,
     dx = 1.e-7,
     pdata = nothing,
     printerr = true,
@@ -74,12 +74,12 @@ Keyword Arguments (kwargs):\n
 
 rtol and atol: relative and absolute error tolerances\n
 
-pdt0: initial pseudo time step. The default value of 1.e-3 is a bit conservative
+delta0: initial pseudo time step. The default value of 1.e-3 is a bit conservative
 and is one option you really should play with. Look at the example
 where I set it to 1.0!\n
 
 maxit: limit on nonlinear iterations, default=100. \n
-This is coupled to pdt0. If your choice of pdt0 is too small (conservative)
+This is coupled to delta0. If your choice of delta0 is too small (conservative)
 then you'll need many iterations to converge and will need a larger
 value of maxit
 
@@ -116,14 +116,14 @@ Pvec: Preconditioner-vector product. The rules are similar to Jvec
     P(x) is the preconditioner. You must use x as an input even
     if your preconditioner does not depend on x.\n 
 
-PvecKnowspdt: If you want your preconditioner-vector product to depend on 
-    the pseudo-timestep pdt, put an array pdtval in your precomputed
+PvecKnowsdelta: If you want your preconditioner-vector product to depend on 
+    the pseudo-timestep delta, put an array deltaval in your precomputed
     data. Initialize it as
-    pdtval = zeros(1,)
+    deltaval = zeros(1,)
     and let ptcsoli know about it by setting the kwarg
-    PvecKnowspdt = true
-    ptcsoli will update the value in pdtval with every change
-    to pdt with pdata.pdtval[1]=pdt
+    PvecKnowsdelta = true
+    ptcsoli will update the value in deltaval with every change
+    to delta with pdata.deltaval[1]=delta
     so your preconditioner-vector product can get to it.\n
     
 
@@ -202,7 +202,7 @@ julia> function PreCondBeam(v, x, bdata)
        end
 PreCondBeam (generic function with 1 method)
 
-julia> n=63; maxit=1000; pdt0 = 0.01; lambda = 20.0;
+julia> n=63; maxit=1000; delta0 = 0.01; lambda = 20.0;
 
 julia> bdata = beaminit(n, 0.0, lambda);
 
@@ -211,7 +211,7 @@ julia> x = bdata.x; u0 = x .* (1.0 .- x) .* (2.0 .- x); u0 .*= exp.(-10.0 * u0);
 
 julia> FS = copy(u0); FPJV=zeros(n,20);
 
-julia> pout = ptcsoli( FBeam!, u0, FS, FPJV; pdt0 = pdt0, pdata = bdata,
+julia> pout = ptcsoli( FBeam!, u0, FS, FPJV; delta0 = delta0, pdata = bdata,
        eta = 1.e-2, rtol = 1.e-10, maxit = maxit, Pvec = PreCondBeam);
 
 julia> # It takes a few iterations to get there.
@@ -247,9 +247,9 @@ function ptcsoli(
     eta = 0.1,
     fixedeta = true,
     Pvec = nothing,
-    PvecKnowspdt = false,
+    PvecKnowsdelta = false,
     pside = "right",
-    pdt0 = 1.e-6,
+    delta0 = 1.e-6,
     dx = 1.e-7,
     pdata = nothing,
     printerr = true,
@@ -267,9 +267,9 @@ function ptcsoli(
         dx,
         F!,
         Jvec,
-        pdt0,
+        delta0,
         Pvec,
-        PvecKnowspdt,
+        PvecKnowsdelta,
         pside,
         lsolver,
         eta,
@@ -303,17 +303,17 @@ function ptcsoli(
     #
     # The main loop stops on convergence or too many iterations.
     #
-    pdt = pdt0
+    delta = delta0
     while resnorm > tol && itc < maxit
         residm = resnorm
         newjac = 0
         newikfail = 0
         #   
-        # Evaluate and factor the Jacobian; update x, F(x), and pdt.  
+        # Evaluate and factor the Jacobian; update x, F(x), and delta.  
         #
         etag = forcing(itc, residratio, etag, ItRules, tol, resnorm)
-        (x, pdt, FS, resnorm, Lstats) =
-            PTCUpdatei(FPS, FS, x, ItRules, step, resnorm, pdt, etag)
+        (x, delta, FS, resnorm, Lstats) =
+            PTCUpdatei(FPS, FS, x, ItRules, step, resnorm, delta, etag)
         resdiratio = resnorm / residm
         newjac = Lstats.lits
         linok = Lstats.idid

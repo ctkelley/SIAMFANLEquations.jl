@@ -1,16 +1,16 @@
 """
-ptciBeam(n=63, pdt0=1.e-2, PvecKnowspdt=true, pside = "right")
+ptciBeam(n=63, delta0=1.e-2, PvecKnowsdelta=true, pside = "right")
 
 Solves the buckling beam problem with ptcsoli. You can play
 - left/right preconditioning
 - pseudo time step dependent preconditioning
-- relationship of pdt0 to n (hint, it's not mesh-independent)
+- relationship of delta0 to n (hint, it's not mesh-independent)
 """
-function ptciBeam(n = 63, pdt0 = 1.e-2, PvecKnowspdt = true, pside = "right")
+function ptciBeam(n = 63, delta0 = 1.e-2, PvecKnowsdelta = true, pside = "right")
     lambda = 20.0
     maxit = 1000
-    pdt0 = 0.01
-    PvecKnowspdt ? Pvec = ptvbeampdt : Pvec = ptvbeam
+    delta0 = 0.01
+    PvecKnowsdelta ? Pvec = ptvbeamdelta : Pvec = ptvbeam
     bdata = beaminit(n, 0.0, lambda)
     x = bdata.x
     u0 = x .* (1.0 .- x) .* (2.0 .- x)
@@ -22,13 +22,13 @@ function ptciBeam(n = 63, pdt0 = 1.e-2, PvecKnowspdt = true, pside = "right")
         u0,
         FS,
         FPJV;
-        pdt0 = pdt0,
+        delta0 = delta0,
         pdata = bdata,
         eta = 1.e-2,
         rtol = 1.e-10,
         maxit = maxit,
         Pvec = Pvec,
-        PvecKnowspdt = PvecKnowspdt,
+        PvecKnowsdelta = PvecKnowsdelta,
         pside = pside,
     )
     return pout
@@ -37,13 +37,13 @@ end
 
 
 """
-ptvbeampdt(v, x, bdata)
+ptvbeamdelta(v, x, bdata)
 
-Precondition buckling beam problem with dt-aware preconditioner.
+Precondition buckling beam problem with delta-aware preconditioner.
 """
-function ptvbeampdt(v, x, bdata)
-    pdt = bdata.pdtval[1]
-    J = bdata.D2 + (1.0 / pdt) * I
+function ptvbeamdelta(v, x, bdata)
+    delta = bdata.deltaval[1]
+    J = bdata.D2 + (1.0 / delta) * I
     ptv = J \ v
 end
 

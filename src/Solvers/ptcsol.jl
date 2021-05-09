@@ -1,6 +1,6 @@
 """
 ptcsol(F!, x0, FS, FPS, J! = diffjac!; rtol=1.e-6, atol=1.e-12,
-               maxit=20, pdt0=1.e-6, dx=1.e-7, pdata = nothing, jfact = klfact,
+               maxit=20, delta0=1.e-6, dx=1.e-7, pdata = nothing, jfact = klfact,
                printerr = true, keepsolhist = false, jknowsdt = false)
 
 C. T. Kelley, 2020
@@ -65,12 +65,12 @@ Keyword Arguments (kwargs):\n
 
 rtol and atol: relative and absolute error tolerances\n
 
-pdt0: initial pseudo time step. The default value of 1.e-3 is a bit conservative
+delta0: initial pseudo time step. The default value of 1.e-3 is a bit conservative
 and is one option you really should play with. Look at the example
 where I set it to 1.0!\n
 
 maxit: limit on nonlinear iterations, default=100. \n
-This is coupled to pdt0. If your choice of pdt0 is too small (conservative)
+This is coupled to delta0. If your choice of delta0 is too small (conservative)
 then you'll need many iterations to converge and will need a larger
 value of maxit
 
@@ -158,7 +158,7 @@ You'll need to use TestProblems for this to work.
 ```jldoctest
 julia> using SIAMFANLEquations.TestProblems
 
-julia> n=63; maxit=1000; pdt = 0.01; lambda = 20.0;
+julia> n=63; maxit=1000; delta = 0.01; lambda = 20.0;
 
 julia> bdata = beaminit(n, 0.0, lambda);
 
@@ -168,7 +168,7 @@ julia> x = bdata.x; u0 = x .* (1.0 .- x) .* (2.0 .- x); u0 .*= exp.(-10.0 * u0);
 julia> FS = copy(u0); FPS = copy(bdata.D2);
 
 julia> pout = ptcsol( FBeam!, u0, FS, FPS, BeamJ!; rtol = 1.e-10, pdata = bdata,
-                pdt0 = pdt, maxit = maxit);
+                delta0 = delta, maxit = maxit);
 
 julia> # It takes a few iterations to get there.
        length(pout.history)
@@ -198,7 +198,7 @@ function ptcsol(
     rtol = 1.e-6,
     atol = 1.e-12,
     maxit = 20,
-    pdt0 = 1.e-6,
+    delta0 = 1.e-6,
     dx = 1.e-7,
     pdata = nothing,
     jfact = klfact,
@@ -214,7 +214,7 @@ function ptcsol(
     #   the problem so it's easy to pass them around. 
     #
     (ItRules, x, n, solhist) =
-        PTCinit(x0, dx, F!, J!, pdt0, maxit, pdata, jfact, keepsolhist, jknowsdt)
+        PTCinit(x0, dx, F!, J!, delta0, maxit, pdata, jfact, keepsolhist, jknowsdt)
     #
     # First Evaluation of the function. Initialize the iteration history.
     # Fix the tolerances for convergence and define the derivative FPF
@@ -235,12 +235,12 @@ function ptcsol(
     #
     # The main loop stops on convergence or too many iterations.
     #
-    pdt = pdt0
+    delta = delta0
     while resnorm > tol && itc < maxit
         #   
-        # Evaluate and factor the Jacobian; update x, F(x), and pdt.  
+        # Evaluate and factor the Jacobian; update x, F(x), and delta.  
         #
-        (x, pdt, FS, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, resnorm, pdt)
+        (x, delta, FS, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, resnorm, delta)
         #
         # Keep the books
         #

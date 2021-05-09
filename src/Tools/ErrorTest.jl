@@ -26,13 +26,13 @@ PTCOK: Figure out idid and errcode
 """
 function PTCOK(resnorm, tol, toosoon, ItRules, printerr)
     maxit = ItRules.maxit
-    pdt0 = ItRules.pdt0
+    delta0 = ItRules.delta0
     errcode = 0
     resfail = (resnorm > tol)
     idid = ~(resfail || toosoon)
     errcode = 0
     if ~idid
-        (errcode = PTCError(resnorm, maxit, pdt0, toosoon, tol, printerr))
+        (errcode = PTCError(resnorm, maxit, delta0, toosoon, tol, printerr))
     end
     return (idid, errcode)
 end

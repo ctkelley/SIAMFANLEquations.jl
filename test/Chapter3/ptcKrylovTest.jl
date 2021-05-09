@@ -1,8 +1,8 @@
 function ptcKrylovTest(n = 63)
-    pdt0 = .01
+    delta0 = .01
     pout1 = ptciBeam();
-    pout2 = ptciBeam(n, pdt0, false);
-    pout3 = ptciBeam(n, pdt0, false, "left");
+    pout2 = ptciBeam(n, delta0, false);
+    pout3 = ptciBeam(n, delta0, false, "left");
     sol1 = pout1.solution
     sol2 = pout2.solution
     sol3 = pout3.solution

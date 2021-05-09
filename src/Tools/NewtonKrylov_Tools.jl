@@ -3,13 +3,13 @@
 # the Jacobian/preconditioner - vector products. 
 #
 """
-Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
+Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
 
 Take a Newton-Krylov step. This function does lots of its work
 mapping nonlinear problems to linear solvers. Only then do I get
 to deploy the Krylov linear solvers.
 """
-function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
+function Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
     #
     # Test for too much, too soon.
     #
@@ -46,7 +46,7 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, pdt = 0)
         FS = FS,
         Jvec = Jvec,
         Pvec = Pvec,
-        pdt = pdt,
+        delta = delta,
     )
     Pvecg = Pvec2
     Jvecg = Jvec2
@@ -91,9 +91,9 @@ function Jvec2(v, kdata)
     FS = kdata.FS
     xc = kdata.xc
     JV = kdata.Jvec
-    pdt = kdata.pdt
+    delta = kdata.delta
     pdata = kdata.pdata
-    atv = EvalJV(JV, v, FS, xc, pdt, pdata)
+    atv = EvalJV(JV, v, FS, xc, delta, pdata)
     return atv
 end
 
@@ -107,20 +107,20 @@ function EvalPV(PV, v, xc, pdata)
     return ptv
 end
 
-function EvalJV(JV, v, FS, xc, pdt, q::Nothing)
+function EvalJV(JV, v, FS, xc, delta, q::Nothing)
     atv = JV(v, FS, xc)
-    ptcmv!(atv, v, pdt)
-    #    if pdt > 0
-    #        atv .= atv + (1.0 / pdt) * v
+    ptcmv!(atv, v, delta)
+    #    if delta > 0
+    #        atv .= atv + (1.0 / delta) * v
     #    end
     return atv
 end
 
-function EvalJV(JV, v, FS, xc, pdt, pdata)
+function EvalJV(JV, v, FS, xc, delta, pdata)
     atv = JV(v, FS, xc, pdata)
-    ptcmv!(atv, v, pdt)
-    #    if pdt > 0
-    #        atv .= atv + (1.0 / pdt) * v
+    ptcmv!(atv, v, delta)
+    #    if delta > 0
+    #        atv .= atv + (1.0 / delta) * v
     #    end
     return atv
 end
@@ -131,21 +131,21 @@ function dirder(v, kdata)
     F = kdata.f
     FS = kdata.FS
     xc = kdata.xc
-    pdt = kdata.pdt
+    delta = kdata.delta
     delx = copy(xc)
     delx .= xc + dx * v
     FPP = copy(xc)
     EvalF!(F, FPP, delx, pdata)
     atv = (FPP - FS) / dx
-    ptcmv!(atv, v, pdt)
-    #    if pdt > 0
-    #        atv .= atv + (1.0 / pdt) * v
+    ptcmv!(atv, v, delta)
+    #    if delta > 0
+    #        atv .= atv + (1.0 / delta) * v
     #    end
     return atv
 end
 
-function ptcmv!(atv, v, pdt)
-    (pdt == 0.0) || (atv .= atv + (1.0 / pdt) * v)
+function ptcmv!(atv, v, delta)
+    (delta == 0.0) || (atv .= atv + (1.0 / delta) * v)
     #return atv
 end
 
