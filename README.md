@@ -6,6 +6,9 @@
 # SIAMFANLEquations version 0.3.1
 [changelog](#Changes)
 
+__Breaking Change:__
+The keyword for the initial pseudo-time step in the PTC codes is now __delta0__ and not ptc0 or dt0 which it was before.
+
 
 This is the package with the solvers and test problems for 
 
