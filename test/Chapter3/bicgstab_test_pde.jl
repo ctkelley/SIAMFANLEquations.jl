@@ -61,13 +61,17 @@ function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
     pcresnp /= pcresnp[1]
     solnone=goutnp.sol
     solldiff = max(solldiff,norm(solnone-sollhw,Inf))
-#    solldiff += norm(solnone-sollhw,Inf)
+#
+# Solve with no preconditioning to get a failure
+#
+    goutnf = kl_bicgstab(u0, RHS, pdeatv, V, eta; lmaxit=20, pdata = pdata)
+    failpass = ~goutnf.idid && (goutnf.lits==20)
 #
 # Are the answers close enough?
 #
     println(solldiff/eta)
     sollpass=(solldiff < 2.0*eta)
 #
-    pass=sollpass && rightpass && leftpass
+    pass=sollpass && rightpass && leftpass && failpass
     return pass
 end

@@ -34,7 +34,7 @@ ptv:  preconditioner-vector product, which will also use pdata. The
 Keyword arguments
 
 kl\\_store: You have the option of giving me some room
-         for the vectors gmres needs to store copies of x0 and b,
+         for the vectors gmres needs. These include copies of x0 and b,
          which I will not overwrite and a couple of vectors I use
          in the iteration. If you're only doing a linear solve, it
          does no harm to let me allocate those vectores in kl\\_gmres.
@@ -72,15 +72,15 @@ idid = status of the iteration
        true -> converged 
        false -> failed to converge
               
-# Examples: 
+## Examples from the docstrings for kl\\_gmres
 
 In these examples you have the matrix and use 
 ```
 function atv(x, A)
     return A * x
 end
-to compute the matvec.
 ```
+to compute the matvec.
 
 #### Three dimensional problem. 
 
@@ -113,7 +113,7 @@ julia> norm(b - A*gout.sol,Inf)
 #### Integral equation. Notice that pdata has the kernel of the 
 operator and we do the matvec directly. Just like the previous example.
 We put the grid information and, for this artifical example, the solution
-in the precoputed data.
+in the precomputed data.
 
 ```jldoctest
 julia> function integop(u, pdata)
