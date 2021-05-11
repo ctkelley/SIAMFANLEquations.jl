@@ -202,6 +202,6 @@ if lsolver == "gmres"
     n == nk || error("Krylov vectors wrong length")
     return
 end
-lsolver == "bicgstab" || error(lsolver, " ", "not supported")
+#lsolver == "bicgstab" || error(lsolver, " ", "not supported")
 end
 
