@@ -16,10 +16,11 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
     lsolver = ItRules.lsolver
     lmaxit = ItRules.lmaxit
     T = eltype(FPS)
-    (nk, mk) = size(FPS)
-    n = length(step)
-    n == nk || error("Krylov vectors wrong length")
-    lsolver == "gmres" || error(lsolver, " ", "not supported")
+    kstep_test(FPS, step, lsolver)
+#    (nk, mk) = size(FPS)
+#    n = length(step)
+#    n == nk || error("Krylov vectors wrong length")
+#    (lsolver == "gmres") || error(lsolver, " ", "not supported")
     Jvec = ItRules.Jvec
     Pvec = ItRules.Pvec
     kl_store = ItRules.kl_store
@@ -193,3 +194,14 @@ tmp7 = zeros(n)
 return (tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7)
 end
 end
+
+function kstep_test(FPS, step, lsolver)
+if lsolver == "gmres"
+    (nk, mk) = size(FPS)
+    n = length(step)
+    n == nk || error("Krylov vectors wrong length")
+    return
+end
+lsolver == "bicgstab" || error(lsolver, " ", "not supported")
+end
+
