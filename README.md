@@ -6,6 +6,9 @@
 # SIAMFANLEquations version 0.3.1
 [changelog](#Changes)
 
+__Breaking Change:__
+The keyword for the initial pseudo-time step in the PTC codes is now __delta0__ and not ptc0 or dt0 which it was before.
+
 
 This is the package with the solvers and test problems for 
 
@@ -238,6 +241,8 @@ doi="10.5281/zenodo.4284687"
 ### Updates since 0.2.3
 
 - **0.3.1 is the current release.** It has Newton-GMRES (nsoli.jl) Pseudo Transient GMRES, and GMRES (kl_gmres). 
+- __Breaking Change:__
+The keyword for the initial pseudo-time step in the PTC codes is now __delta0__ and not ptc0 or dt0 which it was before.
 
 - 0.3.1 has this new stuff since 0.3.0
   - ptcsoli is working and covered by CI. 
