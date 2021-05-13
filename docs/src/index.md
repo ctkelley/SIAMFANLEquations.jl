@@ -18,10 +18,10 @@ I am writing my own Krylov solvers so they will communicate with
 the nonlinear solvers the way I want and so I can do GMRES my way 
 (classical Gram-Schmidt twice!). 
 
-Version 0.3.1 has PTC-GMRES and GMRES(m)
+Version 0.3.1 has PTC-GMRES/BiCGSTAB and GMRES(m)
 
-Version 0.3.2 comes out when BiCGstab is done and the notebook section
-is done.
+Version 0.3.2 comes out when the writing is mostly done and all the
+examples are finished.
 
 Version 0.3.3 happens when the chapter is done for the print book and
 the maps print <--> notebook are complete.
@@ -288,7 +288,7 @@ or BandedMatrices. The solvers
 
 ### Nonlinear systems with iterative linear solvers: Chapter 3
 
-1. The Newton-Krylov linear solver is nsoli.jl. The linear solvers are GMRES and BiCGstab. __done:__ GMRES and GMRES(m) done, __almost done:__ BiCGstab
+1. The Newton-Krylov linear solver is nsoli.jl. The linear solvers are GMRES(m) and BiCGstab. __done:__ 
 
 2. ptcsoli.jl is the Newton-Krylov pseudo-transient continuation code. 
 

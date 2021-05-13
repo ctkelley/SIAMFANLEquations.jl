@@ -196,12 +196,11 @@ end
 end
 
 function kstep_test(FPS, step, lsolver)
-if lsolver == "gmres"
-    (nk, mk) = size(FPS)
-    n = length(step)
-    n == nk || error("Krylov vectors wrong length")
-    return
-end
-#lsolver == "bicgstab" || error(lsolver, " ", "not supported")
+solver_ok = (lsolver == "gmres") || (lsolver == "bicgstab")
+solver_ok || error(lsolver, " ", "not supported")
+# Do a bit of management
+(nk, ) = size(FPS)
+n = length(step)
+n == nk || error("Krylov storage vectors wrong length")
 end
 
