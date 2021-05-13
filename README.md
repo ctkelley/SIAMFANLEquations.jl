@@ -182,7 +182,7 @@ The algorithms, listed by book chapter will be
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsoli.jl and ptcsoli.jl
        - nsoli.jl __done__ except for hook to bicgstab
        - ptcsoli.jl __done__ except for hook to bicgstab
-       - Linear solver(s): kl_gmres.jl __done__ and kl_bicgstab.jl __90% done__:
+       - Linear solver(s): kl_gmres.jl __done__ and kl_bicgstab.jl __done__:
        - Notebook: print book -> notebook __90% done__ only bicgstab is missing
           - notebook -> printbook, __10% done__, writing left to do.
    - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
@@ -240,14 +240,15 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.2.3
 
-- **0.3.1 is the current release.** It has Newton-GMRES (nsoli.jl) Pseudo Transient GMRES, and GMRES (kl_gmres). 
+- **0.3.1 is the current release.** It has Newton-GMRES (nsoli.jl) Pseudo Transient GMRES, GMRES (kl_gmres), and BiCGSTAB (kl_bicgstab)
 - __Breaking Change:__
-The keyword for the initial pseudo-time step in the PTC codes is now __delta0__ and not ptc0 or dt0 which it was before.
+- The __keyword for the initial pseudo-time step__ in the PTC codes is now __delta0__ and not ptc0 or dt0 which it was before.
 
 - 0.3.1 has this new stuff since 0.3.0
   - ptcsoli is working and covered by CI. 
   - restarted GMRES is working and in CI.
-  - BiCGSTAB is working and in CI __90% done__
+  - BiCGSTAB is working and in CI.
+  - Newton-Krylov solvers done (Newton-GMRES/BiCGSTAB and Ptcsoli with both linear solvers)
   - Notebook in much better shape, print book -> notebook mostly done.
   
   
