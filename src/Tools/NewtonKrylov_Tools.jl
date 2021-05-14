@@ -37,7 +37,7 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
     side = ItRules.pside
     #
     # map the Jacobian-vector and preconditioner-vector products 
-    # from nsoli format to what kl_gmres wants to see
+    # from nsoli format to what the Krylov solvers want to see
     #
     kdata = (
         pdata = pdata,
@@ -56,18 +56,13 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
     #
     #RHS=FS
     #T == Float64 || (RHS=T.(FS))
-    kout = kl_gmres(
-        s0,
-        FS,
-        Jvecg,
-        FPS,
-        etag,
-        Pvecg;
-        kl_store = kl_store,
-        pdata = kdata,
-        side = side,
-        lmaxit = lmaxit,
-    )
+    if lsolver == "gmres"
+    kout = kl_gmres( s0, FS, Jvecg, FPS, etag, Pvecg;
+        kl_store = kl_store, pdata = kdata, side = side, lmaxit = lmaxit,)
+    else
+    kout = kl_bicgstab( s0, FS, Jvecg, FPS, etag, Pvecg;
+        kl_store = kl_store, pdata = kdata, side = side, lmaxit = lmaxit,)
+    end
     step .= -kout.sol
     reshist = kout.reshist
     lits = kout.lits
@@ -128,13 +123,15 @@ end
 
 function dirder(v, kdata)
     pdata = kdata.pdata
-    dx = kdata.dx
+    dx = kdata.dx/norm(v)
     F = kdata.f
     FS = kdata.FS
     xc = kdata.xc
     delta = kdata.delta
     delx = copy(xc)
-    delx .= xc + dx * v
+#    delx .= xc + dx * v
+#    delx .+= dx*v
+    axpy!(dx, v, delx)
     FPP = copy(xc)
     EvalF!(F, FPP, delx, pdata)
     atv = (FPP - FS) / dx
