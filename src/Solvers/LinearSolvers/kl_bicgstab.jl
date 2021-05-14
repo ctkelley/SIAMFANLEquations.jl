@@ -152,7 +152,10 @@ julia> norm(gout.sol-ue,Inf)
 """
 function kl_bicgstab( x0, b, atv, V, eta, ptv = nothing; 
       kl_store=nothing, side = "right", lmaxit = 10, pdata = nothing) 
-    rhs = V
+#
+# If you give me too much storage, I will fix it for you.
+#
+    isa(V,Vector) ? rhs = V : rhs = @view V[:,1]
     rhs .= b
     if side == "right" || ptv == nothing
         itsleft = false

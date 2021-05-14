@@ -60,8 +60,8 @@ lmaxit: limit on linear iterations. If lmaxit > m-1, where FPS has
 m columns, and you need more than m-1 linear iterations, then GMRES 
 will restart. 
 
-The default is -1. This means that you'll take m-1 iterations, where
-size(V) = (n,m), and get no restarts.
+The default is -1 for GMRES. This means that you'll take m-1 iterations, 
+where size(V) = (n,m), and get no restarts. For BiCGSTAB the default is 5.
 
 lsolver: the linear solver, default = "gmres"\n
 Your choices will be "gmres" or "bicgstab". However,
@@ -167,6 +167,11 @@ GMRES will solve the equation for the step exactly in two iterations. Finite
 difference Jacobians and analytic Jacobian-vector products for full precision
 and finite difference Jacobian-vector products for single precision.
 
+BiCGSTAB converges in 5 itertions and each nonlinear iteration costs
+two Jacobian-vector products. Note that the storage for the Krylov
+space in GMRES (jvs) is replace by a single vector (fpv) when BiCGSTAB
+is the linear solver.
+
 ```jldoctest
 julia> function f!(fv,x)
        fv[1]=x[1] + sin(x[2])
@@ -200,6 +205,20 @@ julia> [nout.history kout.history kout32.history]
  1.19231e-02  1.19231e-02  1.19231e-02
  1.03266e-05  1.03261e-05  1.03273e-05
  1.46416e-11  1.40862e-11  1.45457e-11
+
+julia> fpv=zeros(2,);
+
+julia> koutb=nsoli(f!,x0,fv,fpv,JVec; fixedeta=true, eta=.1, lmaxit=2, 
+       lsolver="bicgstab");
+
+julia> koutb.history
+6-element Vector{Float64}:
+ 1.88791e+00
+ 2.43120e-01
+ 1.19231e-02
+ 4.87500e-04
+ 7.54236e-06
+ 3.84646e-07
 ```
 
 

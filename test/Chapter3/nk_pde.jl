@@ -3,13 +3,13 @@ nk_pde(n)
 
 Solve the Elliptic PDE using nsoli.jl on an n x n grid. 
 """
-function nk_pde()
+function nk_pde(n=15)
     # Get some room for the residual
     rtol = 1.e-7
     atol = 1.e-10
-    n = 15
     u0 = zeros(n * n)
     FV = copy(u0)
+    FVS = copy(u0)
     # Get the precomputed data from pdeinit
     pdata = pdeinit(n)
     # Storage for the Jacobian-vector products
@@ -27,12 +27,30 @@ function nk_pde()
         fixedeta = false,
         maxit = 20,
     )
-    # Call the solver twice with an analytic Jac-Vec
+houtb = nsoli(
+        pdeF!,
+        u0,
+        FV,
+        FVS;
+        rtol = rtol,
+        atol = atol,
+        pdata = pdata,
+        eta = .1,
+        fixedeta = false,
+        maxit = 20,
+        lmaxit = 20,
+        lsolver="bicgstab"
+    )
+
+    # Call the solver a few times with an analytic Jac-Vec
     hout2 = NsoliPDE(n; fixedeta=false)
     hout3 = NsoliPDE(n; fixedeta=true)
+    hout4 = NsoliPDE(n; fixedeta=false, lsolver="bicgstab")
     soldiff = (
         norm(hout3.solution - hout.solution, Inf) +
-        norm(hout3.solution - hout.solution, Inf)
+        norm(hout3.solution - hout.solution, Inf) +
+        norm(houtb.solution - hout.solution, Inf) +
+        norm(hout4.solution - hout.solution, Inf)
     )
     solpass = (soldiff < 1.e-6)
     solpass || println("solution compare fails in nk_pde, ",soldiff)

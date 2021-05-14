@@ -124,6 +124,7 @@ function Newton_Krylov_Init(
     tmp4 = zeros(n)
     kl_store = (tmp1, tmp2, tmp3, tmp4)
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
+    ((lmaxit == -1) && (lsolver=="bicgstab") ) && (lmaxit = 5)
     ItRules = (
         dx = dx,
         f = F!,
