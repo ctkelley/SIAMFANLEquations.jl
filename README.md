@@ -81,10 +81,11 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.3.1. 
+This is version v0.3.1. __The Newton-Krylov solvers and Krylov linear solvers are done!!!__
       
 - nsol.jl, ptcsol.jl (Newton and pseudo-transient continuation) codes are stable. The scalar codes nsolsc.jl and ptcsol.jl are also stable.
-- kl_gmres.jl, the GMRES linear solver, is stable.
+- kl_gmres.jl, the GMRES linear solver, and kl_bicgstab.jl, the BiCGSTAB linear solver, are stable.
+- The Newton-Krylov solvers nsoli.jl and ptcsoli.jl are stable.
      
 The plan is, for x > 2.
 
@@ -94,9 +95,15 @@ The plan is, for x > 2.
 
 - Version v0.x.2 goes out when the codes and notebook for Chapter x are finished.
 
-- v0.x.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I post the package announcements for v0.x.3.
+- v0.x.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I will post the package announcements for v0.x.3 on Discourse for 1 <= x <= 5
 
- - 0.x.y for y > 3 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters. 
+ - 0.x.y for y > 3 and x < 5 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters. 
+
+- 0.5.z for z > 3 are preparatory releases for the announcement to NA-Digest.
+
+- 0.6.0 is the NA-Digest release. At that point the text should be in final(?) draft form, the solvers and examples should be done, and the writing should be in the final proofreading stage. 0.6.y for y>0 will be bug fixex, typo management, response to community complaints ...
+
+- 0.z.w for 7 <= z <= 9 will be milestone releases for things like (1) chapter on case studies, (2) shipment of ms to publisher, (3) fixes for problems found in copy editing, ...
 
 v1.0.0 goes out __when the print book is published__. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
