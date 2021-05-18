@@ -3,11 +3,8 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.3.1
+# SIAMFANLEquations version 0.3.2
 [changelog](#Changes)
-
-__Breaking Change from 0.3.0:__
-The keyword for the initial pseudo-time step in the PTC codes is now __delta0__ and not ptc0 or dt0 which it was before.
 
 
 This is the package with the solvers and test problems for 
@@ -81,11 +78,9 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.3.1. __The Newton-Krylov solvers and Krylov linear solvers are done!!!__
-      
-- nsol.jl, ptcsol.jl (Newton and pseudo-transient continuation) codes are stable. The scalar codes nsolsc.jl and ptcsol.jl are also stable.
-- kl_gmres.jl, the GMRES linear solver, and kl_bicgstab.jl, the BiCGSTAB linear solver, are stable.
-- The Newton-Krylov solvers nsoli.jl and ptcsoli.jl are stable.
+This is version v0.3.2.
+
+The solvers are stable. I'll tag this version when the writing is done and the notebook <--> print book maps are mostly done.
      
 The plan is, for x > 2.
 
@@ -184,14 +179,10 @@ The algorithms, listed by book chapter will be
 
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsolsc.jl
         - Codes: __Done!__, Notebook: __done!__
-   - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsold.jl and ptcd.jl
+   - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsol.jl and ptcsol.jl
         - Codes: __Done!__, Notebook: __done!__
-   - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: enable for nsoli.jl and ptcsoli.jl
-       - nsoli.jl __done__ except for hook to bicgstab
-       - ptcsoli.jl __done__ except for hook to bicgstab
-       - Linear solver(s): kl_gmres.jl __done__ and kl_bicgstab.jl __done__:
-       - Notebook: print book -> notebook __90% done__ only bicgstab is missing
-          - notebook -> printbook, __10% done__, writing left to do.
+   - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptcsoli.jl
+       - Codes: __Done!__, Notebook: __75% done__
    - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
    - Chapter 5: Broyden's method: brsol.jl __0% done, but won't take long once I get started. I will do it the right way (ie from (Kel95)).__
    
@@ -247,26 +238,20 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.2.3
 
-- **0.3.1 is the current release.** It has Newton-GMRES (nsoli.jl) Pseudo Transient GMRES, GMRES (kl_gmres), and BiCGSTAB (kl_bicgstab)
-- __Breaking Change:__
-- The __keyword for the initial pseudo-time step__ in the PTC codes is now __delta0__ and not ptc0 or dt0 which it was before.
+- **0.3.2 is the current release.** 
 
 - 0.3.1 has this new stuff since 0.3.0
-  - ptcsoli is working and covered by CI. 
-  - restarted GMRES is working and in CI.
-  - BiCGSTAB is working and in CI.
-  - Newton-Krylov solvers done (Newton-GMRES/BiCGSTAB and Ptcsoli with both linear solvers)
-  - Notebook in much better shape, print book -> notebook mostly done.
-  
+  - __Nonlinear and linear solvers done__
+
+- 0.3.2 has complete notebook and mostly complete notebook <--> printbook maps
   
 - Small things
    - Default side for preconditer is now __"right"__. See section 3.1.3 for the story on this.
    - Default forcing term is still constant __eta = .1__. This could change at any time and I've been careful to specify it completely in the examples.
+   - Storage for BiCGSTAB should be a vector, but I will accept a matrix. I will only use the first column of that matrix.
 
-### What's after 0.3.1?
+### What's after 0.3.2?
  
- - 0.3.2 goes out when the writing is mostly done. 
-
  - 0.3.3 goes out when Chapter 3 is finished. I'm hoping for sometime in May. 
 
  - 0.4.0 is Anderson acceleration.
