@@ -18,7 +18,8 @@ I am writing my own Krylov solvers so they will communicate with
 the nonlinear solvers the way I want and so I can do GMRES my way 
 (classical Gram-Schmidt twice!). 
 
-Version 0.3.1 has PTC-GMRES/BiCGSTAB and GMRES(m)
+Version 0.3.1: Solvers done. Newton-Krylov and PTC-Krylov with
+BiCGSTAB and GMRES(m). Print book --> notebook 90% done.
 
 Version 0.3.2 comes out when the writing is mostly done and all the
 examples are finished.
