@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.3.1
+# SIAMFANLEquations.jl v0.3.2
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -10,7 +10,7 @@ __Solvers and Examples in Julia__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-This is version 0.3.1. 
+This is version 0.3.2. 
 
 This is part of __Chapter 3__, Newton-Krylov solvers. 
 
@@ -18,10 +18,10 @@ I am writing my own Krylov solvers so they will communicate with
 the nonlinear solvers the way I want and so I can do GMRES my way 
 (classical Gram-Schmidt twice!). 
 
-Version 0.3.1: Solvers done. Newton-Krylov and PTC-Krylov with
+Version 0.3.2: Solvers done. Newton-Krylov and PTC-Krylov with
 BiCGSTAB and GMRES(m). Print book --> notebook 90% done.
 
-Version 0.3.2 comes out when the writing is mostly done and all the
+I'll tag Version 0.3.2 when the writing is mostly done and all the
 examples are finished.
 
 Version 0.3.3 happens when the chapter is done for the print book and
