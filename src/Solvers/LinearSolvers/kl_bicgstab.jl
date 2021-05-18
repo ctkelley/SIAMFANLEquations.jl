@@ -157,6 +157,12 @@ function kl_bicgstab( x0, b, atv, V, eta, ptv = nothing;
 #
     isa(V,Vector) ? rhs = V : rhs = @view V[:,1]
     rhs .= b
+    n=length(b)
+#
+# If you're playing with both gmres and bicgstab you might have
+# lmaxit set to -1. That will break things to I fixed that.
+#
+    (lmaxit == -1) && (lmaxit = 10)
     if side == "right" || ptv == nothing
         itsleft = false
     else

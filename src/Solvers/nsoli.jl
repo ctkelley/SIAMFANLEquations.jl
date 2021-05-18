@@ -61,7 +61,7 @@ m columns, and you need more than m-1 linear iterations, then GMRES
 will restart. 
 
 The default is -1 for GMRES. This means that you'll take m-1 iterations, 
-where size(V) = (n,m), and get no restarts. For BiCGSTAB the default is 5.
+where size(V) = (n,m), and get no restarts. For BiCGSTAB the default is 10.
 
 lsolver: the linear solver, default = "gmres"\n
 Your choices will be "gmres" or "bicgstab". However,

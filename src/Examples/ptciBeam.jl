@@ -1,12 +1,14 @@
 """
-ptciBeam(n=63, delta0=1.e-2, PvecKnowsdelta=true, pside = "right")
+ptciBeam(n=63, delta0=1.e-2, PvecKnowsdelta=true, pside = "right"; 
+lsolver="gmres")
 
 Solves the buckling beam problem with ptcsoli. You can play
 - left/right preconditioning
 - pseudo time step dependent preconditioning
 - relationship of delta0 to n (hint, it's not mesh-independent)
 """
-function ptciBeam(n = 63, delta0 = 1.e-2, PvecKnowsdelta = true, pside = "right")
+function ptciBeam(n = 63, delta0 = 1.e-2, PvecKnowsdelta = true, 
+pside = "right"; lsolver="gmres")
     lambda = 20.0
     maxit = 1000
     delta0 = 0.01
@@ -22,8 +24,10 @@ function ptciBeam(n = 63, delta0 = 1.e-2, PvecKnowsdelta = true, pside = "right"
         u0,
         FS,
         FPJV;
+        lsolver=lsolver,
         delta0 = delta0,
         pdata = bdata,
+        lmaxit = 19,
         eta = 1.e-2,
         rtol = 1.e-10,
         maxit = maxit,

@@ -91,9 +91,9 @@ lmaxit: limit on linear iterations. If lmaxit > m-1, where FPS has
 m columns, and you need more than m-1 linear iterations, then GMRES
 will restart.
 
-The default is -1. This means that you'll take m-1 iterations, where
-size(V) = (n,m), and get no restarts.
---> Restarted GMRES is not ready yet. \n
+The default is -1. For GMRES this means that you'll take m-1 iterations, where
+size(V) = (n,m), and get no restarts. For BiCGSTAB you'll then get the default
+of 10 iterations.
 
 lsolver: the linear solver, default = "gmres"\n
 Your choices will be "gmres" or "bicgstab". However,
@@ -230,6 +230,31 @@ julia> # We get the nonnegative stedy state.
        norm(pout.solution,Inf)
 2.19086e+00
 
+n=63; maxit=1000; delta0 = 0.01; lambda = 20.0;
+
+julia> # Use BiCGSTAB for the linear solver
+
+julia> FS = copy(u0); FPJV=zeros(n,);
+
+julia> pout = ptcsoli( FBeam!, u0, FS, FPJV; delta0 = delta0, pdata = bdata,
+       eta = 1.e-2, rtol = 1.e-10, maxit = maxit, 
+       Pvec = PreCondBeam, lsolver="bicgstab");
+
+julia> # Same number of iterations as GMRES, but each one costs double 
+
+julia> # the Jacobian-vector products and much less storage
+
+julia> length(pout.history)
+25
+
+julia> [pout.history[1:5] pout.history[21:25]]
+5×2 Matrix{Float64}:
+ 6.31230e+01  1.68032e+00
+ 7.47081e+00  2.35073e-01
+ 8.62095e+00  5.18262e-03
+ 2.96495e+01  3.23715e-06
+ 3.51504e+01  3.33107e-10
+
 ```
 
 """
@@ -309,7 +334,7 @@ function ptcsoli(
         newjac = 0
         newikfail = 0
         #   
-        # Evaluate and factor the Jacobian; update x, F(x), and delta.  
+        # Comppute the Jacobian-vector product; update x, F(x), and delta.  
         #
         etag = forcing(itc, residratio, etag, ItRules, tol, resnorm)
         (x, delta, FS, resnorm, Lstats) =

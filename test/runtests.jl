@@ -16,6 +16,7 @@ include("Chapter2/knowsdt_test.jl")
 include("Chapter3/gmres_test.jl")
 include("Chapter3/Krylov_pde_test.jl")
 include("Chapter3/ptcKrylovTest.jl")
+include("Chapter3/ptcKrylovTestB.jl")
 include("Chapter3/nk_test.jl")
 include("Chapter3/nk_pde.jl")
 include("Chapter3/nk_heq.jl")
@@ -42,4 +43,5 @@ end
     @test gmres_test_pde(31)
     @test bicgstab_test_pde(31)
     @test ptcKrylovTest()
+    @test ptcKrylovTestB()
 end
