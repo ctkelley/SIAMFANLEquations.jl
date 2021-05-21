@@ -48,6 +48,8 @@ Inputs:\n
     is good and you only need a few Krylovs/Newton, reduced precision won't
     help you much.
 
+    BiCGSTAB does not benefit from reduced precsion. 
+
 ----------------------
 
 Keyword Arguments (kwargs):\n

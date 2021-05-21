@@ -23,7 +23,8 @@ V:  Preallocated n x K array for the Krylov vectors. I store the initial
     normalized residual in column 1, so  you have at most K-1 iterations
     before gmres\\_base returns a failure. kl\\_gmres will handle the 
     restarts and, if lmaxit > 0, keep going until you hit lmaxit GMRES
-    iterations.
+    iterations. You may allocate V in Float32 and save on storage. The
+    benefit from doing this is not dramatic in terms of CPU time.
 
 eta: Termination happens when ||b - Ax|| <= eta || b ||
 

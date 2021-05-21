@@ -24,7 +24,7 @@ atv:  matrix-vector product which depends on precomputed data pdta
       API for atv is av=atv(v,pdata)
 
 V: a vector for me to store a Jacobian-vector product. It goes where 
-   FPS would go in gmres
+   FPS would go in gmres. You are best served if V is Float64.
 
 eta: Termination happens when ||b - Ax|| <= eta || b ||
 
