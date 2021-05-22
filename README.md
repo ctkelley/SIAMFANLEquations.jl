@@ -96,7 +96,7 @@ The plan is, for x > 2.
 
 - 0.5.z for z > 3 are preparatory releases for the announcement to NA-Digest.
 
-- 0.6.0 is the NA-Digest release. At that point the text should be in final(?) draft form, the solvers and examples should be done, and the writing should be in the final proofreading stage. 0.6.y for y>0 will be bug fixex, typo management, response to community complaints ...
+- 0.6.0 is the NA-Digest release. At that point the text should be in final(?) draft form, the solvers and examples should be done, and the writing should be in the final proofreading stage. 0.6.y for y>0 will be bug fixes, typo management, response to community complaints ...
 
 - 0.z.w for 7 <= z <= 9 will be milestone releases for things like (1) chapter on case studies, (2) shipment of ms to publisher, (3) fixes for problems found in copy editing, ...
 
@@ -178,9 +178,9 @@ The linear solvers are tuned to communicate well with nonlinear solvers. My old 
 The algorithms, listed by book chapter will be
 
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsolsc.jl
-        - Codes: __Done!__, Notebook: __done!__
+        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsol.jl and ptcsol.jl
-        - Codes: __Done!__, Notebook: __done!__
+        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptcsoli.jl
        - Codes: __Done!__, Notebook: __75% done__
    - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
@@ -238,17 +238,22 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.2.3
 
+- __Newton-Krylov and PTC-Krylov solvers__
+- GMRES(m) and BiCGSTAB linear solvers
+
 - **0.3.2 is the current release.** 
 
 - 0.3.1 has this new stuff since 0.3.0
   - __Nonlinear and linear solvers done__
+  - __Bug fixes for Ch 1 and Ch 2 codes/notebook__
+  - __Breaking change in PTC codes:__ the initial time step is now __delta0__. See the docstrings
 
-- 0.3.2 has complete notebook and mostly complete notebook <--> printbook maps
+- 0.3.2 has the complete notebook and mostly complete notebook <--> printbook maps
   
 - Small things
    - Default side for preconditer is now __"right"__. See section 3.1.3 for the story on this.
    - Default forcing term is still constant __eta = .1__. This could change at any time and I've been careful to specify it completely in the examples.
-   - Storage for BiCGSTAB should be a vector, but I will accept a matrix. I will only use the first column of that matrix.
+   - Storage for BiCGSTAB should be a vector, but I will accept a matrix. I will only use the first column of that matrix. The code will not break if you give it storage in Float32, but will not work better in any way. The storage savings is insignificant.
 
 ### What's after 0.3.2?
  
