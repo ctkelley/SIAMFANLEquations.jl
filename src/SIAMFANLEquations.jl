@@ -22,13 +22,6 @@ export kstore
 export Orthogonalize!
 export EvalF!
 export solhistinit
-#
-# for test of ptcsoli
-# export dirder
-export Krylov_Step!
-export forcing
-export PTCOK
-#export PTCClose
 
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
