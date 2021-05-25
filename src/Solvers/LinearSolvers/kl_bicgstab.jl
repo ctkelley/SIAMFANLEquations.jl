@@ -64,7 +64,7 @@ idid = status of the iteration
        true -> converged
        false -> failed to converge
 
-## Examples from the docstrings for kl\\_bicgstab
+### Examples from the docstrings for kl\\_bicgstab
 
 In these examples you have the matrix and use
 ```

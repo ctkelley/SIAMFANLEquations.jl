@@ -150,9 +150,9 @@ keepsolhist=true\n
 solhist is an N x K array where N is the length of x and K is the number
 of iteration + 1. So, for scalar equations, it's a row vector.
 
-## Example from the docstrings for ptcsol
+### Example from the docstrings for ptcsol
 
-### The buckling beam problem. 
+#### The buckling beam problem. 
 You'll need to use TestProblems for this to work.
 
 ```jldoctest

@@ -188,9 +188,9 @@ iteration + 1. So, for scalar equations, it's a row vector.
 
 ------------------------
 
-## Examples from the docstrings for nsol
+### Examples from the docstrings for nsol
 
-### World's easiest problem example. Test 64 and 32 bit Jacobians. No meaningful difference in the residual histories or the converged solutions.
+#### World's easiest problem example. Test 64 and 32 bit Jacobians. No meaningful difference in the residual histories or the converged solutions.
 
 ```jldoctest
  julia> function f!(fv,x)
@@ -216,7 +216,7 @@ julia> [nout.solution nout.solution-nout32.solution]
   2.30988e+00  2.89546e-13
 ```
 
-### H-equation example. I'm taking the sham=5 default here, so the convergence is not quadratic. The good news is that we evaluate the Jacobian only once.
+#### H-equation example. I'm taking the sham=5 default here, so the convergence is not quadratic. The good news is that we evaluate the Jacobian only once.
 
 ```jldoctest
 julia> n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n);

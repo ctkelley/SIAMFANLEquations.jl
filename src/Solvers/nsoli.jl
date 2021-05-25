@@ -161,9 +161,9 @@ iteration + 1. So, for scalar equations, it's a row vector.
 
 ------------------------
 
-## Example from the docstrings for nsoli
+### Example from the docstrings for nsoli
 
-### Simple 2D problem. 
+#### Simple 2D problem. 
 You should get the same results as for nsol.jl because
 GMRES will solve the equation for the step exactly in two iterations. Finite
 difference Jacobians and analytic Jacobian-vector products for full precision
