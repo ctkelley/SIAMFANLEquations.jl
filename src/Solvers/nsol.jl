@@ -23,6 +23,7 @@ Inputs:\n
 - x0: initial iterate\n
 
 - FS: Preallocated storage for function. It is an N x 1 column vector\n
+  You may store it as (n,) or (n,1), depending on what F! likes to see.
 
 - FPS: preallocated storage for Jacobian. It is an N x N matrix\n
 

@@ -23,6 +23,7 @@ Inputs:\n
 - x0: initial iterate\n
 
 - FS: Preallocated storage for function. It is an N x 1 column vector\n
+  You may store it as (n,) or (n,1), depending on what F! likes to see.
 
 - FPS: preallocated storage for the Krylov basis. It is an N x m matrix where
        you plan to take at most m-1 GMRES iterations before a restart. \n
