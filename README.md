@@ -257,9 +257,9 @@ doi="10.5281/zenodo.4284687"
 
 ### What's after 0.3.2?
  
- - 0.3.3 goes out when Chapter 3 is finished. I'm hoping for sometime in May. 
+- 0.3.3 goes out when Chapter 3 is finished. I'm hoping for sometime soon after I tag 0.3.2.
 
- - 0.4.0 is Anderson acceleration.
+- 0.4.0 is Anderson acceleration.
 
 - 0.5.0 is Broyden's method
 
