@@ -22,6 +22,7 @@ function test3x3()
     pass = (length(gout.reshist)== 5) && 
             (norm(A*gout.sol - b,Inf) < 1.e-12) && gout.idid && (gout.lits==4)
 #    return (gout=gout, pass=pass)
+pass || println("3x3 test fails")
     return pass
 end
 
@@ -35,6 +36,7 @@ function testR1()
     gout = kl_bicgstab(x0, b, atv, V, 1.e-7; pdata = A)
     pass = (length(gout.reshist)== 3) && (norm(A*gout.sol - b,Inf) < 1.e-12)
 #    return (gout=gout, pass=pass)
+pass || println("R1 test fails")
     return pass
 end
 
@@ -47,6 +49,7 @@ function test_integop(n=100)
     realres = (I - pdata.K)*gout.sol - f
 pass = ( (norm(realres,Inf) < 1.e-15) && (length(gout.reshist)==4))
 #    return (gout=gout, pass=pass)
+pass || println("integop test fails")
      return pass
 end
 
