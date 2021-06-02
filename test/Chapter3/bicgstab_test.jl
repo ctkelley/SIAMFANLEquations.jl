@@ -47,7 +47,7 @@ function test_integop(n=100)
     u0 = zeros(size(f)); V = zeros(size(f))
     gout = kl_bicgstab(u0, f, integop, V, 1.e-10; pdata = pdata)
     realres = (I - pdata.K)*gout.sol - f
-pass = ( (norm(realres,Inf) < 1.e-15) && (length(gout.reshist)==4))
+pass = ( (norm(realres,Inf) < 1.e-12) && (length(gout.reshist)==4))
 #    return (gout=gout, pass=pass)
 pass || println("integop test fails")
      return pass
