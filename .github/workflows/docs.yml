@@ -17,7 +17,7 @@ jobs:
 #    if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       matrix:
-        julia-version: [1.5]
+        julia-version: [1.6]
         julia-arch: [x86]
         os: [ubuntu-latest]
     steps:
