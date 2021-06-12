@@ -1,4 +1,4 @@
-using Documenter, SIAMFANLEquations, DocumenterLaTeX, DocumenterTools
+using Documenter, SIAMFANLEquations, DocumenterTools
 push!(LOAD_PATH,"../src/")
 makedocs(sitename="SIAMFANLEquations.jl",
 authors="C. T. Kelley",
