@@ -3,7 +3,8 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.3.2
+# SIAMFANLEquations version 0.3.3
+
 [changelog](#Changes)
 
 
@@ -23,7 +24,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.2.3) (open source, MIT License, Creative Commons License)
-      Versons __0.3.1__ of the notebook and package run correctly and (for now) the tagged version of the package should run with either version 0.3.1 or 0.3.2 of the notebook.
+      Versons __0.3.2__ of the notebook and package run correctly and (for now) the tagged version of the package should run with either version 0.3.2 or 0.3.3 of the notebook.
    3. This package (MIT License)<br>
    
 ## Readme Contents:
@@ -78,10 +79,10 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.3.2.
+This is version v0.3.3.
 
-The solvers are stable. I'll tag this version when the writing is done and the notebook <--> print book maps are mostly done.
-     
+The solvers are stable. I'll tag this version when everything for Chapter 3 is done. 
+
 The plan is, for x > 2.
 
 - v0.x.0 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. 
@@ -238,26 +239,10 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.2.3
 
-- __Newton-Krylov and PTC-Krylov solvers__
-- GMRES(m) and BiCGSTAB linear solvers
+- __Chapter 3: Newton-Krylov and PTC-Krylov solvers__
+   - GMRES, GMRES(m), and BiCGSTAB linear solvers
 
-- **0.3.2 is the current release.** 
-
-- 0.3.1 has this new stuff since 0.3.0
-  - __Nonlinear and linear solvers done__
-  - __Bug fixes for Ch 1 and Ch 2 codes/notebook__
-  - __Breaking change in PTC codes:__ the initial time step is now __delta0__. See the docstrings
-
-- 0.3.2 has the complete notebook and mostly complete notebook <--> printbook maps
-  
-- Small things
-   - Default side for preconditer is now __"right"__. See section 3.1.3 for the story on this.
-   - Default forcing term is still constant __eta = .1__. This could change at any time and I've been careful to specify it completely in the examples.
-   - Storage for BiCGSTAB should be a vector, but I will accept a matrix. I will only use the first column of that matrix. The code will not break if you give it storage in Float32, but will not work better in any way. The storage savings is insignificant.
-
-### What's after 0.3.2?
- 
-- 0.3.3 goes out when Chapter 3 is finished. I'm hoping for sometime soon after I tag 0.3.2.
+### What's after 0.3.3?
 
 - 0.4.0 is Anderson acceleration.
 
