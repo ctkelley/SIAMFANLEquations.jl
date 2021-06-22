@@ -12,13 +12,14 @@ This documentation is sketchy and designed to get you going, but the real deal i
 
 This is version 0.3.3. 
 
-This is part of __Chapter 3__, Newton-Krylov solvers. 
+This is __Chapter 3__, Newton-Krylov solvers. 
 
 I am writing my own Krylov solvers so they will communicate with 
 the nonlinear solvers the way I want and so I can do GMRES my way 
 (classical Gram-Schmidt twice!). 
 
 Version 0.3.3: Newton-Krylov and PTC-Krylov solvers. Chapter 3 done.
+
 Next up, version 0.4.0, Anderson acceleration.
 
 ## Scalar Equations: Chapter 1
