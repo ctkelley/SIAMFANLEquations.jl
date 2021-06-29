@@ -24,7 +24,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.2.3) (open source, MIT License, Creative Commons License)
-      Versons __0.3.2__ of the notebook and package run correctly and (for now) the tagged version of the package should run with either version 0.3.2 or 0.3.3 of the notebook.
+      Versons __0.3.3__ of the notebook and package run correctly and the tagged version of the package should run v0.3.3 of the notebook.
    3. This package (MIT License)<br>
    
 ## Readme Contents:
@@ -45,7 +45,7 @@ This package is designed and built to support a book project. So the solvers and
 
 ## Installation: Use Julia 1.5 and up with this thing!!!
 
-This package has been tested on Julia 1.5. __It no longer works on 1.0!__ It may still work on 1.4, but I make no promises.
+This package has been tested on Julia 1.5. __It no longer works on 1.0!__ 
 
 Type this 
 
@@ -81,7 +81,9 @@ If __log(version_number) < 0__ there's trouble!
 
 This is version v0.3.3.
 
-The solvers are stable. I'll tag this version when everything for Chapter 3 is done. 
+The solvers are stable and the notebook <--> print book maps are done. The draft of Chapter 3 is finished.
+
+Next up: v0.4.0: Anderson acceleration
 
 The plan is, for x > 2.
 
@@ -183,7 +185,7 @@ The algorithms, listed by book chapter will be
    - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsol.jl and ptcsol.jl
         - Codes: __Done!__, Notebook: __Done!__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptcsoli.jl
-       - Codes: __Done!__, Notebook: __75% done__
+       - Codes: __Done!__, Notebook: __Done!__
    - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
    - Chapter 5: Broyden's method: brsol.jl __0% done, but won't take long once I get started. I will do it the right way (ie from (Kel95)).__
    
