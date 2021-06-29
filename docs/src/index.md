@@ -10,15 +10,8 @@ __Solvers and Examples in Julia__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-This is version 0.3.3. 
-
-This is __Chapter 3__, Newton-Krylov solvers. 
-
-I am writing my own Krylov solvers so they will communicate with 
-the nonlinear solvers the way I want and so I can do GMRES my way 
-(classical Gram-Schmidt twice!). 
-
-Version 0.3.3: Newton-Krylov and PTC-Krylov solvers. Chapter 3 done.
+Version 0.3.3: Newton-Krylov and PTC-Krylov solvers. The draft of
+Chapter 3 is done.
 
 Next up, version 0.4.0, Anderson acceleration.
 
