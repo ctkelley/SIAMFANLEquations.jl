@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.3.3
+# SIAMFANLEquations.jl v0.4.0
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -10,10 +10,7 @@ __Solvers and Examples in Julia__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-Version 0.3.3: Newton-Krylov and PTC-Krylov solvers. The draft of
-Chapter 3 is done.
-
-Next up, version 0.4.0, Anderson acceleration.
+Version 0.4.0: New stuff = Chapter 4: Anderson acceleration.
 
 ## Scalar Equations: Chapter 1
 
