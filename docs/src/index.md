@@ -97,7 +97,8 @@ julia> [nsolout.solhist.-2 nsolout.history]
 
 ## Nonlinear systems with direct linear solvers: Chapter 2
 
-The solvers ```nsoli.jl``` and ```ptcsol.jl solve systems of nonlinear equations
+The solvers ```nsoli.jl``` and ```ptcsol.jl``` 
+solve systems of nonlinear equations
 
 ``F(x) = 0``
 
@@ -187,10 +188,28 @@ julia> nout32.history
 ```
 As you can see, not much has happened.
 
+```ptcsol.jl``` finds steady state solutions of initial value problems
+
+``dx/dt = -F(x), x(0)=x0``
+
+The iteration differs from Newton in that there is no line search. Instead
+the iteration is updated with the step ``s`` where
+
+``
+(\delta + F'(x) ) s = - F(x)
+``
+
+Our codes update ``\delta`` via the SER formula
+``
+\delta_+ = \delta_0 \| F(x_0 \|/\| F(x_n)
+``
+
+
+
 ## Nonlinear systems with Krylov linear solvers: Chapter 3
 
 The methods in this chapter use Krylov itertive solvers to compute
-the Newton step. 
+The solvers are ```nsoli.jl``` and ```ptcsoli.jl```. 
 
 The calling sequence for solving ```F(x) = 0```  with ```nsoli.jl```, leaving out the kwargs, is
 
