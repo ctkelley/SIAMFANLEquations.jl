@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.3.3
+# SIAMFANLEquations version 0.4.0
 
 [changelog](#Changes)
 
@@ -23,7 +23,7 @@ Hence the notebook and this package all have SIAMFANL in their names.
 The new book with have a different algorithm mix and the solvers and examples will be in Juila. The project will have three parts.
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
-   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.2.3) (open source, MIT License, Creative Commons License)
+   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.3.3) (open source, MIT License, Creative Commons License)
       Versons __0.3.3__ of the notebook and package run correctly and the tagged version of the package should run v0.3.3 of the notebook.
    3. This package (MIT License)<br>
    
@@ -36,7 +36,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
 - [How to cite this stuff](#Citations)
-- [What's new in this version since 0.2.3](#Changes)
+- [What's new in this version since 0.3.3](#Changes)
 - [Funding](#Funding) 
 
 ## Package Mission
@@ -79,11 +79,7 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.3.3.
-
-The solvers are stable and the notebook <--> print book maps are done. The draft of Chapter 3 is finished.
-
-Next up: v0.4.0: Anderson acceleration
+This is version v0.4.0: New stuff = Chapter 4: Anderson acceleration 
 
 The plan is, for x > 2.
 
@@ -239,14 +235,11 @@ doi="10.5281/zenodo.4284687"
 
 ## Changes
 
-### Updates since 0.2.3
+### Updates since 0.3.3
 
-- __Chapter 3: Newton-Krylov and PTC-Krylov solvers__
-   - GMRES, GMRES(m), and BiCGSTAB linear solvers
+- Nothing, I haven't done anything yet
 
-### What's after 0.3.3?
-
-- 0.4.0 is Anderson acceleration.
+### What's after 0.4.3?
 
 - 0.5.0 is Broyden's method
 
