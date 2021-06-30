@@ -117,6 +117,11 @@ nsol(F!, x0, FS, FPS, J!=diffjac!)
 ```
 FS and FPS are arrays for storage of the function and Jacobian. F! is the call to ``F``. The ```!``` signifies that you must overwrite FS with the value of ``F(x)``. J! is the function for Jacobian evaluation. It overwrites the storage you have allocated for the Jacobian. The default is a finite-difference Jacobian.
 
+So to call nsol and use the default Jacobian you'd do this
+```julia
+nsol(F!, x0, FS, FPS)
+```
+
 Here is an extremely simple example from the book. The function and Jacobian codes are
 
 ```julia
@@ -170,7 +175,7 @@ that the line search took two steplength reductions on the first iteration.
 
 We can do the linear algebra in single precision by storing the 
 Jacobian in Float32 and use a finite difference Jacobian by omitting
-```jsimple!``. So ...
+```jsimple!```. So ...
 
 ```julia
 julia> FP32=zeros(Float32,2,2);
@@ -201,10 +206,15 @@ the iteration is updated with the step ``s`` where
 
 Our codes update ``\delta`` via the SER formula
 ``
-\delta_+ = \delta_0 \| F(x_0 \|/\| F(x_n)
+\delta_+ = \delta_0 \| F(x_0 \|/\| F(x_n)\|
 ``
 
-
+The calling sequence for ```ptcsol``` is, leaving out the kwargs and
+taking the default finite-difference Jacobian
+```julia
+ptcsol(F!, x0, FS, FPS)
+```
+and the inputs are the same as for ```nsol.jl```
 
 ## Nonlinear systems with Krylov linear solvers: Chapter 3
 
@@ -216,7 +226,11 @@ The calling sequence for solving ```F(x) = 0```  with ```nsoli.jl```, leaving ou
 ```julia
 nsoli(F!, x0, FS, FPS, Jvec=dirder)
 ```
-FS and FPS are arrays for storage of the function and the Krylov basis. If you want to take m GMRES iterations with no restarts you must give FPS at least m+1 columns. F! is the call to ``F``, exactly as in Chapter 2. We will do the simple example again with an analytic Jacobian-vector product.
+FS and FPS are arrays for storage of the function and the Krylov basis. 
+```Jvec``` is the function for a Jacobian-vector project.
+The default is a finite difference Jacobian-vector project.
+If you want to take m GMRES iterations with no restarts you must give FPS at least m+1 columns. F! is the call to ``F``, exactly as in Chapter 2. 
+We will do the simple example again with an analytic Jacobian-vector product.
 
 One important kwarg is ```lmaxit```, the maximum number of Krylov iterations. For now FPS must have a least lmaxit+1 columns or the solver will complain. The default is 5, which may change as I get better organized. For the two-dimensional
 
@@ -253,6 +267,17 @@ julia> kout.history
  4.28404e-04
  3.18612e-08
 ```	
+
+The pseudo-transient continuation code ```ptcsoli.jl``` takes the same
+inputs as ```nsoli.jl```. So the call to ```ptcsoli.jl```, taking the defaults,
+is
+```julia
+ptcsoli(F!,x0,FS,FPS)
+
+```
+The value of ``\delta_0`` is one of the kwargs. The default is ``10^{-6}``,
+which is very conservative and something you'll want to play with after reading
+the book.
 
 ## Overview of the Codes
 
