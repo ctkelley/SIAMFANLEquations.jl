@@ -66,6 +66,7 @@ export
     heqinit,
     heqf!,
     heqJ!,
+    HeqFix!,
     simple!,
     jsimple!,
     JVsimple,

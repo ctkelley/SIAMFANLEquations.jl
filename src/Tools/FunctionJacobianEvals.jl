@@ -110,12 +110,12 @@ you are using precomputed data or not. No reason to get excited
 about this.
 """
 function EvalF!(F!, FS, x, q::Nothing)
-    F!(FS, x)
+    FS=F!(FS, x)
     return FS
 end
 
 function EvalF!(F!, FS, x, pdata)
-    F!(FS, x, pdata)
+    FS=F!(FS, x, pdata)
     return FS
 end
 
@@ -182,6 +182,7 @@ function EvalJ!(FPS, FS, x, F!, J!, dx, dt, pdata, jknowsdt)
         EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
         FPS .= FPS + (1.0 / dt) * I
     end
+    return FPS
 end
 
 function EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
@@ -190,6 +191,7 @@ function EvalJ!(FPS, FS, x, F!, J!, dx, pdata)
     else
         diffjac!(FPS, FS, F!, x, dx, pdata)
     end
+    return FPS
 end
 
 
@@ -216,6 +218,7 @@ function diffjac!(FPS::Array{T,2}, FS, F!, x, dx, pdata) where {T<:Real}
             FPS[ir, ic] = (FY[ir] - FS[ir]) / h
         end
     end
+    return FPS
 end
 
 """

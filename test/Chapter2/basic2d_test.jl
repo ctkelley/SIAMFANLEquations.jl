@@ -83,6 +83,7 @@ end
 function basic2d!(FV, x)
     FV[1] = x[1] * x[1] - 2.0
     FV[2] = exp(x[1] - 1) + x[2] * x[2] - 2.0
+    return FV
 end
 
 function jbasic2d!(JV, FV, x)
@@ -90,4 +91,5 @@ function jbasic2d!(JV, FV, x)
     JV[1, 2] = 0.0
     JV[2, 1] = exp(x[1] - 1)
     JV[2, 2] = 2 * x[2]
+    return JV
 end

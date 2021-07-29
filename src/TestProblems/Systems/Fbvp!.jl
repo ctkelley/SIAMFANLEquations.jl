@@ -29,6 +29,7 @@ function Fbvp!(FV, U, bdata)
         FV[2*ip+1] = v[ip+1] - v[ip] - h2 * (vp[ip] + vp[ip+1])
         FV[2*ip] = vp[ip+1] - vp[ip] + h2 * (force[ip] + force[ip+1])
     end
+    return FV
 end
 
 function Jbvp!(FVP, FV, x, bdata)
@@ -56,6 +57,7 @@ function Jbvp!(FVP, FV, x, bdata)
     ndown = diagind(FVP, -1)
     FDOWN = view(FVP, ndown)
     @views FDOWN[1:2:2n-3] .= zdat[1:n-1]
+    return FVP
 end
 
 

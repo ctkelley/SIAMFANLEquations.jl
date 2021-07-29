@@ -113,6 +113,7 @@ end
 function f!(fv, x, pdata)
     fv[1] = x[1] + sin(x[2])
     fv[2] = cos(x[1] + x[2])
+    return fv
 end
 
 
@@ -124,6 +125,7 @@ Function evaluation witout precomputed data for testing.
 function fv2!(fv, x)
     fv[1] = x[1] + sin(x[2])
     fv[2] = cos(x[1] + x[2])
+    return fv
 end
 
 
