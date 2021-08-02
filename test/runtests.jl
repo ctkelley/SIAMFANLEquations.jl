@@ -38,12 +38,12 @@ end
     @test nk_test()
     @test nk_pde()
     @test nk_heq()
+    @test ptcKrylovTest()
+    @test ptcKrylovTestB()
 end
 @testset "Krylov solvers: Chapter 3" begin
     @test gmres_test()
     @test bicgstab_test()
     @test gmres_test_pde(31)
     @test bicgstab_test_pde(31)
-    @test ptcKrylovTest()
-    @test ptcKrylovTestB()
 end

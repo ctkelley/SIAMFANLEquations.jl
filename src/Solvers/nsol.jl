@@ -197,6 +197,7 @@ iterations + 1. So, for scalar equations, it's a row vector.
  julia> function f!(fv,x)
        fv[1]=x[1] + sin(x[2])
        fv[2]=cos(x[1]+x[2])
+       return fv
        end
 f (generic function with 1 method)
 
