@@ -12,6 +12,7 @@ export ptcsol
 export ptcsoli
 export nsol
 export nsoli
+export aasol
 export nofact
 export secant
 export armijosc
@@ -32,6 +33,7 @@ include("Tools/ErrorTest.jl")
 include("Tools/NewtonKrylov_Tools.jl")
 include("Tools/PTCTools.jl")
 include("Tools/PTCToolsi.jl")
+include("Tools/AA_Tools.jl")
 include("Solvers/Chapter1/nsolsc.jl")
 include("Solvers/Chapter1/ptcsolsc.jl")
 include("Solvers/Chapter1/secant.jl")
@@ -39,6 +41,7 @@ include("Solvers/ptcsol.jl")
 include("Solvers/ptcsoli.jl")
 include("Solvers/nsol.jl")
 include("Solvers/nsoli.jl")
+include("Solvers/aasol.jl")
 include("Solvers/LinearSolvers/kl_gmres.jl")
 include("Solvers/LinearSolvers/kl_bicgstab.jl")
 include("Solvers/LinearSolvers/Orthogonalize!.jl")

@@ -21,6 +21,10 @@ include("Chapter3/ptcKrylovTestB.jl")
 include("Chapter3/nk_test.jl")
 include("Chapter3/nk_pde.jl")
 include("Chapter3/nk_heq.jl")
+include("Chapter4/alex_test.jl")
+include("Chapter4/heq_aa.jl")
+include("Chapter4/linear_aa.jl")
+
 @testset "Scalar Equations: Chapter 1" begin
     @test nsolsc_solution_test()
     @test ptcsolsc_test()
@@ -46,4 +50,9 @@ end
     @test bicgstab_test()
     @test gmres_test_pde(31)
     @test bicgstab_test_pde(31)
+end
+@testset "Anderson Acceleration: Chapter 4" begin
+    @test alex_test()
+    @test heq_aa()
+    @test linear_aa()
 end
