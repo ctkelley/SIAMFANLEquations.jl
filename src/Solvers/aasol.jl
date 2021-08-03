@@ -32,8 +32,6 @@ Inputs:\n
   should have at least 2m+2 columns. So for Anderson(3), Vstore should
   be no smaller than zeros(n,8)
 
-- maxit: Maximum number of iterations. Default = 20.
-
 Keyword Arguments (kwargs):\n
 
 maxit: default = 20\n

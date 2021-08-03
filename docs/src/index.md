@@ -215,7 +215,7 @@ and the inputs are the same as for ```nsol.jl```
 
 ## Nonlinear systems with Krylov linear solvers: Chapter 3
 
-The methods in this chapter use Krylov itertive solvers to compute
+The methods in this chapter use Krylov iterative solvers to compute
 The solvers are ```nsoli.jl``` and ```ptcsoli.jl```. 
 
 The calling sequence for solving ```F(x) = 0```  with ```nsoli.jl```, leaving out the kwargs, is
@@ -276,6 +276,36 @@ The value of ``\delta_0`` is one of the kwargs. The default is ``10^{-6}``,
 which is very conservative and something you'll want to play with after reading
 the book.
 
+## Solving fixed point problems with Anderson acceleration: Chapter 4
+
+The solver is ```aasol.jl``` and one is solving ```x = GFix(x)```. 
+The calling sequence, leaving out the kwargs, is
+
+```julia
+aasol(GFix!, x0, m, Vstore)
+```
+
+Here, similarly to the Newton solvers in Chapters 2 and 3, ```GFix!```
+must have the calling sequence
+```julia
+xout=GFix!(xout,xin)
+```
+or 
+```julia
+xout=GFix!(xout,xin,pdata)
+```
+where ```xout``` is the preallocated storage for the function value and
+pdata is any precomputed data that ```GFix!``` needs. 
+
+```x0``` is the initial iterate and ```m``` is the depth. The iteration
+must store ``2 m`` vectors and you must allocate that (and more!) in
+```Vstore```. I am currently changing the size of ```Vstore``` frequently
+so look at the docstrings for the latest on this.
+
+The linear least squares problem for the optimization is typically very
+ill-conditioned and solving that in reduced precision is a bad idea. I do
+not offer that option in ```aasol.jl```.
+
 ## Overview of the Codes
 
 The solvers for scalar equations in Chapter 1 are wrappers for the codes from Chapter 2 with the same interface. 
@@ -323,5 +353,8 @@ or BandedMatrices. The solvers
 2. ptcsoli.jl is the Newton-Krylov pseudo-transient continuation code. 
 
 ### Anderson Acceleration
+
+The solver is aasol.jl. Keep in mind that you are solving fixed point 
+problems ``x = G(x)`` so you send the solver the fixed point map ``G``.
 
 ### Broyden's Method
