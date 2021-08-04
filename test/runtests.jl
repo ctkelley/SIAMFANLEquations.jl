@@ -14,6 +14,7 @@ include("Chapter2/pde_lin_test.jl")
 include("Chapter2/nsolpde_test.jl")
 include("Chapter2/knowsdt_test.jl")
 include("Chapter3/gmres_test.jl")
+include("Chapter3/mgs_test.jl")
 include("Chapter3/bicgstab_test.jl")
 include("Chapter3/Krylov_pde_test.jl")
 include("Chapter3/ptcKrylovTest.jl")
@@ -47,6 +48,7 @@ end
 end
 @testset "Krylov solvers: Chapter 3" begin
     @test gmres_test()
+    @test mgs_test()
     @test bicgstab_test()
     @test gmres_test_pde(31)
     @test bicgstab_test_pde(31)

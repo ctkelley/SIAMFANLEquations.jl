@@ -98,7 +98,7 @@ function mgs!(V, hv, vv, orth = "once")
         vv .-= hv[j] * p
     end
     hv[k+1] = norm(vv)
-    if (normin + 0.001 * hv[k+1] == normin) #&& (orth == "twice")
+    if (normin + 0.001 * hv[k+1] == normin) && (orth == "twice")
         @views for j = 1:k
             p = vec(V[:, j])
             hr = p' * vv

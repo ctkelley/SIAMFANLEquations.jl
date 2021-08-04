@@ -74,7 +74,7 @@ return gout
 end
 
 function makeLinpdata(eigs, beta=1.0)
-U=[1 -1; 1 1]./sqrt(2)
+U=[1 -1; 1 1]./sqrt(2.0)
 V=[3 -4; 4 3]./5.0
 S=diagm(eigs)
 M=U*S*V'
