@@ -238,9 +238,8 @@ doi="10.5281/zenodo.4284687"
 ### Updates since 0.3.3
 
 - First version of Anderson acceleration: aasol.jl 
-  - All there except for doing QR the right way and putting examples in the docstrings and the notebooks
-  - Once the examples are done I'll tag 0.4.0
-  - CI problems duplicate the examples from Toth/Kelley, so I'm close.
+  - All there except for doing QR the right way. Examples in docstrings and (via ```help```) in the notebooks.
+      - CI problems duplicate the examples from Toth/Kelley, so I'm close.
 
 ### What's after 0.4.3?
 
