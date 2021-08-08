@@ -182,7 +182,9 @@ The algorithms, listed by book chapter will be
         - Codes: __Done!__, Notebook: __Done!__
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptcsoli.jl
        - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 4: Anderson acceleration: aasol.jl __Does Matlab code count as partially done?__
+   - Chapter 4: Anderson acceleration: aasol.jl 
+        - Codes: __75% done; solver works;  missing update/downdate of QR factorization for optimization problem__
+        - Notebook: Getting started
    - Chapter 5: Broyden's method: brsol.jl __0% done, but won't take long once I get started. I will do it the right way (ie from (Kel95)).__
    
    
@@ -237,9 +239,9 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.3.3
 
-- First version of Anderson acceleration: aasol.jl 
-  - All there except for doing QR the right way. Examples in docstrings and (via ```help```) in the notebooks.
-      - CI problems duplicate the examples from Toth/Kelley, so I'm close.
+- v0.4.0: Latest tagged version: First version of Anderson acceleration: aasol.jl 
+  - All there except for doing QR the right way. Examples from Toth/Kelley in docstrings and (via ```help```) in the notebooks.
+      
 
 ### What's after 0.4.3?
 
