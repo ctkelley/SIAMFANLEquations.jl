@@ -23,8 +23,8 @@ Hence the notebook and this package all have SIAMFANL in their names.
 The new book with have a different algorithm mix and the solvers and examples will be in Juila. The project will have three parts.
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021 and publication in 2022__.
-   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.3.3) (open source, MIT License, Creative Commons License)
-      Versons __0.3.3__ of the notebook and package run correctly and the tagged version of the package should run v0.3.3 of the notebook.
+   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.4.1) (open source, MIT License, Creative Commons License)
+      Versons __0.4.1__ of the notebook and package run correctly and the tagged version of the package should run v0.4.1 of the notebook.
    3. This package (MIT License)<br>
    
 ## Readme Contents:
@@ -45,7 +45,7 @@ This package is designed and built to support a book project. So the solvers and
 
 ## Installation: Use Julia 1.5 and up with this thing!!!
 
-This package has been tested on Julia 1.5. __It no longer works on 1.0!__ 
+This package has been tested on Julia 1.5. __The package no longer works on 1.0!__ 
 
 Type this 
 
