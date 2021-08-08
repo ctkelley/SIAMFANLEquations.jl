@@ -71,7 +71,19 @@ where
    -- stats = named tuple (condhist, alphanorm) of the history of the
               condition numbers of the optimization problem
               and l1 norm of the coefficients. This is only for diagosing
-              problems and research.
+              problems and research. Condihist[k] and alphanorm[k] are
+              the condition number and coefficient norm for the optimization
+              problem that computes iteration k+1 from iteration k. \n
+
+              I record this for iterations k=1, ... until the final iteration 
+              K. So I do not record the stats for k=0 or the final iteration. 
+              We did record the data for the final iteration in Toth/Kelley 
+              2015 at the cost of an extra optimiztion problem solve. 
+              Since we've already terminated, there's not any point in 
+              collecting that data.\n
+
+              Bottom line: if history has length K+1 for iterations 
+              0 ... K, then condhist and alphanorm have length K-1.
  
    -- idid=true if the iteration succeeded and false if not.
 
@@ -89,6 +101,44 @@ solhist is an N x K array where N is the length of x and K is the number of
 iterations + 1. 
 
 ### Examples from the docstrings for aasol
+
+#### Duplicate Table 1 from Toth-Kelley 2015.
+
+
+The final entries in the condition number and coefficient norm statistics
+are never used in the computation and we don't compute them in Julia.
+See the docstrings, notebook, and the print book for the story on this.
+
+```jldoctest
+julia> function tothk!(G, u)
+       G[1]=cos(.5*(u[1]+u[2]))
+       G[2]=G[1]+ 1.e-8 * sin(u[1]*u[1])
+       return G
+       end
+tothk! (generic function with 1 method)
+
+julia> u0=ones(2,); m=2; vdim=2*(m+1); Vstore = zeros(2, vdim);
+julia> aout = aasol(tothk!, u0, m, Vstore; rtol = 1.e-10);
+julia> aout.history
+8-element Vector{Float64}:
+ 6.50111e-01
+ 4.48661e-01
+ 2.61480e-02
+ 7.25389e-02
+ 1.53107e-04
+ 1.18512e-05
+ 1.82476e-08
+ 1.04804e-13
+
+julia> [aout.stats.condhist aout.stats.alphanorm]
+6×2 Matrix{Float64}:
+ 1.00000e+00  1.00000e+00
+ 2.01556e+10  4.61720e+00
+ 1.37776e+09  2.15749e+00
+ 3.61344e+10  1.18377e+00
+ 2.54947e+11  1.00000e+00
+ 3.67672e+10  1.00171e+00
+```
 
 #### H-equation example with m=2. This takes more iterations than
 Newton, which should surprise no one.
