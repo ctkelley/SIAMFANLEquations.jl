@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.4.0
+# SIAMFANLEquations version 0.4.1
 
 [changelog](#Changes)
 
@@ -79,7 +79,7 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.4.0: New stuff = Chapter 4: Anderson acceleration 
+This is version v0.4.1: Chapter 4: Anderson acceleration; solver mostly done and working on writing and examples
 
 The plan is, for x > 2.
 
@@ -241,6 +241,8 @@ doi="10.5281/zenodo.4284687"
 
 - v0.4.0: Latest tagged version: First version of Anderson acceleration: aasol.jl 
   - All there except for doing QR the right way. Examples from Toth/Kelley in docstrings and (via ```help```) in the notebooks.
+- v0.4.1: Writing for Ch 4 and more examples 
+   - This chapter and chapter 5 will be shorter than any of the first three chapters because the algorithms are simpler.
       
 
 ### What's after 0.4.3?
