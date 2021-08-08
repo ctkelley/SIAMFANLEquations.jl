@@ -54,7 +54,7 @@ end
     @test bicgstab_test_pde(31)
 end
 @testset "Anderson Acceleration: Chapter 4" begin
-    @test alex_test()
     @test heq_aa()
     @test linear_aa()
+    @test alex_test()
 end
