@@ -70,20 +70,20 @@ where
 
    -- stats = named tuple (condhist, alphanorm) of the history of the
               condition numbers of the optimization problem
-              and l1 norm of the coefficients. This is only for diagosing
-              problems and research. Condihist[k] and alphanorm[k] are
-              the condition number and coefficient norm for the optimization
-              problem that computes iteration k+1 from iteration k. \n
+              and l1 norm of the coefficients. 
+This is only for diagosing
+problems and research. Condihist[k] and alphanorm[k] are
+the condition number and coefficient norm for the optimization
+problem that computes iteration k+1 from iteration k. 
 
-              I record this for iterations k=1, ... until the final iteration 
-              K. So I do not record the stats for k=0 or the final iteration. 
-              We did record the data for the final iteration in Toth/Kelley 
-              2015 at the cost of an extra optimiztion problem solve. 
-              Since we've already terminated, there's not any point in 
-              collecting that data.\n
-
-              Bottom line: if history has length K+1 for iterations 
-              0 ... K, then condhist and alphanorm have length K-1.
+I record this for iterations k=1, ... until the final iteration 
+K. So I do not record the stats for k=0 or the final iteration. 
+We did record the data for the final iteration in Toth/Kelley 
+2015 at the cost of an extra optimiztion problem solve. 
+Since we've already terminated, there's not any point in 
+collecting that data.\n
+Bottom line: if history has length K+1 for iterations 
+0 ... K, then condhist and alphanorm have length K-1.
  
    -- idid=true if the iteration succeeded and false if not.
 
