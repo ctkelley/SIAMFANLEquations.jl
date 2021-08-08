@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.4.0
+# SIAMFANLEquations.jl v0.4.1
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -10,7 +10,10 @@ __Solvers and Examples in Julia__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-Version 0.4.0: New stuff = Chapter 4: Anderson acceleration.
+Version 0.4.1: New stuff = writing for Chapter 4 + API changes(?) + more examples
+
+Old stuff from 0.4.0 = First Anderson acceleration code.
+
 
 ## Scalar Equations: Chapter 1
 
