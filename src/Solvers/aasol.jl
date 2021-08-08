@@ -87,6 +87,32 @@ keepsolhist=true\n
 
 solhist is an N x K array where N is the length of x and K is the number of
 iterations + 1. 
+
+### Examples from the docstrings for aasol
+
+#### H-equation example with m=2. This takes more iterations than
+Newton, which should surprise no one.
+
+```jldoctest
+julia> n=16; x0=ones(n,); Vstore=zeros(n,20); m=2;
+julia> hdata=heqinit(x0,.99);
+julia> hout=aasol(HeqFix!, x0, m, Vstore; pdata=hdata);
+julia> hout.history
+12-element Vector{Float64}:
+ 1.47613e+00
+ 7.47800e-01
+ 2.16609e-01
+ 4.32017e-02
+ 2.66867e-02
+ 6.82965e-03
+ 2.70779e-04
+ 6.51027e-05
+ 7.35581e-07
+ 1.85649e-09
+ 4.94803e-10
+ 5.18866e-12
+
+```
 """
 function aasol(
     GFix!,
