@@ -68,7 +68,7 @@ enables you to use the codes. You'll need
 ```
 using SIAMFANLEquations.TestProblems
 ```
-to run the test problems. Then there the examples you get with
+to run the test problems. Then there are the examples you get with
 ```
 using SIAMFANLEquations.Examples
 ```
