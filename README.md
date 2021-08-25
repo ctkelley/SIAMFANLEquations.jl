@@ -125,17 +125,17 @@ This is a book project and I need to put all changes in by hand so I'll have mus
 
 I have limited bandwidth, __so please do not send me email or open issues about__ ...
 
-   1. Typos in the notebook or the docstrings. This project is far from the final proofreading stage and I want to fix those things in peace. There are many of them and I do not need 100s of emails/issues about that. If you like hunting typos, open season begins when I announce this project on NA-DIGEST.
-   2. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia, am working on it, and getting better. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. There may be something more abstract coming at the end of the project, but that is far away from now.
+   0. Typos in the notebook or the docstrings. This project is far from the final proofreading stage and I want to fix those things in peace. There are many of them and I do not need 100s of emails/issues about that. If you like hunting typos, open season begins when I announce this project on NA-DIGEST.
+   1. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia, am working on it, and getting better. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. 
       1. I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. 
            1.  Fortran + Julia = __Foolia__
-   3. Organization of the repo. I'm still thinking this through. The important thing is that it make sense for the print book. I must do this work with the publisher.
-   4. Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully, have a clear vision for this project, and understand this field fairly well. 
-   5. Questions like "Why doesn't SIAMFANLequations.jl look/work/smell like and/or use DasKapital.jl?" The reasons are that
+   2. Organization of the repo. I'm still thinking this through. The important thing is that it make sense for the print book. I must do this work with the publisher.
+   3. Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully, have a clear vision for this project, and understand this field fairly well. 
+   4. Questions like "Why doesn't SIAMFANLEquations.jl look/work/smell like and/or use DasKapital.jl?" The reasons are that
       1. I am neither Karl nor Groucho,
       2. this project has a different mission, and 
       3. __I am working hard to limit depencencies__. 
-   6. Philosophy, politics, opinions, invitations to debates, ...
+   5. Philosophy, politics, opinions, invitations to debates, ...
  
 
 
