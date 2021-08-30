@@ -1,3 +1,10 @@
+"""
+heq_aa()
+Duplicate the part of Table 4 in Toth-Kelley for l^2 optimization
+with c=.99.
+
+Compare solution with one from nsoli.
+"""
 function heq_aa()
     c = 0.99
     tol = 1.e-8
