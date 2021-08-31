@@ -65,7 +65,7 @@ u=fish2d(f, fdata)
 
 Fast Poisson solver in two space dimensions.
 Same as the Matlab code.
-Unit squre + homogeneous Dirichlet BCs.
+Unit square + homogeneous Dirichlet BCs.
 
 Grid is nx by nx
 
