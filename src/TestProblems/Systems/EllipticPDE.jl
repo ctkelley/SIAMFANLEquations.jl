@@ -93,6 +93,30 @@ function Jvec2d(v, FS, u, pdata)
     return jvec
 end
 
+"""
+hardleft!(FV, u, pdata)
+Convection-diffusion equation with left preconditioning hard-wired in
+
+"""
+function hardleft!(FV, u, pdata)
+fdata=pdata.fdata
+FV = pdeF!(FV,u,pdata)
+FV .= Pfish2d(FV,fdata)
+return FV
+end
+
+"""
+hardleftFix!(FV, u, pdata)
+Fixed point form of the left preconditioned nonlinear
+convection-diffusion equation
+"""
+function hardleftFix!(FV, u, pdata)
+FV = hardleft!(FV, u, pdata)
+# G(u) = u - FV
+axpby!(1.0, u, -1.0, FV)
+return FV
+end
+
 
 """
 pdeinit(n)

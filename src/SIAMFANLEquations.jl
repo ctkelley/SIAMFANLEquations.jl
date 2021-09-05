@@ -102,7 +102,9 @@ export
     solexact,
     l2dexact,
     dxexact,
-    dyexact
+    dyexact,
+    hardleft!,
+    hardleftFix!
 
 include("TestProblems/Scalars/fcos.jl")
 include("TestProblems/Scalars/fpatan.jl")
@@ -130,6 +132,7 @@ export BVP_solve
 export nsolheq
 export NsolPDE
 export NsoliPDE
+export PDE_aa
 
 include("Examples/ptciBeam.jl")
 include("Examples/ptcBeam.jl")
@@ -137,6 +140,7 @@ include("Examples/ivpBeam.jl")
 include("Examples/BVP_solve.jl")
 include("Examples/NsolPDE.jl")
 include("Examples/NsoliPDE.jl")
+include("Examples/PDE_aa.jl")
 include("Examples/Internal/nsolheq.jl")
 end
 
