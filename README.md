@@ -170,7 +170,7 @@ The references I use for theory of pseudo-transient continuation and Anderson ac
 
 ## Algorithms and Solvers
 
-The solvers are designed to be stand-alone codes. The reason for this is the education mission of the project. I want the codes to be as easy to understand as possible. I have deliberately sacrificed a lot of abstraction and some performance in this effort. The reward for the reader (ie you) is that the algorithmic parameters are completely exposed so  you can play with them. At the end I hope to write a wrapper for all this that hides the parameters, but the stand-alone, keyword-infested codes are what you need if you want to really understand how these methods work. My students became experts in this field by fiddling with the Matlab version of these solvers.
+The solvers are designed to be stand-alone codes. The reason for this is the education mission of the project. I want the codes to be as easy to understand as possible. I have deliberately sacrificed a lot of abstraction and some performance in this effort. The reward for the reader (ie you) is that the algorithmic parameters are completely exposed so  you can play with them. At the end I may write a wrapper for all this that hides the parameters as a separate package. However, the stand-alone, keyword-infested codes are what you need if you want to really understand how these methods work. My students became experts in this field by fiddling with the Matlab version of these solvers.
 
 The linear solvers are tuned to communicate well with nonlinear solvers. My old Matlab codes are a good illustration of this idea. My [new Mablab codes](https://ctk.math.ncsu.edu/knl.html) were designed in response to the need to do this better than I had been. In particular, the linear solver and the matrix-vector/preconditioner-vector product function need information on the nonlinear iteration and any precomputed data. While I could use global variables (and did in Kel95) and put these things in a module to simplify the interface, I won't do that anymore. Global varaibles make debugging harder and break parallelism. I like to avoid them. 
 
@@ -184,7 +184,7 @@ The algorithms, listed by book chapter will be
        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 4: Anderson acceleration: aasol.jl 
         - Codes: __75% done; solver works;  missing update/downdate of QR factorization for optimization problem__
-        - Notebook: Getting started
+        - Notebook: __Map from print book --> notebook 75% done__, notebook examples, __0% done__
    - Chapter 5: Broyden's method: brsol.jl __0% done, but won't take long once I get started. I will do it the right way (ie from (Kel95)).__
    
    
@@ -241,7 +241,7 @@ doi="10.5281/zenodo.4284687"
 
 - v0.4.0: Latest tagged version: First version of Anderson acceleration: aasol.jl 
   - All there except for doing QR the right way. Examples from Toth/Kelley in docstrings and (via ```help```) in the notebooks.
-- v0.4.1: Writing for Ch 4 and more examples 
+- v0.4.1: Chapter 4 of print book, QR up/down dates in Andeson code, print book --> notebook map, more stuff in CI
    - This chapter and chapter 5 will be shorter than any of the first three chapters because the algorithms are simpler.
       
 
