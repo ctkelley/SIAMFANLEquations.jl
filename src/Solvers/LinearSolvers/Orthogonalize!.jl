@@ -21,71 +21,6 @@ function Orthogonalize!(V, hv, vv, orth = "mgs1")
 end
 
 """
-cgs!(V, hv, vv, orth="twice")
-
-Classical Gram-Schmidt.
-"""
-function cgs!(V, hv, vv, orth)
-    T = eltype(V)
-    k = length(hv)
-    @views rk = hv[1:k-1]
-    onep = T(1.0)
-    zerop = T(0.0)
-    pk = zeros(T, k - 1)
-    qk = vv
-    Qkm = V
-    #
-    # As the inventors of the BLAS said, "RTFM"!
-    #
-    # Orthogonalize!
-    BLAS.gemv!('T', onep, Qkm, qk, onep, rk)
-    BLAS.gemv!('N', -onep, Qkm, rk, onep, qk)
-    if orth == "twice"
-        #
-        # Orthogonalize again!
-        BLAS.gemv!('T', onep, Qkm, qk, zerop, pk)
-        BLAS.gemv!('N', -onep, Qkm, pk, onep, qk)
-        rk .+= pk
-    end
-    #
-    # Keep track of what you did.
-    nqk = norm(qk)
-    qk ./= nqk
-    hv[k] = nqk
-end
-
-
-#
-function cgs!(V::SubArray{Float16,2}, hv, vv, orth)
-    #
-    #   no BLAS
-    #
-    k = length(hv)
-    T = eltype(V)
-    onep = T(1.0)
-    zerop = T(0.0)
-    @views rk = hv[1:k-1]
-    pk = zeros(T, size(rk))
-    qk = vv
-    Qkm = V
-    # Orthogonalize
-    rk .+= Qkm' * qk
-    qk .-= Qkm * rk
-    if orth == "twice"
-        # Orthogonalize again
-        pk .= Qkm' * qk
-        qk .-= Qkm * pk
-        rk .+= pk
-    end
-    # Keep track of what you did.
-    nqk = norm(qk)
-    nqk != 0.0 || println("breakdown")
-    nqk == 0.0 || qk ./= nqk
-    hv[k] = nqk
-end
-
-
-"""
 mgs!(V, hv, vv, orth)
 """
 function mgs!(V, hv, vv, orth = "once")
@@ -113,8 +48,45 @@ function mgs!(V, hv, vv, orth = "once")
     #
     #if hv[k+1] != 0
     #@views vv .= vv/hv[k+1]
-    nv != 0 || println("breakdown")
+    (nv != 0) || println("breakdown in mgs1")
     if nv != 0
         vv ./= nv
     end
 end
+
+"""
+cgs!(V, hv, vv, orth="twice")
+
+Classical Gram-Schmidt.
+"""
+function cgs!(V, hv, vv, orth="twice")
+    #
+    #   no BLAS. Seems faster than BLAS since 1.6 and allocates
+    #   far less memory.
+    #
+    k = length(hv)
+    T = eltype(V)
+    onep = T(1.0)
+    zerop = T(0.0)
+    @views rk = hv[1:k-1]
+    pk = zeros(T, size(rk))
+    qk = vv
+    Qkm = V
+    # Orthogonalize
+    rk .+= Qkm' * qk
+#    qk .-= Qkm * rk
+    mul!(qk, Qkm, rk, -1.0, 1.0)
+    if orth == "twice"
+        # Orthogonalize again
+        pk .= Qkm' * qk
+#        qk .-= Qkm * pk
+        mul!(qk, Qkm, pk, -1.0, 1.0)
+        rk .+= pk
+    end
+    # Keep track of what you did.
+    nqk = norm(qk)
+    (nqk != 0.0) || println("breakdown in cgs")
+    (nqk > 0.0) && (qk ./= nqk)
+    hv[k] = nqk
+end
+

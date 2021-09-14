@@ -358,6 +358,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
         # Update the residual norm.
         #
         rho = abs(g[k+1])
+        (nu > 0.0) || (println("near breakdown"); rho=0.0;)
         push!(reshist, rho)
     end
     #
