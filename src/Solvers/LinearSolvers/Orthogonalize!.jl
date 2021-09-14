@@ -1,29 +1,29 @@
 """
-Orthogonalize!(V, hv, vv, orth)
+Orthogonalize!(V, hv, vv, orth; verbose=false)
 
 Orthogonalize the Krylov vectors using your (my) choice of
 methods. Anything other than classical Gram-Schmidt twice (cgs2) is
 likely to become an undocumented option. Methods other than cgs2 are
 for CI for the linear solver.
 """
-function Orthogonalize!(V, hv, vv, orth = "mgs1")
+function Orthogonalize!(V, hv, vv, orth = "mgs1"; verbose=false)
     orthopts = ["mgs1", "mgs2", "cgs1", "cgs2"]
     orth in orthopts || error("Impossible orth spec in Orthogonalize!")
     if orth == "mgs1"
-        mgs!(V, hv, vv)
+        mgs!(V, hv, vv; verbose=verbose)
     elseif orth == "mgs2"
-        mgs!(V, hv, vv, "twice")
+        mgs!(V, hv, vv, "twice"; verbose=verbose)
     elseif orth == "cgs1"
-        cgs!(V, hv, vv, "once")
+        cgs!(V, hv, vv, "once"; verbose=verbose)
     else
-        cgs!(V, hv, vv, "twice")
+        cgs!(V, hv, vv, "twice"; verbose=verbose)
     end
 end
 
 """
-mgs!(V, hv, vv, orth)
+mgs!(V, hv, vv, orth; verbose=false)
 """
-function mgs!(V, hv, vv, orth = "once")
+function mgs!(V, hv, vv, orth = "once"; verbose=false)
     k = length(hv) - 1
     normin = norm(vv)
     #p=copy(vv)
@@ -48,18 +48,18 @@ function mgs!(V, hv, vv, orth = "once")
     #
     #if hv[k+1] != 0
     #@views vv .= vv/hv[k+1]
-    (nv != 0) || println("breakdown in mgs1")
+    (nv != 0) || (verbose && (println("breakdown in mgs1")))
     if nv != 0
         vv ./= nv
     end
 end
 
 """
-cgs!(V, hv, vv, orth="twice")
+cgs!(V, hv, vv, orth="twice"; verbose=false)
 
 Classical Gram-Schmidt.
 """
-function cgs!(V, hv, vv, orth="twice")
+function cgs!(V, hv, vv, orth="twice"; verbose=false)
     #
     #   no BLAS. Seems faster than BLAS since 1.6 and allocates
     #   far less memory.
@@ -85,7 +85,7 @@ function cgs!(V, hv, vv, orth="twice")
     end
     # Keep track of what you did.
     nqk = norm(qk)
-    (nqk != 0.0) || println("breakdown in cgs")
+    (nqk != 0) || (verbose && (println("breakdown in cgs")))
     (nqk > 0.0) && (qk ./= nqk)
     hv[k] = nqk
 end
