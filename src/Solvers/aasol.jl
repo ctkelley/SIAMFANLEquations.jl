@@ -223,11 +223,11 @@ function aasol(
             condit = 1.0
             sol .= gx
         else
-            Abuild4!(DG, DF, m, k + 1, dg, df)
+            BuildDG!(DG,m,k+1,dg)
+            (QA, RA) = BuildDF!(DF,m,k+1,df)
             mk = min(m, k)
-            @views AC = DF[:, 1:mk]
-            @views theta = AC \ res
-            condit = cond(AC)
+            theta = RA\ (QA'*res)
+            condit = cond(RA)
             alphanrm = falpha(alpha, theta, min(m, k))
             copy!(sol, gx)
             @views sol .-= DG[:, 1:mk] * theta
@@ -245,27 +245,49 @@ function aasol(
 end
 
 """
-Abuild4!(DG, DF, m, k, dg, df)
+BuildDG!(DG,m,k,dg)
+
+Keeps the history of the fixed point map differences
+"""
+function BuildDG!(DG,m,k,dg)
+    if m == 1
+        @views copy!(DG[:, 1], dg)
+    elseif k > m + 1
+        for ic = 1:m-1
+            @views DG[:, ic] .= DG[:, ic+1]
+        end
+        @views copy!(DG[:, m], dg)
+    else
+        @views copy!(DG[:, k-1], dg)
+    end
+end
+
+
+
+"""
+BuildDF!(DG, DF, m, k, dg, df)
 
 Builds the coefficient matrix for the optimization problem. 
 This will get replaced by something that up/down dates the QR
 factorization before v0.4.3 is released.
 """
-function Abuild4!(DG, DF, m, k, dg, df)
+function BuildDF!(DF, m, k, df)
     if m == 1
         @views copy!(DF[:, 1], df)
-        @views copy!(DG[:, 1], dg)
     elseif k > m + 1
         for ic = 1:m-1
             @views DF[:, ic] .= DF[:, ic+1]
-            @views DG[:, ic] .= DG[:, ic+1]
         end
         @views copy!(DF[:, m], df)
-        @views copy!(DG[:, m], dg)
     else
         @views copy!(DF[:, k-1], df)
-        @views copy!(DG[:, k-1], dg)
     end
+mk=min(k-1,m)
+@views AC=DF[:,1:mk]
+QZ=qr(AC)
+QA=Matrix(QZ.Q)
+RA=Matrix(QZ.R)
+return (QA, RA)
 end
 
 """
