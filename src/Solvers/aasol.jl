@@ -181,7 +181,7 @@ function aasol(
     #
     # Set up the storage
     #
-    (sol, DG, DF, solhist) =
+    (sol, DG, QP, solhist) =
            Anderson_Init(x0, Vstore, m, maxit, beta, keepsolhist)
     gx = @views Vstore[:,2*m+1]
     df = copy(sol)
@@ -217,6 +217,12 @@ function aasol(
         aa_point!(gx, GFix!, gold, sol, res, resold, dg, df, beta, pdata)
     updateHist!(ItData, resnorm)
     end
+    n=length(x0)
+#    QF=zeros(n,m)
+    RF=zeros(m,m)
+#    QP=zeros(n,m)
+    RP=zeros(m,m)
+    (m==0) || (QD=zeros(n,m-1))
     while (k < maxit) && resnorm > tol && ~toosoon
         if m == 0
             alphanrm = 1.0
@@ -224,8 +230,10 @@ function aasol(
             sol .= gx
         else
             BuildDG!(DG,m,k+1,dg)
-            (QA, RA) = BuildDF!(DF,m,k+1,df)
+            (QP, RP) = aa_qr_update!(QP, RP, df, m, k-1, QD)
             mk = min(m, k)
+            @views QA=QP[:,1:mk]
+            @views RA=RP[1:mk,1:mk]
             theta = RA\ (QA'*res)
             condit = cond(RA)
             alphanrm = falpha(alpha, theta, min(m, k))
@@ -262,33 +270,102 @@ function BuildDG!(DG,m,k,dg)
     end
 end
 
-
-
 """
-BuildDF!(DG, DF, m, k, dg, df)
+aa_qr_update(Q, R, vnew, m, k, Qd)
 
-Builds the coefficient matrix for the optimization problem. 
-This will get replaced by something that up/down dates the QR
-factorization before v0.4.3 is released.
+Update the QR factorization for the Anderson acceleration optimization
+problem.
+
+Still need to make the allocation for Qd go away.
 """
-function BuildDF!(DF, m, k, df)
-    if m == 1
-        @views copy!(DF[:, 1], df)
-    elseif k > m + 1
-        for ic = 1:m-1
-            @views DF[:, ic] .= DF[:, ic+1]
-        end
-        @views copy!(DF[:, m], df)
+function aa_qr_update!(Q, R, vnew, m, k, Qd)
+(n,m)=size(Q)
+    aa_dim_check(Q, R, vnew, m, k)
+    if k == 0
+        R[1, 1] = norm(vnew)
+        @views Q[:, 1] .= vnew / norm(vnew)
     else
-        @views copy!(DF[:, k-1], df)
-    end
-mk=min(k-1,m)
-@views AC=DF[:,1:mk]
-QZ=qr(AC)
-QA=Matrix(QZ.Q)
-RA=Matrix(QZ.R)
-return (QA, RA)
+        if k > m - 1
+            downdate_aa!(Q, R, m, Qd)
+        end # inner if block
+        kq = min(k, m - 1)
+        update_aa!(Q, R, vnew, m, kq)
+    end # outer if block
+    return (Q, R)
 end
+
+function update_aa!(Q, R, vnew, m, k)
+    (nq, mq) = size(Q)
+    (k > m - 1) && error("Dimension error in Anderson QR")
+    @views Qkm=Q[:,1:k]
+    @views hv = vec(R[1:k+1, k+1])
+#    Orthogonalize!(Qkm, hv, vnew)
+    aa_cgs!(Qkm, hv, vnew)
+    @views R[1:k+1, k+1] .= hv
+    @views Q[:, k+1] .= vnew
+#    return (Q = Q, R = R)
+end
+
+function downdate_aa!(Q, R, m, Qd)
+    @views Rp = R[:, 2:m]
+    G = qr(Rp)
+    Rd = Matrix(G.R)
+    R .= 0.0
+    @views R[1:m-1, 1:m-1] .= Rd
+    Qx = Matrix(G.Q)
+    mul!(Qd,Q,Qx)
+#    Qd .= Q * Qx
+    @views Q[:, 1:m-1] .= Qd
+    @views Q[:, m] .= 0.0
+    return (Q, R)
+end
+
+function aa_dim_check(Q, R, vnew, m, k)
+    (mq, nq) = size(Q)
+    (mr, nr) = size(R)
+    n = length(vnew)
+    dimqok = ((mq == n) && (nq == m))
+    dimrok = ((mr == m) && (nr == m))
+    dimok = (dimqok && dimrok)
+    dimok || error("array size error in AA update")
+end
+
+"""
+aa_cgs!(V, hv, vv, orth="twice")
+
+Classical Gram-Schmidt.
+"""
+function aa_cgs!(V, hv, vv, orth="twice")
+    #
+    #   no BLAS
+    #
+    k = length(hv)
+    T = eltype(V)
+    onep = T(1.0)
+    zerop = T(0.0)
+    @views rk = hv[1:k-1]
+    pk = zeros(T, size(rk))
+    qk = vv
+    Qkm = V
+    # Orthogonalize
+    rk .+= Qkm' * qk
+#    qk .-= Qkm * rk
+    mul!(qk, Qkm, rk, -1.0, 1.0)
+    if orth == "twice"
+        # Orthogonalize again
+        pk .= Qkm' * qk
+#        qk .-= Qkm * pk
+        mul!(qk, Qkm, pk, -1.0, 1.0)
+        rk .+= pk
+    end
+    # Keep track of what you did.
+    nqk = norm(qk)
+    nqk != 0.0 || println("breakdown")
+    nqk == 0.0 || qk ./= nqk
+    hv[k] = nqk
+end
+
+
 
 """
 aa_point!(gx, gfix, gold, sol, res, resold, dg, df, pdata)

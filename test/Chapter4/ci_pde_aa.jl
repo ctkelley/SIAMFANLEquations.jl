@@ -1,8 +1,8 @@
 """
-pde_aa()
+ci_pde_aa()
 Duplicate part of the data for Figure 4.2 in the book.
 """
-function pde_aa()
+function ci_pde_aa()
 n=31;
 m=10;
 pdata=pdeinit(n);

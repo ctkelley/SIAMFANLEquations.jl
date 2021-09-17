@@ -23,7 +23,7 @@ include("Chapter3/nk_test.jl")
 include("Chapter3/nk_pde.jl")
 include("Chapter3/nk_heq.jl")
 include("Chapter4/alex_test.jl")
-include("Chapter4/pde_aa.jl")
+include("Chapter4/ci_pde_aa.jl")
 include("Chapter4/heq_aa.jl")
 include("Chapter4/linear_aa.jl")
 
@@ -55,7 +55,7 @@ end
     @test bicgstab_test_pde(31)
 end
 @testset "Anderson Acceleration: Chapter 4" begin
-    @test pde_aa()
+    @test ci_pde_aa()
     @test heq_aa()
     @test linear_aa()
     @test alex_test()
