@@ -241,8 +241,10 @@ doi="10.5281/zenodo.4284687"
 
 - v0.4.0: Latest tagged version: First version of Anderson acceleration: aasol.jl 
   - All there except for doing QR the right way. Examples from Toth/Kelley in docstrings and (via ```help```) in the notebooks.
-- v0.4.1: Chapter 4 of print book, QR up/down dates in Andeson code, print book --> notebook map, more stuff in CI
-   - This chapter and chapter 5 will be shorter than any of the first three chapters because the algorithms are simpler.
+- v0.4.1: Chapter 4 of print book, QR up/down dates in Anderson code, print book --> notebook map 75% done , more stuff in CI
+- v0.4.2 Print book --> notebook done! Notebook 90% done. Only final benchmarking + projects will be left.
+
+### Chapters 4 and 5 will be shorter than Chapters 1, 2, and 3 because the algorithms are simpler with fewer options.
       
 
 ### What's after 0.4.3?
