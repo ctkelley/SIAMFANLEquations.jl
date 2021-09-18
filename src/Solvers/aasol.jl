@@ -299,8 +299,7 @@ function update_aa!(Q, R, vnew, m, k)
     (k > m - 1) && error("Dimension error in Anderson QR")
     @views Qkm=Q[:,1:k]
     @views hv = vec(R[1:k+1, k+1])
-#    Orthogonalize!(Qkm, hv, vnew)
-    aa_cgs!(Qkm, hv, vnew)
+    Orthogonalize!(Qkm, hv, vnew)
     @views R[1:k+1, k+1] .= hv
     @views Q[:, k+1] .= vnew
 #    return (Q = Q, R = R)
@@ -329,43 +328,6 @@ function aa_dim_check(Q, R, vnew, m, k)
     dimok = (dimqok && dimrok)
     dimok || error("array size error in AA update")
 end
-
-"""
-aa_cgs!(V, hv, vv, orth="twice")
-
-Classical Gram-Schmidt.
-"""
-function aa_cgs!(V, hv, vv, orth="twice")
-    #
-    #   no BLAS
-    #
-    k = length(hv)
-    T = eltype(V)
-    onep = T(1.0)
-    zerop = T(0.0)
-    @views rk = hv[1:k-1]
-    pk = zeros(T, size(rk))
-    qk = vv
-    Qkm = V
-    # Orthogonalize
-    rk .+= Qkm' * qk
-#    qk .-= Qkm * rk
-    mul!(qk, Qkm, rk, -1.0, 1.0)
-    if orth == "twice"
-        # Orthogonalize again
-        pk .= Qkm' * qk
-#        qk .-= Qkm * pk
-        mul!(qk, Qkm, pk, -1.0, 1.0)
-        rk .+= pk
-    end
-    # Keep track of what you did.
-    nqk = norm(qk)
-    nqk != 0.0 || println("breakdown")
-    nqk == 0.0 || qk ./= nqk
-    hv[k] = nqk
-end
-
-
 
 """
 aa_point!(gx, gfix, gold, sol, res, resold, dg, df, pdata)

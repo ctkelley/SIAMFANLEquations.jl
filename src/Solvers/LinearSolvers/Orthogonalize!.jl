@@ -3,10 +3,12 @@ Orthogonalize!(V, hv, vv, orth; verbose=false)
 
 Orthogonalize the Krylov vectors using your (my) choice of
 methods. Anything other than classical Gram-Schmidt twice (cgs2) is
-likely to become an undocumented option. Methods other than cgs2 are
-for CI for the linear solver.
+likely to become an undocumented and UNSUPPORTED option. Methods other 
+than cgs2 are mostly for CI for the linear solver.
+
+DO NOT use anything other than "cgs2" with Anderson acceleration.
 """
-function Orthogonalize!(V, hv, vv, orth = "mgs1"; verbose=false)
+function Orthogonalize!(V, hv, vv, orth = "cgs2"; verbose=false)
     orthopts = ["mgs1", "mgs2", "cgs1", "cgs2"]
     orth in orthopts || error("Impossible orth spec in Orthogonalize!")
     if orth == "mgs1"
