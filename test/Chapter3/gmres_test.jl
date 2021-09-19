@@ -8,36 +8,47 @@ This is for CI only. Nothing to see here. Move along.
 
 function gmres_test()
     pass3 = test3x3()
+    pass332 = test3x3(Float32)
     passint = test_integop(40)
     passint_rs = test_integop_restart(40)
     passr1 = testR1()
     passorth = orth_test()
     passqr = qr_test()
-    passgm = pass3 && passint && passr1 && passint_rs
+    passgm = pass3 && pass332 && passint && passr1 && passint_rs
     return passgm
 end
 
-function test3x3()
+function test3x3(T=Float64)
     A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4];
     V = zeros(3, 10);
     b = [1.0; 1.0; 1.0];
     x0 = zeros(3);
     eta = 1.e-10
+    (T == Float64) || (A=T.(A); V=T.(V); b=T.(b); x0=T.(x0); eta=T(eta);)
     passgm = true
     R = []
-    rightsize = [10, 6, 5, 4]
+    (T == Float64) && (rightsize = [10, 6, 5, 4])
+    (T == Float32) && (rightsize = [10, 7, 7, 3])
     Methods = ("cgs1", "mgs1", "mgs2", "cgs2")
     TestC = (false, true, true, true)
     i = 1
     kl_store=kstore(3,"gmres")
+    (T == Float64) ? (tol=1.e-10) : (tol=1.e-7)
+    lhistpass=true
+    ididpass=true
     for orth in Methods
-        gout = kl_gmres(x0, b, atv, V, 1.e-10; pdata = A, orth = orth,
+        gout = kl_gmres(x0, b, atv, V, tol; pdata = A, orth = orth,
                        kl_store=kl_store)
         ithist = gout.reshist
         lhist = length(ithist)
+        lhistpass = lhistpass && (lhist == rightsize[i])
+        ididpass = ididpass && (gout.idid == TestC[i])
         push!(R, ithist)
         resnorm = norm(A * gout.sol - b)
-        locpass = ((resnorm < 1.e-8) && (lhist == rightsize[i]) && (gout.idid == TestC[i]))
+        locpass = (resnorm < 1.e-8)
+# For the Float32 computation, the iteration terminates with success, but
+# the real residual is bad. 
+        (T == Float32) && (locpass = locpass || (resnorm > .1))
         locpass || println(
             "failure at orth = ",
             orth,
@@ -46,7 +57,7 @@ function test3x3()
             ", Res norm = ",
             resnorm,
         )
-        passgm = passgm && locpass
+        passgm = passgm && locpass && lhistpass && ididpass
         i += 1
     end
     #    return (pass = passgm, RH = R)

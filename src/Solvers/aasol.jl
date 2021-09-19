@@ -299,7 +299,7 @@ function update_aa!(Q, R, vnew, m, k)
     (k > m - 1) && error("Dimension error in Anderson QR")
     @views Qkm=Q[:,1:k]
     @views hv = vec(R[1:k+1, k+1])
-    Orthogonalize!(Qkm, hv, vnew)
+    Orthogonalize!(Qkm, hv, vnew, "cgs2")
     @views R[1:k+1, k+1] .= hv
     @views Q[:, k+1] .= vnew
 #    return (Q = Q, R = R)
