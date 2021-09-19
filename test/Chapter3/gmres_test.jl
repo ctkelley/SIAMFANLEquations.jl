@@ -8,47 +8,66 @@ This is for CI only. Nothing to see here. Move along.
 
 function gmres_test()
     pass3 = test3x3()
-    pass332 = test3x3(Float32)
     passint = test_integop(40)
     passint_rs = test_integop_restart(40)
     passr1 = testR1()
     passorth = orth_test()
     passqr = qr_test()
-    passgm = pass3 && pass332 && passint && passr1 && passint_rs
+    passgm = pass3 && passint && passr1 && passint_rs
     return passgm
 end
 
-function test3x3(T=Float64)
+"""
+test3x3()
+
+Do the nasty problem in Float64 or Float32. When you orthogonalize in Float32,
+the iteration thinks it's ok and is wrong. 
+"""
+function test3x3()
     A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4];
     V = zeros(3, 10);
+    V32= zeros(Float32,3, 10);
     b = [1.0; 1.0; 1.0];
     x0 = zeros(3);
     eta = 1.e-10
-    (T == Float64) || (A=T.(A); V=T.(V); b=T.(b); x0=T.(x0); eta=T(eta);)
     passgm = true
-    R = []
-    (T == Float64) && (rightsize = [10, 6, 5, 4])
-    (T == Float32) && (rightsize = [10, 7, 7, 3])
+    rightsize = [10, 6, 5, 4]
+    rightsize32 = [10, 7, 7, 3]
     Methods = ("cgs1", "mgs1", "mgs2", "cgs2")
     TestC = (false, true, true, true)
     i = 1
     kl_store=kstore(3,"gmres")
-    (T == Float64) ? (tol=1.e-10) : (tol=1.e-7)
+    kl_store32=kstore(3,"gmres")
+    tol=1.e-10
+    tol32=1.e-7
     lhistpass=true
     ididpass=true
+    locpass=true
     for orth in Methods
         gout = kl_gmres(x0, b, atv, V, tol; pdata = A, orth = orth,
                        kl_store=kl_store)
-        ithist = gout.reshist
-        lhist = length(ithist)
-        lhistpass = lhistpass && (lhist == rightsize[i])
-        ididpass = ididpass && (gout.idid == TestC[i])
-        push!(R, ithist)
         resnorm = norm(A * gout.sol - b)
-        locpass = (resnorm < 1.e-8)
+# If I don't have separate kl_stores then the gout.sol is overwritten.
+# I will fix this at some point. For now, only the nonlinear solvers really
+# use kl_store.
+        gout32 = kl_gmres(x0, b, atv, V32, tol32; pdata = A, orth = orth,
+                       kl_store=kl_store32)
+        ithist = gout.reshist
+        ithist32 = gout32.reshist
+        lhist = length(ithist)
+        lhist32 = length(ithist32)
+        lhistpass = lhistpass && (lhist == rightsize[i])
+        lhistpass = lhistpass && (lhist32 == rightsize32[i])
+        ididpass = ididpass && (gout.idid == TestC[i])
+        ididpass = ididpass && (gout32.idid == TestC[i])
+        resnormx = norm(A * gout.sol - b)
+        resnorm32 = norm(A * gout32.sol - b)
+        locpass = (resnorm < 1.e-8) && (resnorm32 > .1)
+println(lhistpass,"  ",ididpass,"  ",locpass)
+println(resnorm,"  ",resnorm32,"  ",resnormx,"  ",norm(c-gout.sol))
 # For the Float32 computation, the iteration terminates with success, but
 # the real residual is bad. 
-        (T == Float32) && (locpass = locpass || (resnorm > .1))
+println(lhistpass,"  ",ididpass,"  ",locpass)
         locpass || println(
             "failure at orth = ",
             orth,

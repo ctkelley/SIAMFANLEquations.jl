@@ -34,14 +34,21 @@ ptv:  preconditioner-vector product, which will also use pdata. The
 
 Keyword arguments
 
-kl\\_store: You have the option of giving me some room
+kl\\_store: You have the option (don't do it!) of giving me some room
          for the vectors gmres needs. These include copies of x0 and b,
          which I will not overwrite and a couple of vectors I use
-         in the iteration. If you're only doing a linear solve, it
-         does no harm to let me allocate those vectores in kl\\_gmres.
-         The way to do this is ```kl_store=kstore(n,"gmres")``` where n
+         in the iteration. If you're only doing a linear solve, PLEASE
+         let me allocate those vectores in kl\\_gmres. For computing a
+         Newton step or for repeated solves,
+         the way to do this is ```kl_store=kstore(n,"gmres")``` where n
          is the number of unknows. I call this myself in the initialization
          phase if you don't do it ahead of me.
+
+         Be very careful with this. kl_store is use to store the solution
+         to avoid overwriting the initial iterate. This means that
+         two calls to kl_gmres with the same kl_store will step on the
+         solution coming from the first call. If you let me allocate it
+         then it happens in local scope and will do no harm.
 
 pdata: precomputed data. The default is nothing, but that ain't gonna
         work well for nonlinear equations.
