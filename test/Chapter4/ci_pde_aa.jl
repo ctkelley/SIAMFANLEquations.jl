@@ -11,8 +11,8 @@ VstoreS=zeros(n*n,2*m+4);
 aout=PDE_aa(n, m; Vstore=Vstore, pdata=pdata);
 aoutS=PDE_aa(n, m; Vstore=VstoreS, pdata=pdata);
 # Same results with low storage mode?
-alphaS= reldiff(aout.stats.alphanorm,aout2.stats.alphanorm)
-condS= reldiff(aout.stats.condhist,aout2.stats.condhist)
+alphaS= reldiff(aout.stats.alphanorm,aoutS.stats.alphanorm)
+condS= reldiff(aout.stats.condhist,aoutS.stats.condhist)
 histS = norm(aoutS.history-aout.history,Inf)
 pdeerrS=  condS + alphaS + histS
 aout.idid || println("pde solver failed")
