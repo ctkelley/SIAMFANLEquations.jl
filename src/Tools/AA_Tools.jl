@@ -100,31 +100,3 @@ function falpha(alpha, theta, mk)
     alpha[mk+1] = 1.0 - theta[mk]
     return norm(alpha, 1)
 end
-
-
-function XCloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist = [])
-    stats = CollectStats(ItData)
-    ithist = ItData.history
-    if keepsolhist
-        sizehist = length(ithist)
-        return (
-            solution = x,
-            functionval = FS,
-            history = ithist,
-            stats = stats,
-            idid = idid,
-            errcode = errcode,
-            solhist = solhist[:, 1:sizehist],
-        )
-    else
-        return (
-            solution = x,
-            functionval = FS,
-            history = ithist,
-            stats = stats,
-            idid = idid,
-            errcode = errcode,
-        )
-    end
-end
-

@@ -16,7 +16,7 @@ pdeerrS= (
         norm(aoutS.stats.condhist-aout.stats.condhist,Inf) +
         norm(aoutS.stats.alphanorm-aout.stats.alphanorm,Inf)
     )
-aa_ok = aout.idid && (aout.errcode==0) && (length(aout.history)==21) && (pdeerrS < 1.e-15)
+aa_ok = aout.idid && (aout.errcode==0) && (length(aout.history)==21) && (pdeerrS < 1.e-12)
 return aa_ok
 end
 
