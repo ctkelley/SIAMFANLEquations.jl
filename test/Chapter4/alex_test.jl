@@ -48,12 +48,6 @@ function alex_test()
 end
 
 
-function reldiff(x, y)
-    p = (x - y) ./ abs.(x)
-    return norm(p, Inf)
-end
-
-
 function vtst()
     historye = [
         6.50111e-01
