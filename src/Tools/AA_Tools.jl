@@ -33,17 +33,46 @@ end
 # Initialize Anderson iteration
 #
 function Anderson_Init(x0, Vstore, m, maxit, beta, keepsolhist)
+blocksize=1024
 (0.0 < abs(beta) <= 1) || error("abs(beta) must be in (0,1]")
 sol=copy(x0)
 n=length(x0)
 (mv, nv) = size(Vstore)
 mv == n || error("Vstore needs ", n, " rows")
-(nv >= 2 * (m + 1)) || error("Vstore needs ", 2 * (m + 1), " columns")
-DF = @views Vstore[:, 1:m]
+(nv >= 2 * (m + 1)) || error("Vstore needs ", 2 * m + 4, " columns")
+#
+# Just in case you are reusing Vstore for several problems, I will
+# reinitialize it to zero.
+#
+Vstore .= 0.0
+if m==0 
+   Qd=[]; QP=[]; DG=[];
+   nvblock=1
+else
+QP = @views Vstore[:, 1:m]
 DG = @views Vstore[:, m+1:2*m]
-keepsolhist ? (solhist = solhistinit(n, maxit, sol)) : (solhist = [])
-return(sol, DG, DF, solhist)
+if (nv >= 3*m+3) 
+    (Qd = @views Vstore[:,2*m+1:3*m-1])
+    nvblock=3*m
+else
+    @warn "Low storage mode"
+    Qd=zeros(blocksize,m-1)
+    nvblock=2*m+1
 end
+end
+gx = Anderson_vector_Init(Vstore,nvblock)
+df = Anderson_vector_Init(Vstore,nvblock+1)
+dg = Anderson_vector_Init(Vstore,nvblock+2)
+res = Anderson_vector_Init(Vstore,nvblock+3)
+keepsolhist ? (solhist = solhistinit(n, maxit, sol)) : (solhist = [])
+return(sol, gx, df, dg, res, DG, QP, Qd, solhist)
+end
+
+function Anderson_vector_Init(Vstore,nvblock)
+gx = @views Vstore[:,nvblock]
+return gx
+end
+
 
 #
 # Figure out what idid and errcode are. Boring but must be done.
@@ -72,4 +101,30 @@ function falpha(alpha, theta, mk)
     return norm(alpha, 1)
 end
 
+
+function XCloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist = [])
+    stats = CollectStats(ItData)
+    ithist = ItData.history
+    if keepsolhist
+        sizehist = length(ithist)
+        return (
+            solution = x,
+            functionval = FS,
+            history = ithist,
+            stats = stats,
+            idid = idid,
+            errcode = errcode,
+            solhist = solhist[:, 1:sizehist],
+        )
+    else
+        return (
+            solution = x,
+            functionval = FS,
+            history = ithist,
+            stats = stats,
+            idid = idid,
+            errcode = errcode,
+        )
+    end
+end
 

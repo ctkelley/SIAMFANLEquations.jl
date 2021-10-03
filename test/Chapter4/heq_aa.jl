@@ -20,7 +20,7 @@ function heq_aa()
     atol = tol
     maxit = 100
     mmax = 6
-    Vstore = zeros(n, 2 * (mmax + 1))
+    Vstore = zeros(n, 3 * mmax + 2)
     itrecords = zeros(6, 4)
     houtn = nsoli(
         heqf!,
@@ -37,7 +37,6 @@ function heq_aa()
     # Solve H-equation with Anderson(m) for several values of m
     #
     for m = 1:6
-        #houta=aasol(HeqFix!, u0, m; maxit; pdata=hdata, rtol=rtol, atol=atol)
         houta = aasol(
             HeqFix!,
             u0,

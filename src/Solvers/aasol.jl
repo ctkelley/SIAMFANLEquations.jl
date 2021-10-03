@@ -8,14 +8,11 @@ Julia code for Anderson acceleration. Nothing fancy.
 
 Solvers fixed point problems x = G(x).
 
-WARNING! This is an alpha version of the solver. The API may change
-and the management of the optimization problem WILL change.
-
 You must allocate storage for the function and fixed point map
 history --> in the calling program <-- in the array Vstore.
 
 For an n dimensional problem with Anderson(m), Vstore must have
-at least 2m+2 columns. THIS MAY CHANGE!!!
+at least 2m + 4 columns and 3m + 3 is better. 
 
 Inputs:\n
 
@@ -29,8 +26,16 @@ Inputs:\n
 - m: depth for Anderson acceleration. m=0 is Picard iteration
 
 - Vstore: Working storage array. For an n dimensional problem Vstore
-  should have at least 2m+2 columns. So for Anderson(3), Vstore should
-  be no smaller than zeros(n,8)
+  should have at least 3m+3 columns unless you are storage bound. If storage
+  is a problem, then you can allocate a minimum of 2m+4 columns. The smaller
+  allocation exacts a performance penalty, especially for small problems
+  and small values of m. So for Anderson(3), Vstore should be no smaller 
+  than zeros(n,8) with zeros(n,11) a better choice. Vstore needs to
+  allocate for the history of differences of the residuals and fixed
+  point maps. The extra m-1 columns are for storing intermediate results
+  in the downdating phase of the QR factorization for the coefficeint 
+  matrix of the optimization problem. See the notebook or the print book 
+  for the details of this mess.
 
 Keyword Arguments (kwargs):\n
 
@@ -181,14 +186,9 @@ function aasol(
     #
     # Set up the storage
     #
-    (sol, DG, QP, solhist) =
+    (sol, gx, df, dg, res, DG, QP, Qd, solhist) =
            Anderson_Init(x0, Vstore, m, maxit, beta, keepsolhist)
-    gx = @views Vstore[:,2*m+1]
-    df = copy(sol)
-    dg = copy(sol)
-    gold = copy(sol)
     res = copy(sol)
-    resold = copy(sol)
     #
     #   Iteration 1
     #
@@ -196,7 +196,6 @@ function aasol(
     ~keepsolhist || (@views solhist[:, k+1] .= sol)
     gx = EvalF!(GFix!, gx, sol, pdata)
     (beta == 1.0) || (gx=betafix!(gx, sol, beta))
-    gold .= gx
     res .= gx - sol
     resnorm = norm(res)
     tol = rtol * resnorm + atol
@@ -213,16 +212,13 @@ function aasol(
     alpha = zeros(m + 1)
     k = k + 1
     ~keepsolhist || (@views solhist[:, k+1] .= sol)
-    (gx, dg, df, res, resold, resnorm) =
-        aa_point!(gx, GFix!, gold, sol, res, resold, dg, df, beta, pdata)
+    (gx, dg, df, res, resnorm) =
+        aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
     updateHist!(ItData, resnorm)
     end
     n=length(x0)
-#    QF=zeros(n,m)
     RF=zeros(m,m)
-#    QP=zeros(n,m)
     RP=zeros(m,m)
-    (m==0) || (QD=zeros(n,m-1))
     while (k < maxit) && resnorm > tol && ~toosoon
         if m == 0
             alphanrm = 1.0
@@ -230,7 +226,7 @@ function aasol(
             sol .= gx
         else
             BuildDG!(DG,m,k+1,dg)
-            (QP, RP) = aa_qr_update!(QP, RP, df, m, k-1, QD)
+            (QP, RP) = aa_qr_update!(QP, RP, df, m, k-1, Qd)
             mk = min(m, k)
             @views QA=QP[:,1:mk]
             @views RA=RP[1:mk,1:mk]
@@ -243,8 +239,8 @@ function aasol(
         updateStats!(ItData, condit, alphanrm)
         k += 1
         ~keepsolhist || (@views solhist[:, k+1] .= sol)
-        (gx, dg, df, res, resold, resnorm) =
-            aa_point!(gx, GFix!, gold, sol, res, resold, dg, df, beta, pdata)
+        (gx, dg, df, res, resnorm) =
+            aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
         updateHist!(ItData, resnorm)
     end
     (idid, errcode) = AndersonOK(resnorm, tol, k, toosoon)
@@ -271,81 +267,22 @@ function BuildDG!(DG,m,k,dg)
 end
 
 """
-aa_qr_update(Q, R, vnew, m, k, Qd)
-
-Update the QR factorization for the Anderson acceleration optimization
-problem.
-
-Still need to make the allocation for Qd go away.
-"""
-function aa_qr_update!(Q, R, vnew, m, k, Qd)
-(n,m)=size(Q)
-    aa_dim_check(Q, R, vnew, m, k)
-    if k == 0
-        R[1, 1] = norm(vnew)
-        @views Q[:, 1] .= vnew / norm(vnew)
-    else
-        if k > m - 1
-            downdate_aa!(Q, R, m, Qd)
-        end # inner if block
-        kq = min(k, m - 1)
-        update_aa!(Q, R, vnew, m, kq)
-    end # outer if block
-    return (Q, R)
-end
-
-function update_aa!(Q, R, vnew, m, k)
-    (nq, mq) = size(Q)
-    (k > m - 1) && error("Dimension error in Anderson QR")
-    @views Qkm=Q[:,1:k]
-    @views hv = vec(R[1:k+1, k+1])
-    Orthogonalize!(Qkm, hv, vnew, "cgs2")
-    @views R[1:k+1, k+1] .= hv
-    @views Q[:, k+1] .= vnew
-#    return (Q = Q, R = R)
-end
-
-function downdate_aa!(Q, R, m, Qd)
-    @views Rp = R[:, 2:m]
-    G = qr(Rp)
-    Rd = Matrix(G.R)
-    R .= 0.0
-    @views R[1:m-1, 1:m-1] .= Rd
-    Qx = Matrix(G.Q)
-    mul!(Qd,Q,Qx)
-#    Qd .= Q * Qx
-    @views Q[:, 1:m-1] .= Qd
-    @views Q[:, m] .= 0.0
-    return (Q, R)
-end
-
-function aa_dim_check(Q, R, vnew, m, k)
-    (mq, nq) = size(Q)
-    (mr, nr) = size(R)
-    n = length(vnew)
-    dimqok = ((mq == n) && (nq == m))
-    dimrok = ((mr == m) && (nr == m))
-    dimok = (dimqok && dimrok)
-    dimok || error("array size error in AA update")
-end
-
-"""
-aa_point!(gx, gfix, gold, sol, res, resold, dg, df, pdata)
+aa_point!(gx, gfix, sol, res, dg, df, pdata)
 
 Evaluate the fixed point map at the new point. 
 Keep the books to get ready to update the coefficient matrix
 for the optimization problem.
 """
-function aa_point!(gx, gfix, gold, sol, res, resold, dg, df, beta, pdata)
-    gold .= gx
+function aa_point!(gx, gfix, sol, res, dg, df, beta, pdata)
+    dg .= -gx
     gx = EvalF!(gfix, gx, sol, pdata)
     (beta == 1.0) || (gx=betafix!(gx, sol, beta))
-    dg .= gx - gold
-    resold .= res
+    dg .+= gx
+    df .= -res
     res .= gx - sol
-    df .= res - resold
+    df .+= res
     resnorm = norm(res)
-    return (gx, dg, df, res, resold, resnorm)
+    return (gx, dg, df, res, resnorm)
 end
 
 """

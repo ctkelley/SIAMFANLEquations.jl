@@ -6,8 +6,10 @@ Test aasol.jl for a two-dimensional linear problem
 function linear_aa()
 maxit = 10
 maxm = 2
-vdim = 2 * (maxm + 1)
+vdim = 3 * maxm + 3
 Vstore = zeros(2, vdim)
+vdimS = 2 * maxm + 4
+VstoreS = zeros(2, vdimS)
 eigs=[.1, .5]
 xstar=ones(2,)
 pdata=makeLinpdata(eigs)
@@ -18,7 +20,15 @@ m=0
 x0=[1.0, 1.0]; m=0;
 aout = aasol(GLin!, x0, m, Vstore;
      rtol = 1.e-10, pdata=pdata, maxit=maxit, keepsolhist=true);
-tflag = (aout.errcode===-1) && aout.idid
+# Same results with low storage method?
+aoutS = aasol(GLin!, x0, m, VstoreS;
+     rtol = 1.e-10, pdata=pdata, maxit=maxit, keepsolhist=true);
+linerrS = (
+        norm(aoutS.history-aout.history,Inf) +
+        norm(aoutS.stats.condhist-aout.stats.condhist,Inf) +
+        norm(aoutS.stats.alphanorm-aout.stats.alphanorm,Inf)
+    )
+tflag = (aout.errcode===-1) && aout.idid && (linerrS < 1.e-15)
 tflag || println("Failure in aasol terminate on entry test.")
 #
 # Test for failure to converge
