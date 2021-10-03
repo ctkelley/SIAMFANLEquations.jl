@@ -16,7 +16,12 @@ pdeerrS= (
         norm(aoutS.stats.condhist-aout.stats.condhist,Inf) +
         norm(aoutS.stats.alphanorm-aout.stats.alphanorm,Inf)
     )
+aout.idid || println("pde solver failed")
+(aout.errcode == 0) || println("wrong error code in pde")
+(pdeerrS < 1.e-15) || println("different stats")
+(length(aout.history)==21) || println("history length wrong")
 aa_ok = aout.idid && (aout.errcode==0) && (length(aout.history)==21) && (pdeerrS < 1.e-12)
+aa_ok && println("pde succeeds")
 return aa_ok
 end
 
