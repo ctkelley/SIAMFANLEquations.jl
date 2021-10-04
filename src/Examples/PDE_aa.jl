@@ -14,9 +14,9 @@ function PDE_aa(n=31, m=3; Vstore=Float64[], pdata=nothing)
 # Process Vstore and pdata
 #
 (pdata != nothing) || (pdata=pdeinit(n));
-(length(Vstore)>0) || (Vstore=zeros(n*n,2(m+1)));
+(length(Vstore)>0) || (Vstore=zeros(n*n,3*m + 3))
 (mv, nv)  = size(Vstore)
-dimvtest= ((mv == n*n) && (nv <= 2*(m + 1)))
+dimvtest= ((mv == n*n) && (nv >= 2*m + 4))
 dimvtest || error("Vstore too small")
 #
 # Call aasol and return the results.
