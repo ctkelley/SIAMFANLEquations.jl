@@ -43,9 +43,9 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
 This package is designed and built to support a book project. So the solvers and examples reinforce the algorithmic discussion in the book. General purpose packages have a different mission.
 
-## Installation: Use Julia 1.5 and up with this thing!!!
+## Installation: Use Julia 1.6 and up with this thing!!!
 
-This package has been tested on Julia 1.5. __The package no longer works on 1.0!__ 
+This package has been tested on Julia 1.6. __The package no longer works on 1.5 or earlier!__ 
 
 Type this 
 
