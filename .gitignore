@@ -10,6 +10,7 @@
 *.rar
 *.tar
 *.zip
+*.swp
 docs/build/
 Manifest.toml
 src/Archive
