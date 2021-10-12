@@ -5,8 +5,7 @@ secant(f,x0; rtol=1.e-6, atol=1.e-12, maxit=10,
 
 C. T. Kelley, 2020
 
-The secant method for scalar equations. Has most of the features a
-Broyden method code for systems of equations needs.
+The secant method for scalar equations. 
 
 Input:\n 
 f: function\n 
