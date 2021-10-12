@@ -24,8 +24,15 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021(?) and publication in 2022__. 
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.4.1) (open source, MIT License, Creative Commons License)
-      Versons __0.4.12_ of the notebook and package run correctly and the tagged version of the package should run v0.4.2 of the notebook.
+      Versons __0.4.2_ of the notebook and package run correctly and the tagged version of the package should run v0.4.2 of the notebook.
    3. This package (MIT License)<br>
+
+Content changes:
+
+- New solvers: __pseudo-transient continuation__ and __Anderson acceleration__
+- Deletions: __Broyden's method__ 
+    - Quasi-Newton methods are not used much for nonlinear equations any more. Newton-Krylov has taken over.
+- New Case Studies chapter
    
 ## Readme Contents:
 - [Mission](#Package-Mission)
@@ -155,7 +162,7 @@ and
 
 (Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003
 
-describe the Newton and Broyden algorithms. Kel95 has the theory. This project is a sequal to Kel03. Kel03 is Matlab-centric
+describe the classic Newton and Newton-Krylov algorithms. Kel95 has the theory. This project is a sequal to Kel03. Kel03 is Matlab-centric
 and will remain in print.
 
 A recent Acta Numerica paper has everything
@@ -185,7 +192,7 @@ The algorithms, listed by book chapter will be
    - Chapter 4: Anderson acceleration: aasol.jl 
         - Codes: __done; solver in final form__
         - Notebook: __Map from print book --> notebook done__, notebook examples, __50% done__
-   - Chapter 5: Broyden's method: brsol.jl __0% done, but won't take long once I get started. I will do it the right way (ie from (Kel95)).__
+   - Chapter 5: Case studies: __I know what two of them will be and need to write the code.__
    
    
 ## Test Problems
@@ -250,8 +257,8 @@ doi="10.5281/zenodo.4284687"
 
 ### What's after 0.4.3?
 
-- 0.5.0 is Broyden's method
-
+- 0.5.0  will contain some (> 0 and < 5) case studies
+- 
 - 0.6.0 is the version I'll announce on NA-Digest, expect 0.5.x for x=0, ..., 9 before this happens.
 
    
