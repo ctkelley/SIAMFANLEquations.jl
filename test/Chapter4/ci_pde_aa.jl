@@ -3,7 +3,7 @@ ci_pde_aa()
 Duplicate part of the data for Figure 4.2 in the book.
 """
 function ci_pde_aa()
-n=31;
+n=63;
 m=10;
 pdata=pdeinit(n);
 Vstore=zeros(n*n,3*m+3);
