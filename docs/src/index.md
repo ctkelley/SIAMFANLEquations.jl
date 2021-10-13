@@ -13,8 +13,6 @@ This documentation is sketchy and designed to get you going, but the real deal i
 Version 0.4.2: New stuff = Finish print book --> notebook map; begin notebook
 
 Old stuff from 0.4.1 = Anderson acceleration code complete. 
-Old stuff from 0.4.0 = First Anderson acceleration code.
-
 
 ## Scalar Equations: Chapter 1
 
@@ -327,9 +325,7 @@ There are three codes for the methods in this chapter
    - I do an Armijo line search for all the methods unless the method is
      chord or you tell me not to.
 
-2. secant.jl is the scalar secant method. It is a stand-alone code.
-I do not know if I'll merge it with the Broyden code or not. It's really
-too simple to mess with much.
+2. secant.jl is the scalar secant method.
 
 3. ptcsolsc.jl is pseudo-transient continuation. 
 
@@ -356,9 +352,8 @@ or BandedMatrices. The solvers
 
 2. ptcsoli.jl is the Newton-Krylov pseudo-transient continuation code. 
 
-### Anderson Acceleration
+### Anderson Acceleration: Chapter 4
 
 The solver is aasol.jl. Keep in mind that you are solving fixed point 
 problems ``x = G(x)`` so you send the solver the fixed point map ``G``.
 
-### Broyden's Method
