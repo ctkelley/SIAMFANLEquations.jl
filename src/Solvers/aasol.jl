@@ -47,7 +47,9 @@ relative and absolute error tolerances\n
 
 beta:\n
 Anderson mixing parameter. Changes G(x) to (1-beta)x + beta G(x).
-Equivalent to accelerating damped Picard iteration.
+Equivalent to accelerating damped Picard iteration. The history
+vector is the one for the damped fixed point map, not the original
+one. Keep this in mind when comparing results.
 
 pdata:\n
 precomputed data for the fixed point map.
@@ -122,7 +124,7 @@ julia> function tothk!(G, u)
        end
 tothk! (generic function with 1 method)
 
-julia> u0=ones(2,); m=2; vdim=2*(m+1); Vstore = zeros(2, vdim);
+julia> u0=ones(2,); m=2; vdim=3*m+3; Vstore = zeros(2, vdim);
 julia> aout = aasol(tothk!, u0, m, Vstore; rtol = 1.e-10);
 julia> aout.history
 8-element Vector{Float64}:
@@ -131,19 +133,38 @@ julia> aout.history
  2.61480e-02
  7.25389e-02
  1.53107e-04
- 1.18512e-05
- 1.82476e-08
- 1.04804e-13
+ 1.18513e-05
+ 1.82466e-08
+ 1.04725e-13
 
 julia> [aout.stats.condhist aout.stats.alphanorm]
 6×2 Matrix{Float64}:
  1.00000e+00  1.00000e+00
  2.01556e+10  4.61720e+00
  1.37776e+09  2.15749e+00
- 3.61344e+10  1.18377e+00
- 2.54947e+11  1.00000e+00
- 3.67672e+10  1.00171e+00
+ 3.61348e+10  1.18377e+00
+ 2.54948e+11  1.00000e+00
+ 3.67694e+10  1.00171e+00
 ```
+
+Now we put a mixing or damping paramter in there with beta = .5. This
+example is nasty enough to make mixing do ok. Keep in mind
+that the history is for the damped residual, not the original one.
+
+```
+julia> bout=aasol(tothk!, u0, m, Vstore; rtol = 1.e-10, beta=.5);
+
+julia> bout.history
+7-element Vector{Float64}:
+ 3.25055e-01
+ 3.70140e-02
+ 1.81111e-03
+ 9.55308e-04
+ 1.25936e-05
+ 1.40854e-09
+ 2.18196e-12
+```
+
 
 #### H-equation example with m=2. This takes more iterations than
 Newton, which should surprise no one.
