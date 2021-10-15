@@ -12,7 +12,8 @@ You must allocate storage for the function and fixed point map
 history --> in the calling program <-- in the array Vstore.
 
 For an n dimensional problem with Anderson(m), Vstore must have
-at least 2m + 4 columns and 3m + 3 is better. 
+at least 2m + 4 columns and 3m + 3 is better.  If m=0 (Picard) then
+V must have at least 4 columns.
 
 Inputs:\n
 
@@ -35,7 +36,9 @@ Inputs:\n
   point maps. The extra m-1 columns are for storing intermediate results
   in the downdating phase of the QR factorization for the coefficeint 
   matrix of the optimization problem. See the notebook or the print book 
-  for the details of this mess.
+  for the details of this mess. 
+
+  If m=0, then Vstore needs 4 columns.
 
 Keyword Arguments (kwargs):\n
 

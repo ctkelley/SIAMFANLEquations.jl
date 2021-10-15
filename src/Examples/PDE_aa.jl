@@ -1,5 +1,5 @@
 """
-PDE_aa(n=31, m=3; Vstore=Float64[], pdata=nothing)
+PDE_aa(n=31, m=3; Vstore=Float64[], pdata=nothing, beta=1.0)
 Solve preconditioned convection-diffusion equation with hardwired left
 preconditioner using Anderson acceleration.
 
@@ -9,7 +9,7 @@ allocate for Vstore with each call to this function. The story on
 pdata is the same. If you are calling this several times with the
 same value of n, build pdata outside the call.
 """
-function PDE_aa(n=31, m=3; Vstore=Float64[], pdata=nothing)
+function PDE_aa(n=31, m=3; Vstore=Float64[], pdata=nothing, beta=1.0)
 #
 # Process Vstore and pdata
 #
@@ -25,6 +25,6 @@ u0=zeros(n*n);
 rtol = 1.e-8;
 atol = 1.e-8;
 aout = aasol(hardleftFix!, u0, m, Vstore; pdata=pdata, maxit=40, rtol=rtol,
-             atol=atol);
+             atol=atol, beta=beta);
 return aout
 end
