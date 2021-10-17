@@ -74,7 +74,8 @@ example below.
 If the iteration fails it's time to play with the tolerances, delta0, and maxit.
 You are certain to fail if there is no stable solution to the equation.
 
-# Examples
+### Examples for ptcsolsc
+
 ```jldoctest
 julia> ptcout=ptcsolsc(sptest,.2;delta0=2.0,rtol=1.e-3,atol=1.e-3);
 

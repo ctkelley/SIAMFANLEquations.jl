@@ -113,7 +113,8 @@ is the number of iteration + 1. So, for scalar equations (N=1), solhist
 is a row vector. Hence the use of solhist' in the example below.
 
 
-# Examples
+### Examples for nsolsc.jl
+
 ```jldoctest
 julia> nsolout=nsolsc(atan,1.0;maxit=5,atol=1.e-12,rtol=1.e-12);
 

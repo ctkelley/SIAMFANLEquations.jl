@@ -189,7 +189,7 @@ iterations + 1. So, for scalar equations, it's a row vector.
 
 ------------------------
 
-### Examples from the docstrings for nsol
+### Examples for nsol
 
 #### World's easiest problem example. Test 64 and 32 bit Jacobians. No meaningful difference in the residual histories or the converged solutions.
 

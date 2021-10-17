@@ -69,7 +69,8 @@ is the number of iteration + 1. So, for scalar equations (N=1), solhist
 is a row vector. Hence the use of solhist' in the example below.
 
 
-# Examples
+### Example for secant.jl
+
 ```jldoctest
 
 julia> secout=secant(atan,1.0;maxit=6,atol=1.e-12,rtol=1.e-12);

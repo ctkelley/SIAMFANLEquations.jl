@@ -110,7 +110,7 @@ keepsolhist=true\n
 solhist is an N x K array where N is the length of x and K is the number of
 iterations + 1. 
 
-### Examples from the docstrings for aasol
+### Examples for aasol
 
 #### Duplicate Table 1 from Toth-Kelley 2015.
 

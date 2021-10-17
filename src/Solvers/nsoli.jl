@@ -162,7 +162,7 @@ iteration + 1. So, for scalar equations, it's a row vector.
 
 ------------------------
 
-### Example from the docstrings for nsoli
+### Example for nsoli
 
 #### Simple 2D problem. 
 You should get the same results as for nsol.jl because
