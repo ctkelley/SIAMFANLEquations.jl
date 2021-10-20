@@ -1,9 +1,9 @@
 """
 ptcsol(F!, x0, FS, FPS, J! = diffjac!; rtol=1.e-6, atol=1.e-12,
-               maxit=20, delta0=1.e-6, dx=1.e-7, pdata = nothing, jfact = klfact,
+             maxit=20, delta0=1.e-6, dx=1.e-7, pdata = nothing, jfact = klfact,
                printerr = true, keepsolhist = false, jknowsdt = false)
 
-C. T. Kelley, 2020
+C. T. Kelley, 2021
 
 Julia versions of the nonlinear solvers from my SIAM books. 
 Herewith: some new stuff ==> ptcsol

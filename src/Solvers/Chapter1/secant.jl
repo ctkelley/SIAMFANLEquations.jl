@@ -3,7 +3,7 @@ secant(f,x0; rtol=1.e-6, atol=1.e-12, maxit=10,
         armmax=10, armfix=false, pdata=nothing,
         printerr=true, keepsolhist=true, stagnationok=false)
 
-C. T. Kelley, 2020
+C. T. Kelley, 2021
 
 The secant method for scalar equations. 
 

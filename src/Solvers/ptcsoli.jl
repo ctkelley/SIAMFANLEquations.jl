@@ -1,25 +1,8 @@
 """
-function ptcsoli(
-    F!,
-    x0,
-    FS,
-    FPS,
-    Jvec = dirder;
-    rtol = 1.e-6,
-    atol = 1.e-12,
-    maxit = 20,
-    lmaxit = -1,
-    lsolver = "gmres",
-    eta = 0.1,
-    fixedeta = true,
-    Pvec = nothing,
-    PvecKnowsdelta = false, 
-    pside = "right",
-    delta0 = 1.e-6,
-    dx = 1.e-7,
-    pdata = nothing,
-    printerr = true,
-    keepsolhist = false,
+function ptcsoli( F!, x0, FS, FPS, Jvec = dirder; rtol = 1.e-6, atol = 1.e-12,
+    maxit = 20, lmaxit = -1, lsolver = "gmres", eta = 0.1, fixedeta = true,
+    Pvec = nothing, PvecKnowsdelta = false, pside = "right", delta0 = 1.e-6,
+    dx = 1.e-7, pdata = nothing, printerr = true, keepsolhist = false,
 )
 
 C. T. Kelley, 2021

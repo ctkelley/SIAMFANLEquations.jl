@@ -6,7 +6,7 @@
                printerr = true, keepsolhist = false, stagnationok=false)
 )
 
-C. T. Kelley, 2020
+C. T. Kelley, 2021
 
 Julia versions of the nonlinear solvers from my SIAM books. 
 Herewith: nsol
