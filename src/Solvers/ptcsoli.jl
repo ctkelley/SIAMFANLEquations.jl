@@ -23,9 +23,10 @@ Inputs:\n
 
 - x0: initial iterate\n
 
-- FS: Preallocated storage for function. It is an N x 1 column vector.\n
-You may dimension it as (n,) or (n,1). (n,) is best, but the
-solvers can deal with it either way.
+- FS: Preallocated storage for function. It is a vector of size N\n
+  You should store it as (N,) and design F! to use vectors of size (N,).
+  If you use (N,1) consistently instead, the solvers may work, but I make
+  no guarantees.
 
 - FPS: preallocated storage for the Krylov basis. It is an N x m matrix where
        you plan to take at most m-1 GMRES iterations before a restart. \n

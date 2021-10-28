@@ -18,12 +18,14 @@ Inputs:\n
 - F!: function evaluation, the ! indicates that F! overwrites FS, your
     preallocated storage for the function.\n
     So, FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
+    
 
 - x0: initial iterate\n
 
-- FS: Preallocated storage for function. It is an N x 1 column vector.\n
-You may dimension it as (n,) or (n,1). (n,) is best, but the
-solvers can deal with it either way.
+- FS: Preallocated storage for function. It is a vector of size N\n
+  You should store it as (N,) and design F! to use vectors of size (N,).
+  If you use (N,1) consistently instead, the solvers may work, but I make
+  no guarantees.
 
 - FPS: preallocated storage for Jacobian. It is an N x N matrix\n
   If FPS is sparse, you __must__ allocate storage for the diagonal so

@@ -22,7 +22,10 @@ Inputs:\n
     So xout=GFix!(xout,xin) or xout=GFix!(xout,xin,pdata) returns
     xout=G(xin)
 
-- sol: Initial iterate
+- x0: Initial iterate. It is a vector of size N\n
+  You should store it as (N,) and design G! to use vectors of size (N,).
+  If you use (N,1) consistently instead, the solvers may work, but I make
+  no guarantees.
 
 - m: depth for Anderson acceleration. m=0 is Picard iteration
 
@@ -31,7 +34,7 @@ Inputs:\n
   is a problem, then you can allocate a minimum of 2m+4 columns. The smaller
   allocation exacts a performance penalty, especially for small problems
   and small values of m. So for Anderson(3), Vstore should be no smaller 
-  than zeros(n,8) with zeros(n,11) a better choice. Vstore needs to
+  than zeros(N,8) with zeros(N,11) a better choice. Vstore needs to
   allocate for the history of differences of the residuals and fixed
   point maps. The extra m-1 columns are for storing intermediate results
   in the downdating phase of the QR factorization for the coefficeint 
