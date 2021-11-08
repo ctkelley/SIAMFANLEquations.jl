@@ -270,7 +270,7 @@ function aasol(
             aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
         updateHist!(ItData, resnorm)
     end
-    (idid, errcode) = AndersonOK(resnorm, tol, k, toosoon)
+    (idid, errcode) = AndersonOK(resnorm, tol, k, m, toosoon)
     aaout=CloseIteration(sol, gx, ItData, idid, errcode, keepsolhist, solhist)
     return aaout
 end

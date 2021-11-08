@@ -79,11 +79,11 @@ end
 # This is a lot simpler than for Newton. There are no linesearches
 # or Krylov iterations to keep track of.
 #
-function AndersonOK(resnorm, tol, k, toosoon)
+function AndersonOK(resnorm, tol, k, m, toosoon)
 idid=(resnorm <= tol)
 idid ? (errcode = 0) : (errcode = 10)
 toosoon && (errcode = -1)
-idid || println("Failure to converge in aasol.jl")
+idid || println("Failure to converge after $k iterations for m=$m in aasol.jl")
 toosoon && println("Iteration terminates on entry to aasol.jl")
 return (idid, errcode)
 end
