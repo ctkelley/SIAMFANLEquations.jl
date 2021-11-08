@@ -12,7 +12,7 @@ function NewtonError(resfail, iline, resnorm, toosoon, tol, itc, maxit, armmax, 
     ~toosoon || (errcode = Lottery_Winner(resnorm, tol, printerr))
     itc < maxit || (errcode = MaxitError(resnorm, maxit, printerr))
     ~iline || (errcode = LineSearchFailure(maxit, itc, armmax, printerr))
-    errcode != 0 || println("Something's wrong and I don't know what!")
+    errcode != 0 || println("Unknown Newton error. This is not supposed to happen.")
     #
     #
     if printerr && ~toosoon
@@ -85,7 +85,7 @@ end
 function Krylov_Error(lmaxit, ke_report)
     if ke_report == false
         println(
-            "Linear solver did not meet termination criterion at least once.
+ "Newton-Krylov: Linear solver did not meet termination criterion at least once.
     This does not mean the nonlinear solver will fail. lmaxit= ",
             lmaxit,
         )

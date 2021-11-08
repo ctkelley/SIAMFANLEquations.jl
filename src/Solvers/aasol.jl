@@ -228,9 +228,6 @@ function aasol(
     tol = rtol * resnorm + atol
     ItData = ItStatsA(resnorm)
     toosoon = (resnorm <= tol)
-#    if toosoon
-#        println("aasol terminates on entry")
-#    else     
     if ~toosoon
     #
     #   If we need more iterations, get organized.
