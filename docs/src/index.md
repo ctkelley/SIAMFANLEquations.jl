@@ -300,9 +300,9 @@ where ```xout``` is the preallocated storage for the function value and
 pdata is any precomputed data that ```GFix!``` needs. 
 
 ```x0``` is the initial iterate and ```m``` is the depth. The iteration
-must store ``2 m`` vectors and you must allocate that (and more!) in
-```Vstore```. I am currently changing the size of ```Vstore``` frequently
-so look at the docstrings for the latest on this.
+must store ``2 m + 4`` vectors and ``3m+3`` is better
+You must allocate that in ```Vstore```. Use ``2m + 4`` only if storage
+is a major problem for your appliciation.
 
 The linear least squares problem for the optimization is typically very
 ill-conditioned and solving that in reduced precision is a bad idea. I do
