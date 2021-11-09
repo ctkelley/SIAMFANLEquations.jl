@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.4.2
+# SIAMFANLEquations version 0.4.3
 
 [changelog](#Changes)
 
@@ -23,8 +23,8 @@ Hence the notebook and this package all have SIAMFANL in their names.
 The new book with have a different algorithm mix and the solvers and examples will be in Juila. The project will have three parts.
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021(?) and publication in 2022__. 
-   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.4.1) (open source, MIT License, Creative Commons License)
-      Versons __0.4.2_ of the notebook and package run correctly and the tagged version of the package should run v0.4.2 of the notebook.
+   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.4.3) (open source, MIT License, Creative Commons License)
+      Versons __0.4.3_ of the notebook and package run correctly and the tagged version of the package should run v0.4.3 of the notebook.
    3. This package (MIT License)<br>
 
 Content changes:
@@ -86,7 +86,7 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.4.2: Chapter 4: Anderson acceleration; solver done; printbook --> notebook complete; notebook mostly done
+This is version v0.4.3: Chapter 4: Anderson acceleration; solver done; printbook --> notebook complete; notebook mostly done
 
 The plan is, for 4 <= x <= 5.
 
@@ -249,8 +249,8 @@ doi="10.5281/zenodo.4284687"
 - v0.4.0: Latest tagged version: First version of Anderson acceleration: aasol.jl 
   - All there except for doing QR the right way. Examples from Toth/Kelley in docstrings and (via ```help```) in the notebooks.
 - v0.4.1: Anderson code complete;  print book --> notebook map 75% done , more stuff in CI__
-- __v0.4.2: (This release) Print book --> notebook done! Notebook 90% done. Only final benchmarking + projects will be left__
-- v0.4.3: (November, sometime) Chapter 4 tagged
+- v0.4.2: Print book --> notebook done! Notebook 90% done. Only final benchmarking + projects will be left__
+- v0.4.3: (This Release) Chapter 4 tagged; notebook done, mapped to print book
 
 ### Chapter 4 will be shorter than Chapters 1, 2, and 3 because the algorithms are simpler with fewer options.
 
