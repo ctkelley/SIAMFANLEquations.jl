@@ -63,6 +63,7 @@ function test3x3()
         resnormx = norm(A * gout.sol - b)
         resnorm32 = norm(A * gout32.sol - b)
         locpass = (resnorm < 1.e-8) && (resnorm32 > .1)
+c=A\b
 println(lhistpass,"  ",ididpass,"  ",locpass)
 println(resnorm,"  ",resnorm32,"  ",resnormx,"  ",norm(c-gout.sol))
 # For the Float32 computation, the iteration terminates with success, but
