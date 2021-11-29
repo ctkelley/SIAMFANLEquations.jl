@@ -250,9 +250,9 @@ doi="10.5281/zenodo.4284687"
   - All there except for doing QR the right way. Examples from Toth/Kelley in docstrings and (via ```help```) in the notebooks.
 - v0.4.1: Anderson code complete;  print book --> notebook map 75% done , more stuff in CI__
 - v0.4.2: Print book --> notebook done! Notebook 90% done. Only final benchmarking + projects will be left__
-- v0.4.3: (This Release) Chapter 4 tagged; notebook done, mapped to print book
+- v0.4.3: (This Release) Chapter 4 tagged; notebook done, mapped to print book; __solvers done__
 
-### Chapter 4 will be shorter than Chapters 1, 2, and 3 because the algorithms are simpler with fewer options.
+### Chapter 4 is shorter than Chapters 1, 2, and 3 because the algorithms are simpler with fewer options.
 
 ### Chapter 5 will be even shorter.
       
@@ -260,7 +260,7 @@ doi="10.5281/zenodo.4284687"
 ### What's after 0.4.3?
 
 - 0.5.0  will contain some (> 0 and < 5) case studies. 0.5.3 will be the tagged version I announce on discourse.
-- 0.6.0 is the version I'll announce on NA-Digest, expect 0.5.x for x=0, ..., 9 before this happens.
+- 0.6.0 is the version I'll announce on NA-Digest, expect 0.5.x for x=0, ..., before this happens.
 - 0.7.0 is the version that goes to the publisher
 - 0.8.0 is the version where I fix the problems the copy editors find.
 - 0.9.0 is the final tweaking of the codes, test problems, and examples.
