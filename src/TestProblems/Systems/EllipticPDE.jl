@@ -100,7 +100,9 @@ Convection-diffusion equation with left preconditioning hard-wired in
 """
 function hardleft!(FV, u, pdata)
 fdata=pdata.fdata
+# Call the nonlinear function
 FV = pdeF!(FV,u,pdata)
+# and apply the preconditioner.
 FV .= Pfish2d(FV,fdata)
 return FV
 end
