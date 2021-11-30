@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.4.3
+# SIAMFANLEquations version 0.5.0
 
 [changelog](#Changes)
 
@@ -23,8 +23,8 @@ Hence the notebook and this package all have SIAMFANL in their names.
 The new book with have a different algorithm mix and the solvers and examples will be in Juila. The project will have three parts.
 
    1. A print book: __Under contract with SIAM for manuscript delivery in 2021(?) and publication in 2022__. 
-   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.4.3) (open source, MIT License, Creative Commons License)
-      Versons __0.4.3_ of the notebook and package run correctly and the tagged version of the package should run v0.4.3 of the notebook.
+   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.5.0) (open source, MIT License, Creative Commons License)
+      Versons __0.5.0__ of the notebook and package run correctly and the tagged version of the package should run v0.5.0 of the notebook.
    3. This package (MIT License)<br>
 
 Content changes:
@@ -86,19 +86,16 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.4.3: Chapter 4: Anderson acceleration; solver done; printbook --> notebook complete; notebook mostly done
+This is version v0.5.0: Chapter 5: Case studies
 
-The plan is, for 4 <= x <= 5.
+The plan is, for version 5
+- v0.5.0 goes live when the codes when the first case study is in the printbook, mapped to the notebook, and the codes are done
 
-- v0.x.0 goes live when the codes can duplicate the examples I'll keep from Chapter x of (Kel03) and make the new examples. 
+- Version v.0.5.1 means that at least one case study is completly done and I have solid drafts of the print book and notebook parts of the chapter. 
 
-- Version v0.x.1 means the codes are finished and I have solid drafts of the print book and notebook parts of the chapter. 
+- Version v0.x.2 goes out when the codes and notebook for Chapter 5 are finished.
 
-- Version v0.x.2 goes out when the codes and notebook for Chapter x are finished.
-
-- v0.x.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I will post the package announcements for v0.x.3 on Discourse for 1 <= x <= 5
-
- - 0.x.y for y > 3 and x < 5 are serious bug fixes and/or changes in the calling sequences/interfaces/rules that I have to do to make things consistent with future chapters. 
+- v0.5.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I will post the package announcements for v0.5.3 on Discourse when 0.5.3 is done
 
 - 0.5.z for z > 3 are preparatory releases for the announcement to NA-Digest.
 
@@ -250,16 +247,14 @@ doi="10.5281/zenodo.4284687"
   - All there except for doing QR the right way. Examples from Toth/Kelley in docstrings and (via ```help```) in the notebooks.
 - v0.4.1: Anderson code complete;  print book --> notebook map 75% done , more stuff in CI__
 - v0.4.2: Print book --> notebook done! Notebook 90% done. Only final benchmarking + projects will be left__
-- v0.4.3: (This Release) Chapter 4 tagged; notebook done, mapped to print book; __solvers done__
+- v0.4.3: Chapter 4 tagged; notebook done, mapped to print book; __solvers done__
+- v0.5.0: (This release) One case study done.
 
-### Chapter 4 is shorter than Chapters 1, 2, and 3 because the algorithms are simpler with fewer options.
-
-### Chapter 5 will be even shorter.
+### Chapter 5 will be short
       
 
-### What's after 0.4.3?
+### What's after 0.5.x?
 
-- 0.5.0  will contain some (> 0 and < 5) case studies. 0.5.3 will be the tagged version I announce on discourse.
 - 0.6.0 is the version I'll announce on NA-Digest, expect 0.5.x for x=0, ..., before this happens.
 - 0.7.0 is the version that goes to the publisher
 - 0.8.0 is the version where I fix the problems the copy editors find.
