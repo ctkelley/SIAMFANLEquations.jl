@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>kl_bigstab: BiCGSTAB linear solver · SIAMFANLEquations.jl</title><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.039/juliamono-regular.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../"><img src="../../assets/logo.png" alt="SIAMFANLEquations.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../">SIAMFANLEquations.jl</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Solvers</span><ul><li><a class="tocitem" href="../nsol/">nsol: systems of equations with direct linear solvers</a></li><li><a class="tocitem" href="../ptcsol/">ptcsol: Pseudo-Transient Continuation Solver</a></li><li><a class="tocitem" href="../nsoli/">nsoli: systems of equations with Krylov linear solvers</a></li><li><a class="tocitem" href="../ptcsoli/">ptcsoli: Pseudo-Transient Continuation Newton-Krylov Solver</a></li><li><a class="tocitem" href="../aasol/">aasol: solve fixed point prolbems with Anderson acceleration</a></li></ul></li><li><span class="tocitem">Scalar Equations</span><ul><li><a class="tocitem" href="../nsolsc/">nsolsc: scalar equation solver</a></li><li><a class="tocitem" href="../ptcsolsc/">ptcsolsc: pseudo-transient continuation</a></li><li><a class="tocitem" href="../secant/">secant: scalar equation solver</a></li></ul></li><li><span class="tocitem">Linear Solvers</span><ul><li><a class="tocitem" href="../kl_gmres/">kl_gmres: GMRES linear solver</a></li><li class="is-active"><a class="tocitem" href>kl_bigstab: BiCGSTAB linear solver</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Linear Solvers</a></li><li class="is-active"><a href>kl_bigstab: BiCGSTAB linear solver</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>kl_bigstab: BiCGSTAB linear solver</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/ctkelley/SIAMFANLEquations.jl/blob/master/docs/src/functions/kl_bicgstab.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="kl_bigstab:-BiCGSTAB-linear-solver"><a class="docs-heading-anchor" href="#kl_bigstab:-BiCGSTAB-linear-solver">kl_bigstab: BiCGSTAB linear solver</a><a id="kl_bigstab:-BiCGSTAB-linear-solver-1"></a><a class="docs-heading-anchor-permalink" href="#kl_bigstab:-BiCGSTAB-linear-solver" title="Permalink"></a></h1><article class="docstring"><header><a class="docstring-binding" id="SIAMFANLEquations.kl_bicgstab" href="#SIAMFANLEquations.kl_bicgstab"><code>SIAMFANLEquations.kl_bicgstab</code></a> — <span class="docstring-category">Function</span></header><section><div><p>kl_bicgstab( x0, b, atv, V, eta, ptv = nothing;       kl_store=nothing, side = &quot;right&quot;, lmaxit = 10, pdata = nothing) </p><p>BiCGSTAB linear solver. Deals with preconditioning.  Uses bicgstab_base with is oblivious to that.</p><p>The code works and does what it needs to do, but ...</p><p>The user interface is unstable and, even worse, the nonlinear solvers are not hooked up yet.</p><p>The way this works it </p><p>Input:</p><p>x0:  initial iterate, this is usually zero for nonlinear solvers</p><p>b: right hand side (duh!)</p><p>atv:  matrix-vector product which depends on precomputed data pdta       I expect you to use pdata most or all of the time, so it is not       an optional argument, even if it&#39;s nothing (at least for now).       If your mat-vec is just A*v, you have to write a function where       A is the precomputed data.       API for atv is av=atv(v,pdata)</p><p>V: a vector for me to store a Jacobian-vector product. It goes where     FPS would go in gmres. You are best served if V is Float64.</p><p>eta: Termination happens when ||b - Ax|| &lt;= eta || b ||</p><p>ptv:  preconditioner-vector product, which will also use pdata. The       default is nothing, which is no preconditioning at all.       API for ptv is px=ptv(x,pdat) just like kl_gmres</p><p>Keyword arguments</p><p>kl_store: You have the option of giving me some room          for the vectors bicgstab needs to do its work. These in          which I will not overwrite and a couple of vectors I use          in the iteration. If you&#39;re only doing a linear solve, it          does no harm to let me allocate those vectores in kl_bicgstab.          The way to preallocate is <code>kl_store=kstore(n,&quot;bicgstab&quot;)</code> where n          is the number of unknows. I call this myself in the initialization          phase if you don&#39;t do it ahead of me.</p><p>side: left or right preconditioning. The default is &quot;right&quot;.</p><p>lmaxit: maximum number of linear iterations. The default is 10.</p><p>pdata: precomputed data. The default is nothing, but that ain&#39;t gonna         work well for nonlinear equations.</p><p>Output:</p><p>A named tuple (sol, reshist, lits, idid)</p><p>where</p><p>sol= final result reshist = residual norm history lits = number of iterations idid = status of the iteration        true -&gt; converged        false -&gt; failed to converge</p><p><strong>Examples from the docstrings for kl_bicgstab</strong></p><p>In these examples you have the matrix and use</p><pre><code class="nohighlight hljs">function atv(x, A)
+    return A * x
+end</code></pre><p>to compute the matvec.</p><p><strong>Three dimensional problem.</strong></p><p>Will converge in the four iterations (worse than kl_gmres)</p><pre><code class="language-julia-repl hljs">julia&gt; function atv(x, A)
+           return A * x
+       end
+atv (generic function with 1 method)
+
+julia&gt; A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4];
+
+julia&gt; V = zeros(3); b = [1.0; 1.0; 1.0]; x0 = zeros(3);
+
+julia&gt; gout.reshist
+5-element Vector{Any}:
+ 1.73205e+00
+ 1.41421e+00
+ 3.21642e-03
+ 3.20321e-03
+ 4.98049e-13
+
+julia&gt; norm(b - A*gout.sol,Inf)
+3.68594e-13</code></pre><p><strong>Integral equation. Notice that pdata has the kernel of the</strong></p><p>operator and we do the matvec directly. Just like the previous example. We put the grid information and, for this artifical example, the solution in the precomputed data.</p><pre><code class="language-julia-repl hljs">julia&gt; function integop(u, pdata)
+                  K = pdata.K
+                  return u - K * u
+              end
+integop (generic function with 1 method)
+
+julia&gt; function integopinit(n)
+                  h = 1 / n
+                  X = collect(0.5*h:h:1.0-0.5*h)
+                  K = [ker(x, y) for x in X, y in X]
+                  K .*= h
+                  sol = [usol(x) for x in X]
+                  f = sol - K * sol
+                  pdata = (K = K, xe = sol, f = f)
+                  return pdata
+              end
+integopinit (generic function with 1 method)
+
+julia&gt; function usol(x)
+                  return exp.(x) .* log.(2.0 * x .+ 1.0)
+              end
+usol (generic function with 1 method)
+
+julia&gt; function ker(x, y)
+                  ker = 0.1 * sin(x + exp(y))
+              end
+ker (generic function with 1 method)
+
+julia&gt; n=100; pdata = integopinit(n); ue = pdata.xe; f=pdata.f;
+
+julia&gt; u0 = zeros(size(f)); V = zeros(size(f));
+
+julia&gt; gout.reshist
+4-element Vector{Any}:
+ 1.48252e+01
+ 2.90538e-02
+ 2.07823e-07
+ 2.17107e-17
+
+julia&gt; norm(gout.sol-ue,Inf)
+8.88178e-16</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/ctkelley/SIAMFANLEquations.jl/blob/160f9c252da22619c874fa6b3bd2fcccd1d1d1bb/src/Solvers/LinearSolvers/kl_bicgstab.jl#L1-L155">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../kl_gmres/">« kl_gmres: GMRES linear solver</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.10 on <span class="colophon-date" title="Tuesday 30 November 2021 15:01">Tuesday 30 November 2021</span>. Using Julia version 1.6.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
