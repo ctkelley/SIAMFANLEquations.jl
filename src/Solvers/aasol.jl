@@ -92,7 +92,7 @@ problem that computes iteration k+1 from iteration k.
 I record this for iterations k=1, ... until the final iteration 
 K. So I do not record the stats for k=0 or the final iteration. 
 We did record the data for the final iteration in Toth/Kelley 
-2015 at the cost of an extra optimiztion problem solve. 
+2015 at the cost of an extra optimization problem solve. 
 Since we've already terminated, there's not any point in 
 collecting that data.\n
 Bottom line: if history has length K+1 for iterations 
@@ -153,7 +153,7 @@ julia> [aout.stats.condhist aout.stats.alphanorm]
  3.67694e+10  1.00171e+00
 ```
 
-Now we put a mixing or damping paramter in there with beta = .5. This
+Now we put a mixing or damping parameter in there with beta = .5. This
 example is nasty enough to make mixing do ok. Keep in mind
 that the history is for the damped residual, not the original one.
 
