@@ -22,7 +22,7 @@ Hence the notebook and this package all have SIAMFANL in their names.
 
 The new book with have a different algorithm mix and the solvers and examples will be in Juila. The project will have three parts.
 
-   1. A print book: __Under contract with SIAM for manuscript delivery in 2021(?) and publication in 2022__. 
+   1. A print book: __Under contract with SIAM for manuscript delivery in mid-2022 and publication in late 2022__. 
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.5.0) (open source, MIT License, Creative Commons License)
       Versons __0.5.0__ of the notebook and package run correctly and the tagged version of the package should run v0.5.0 of the notebook.
    3. This package (MIT License)<br>
@@ -187,8 +187,7 @@ The algorithms, listed by book chapter will be
    - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptcsoli.jl
        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 4: Anderson acceleration: aasol.jl 
-        - Codes: __done; solver in final form__
-        - Notebook: __Map from print book --> notebook done__, notebook examples, __50% done__
+        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 5: Case studies: __I know what two of them will be and need to write the code.__
    
    
