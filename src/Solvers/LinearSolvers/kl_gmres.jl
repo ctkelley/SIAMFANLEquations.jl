@@ -230,10 +230,6 @@ function kl_gmres(
         gout = outup(gout, localout, ip, klmaxit)
         reslen = length(localout.reshist)
         #
-        # Update the termination criterion for the restart.
-        # gmres_base overwrites y0 with the solution
-        #
-        idid || (eta = eta * localout.rho0 / localout.reshist[reslen])
         ip += 1
     end
     #
@@ -322,7 +318,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
     #
     g = zeros(size(c))
     g[1] = rho
-    errtol = eta * rho
+    errtol = eta*norm(b)
     reshist = []
     #
     # Initialize
