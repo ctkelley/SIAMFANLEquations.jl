@@ -46,7 +46,7 @@ include("Solvers/aa_qr_update.jl")
 include("Solvers/LinearSolvers/kl_gmres.jl")
 include("Solvers/LinearSolvers/kl_bicgstab.jl")
 include("Solvers/LinearSolvers/Orthogonalize!.jl")
-include("PlotsTables/printhist.jl")
+#include("PlotsTables/printhist.jl")
 
 module TestProblems
 using LinearAlgebra
