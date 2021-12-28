@@ -19,7 +19,7 @@ function nsolsc_solution_test()
     #
     # Local convergence with analytic derivative
     #
-    sdataa = nsolsc(atan, 1.0, fpatan)
+    sdataa = nsolsc(atan, 1.0, x -> 1.0/(1.0+x*x))
     solok = (abs(sdataa.solution) < 1.e-8)
     funok = (abs(sdataa.functionval) < 1.e-8)
     hs = size(sdataa.history)
@@ -126,7 +126,8 @@ function nsolsc_solution_test()
     # Test stagnation mode
     #
     stagdatan =
-        nsolsc(ftanx, 4.5, ftanxp; rtol = 1.e-17, atol = 1.e-17, armfix = true, maxit = 14)
+        nsolsc(x -> tan(x)-x, 4.5, x -> sec(x)^2 - 1.0; 
+              rtol = 1.e-17, atol = 1.e-17, armfix = true, maxit = 14)
     fvals = stagdatan.history
     avals = stagdatan.stats.iarm
     ifvals = stagdatan.stats.ifun
@@ -156,7 +157,7 @@ function nsolsc_solution_test()
     # Make sure nsolsc knows if the solution and the intial iterate are
     # the same
     #
-    lotout = nsolsc(flot, 0.0)
+    lotout = nsolsc(x -> x * exp(x), 0.0)
     lotok = (lotout.errcode == -1)
     if ~lotok
         println("Lottery test failed")
@@ -172,8 +173,4 @@ function nsolsc_solution_test()
            p3pok &&
            chordok &&
            lotok
-end
-
-function flot(x)
-    flot = x * exp(x)
 end

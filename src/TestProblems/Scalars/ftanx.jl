@@ -9,5 +9,5 @@ function ftanx(x)
 end
 
 function ftanxp(x)
-    return sec(x)^2 - 1
+    return sec(x)^2 - 1.0
 end
