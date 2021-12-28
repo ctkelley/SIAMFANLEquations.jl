@@ -98,6 +98,7 @@ export
     Pfish2d,
     Pvec2d,
     Lap2d,
+    Lap1d,
     Dx2d,
     Dy2d,
     solexact,
