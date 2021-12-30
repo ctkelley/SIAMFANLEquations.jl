@@ -27,7 +27,7 @@ The new book with have a different algorithm mix and the solvers and examples wi
       Versons __0.5.0__ of the notebook and package run correctly and the tagged version of the package should run v0.5.0 of the notebook.
    3. This package (MIT License)<br>
 
-Content changes:
+Content changes from (Kel03):
 
 - New solvers: __pseudo-transient continuation__ and __Anderson acceleration__
 - Deletions: __Broyden's method__ 
