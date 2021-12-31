@@ -146,6 +146,23 @@ julia> [nsolout.solhist'.-2 nsolout.history]
 
 ```
 
+# You can also use anonymous functions
+
+```jldoctest
+julia> nsolout=nsolsc(atan,10.0,x -> 1.0/(1.0+x^2); atol=1.e-9,rtol=1.e-9);
+
+julia> nsolout.history
+8-element Vector{Float64}:
+ 1.47113e+00
+ 1.19982e+00
+ 1.10593e+00
+ 6.48297e-01
+ 2.56983e-01
+ 1.19361e-02
+ 1.13383e-06
+ 9.71970e-19
+```
+
 """
 function nsolsc(
     f,
