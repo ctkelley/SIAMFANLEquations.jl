@@ -56,17 +56,18 @@ using BandedMatrices
 using AbstractFFTs
 using FFTW
 using Printf
+using FastGaussQuadrature
 
 export
     #Functions
-    fcos,
-    fpatan,
+#    fcos,
+#    fpatan,
     spitchfork,
-    linatan,
+#    linatan,
     sptestp,
     sptest,
-    ftanx,
-    ftanxp,
+#    ftanx,
+#    ftanxp,
     heqinit,
     heqf!,
     heqJ!,
@@ -108,11 +109,11 @@ export
     hardleft!,
     hardleftFix!
 
-include("TestProblems/Scalars/fcos.jl")
-include("TestProblems/Scalars/fpatan.jl")
+#include("TestProblems/Scalars/fcos.jl")
+#include("TestProblems/Scalars/fpatan.jl")
 include("TestProblems/Scalars/spitchfork.jl")
-include("TestProblems/Scalars/linatan.jl")
-include("TestProblems/Scalars/ftanx.jl")
+#include("TestProblems/Scalars/linatan.jl")
+#include("TestProblems/Scalars/ftanx.jl")
 include("TestProblems/Systems/simple!.jl")
 include("TestProblems/Systems/Fbvp!.jl")
 include("TestProblems/Systems/FBeam!.jl")

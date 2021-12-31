@@ -70,8 +70,8 @@ function nsolsc_solution_test()
     #
     # Initialize secant method when x0=0
     #
-    #zedata=nsolsc(fcos,0.0;solver="secant",rtol=1.e-9)
-    zedata = secant(fcos, 0.0; solver = "secant", rtol = 1.e-9)
+    #zedata=nsolsc(x -> cos(x) - x, 0.0;solver="secant",rtol=1.e-9)
+    zedata = secant(x -> cos(x) - x, 0.0; solver = "secant", rtol = 1.e-9)
     solution = 7.390851333858823e-01
     solok = (abs(zedata.solution - solution) < 1.e-9)
     funok = (abs(zedata.functionval) < 1.e-9)
@@ -82,10 +82,12 @@ function nsolsc_solution_test()
         println("local FD fixup at zero fails")
     end
     #
-    # Tricky line search problem
+    # Tricky line search problem.
+    # The line search will fail in the middle of the iteration
+    # and demand a recompute of the derivative.
     #
     sdatal = nsolsc(
-        linatan,
+        x -> (1.0 + .01*x)*atan(x),
         200.0;
         sham = 5,
         maxit = 20,
