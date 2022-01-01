@@ -56,7 +56,6 @@ using BandedMatrices
 using AbstractFFTs
 using FFTW
 using Printf
-using FastGaussQuadrature
 
 export
     #Functions
