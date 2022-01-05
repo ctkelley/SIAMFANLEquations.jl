@@ -75,12 +75,18 @@ function cgs!(V, hv, vv, orth="twice"; verbose=false)
     qk = vv
     Qkm = V
     # Orthogonalize
-    rk .+= Qkm' * qk
+# New low allocation stuff
+    mul!(rk, Qkm', qk, 1.0, 1.0)
+###    mul!(pk, Qkm', qk)
+###    rk .+= pk
+##    rk .+= Qkm' * qk
 #    qk .-= Qkm * rk
     mul!(qk, Qkm, rk, -1.0, 1.0)
     if orth == "twice"
         # Orthogonalize again
-        pk .= Qkm' * qk
+# New low allocation stuff
+    mul!(pk, Qkm', qk)
+##        pk .= Qkm' * qk
 #        qk .-= Qkm * pk
         mul!(qk, Qkm, pk, -1.0, 1.0)
         rk .+= pk

@@ -215,7 +215,6 @@ function aasol(
     #
     (sol, gx, df, dg, res, DG, QP, Qd, solhist) =
            Anderson_Init(x0, Vstore, m, maxit, beta, keepsolhist)
-    res = copy(sol)
     #
     #   Iteration 1
     #
@@ -223,7 +222,9 @@ function aasol(
     ~keepsolhist || (@views solhist[:, k+1] .= sol)
     gx = EvalF!(GFix!, gx, sol, pdata)
     (beta == 1.0) || (gx=betafix!(gx, sol, beta))
-    res .= gx - sol
+    copy!(res,gx)
+    axpy!(-1.0,sol,res)
+#    res .= gx - sol
     resnorm = norm(res)
     tol = rtol * resnorm + atol
     ItData = ItStatsA(resnorm)
@@ -243,22 +244,29 @@ function aasol(
     n=length(x0)
     RF=zeros(m,m)
     RP=zeros(m,m)
+    ThetA=zeros(m)
+    TmPReS=zeros(m)
     while (k < maxit) && resnorm > tol && ~toosoon
         if m == 0
             alphanrm = 1.0
             condit = 1.0
-            sol .= gx
+            copy!(sol, gx)
+ #           sol .= gx
         else
             BuildDG!(DG,m,k+1,dg)
             (QP, RP) = aa_qr_update!(QP, RP, df, m, k-1, Qd)
             mk = min(m, k)
             @views QA=QP[:,1:mk]
             @views RA=RP[1:mk,1:mk]
-            theta = RA\ (QA'*res)
+            @views theta=ThetA[1:mk]
+            @views tres=TmPReS[1:mk]
+            mul!(tres,QA',res)
+            theta .= RA\tres
             condit = cond(RA)
             alphanrm = falpha(alpha, theta, min(m, k))
             copy!(sol, gx)
-            @views sol .-= DG[:, 1:mk] * theta
+#            @views sol .-= DG[:, 1:mk] * theta
+            @views mul!(sol, DG[:,1:mk], theta, -1.0, 1.0)
         end
         updateStats!(ItData, condit, alphanrm)
         k += 1
@@ -282,7 +290,8 @@ function BuildDG!(DG,m,k,dg)
         @views copy!(DG[:, 1], dg)
     elseif k > m + 1
         for ic = 1:m-1
-            @views DG[:, ic] .= DG[:, ic+1]
+#            @views DG[:, ic] .= DG[:, ic+1]
+            @views copy!(DG[:,ic], DG[:, ic+1])
         end
         @views copy!(DG[:, m], dg)
     else
@@ -298,13 +307,21 @@ Keep the books to get ready to update the coefficient matrix
 for the optimization problem.
 """
 function aa_point!(gx, gfix, sol, res, dg, df, beta, pdata)
-    dg .= -gx
+#    dg .= -gx
+    copy!(dg, -gx)
     gx = EvalF!(gfix, gx, sol, pdata)
     (beta == 1.0) || (gx=betafix!(gx, sol, beta))
-    dg .+= gx
-    df .= -res
-    res .= gx - sol
-    df .+= res
+#    dg .+= gx
+    axpy!(1.0, gx, dg)
+#    df .= -res
+    copy!(df,-res)
+#    res .= gx - sol
+#    res .= gx
+#    res .-= sol
+    copy!(res,gx)
+    axpy!(-1.0,sol,res)
+    axpy!(1.0, res, df)
+#    df .+= res
     resnorm = norm(res)
     return (gx, dg, df, res, resnorm)
 end

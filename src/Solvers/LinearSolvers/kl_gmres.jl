@@ -304,7 +304,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
     #
     # Don't do the mat-vec if the intial iterate is zero
     #
-    y = pdata.linsol
+    #    y = pdata.linsol
     (norm(x0) == 0.0) || (r .-= atv(x0, pdata))
     #    (norm(x0) == 0.0) || (y .= atv(x0, pdata); r .-=y;)
     #
@@ -329,7 +329,12 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
     #
     # Showtime!
     #
-    @views V[:, 1] .= r / rho
+#    @views V[:, 1] .= r / rho
+    @views v1 = V[:,1]
+    copy!(v1,r)
+    rhoinv = 1.0/rho
+    v1 .*= rhoinv
+#    @views V[:,1] ./= rho
     beta = rho
     while (rho > errtol) && (k < kmax)
         k += 1
@@ -369,7 +374,8 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
     # It's time to compute x and check out.
     #
     y = h[1:k, 1:k] \ g[1:k]
-    qmf = view(V, 1:n, 1:k)
+#    qmf = view(V, 1:n, 1:k)
+    @views qmf = V[:, 1:k]
     #    mul!(r, qmf, y)
     #    r .= qmf*y    
     #    x .+= r

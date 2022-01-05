@@ -145,7 +145,7 @@ function test_integop_restart(n)
     lhist=length(gout.reshist)
     gerr=norm(gout.sol-pdata.xe,Inf)
     g32err=norm(gout32.sol-pdata.xe,Inf)
-    histpass = dhist < 2.e-7
+    histpass = dhist < 3.e-7
     histpass || println("restart history wrong size = ",dhist)
     errpass = (gerr < 1.e-10) && (g32err < 1.e-10)
     errpass || println("restart error too large")
