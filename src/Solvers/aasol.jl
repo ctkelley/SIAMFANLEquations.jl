@@ -233,7 +233,8 @@ function aasol(
     #
     #   If we need more iterations, get organized.
     #
-    sol .= gx
+#    sol .= gx
+    copy!(sol, gx)
     alpha = zeros(m + 1)
     k = k + 1
     ~keepsolhist || (@views solhist[:, k+1] .= sol)
