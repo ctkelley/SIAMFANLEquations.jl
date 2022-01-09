@@ -27,6 +27,8 @@ include("Chapter4/alex_test.jl")
 include("Chapter4/ci_pde_aa.jl")
 include("Chapter4/heq_aa.jl")
 include("Chapter4/linear_aa.jl")
+include("Chapter5/transport_test.jl")
+include("Chapter5/heat_test.jl")
 
 @testset "Scalar Equations: Chapter 1" begin
     @test nsolsc_solution_test()
@@ -60,4 +62,9 @@ end
     @test heq_aa()
     @test linear_aa()
     @test alex_test()
+end
+
+@testset "Case Studies: Chapter 5" begin
+    @test transport_test()
+    @test heat_test()
 end

@@ -49,6 +49,7 @@ include("Solvers/LinearSolvers/Orthogonalize!.jl")
 #include("PlotsTables/printhist.jl")
 
 module TestProblems
+using SIAMFANLEquations
 using LinearAlgebra
 using SparseArrays
 using SuiteSparse
@@ -106,7 +107,14 @@ export
     dxexact,
     dyexact,
     hardleft!,
-    hardleftFix!
+    hardleftFix!,
+    heat_init,
+    sn_init,
+    heat_fixed!,
+    getrhs,
+    AxB,
+    transport_sweep!
+  
 
 #include("TestProblems/Scalars/fcos.jl")
 #include("TestProblems/Scalars/fpatan.jl")
@@ -119,6 +127,7 @@ include("TestProblems/Systems/FBeam!.jl")
 include("TestProblems/Systems/Hequation.jl")
 include("TestProblems/Systems/EllipticPDE.jl")
 include("TestProblems/Systems/PDE_Tools.jl")
+include("TestProblems/CaseStudies/CR_Heat.jl")
 end
 
 module Examples
