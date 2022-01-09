@@ -50,9 +50,11 @@ Content changes from (Kel03):
 
 This package is designed and built to support a book project. So the solvers and examples reinforce the algorithmic discussion in the book. General purpose packages have a different mission.
 
-## Installation: Use Julia 1.6 and up with this thing!!!
+## Installation: 
 
-This package has been tested on Julia 1.6. __The package no longer works on 1.5 or earlier!__ 
+- Use Julia 1.7.1 (or LTS 1.6.5) and up with this thing!!!
+- This package has been tested on Julia 1.6.5 and 1.7.1. __The package no longer works on 1.5 or earlier!__ 
+- __Versions 1.7.0 and 1.6.4 break the notebooks. This is a known bug and got fixed with 1.7.1 and 1.6.5.__
 
 Type this 
 
