@@ -43,7 +43,7 @@ Content changes from (Kel03):
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
 - [How to cite this stuff](#Citations)
-- [What's new in this version since 0.3.3](#Changes)
+- [What's new in this version since 0.4.3](#Changes)
 - [Funding](#Funding) 
 
 ## Package Mission
@@ -188,7 +188,7 @@ The algorithms, listed by book chapter will be
        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 4: Anderson acceleration: aasol.jl 
         - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 5: Case studies: __I know what two of them will be and need to write the code.__
+   - Chapter 5: Case studies: __Conductive-Radiative heat transfer close to done. When done, it's time for 0.5.0.__
    
    
 ## Test Problems
@@ -213,7 +213,7 @@ Cite the package, print book and notebook like this.
 @misc{ctk:siamfanl,
 title="{SIAMFANLEquations.jl}",
 author="C. T. Kelley",
-year=2021,
+year=2022,
 note="Julia Package",
 doi="10.5281/zenodo.4284807",
 url="https://github.com/ctkelley/SIAMFANLEquations.jl"
@@ -223,7 +223,7 @@ url="https://github.com/ctkelley/SIAMFANLEquations.jl"
 author="C. T. Kelley",
 title="{Solving Nonlinear Equations with Iterative Methods:
 Solvers and Examples in Julia}",
-year=2021,
+year=2022,
 note="Unpublished book ms, under contract with SIAM"
 }
 
@@ -231,7 +231,7 @@ note="Unpublished book ms, under contract with SIAM"
 title="{Notebook for Solving Nonlinear Equations with Iterative Methods:
 Solvers and Examples in Julia}",
 author="C. T. Kelley",
-year=2021,
+year=2022,
 note="IJulia Notebook",
 url="https://github.com/ctkelley/NotebookSIAMFANL",
 doi="10.5281/zenodo.4284687"
@@ -240,14 +240,9 @@ doi="10.5281/zenodo.4284687"
 
 ## Changes
 
-### Updates since 0.3.3
+### Updates since 0.4.3
 
-- v0.4.0: Latest tagged version: First version of Anderson acceleration: aasol.jl 
-  - All there except for doing QR the right way. Examples from Toth/Kelley in docstrings and (via ```help```) in the notebooks.
-- v0.4.1: Anderson code complete;  print book --> notebook map 75% done , more stuff in CI__
-- v0.4.2: Print book --> notebook done! Notebook 90% done. Only final benchmarking + projects will be left__
-- v0.4.3: Chapter 4 tagged; notebook done, mapped to print book; __solvers done__
-- v0.5.0: (This release) One case study done.
+- v0.5.0: (This release) Conductive-Radiative case study done.
 
 ### Chapter 5 will be short
       
@@ -255,10 +250,10 @@ doi="10.5281/zenodo.4284687"
 ### What's after 0.5.x?
 
 - 0.6.0 is the version I'll announce on NA-Digest, expect 0.5.x for x=0, ..., before this happens.
-- 0.7.0 is the version that goes to the publisher
-- 0.8.0 is the version where I fix the problems the copy editors find.
-- 0.9.0 is the final tweaking of the codes, test problems, and examples.
-- 1.0.0 is the end
+- 0.7.0 is the version that goes to the publisher.
+- 0.8.0 is the version where I fix the problems the copy editors find. __This is the version that goes to the printer.__
+- 0.9.0 is the final tweaking of the codes, test problems, and examples. Nothing visible can change at this point. I can cleanup internal documentation for the codes, fix bugs, and tune the README.md files for repositories. 
+- 1.0.0 is the end. 
 
    
 ## Funding
