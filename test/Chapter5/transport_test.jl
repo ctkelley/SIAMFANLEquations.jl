@@ -20,7 +20,7 @@ source=zeros(nx)
 tol=1.e-5
 kout=find_flux(source, sn_data, tol)
 #
-(sn_left, sn_right) = sn_tabulate(s, nx, kout.sol, source; maketab=false)
+(sn_left, sn_right) = sn_tabulate(s, nx, kout.sol, source)
 (out_left, out_right) = ces_data();
 diff=norm(out_left-sn_left,Inf) + norm(out_right-sn_right, Inf)
 kynum=length(kout.reshist)
@@ -46,13 +46,13 @@ end
 
 
 """
-sn_tabulate(s, nx, flux, psi_left, psi_right, source ; maketab=true)
+sn_tabulate(s, nx, flux, psi_left, psi_right, source)
 
 Make the tables to compare with Garcia/Siewert
 
 Uses the converged flux from the solve.
 """
-function sn_tabulate(s, nx, flux, source; maketab=true)
+function sn_tabulate(s, nx, flux, source)
     angleout = [-.05; collect(-.1:-.1:-1.0); 0.05; collect(0.1:0.1:1.0)]
     #
     # I don't really need the weights, but sn_init expects some
@@ -68,13 +68,5 @@ function sn_tabulate(s, nx, flux, source; maketab=true)
     psi_left=tsn_data.psi_left
     psi = tsn_data.psi
     psi = transport_sweep!(psi, flux, psi_left, psi_right, source, tsn_data)
-    if maketab
-    header = " mu         I(0,-mu)        I(tau,mu)"
-    @printf("%s \n", header)
-    for it=1:na
-    @printf("%5.2f %15.5e %15.5e \n", 
-           angleout[it+na], psi[it,1], psi[na+it,np])
-    end
-    end
     return (left = psi[1:na, 1], right = psi[na+1:na2, np])
 end
