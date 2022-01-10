@@ -38,7 +38,13 @@ function heat_test(p = 2)
     #
     # Newton-GMRES
     #
-    return heatokaa
+    FS=copy(theta0)
+    gout=nsoli(FCR_heat!, theta0, FS, Vstore; pdata=hn_data, rtol=tol,
+           atol=tol, dx=1.e-5, eta=.1, fixedeta=false, lsolver="gmres")
+    ndiffg = norm(gout.solution-aout.solution,Inf)
+    lghist=length(gout.history)
+    heatnkok=(ndiffg < 1.e-10) &&  (lghist == 4)
+    return heatokaa && heatnkok
 end
 
 function ces_heat()

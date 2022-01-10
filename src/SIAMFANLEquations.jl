@@ -111,6 +111,7 @@ export
     heat_init,
     sn_init,
     heat_fixed!,
+    FCR_heat!,
     getrhs,
     AxB,
     transport_sweep!

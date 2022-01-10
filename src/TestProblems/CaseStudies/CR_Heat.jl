@@ -1,4 +1,16 @@
 """
+FCR_heat!(FS, x, hdata)
+
+Nonlinear equation form of conductive-radiative heat transfer problem.
+"""
+function FCR_heat!(FS, x, hdata)
+FS = heat_fixed!(FS,x,hdata)
+FS .= x - FS
+#axpy!(-1.0, x, FS)
+return FS
+end
+
+"""
 heat_fixed!(theta, thetain, hn_data)
 
 Fixed point map for the conductive-radiative heat transfer problem.
