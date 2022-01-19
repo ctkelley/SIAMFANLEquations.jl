@@ -18,8 +18,6 @@ Fixed point map for the conductive-radiative heat transfer problem.
 function heat_fixed!(theta, thetain, hn_data)
     epsl = 1.0
     epsr = 1.0
-    thetal = 1.0
-    thetar = 0.0
     sn_data = hn_data.sn_data
     nx = length(thetain)
     theta .= thetain
@@ -73,7 +71,7 @@ function heat_init(nx, na, thetal, thetar, omega, tau, Nc)
     #
     # Precomputed data for the transport problem.
     #
-    sn_data = sn_init(nx, na, x -> omega, tau, thetal, thetar)
+    sn_data = sn_init(nx, na, x -> omega, tau, thetal^4, thetar^4)
     #
     # Stuff it all in one place.
     #
@@ -85,6 +83,8 @@ function heat_init(nx, na, thetal, thetar, omega, tau, Nc)
         omega = omega,
         Nc = Nc,
         kl_store = kl_store,
+        thetal = thetal,
+        thetar = thetar
     )
     return hn_data
 end
