@@ -226,6 +226,7 @@ function aasol(
     axpy!(-1.0,sol,res)
 #    res .= gx - sol
     resnorm = norm(res)
+    resnorm_up_bd = 1.e4*resnorm
     tol = rtol * resnorm + atol
     ItData = ItStatsA(resnorm)
     toosoon = (resnorm <= tol)
@@ -247,7 +248,8 @@ function aasol(
     RP=zeros(m,m)
     ThetA=zeros(m)
     TmPReS=zeros(m)
-    while (k < maxit) && resnorm > tol && ~toosoon
+    while ((k < maxit) && (resnorm > tol) && ~toosoon 
+                      && (resnorm < resnorm_up_bd))
         if m == 0
             alphanrm = 1.0
             condit = 1.0
@@ -276,7 +278,7 @@ function aasol(
             aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
         updateHist!(ItData, resnorm)
     end
-    (idid, errcode) = AndersonOK(resnorm, tol, k, m, toosoon)
+    (idid, errcode) = AndersonOK(resnorm, tol, k, m, toosoon, resnorm_up_bd)
     aaout=CloseIteration(sol, gx, ItData, idid, errcode, keepsolhist, solhist)
     return aaout
 end
