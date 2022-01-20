@@ -104,6 +104,11 @@ Bottom line: if history has length K+1 for iterations
 
         = -1 if the initial iterate satisfies the termination criteria
 
+        = -2 if || residual || > div_test || residual_0 ||
+             I have fixed div_test = 1.e4 for now. I terminate 
+             the iteration when this happens to avoid generating 
+             Infs and/or NaNs.
+
         = 10 if no convergence after maxit iterations
 
    -- solhist:\n
