@@ -38,7 +38,6 @@ function heat_test2_examples(p=2, thetal=1.0, thetar=2.0, omega=.5, tau=4.0)
     # Anderson acceleration test
     #
     iec=1
-    zout=[]
     for m in [5, 10, 20]
         aout = aasol(heat_fixed!, theta0, m, Vstore; rtol = tol, 
                      atol = tol, pdata = hn_data, maxit=50)
@@ -53,6 +52,5 @@ function heat_test2_examples(p=2, thetal=1.0, thetar=2.0, omega=.5, tau=4.0)
         iec += 1
         println("For m=$m: error=$delsol, errcode = $errc")
     end
-    println(Pok)
-    return zout
+    return Pok
 end
