@@ -162,15 +162,16 @@ julia> using SIAMFANLEquations.TestProblems
 
 julia> n=63; maxit=1000; delta = 0.01; lambda = 20.0;
 
-julia> bdata = beaminit(n, 0.0, lambda);
+julia> bdata = beaminit(n, 0.0, lambda); x = bdata.x;
 
-julia> x = bdata.x; u0 = x .* (1.0 .- x) .* (2.0 .- x); u0 .*= exp.(-10.0 * u0);
+julia> u0 = x .* (1.0 .- x) .* (2.0 .- x);
 
+julia> u0 .*= exp.(-10.0 * u0);
 
 julia> FS = copy(u0); FPS = copy(bdata.D2);
 
-julia> pout = ptcsol( FBeam!, u0, FS, FPS, BeamJ!; rtol = 1.e-10, pdata = bdata,
-                delta0 = delta, maxit = maxit);
+julia> pout = ptcsol( FBeam!, u0, FS, FPS, BeamJ!; 
+ rtol = 1.e-10, pdata = bdata, delta0 = delta, maxit = maxit);
 
 julia> # It takes a few iterations to get there.
        length(pout.history)
@@ -182,10 +183,10 @@ julia> [pout.history[1:5] pout.history[21:25]]
  7.52624e+00  8.35295e-02
  8.31545e+00  6.58797e-04
  3.15455e+01  4.12697e-08
- 3.66566e+01  6.75094e-12
+ 3.66566e+01  6.29295e-12
 
 julia> # We get the nonnegative stedy state.
-       norm(pout.solution,Inf)
+       maximum(pout.solution)
 2.19086e+00
 ```
 

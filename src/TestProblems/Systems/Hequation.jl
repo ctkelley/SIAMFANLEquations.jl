@@ -78,7 +78,7 @@ function heqinit(x0::Array{T,1}, c) where {T<:Real}
     n = length(x0)
     cval = ones(1)
     cval[1] = c
-    vsize = (n,)
+    vsize = (n)
     bsize = (2 * n,)
     ssize = (2 * n - 1,)
     FFA = plan_fft(ones(bsize))

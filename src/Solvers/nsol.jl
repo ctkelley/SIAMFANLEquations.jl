@@ -23,7 +23,7 @@ Inputs:\n
 - x0: initial iterate\n
 
 - FS: Preallocated storage for function. It is a vector of size N\n
-  You should store it as (N,) and design F! to use vectors of size (N,). 
+  You should store it as (N) and design F! to use vectors of size (N). 
   If you use (N,1) consistently instead, the solvers may work, but I make
   no guarantees.
 
@@ -203,27 +203,27 @@ iterations + 1. So, for scalar equations, it's a row vector.
        end
 f (generic function with 1 method)
 
-julia> x=ones(2,); fv=zeros(2,); jv=zeros(2,2); jv32=zeros(Float32,2,2);
+julia> x=ones(2); fv=zeros(2); jv=zeros(2,2); jv32=zeros(Float32,2,2);
 julia> nout=nsol(f!,x,fv,jv; sham=1);
 julia> nout32=nsol(f!,x,fv,jv32; sham=1);
 julia> [nout.history nout32.history]
-5×2 Array{Float64,2}:
+5×2 Matrix{Float64}:
  1.88791e+00  1.88791e+00
  2.43119e-01  2.43120e-01
  1.19231e-02  1.19231e-02
  1.03266e-05  1.03265e-05
- 1.46416e-11  1.50402e-11
+ 1.46388e-11  1.45995e-11
 
 julia> [nout.solution nout.solution-nout32.solution]
 2×2 Array{Float64,2}:
- -7.39085e-01  5.69433e-13
-  2.30988e+00  2.89546e-13
+ -7.39085e-01  -5.48450e-14
+  2.30988e+00  -2.26485e-14
 ```
 
 #### H-equation example. I'm taking the sham=5 default here, so the convergence is not quadratic. The good news is that we evaluate the Jacobian only once.
 
 ```jldoctest
-julia> n=16; x0=ones(n,); FV=ones(n,); JV=ones(n,n);
+julia> n=16; x0=ones(n); FV=ones(n); JV=ones(n,n);
 julia> hdata=heqinit(x0, .5);
 julia> hout=nsol(heqf!,x0,FV,JV;pdata=hdata);
 julia> hout.history
