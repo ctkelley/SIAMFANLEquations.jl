@@ -3,15 +3,16 @@
 
 julia&gt; n=63; maxit=1000; delta = 0.01; lambda = 20.0;
 
-julia&gt; bdata = beaminit(n, 0.0, lambda);
+julia&gt; bdata = beaminit(n, 0.0, lambda); x = bdata.x;
 
-julia&gt; x = bdata.x; u0 = x .* (1.0 .- x) .* (2.0 .- x); u0 .*= exp.(-10.0 * u0);
+julia&gt; u0 = x .* (1.0 .- x) .* (2.0 .- x);
 
+julia&gt; u0 .*= exp.(-10.0 * u0);
 
 julia&gt; FS = copy(u0); FPS = copy(bdata.D2);
 
-julia&gt; pout = ptcsol( FBeam!, u0, FS, FPS, BeamJ!; rtol = 1.e-10, pdata = bdata,
-                delta0 = delta, maxit = maxit);
+julia&gt; pout = ptcsol( FBeam!, u0, FS, FPS, BeamJ!; 
+ rtol = 1.e-10, pdata = bdata, delta0 = delta, maxit = maxit);
 
 julia&gt; # It takes a few iterations to get there.
        length(pout.history)
@@ -23,8 +24,8 @@ julia&gt; [pout.history[1:5] pout.history[21:25]]
  7.52624e+00  8.35295e-02
  8.31545e+00  6.58797e-04
  3.15455e+01  4.12697e-08
- 3.66566e+01  6.75094e-12
+ 3.66566e+01  6.29295e-12
 
 julia&gt; # We get the nonnegative stedy state.
-       norm(pout.solution,Inf)
-2.19086e+00</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/ctkelley/SIAMFANLEquations.jl/blob/b0c8baea15274097b6c48059f309843d639524f0/src/Solvers/ptcsol.jl#L1-L214">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../nsol/">« nsol: systems of equations with direct linear solvers</a><a class="docs-footer-nextpage" href="../nsoli/">nsoli: systems of equations with Krylov linear solvers »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.12 on <span class="colophon-date" title="Thursday 20 January 2022 20:48">Thursday 20 January 2022</span>. Using Julia version 1.7.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+       maximum(pout.solution)
+2.19086e+00</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/ctkelley/SIAMFANLEquations.jl/blob/f0bd97de33c4e1661752f74ef89f839f09f7e605/src/Solvers/ptcsol.jl#L1-L215">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../nsol/">« nsol: systems of equations with direct linear solvers</a><a class="docs-footer-nextpage" href="../nsoli/">nsoli: systems of equations with Krylov linear solvers »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.12 on <span class="colophon-date" title="Sunday 23 January 2022 19:43">Sunday 23 January 2022</span>. Using Julia version 1.7.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
