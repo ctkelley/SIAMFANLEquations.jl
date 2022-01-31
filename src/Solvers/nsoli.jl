@@ -181,11 +181,12 @@ is the linear solver.
 julia> function f!(fv,x)
        fv[1]=x[1] + sin(x[2])
        fv[2]=cos(x[1]+x[2])
+       return fv
        end
 f! (generic function with 1 method)
 
 julia> function JVec(v, fv, x)
-       jvec=zeros(2,);
+       jvec=zeros(2);
        p=-sin(x[1]+x[2])
        jvec[1]=v[1]+cos(x[2])*v[2]
        jvec[2]=p*(v[1]+v[2])
@@ -193,28 +194,32 @@ julia> function JVec(v, fv, x)
        end
 JVec (generic function with 1 method)
 
-julia> x0=ones(2,); fv=zeros(2,); jv=zeros(2,2); jv32=zeros(Float32,2,2);
+julia> x0=ones(2); fv=zeros(2); jv=zeros(2,2); 
+
+julia> jv32=zeros(Float32,2,2);
 
 julia> jvs=zeros(2,3); jvs32=zeros(Float32,2,3);
 
 julia> nout=nsol(f!,x0,fv,jv; sham=1);
 
-julia> kout=nsoli(f!,x0,fv,jvs,JVec; fixedeta=true, eta=.1, lmaxit=2);
+julia> kout=nsoli(f!,x0,fv,jvs,JVec; 
+                  fixedeta=true, eta=.1, lmaxit=2);
 
-julia> kout32=nsoli(f!,x0,fv,jvs32; fixedeta=true, eta=.1, lmaxit=2);
+julia> kout32=nsoli(f!,x0,fv,jvs32; 
+                    fixedeta=true, eta=.1, lmaxit=2);
 
 julia> [nout.history kout.history kout32.history]
 5×3 Array{Float64,2}:
  1.88791e+00  1.88791e+00  1.88791e+00
  2.43119e-01  2.43120e-01  2.43119e-01
- 1.19231e-02  1.19231e-02  1.19231e-02
- 1.03266e-05  1.03261e-05  1.03273e-05
- 1.46416e-11  1.40862e-11  1.45457e-11
+ 1.19231e-02  1.19231e-02  1.19230e-02
+ 1.03266e-05  1.03261e-05  1.03264e-05
+ 1.46388e-11  1.40862e-11  1.39825e-11
 
-julia> fpv=zeros(2,);
+julia> fpv=zeros(2);
 
-julia> koutb=nsoli(f!,x0,fv,fpv,JVec; fixedeta=true, eta=.1, lmaxit=2, 
-       lsolver="bicgstab");
+julia> koutb=nsoli(f!,x0,fv,fpv,JVec; 
+            fixedeta=true, eta=.1, lmaxit=2, lsolver="bicgstab");
 
 julia> koutb.history
 6-element Vector{Float64}:
