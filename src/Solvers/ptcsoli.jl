@@ -8,7 +8,7 @@ function ptcsoli( F!, x0, FS, FPS, Jvec = dirder; rtol = 1.e-6, atol = 1.e-12,
 C. T. Kelley, 2021
 
 Julia versions of the nonlinear solvers from my SIAM books. 
-Herewith: some new stuff ==> ptcsoli
+New for this book ==> ptcsoli
 
 PTC finds the steady-state solution of u' = -F(u), u(0) = u_0.
 The - sign is a convention.
@@ -126,7 +126,7 @@ difference increment in finite-difference derivatives
       h=dx*norm(x)+1.e-8 \n
 
 pdata:\n 
-precomputed data for the function/Jacobian-vector/Preconditioner-vector
+precomputed data for the function, Jacobian-vector, and Preconditioner-vector
 products.  Things will go better if you use this rather than hide the data
 in global variables within the module for your function/Jacobian
 
@@ -190,39 +190,40 @@ PreCondBeam (generic function with 1 method)
 
 julia> n=63; maxit=1000; delta0 = 0.01; lambda = 20.0;
 
+julia> # Set up the precomputed data
+
 julia> bdata = beaminit(n, 0.0, lambda);
 
-julia> x = bdata.x; u0 = x .* (1.0 .- x) .* (2.0 .- x); u0 .*= exp.(-10.0 * u0);
+julia> x = bdata.x; u0 = x .* (1.0 .- x) .* (2.0 .- x); 
 
+julia> u0 .*= exp.(-10.0 * u0); FS = copy(u0); FPJV=zeros(n,20);
 
-julia> FS = copy(u0); FPJV=zeros(n,20);
-
-julia> pout = ptcsoli( FBeam!, u0, FS, FPJV; delta0 = delta0, pdata = bdata,
-       eta = 1.e-2, rtol = 1.e-10, maxit = maxit, Pvec = PreCondBeam);
+julia> pout = ptcsoli( FBeam!, u0, FS, FPJV; 
+       delta0 = delta0, pdata = bdata, eta = 1.e-2, 
+       rtol = 1.e-10, maxit = maxit, Pvec = PreCondBeam);
 
 julia> # It takes a few iterations to get there.
        length(pout.history)
 25
 
 julia> [pout.history[1:5] pout.history[21:25]]
-5×2 Array{Float64,2}:
- 6.31230e+01  1.79578e+00
- 7.45926e+00  2.65964e-01
- 8.73598e+00  6.58278e-03
- 2.91936e+01  8.35069e-06
- 3.47969e+01  5.11594e-09
+5×2 Matrix{Float64}:
+ 6.31230e+01  1.79574e+00
+ 7.45927e+00  2.65956e-01
+ 8.73595e+00  6.58220e-03
+ 2.91937e+01  8.34114e-06
+ 3.47970e+01  5.06847e-09
 
 julia> # We get the nonnegative stedy state.
-       norm(pout.solution,Inf)
+julia> maximum(pout.solution)
 2.19086e+00
 
-n=63; maxit=1000; delta0 = 0.01; lambda = 20.0;
+julia> # Now use BiCGSTAB for the linear solver
 
-julia> # Use BiCGSTAB for the linear solver
+julia> FPJV=zeros(n);
 
-julia> FS = copy(u0); FPJV=zeros(n,);
-
-julia> pout = ptcsoli( FBeam!, u0, FS, FPJV; delta0 = delta0, pdata = bdata,
+julia> pout = ptcsoli( FBeam!, u0, FS, FPJV; 
+       delta0 = delta0, pdata = bdata,
        eta = 1.e-2, rtol = 1.e-10, maxit = maxit, 
        Pvec = PreCondBeam, lsolver="bicgstab");
 
@@ -237,10 +238,8 @@ julia> [pout.history[1:5] pout.history[21:25]]
 5×2 Matrix{Float64}:
  6.31230e+01  1.68032e+00
  7.47081e+00  2.35073e-01
- 8.62095e+00  5.18262e-03
- 2.96495e+01  3.23715e-06
- 3.51504e+01  3.33107e-10
-
+ 8.62095e+00  5.18260e-03
+ 2.96495e+01  3.23803e-06
 ```
 
 """

@@ -104,7 +104,7 @@ the step size will be fixed at .5. Don't do this unless you are doing
 experiments for research.\n
 
 pdata:\n 
-precomputed data for the function/Jacobian-vector/Preconditioner-vector
+precomputed data for the function, Jacobian-vector, and Preconditioner-vector
 products.  Things will go better if you use this rather than hide the data 
 in global variables within the module for your function/Jacobian
 
