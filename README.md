@@ -95,15 +95,19 @@ The plan is, for version 5
 
 - Version v.0.5.1 means that at least one case study is completly done and I have solid drafts of the print book and notebook parts of the chapter. 
 
-- Version v0.x.2 goes out when the codes and notebook for Chapter 5 are finished.
+- Version v0.5.2 goes out when the codes and notebook for Chapter 5 are finished.
 
-- v0.5.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I will post the package announcements for v0.5.3 on Discourse when 0.5.3 is done
+- v0.5.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I will post the package announcements for v0.5.3 on Discourse when 0.5.3 is done. __I will make no more announcemnts on Discourse after this until 1.0 comes out.__
 
 - 0.5.z for z > 3 are preparatory releases for the announcement to NA-Digest.
 
 - 0.6.0 is the NA-Digest release. At that point the text should be in final(?) draft form, the solvers and examples should be done, and the writing should be in the final proofreading stage. 0.6.y for y>0 will be bug fixes, typo management, response to community complaints ...
 
-- 0.z.w for 7 <= z <= 9 will be milestone releases for things like (1) more stuff in Chapter 5 (case studies), (2) reorginization of the files for sanity, which must be done!!!, (3) shipment of ms to publisher, (4) fixes for problems found in copy editing, ...
+- 0.7.0 is the version that goes to the copy editor. At this point interfaces, docstrings, and any codes copied into the book are frozen unless I find bugs.
+
+- 0.8.0 is my respose to the copy editor's complaings. The book goes to the printer at this stage and nothing I say in the book about the orginization of the repos ... will change after this.
+
+- 0.9.0 is a clean up release where I give the comment lines in the codes a last tweak.
 
 v1.0.0 goes out __when the print book is published__. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
