@@ -115,6 +115,7 @@ function sn_init(nx, na2, fs, tau, vleft, vright; siewert = false)
     #
     # Set up the quadrature rule in angle
     #
+    # Only used for CI
     if siewert
         #
         # I don't need the weights to make tables, but I need
@@ -122,6 +123,7 @@ function sn_init(nx, na2, fs, tau, vleft, vright; siewert = false)
         #
         angles = [-0.05; collect(-0.1:-0.1:-1.0); 0.05; collect(0.1:0.1:1.0)]
         weights = angles
+    # the real deal
     else
         (angles, weights) = hard_gauss()
         #    (angles, weights) = sn_angles(na2)
@@ -147,6 +149,10 @@ function sn_init(nx, na2, fs, tau, vleft, vright; siewert = false)
     #
     psi_left = vleft * ones(na)
     psi_right = vright * ones(na)
+    # Preallocating the angular flux is not really necessary
+    # since you can compute the scalar flux on the fly as you do it.
+    # However, the preallocation makes the code much easier to understand
+    # and map to/from the text.
     psi = zeros(na2, nx)
     source_average = zeros(nx - 1)
     source_total = zeros(nx)
