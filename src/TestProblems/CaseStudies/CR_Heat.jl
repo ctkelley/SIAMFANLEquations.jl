@@ -125,8 +125,8 @@ function sn_init(nx, na2, fs, tau, vleft, vright; siewert = false)
         weights = angles
     # the real deal
     else
-        (angles, weights) = hard_gauss()
-        #    (angles, weights) = sn_angles(na2)
+#        (angles, weights) = hard_gauss()
+         (angles, weights) = sn_angles(na2)
     end
     na = floor(Int, na2 / 2)
     #
@@ -183,7 +183,7 @@ function sn_init(nx, na2, fs, tau, vleft, vright; siewert = false)
 end
 
 
-function hard_gauss()
+#function hard_gauss()
     #
     # Return the weights/nodes for double 20 pt gauss
     # I could use FastGaussQuadrature.jl for this but am
@@ -193,65 +193,63 @@ function hard_gauss()
     # If you want to try FastGaussQuadrature.jl, see the function below,
     # which I have commented out.
     #
-    m = 40
-    ri = zeros(40)
-    wi = zeros(40)
-    r = zeros(40)
-    w = zeros(40)
-    ri[20] = 0.993128599185095
-    ri[19] = 0.963971927277914
-    ri[18] = 0.912234428251326
-    ri[17] = 0.839116971822218
-    ri[16] = 0.746331906460151
-    ri[15] = 0.636053680726515
-    ri[14] = 0.510867001950827
-    ri[13] = 0.373706088715420
-    ri[12] = 0.227785851141645
-    ri[11] = 0.076526521133497
-    wi[20] = 0.017614007139152
-    wi[19] = 0.040601429800387
-    wi[18] = 0.062672048334109
-    wi[17] = 0.083276741576705
-    wi[16] = 0.101930119817240
-    wi[15] = 0.118194531961518
-    wi[14] = 0.131688638449177
-    wi[13] = 0.142096109318382
-    wi[12] = 0.149172986472604
-    wi[11] = 0.152753387130726
-    for i = 1:10, ri[i] in -ri[21-i]
-        wi[i] = wi[21-i]
-    end
-    #      mm=m/2;
-    mm = floor(Int, m / 2)
-    for i = 1:mm
-        r[i+mm] = (1.0 + ri[i]) * 0.5
-        w[i+mm] = wi[i] * 0.5
-        #       r[i]=(ri[i] - 1.0)*.5;
-        r[i] = -r[i+mm]
-        w[i] = wi[i] * 0.5
-    end
-    return (r, w)
-end
+#    m = 40
+#    ri = zeros(40)
+#    wi = zeros(40)
+#    r = zeros(40)
+#    w = zeros(40)
+#    ri[20] = 0.993128599185095
+#    ri[19] = 0.963971927277914
+#    ri[18] = 0.912234428251326
+#    ri[17] = 0.839116971822218
+#    ri[16] = 0.746331906460151
+#    ri[15] = 0.636053680726515
+#    ri[14] = 0.510867001950827
+#    ri[13] = 0.373706088715420
+#    ri[12] = 0.227785851141645
+#    ri[11] = 0.076526521133497
+#    wi[20] = 0.017614007139152
+#    wi[19] = 0.040601429800387
+#    wi[18] = 0.062672048334109
+#    wi[17] = 0.083276741576705
+#    wi[16] = 0.101930119817240
+#    wi[15] = 0.118194531961518
+#    wi[14] = 0.131688638449177
+#    wi[13] = 0.142096109318382
+#    wi[12] = 0.149172986472604
+#    wi[11] = 0.152753387130726
+#    for i = 1:10, ri[i] in -ri[21-i]
+#        wi[i] = wi[21-i]
+#    end
+#    mm = floor(Int, m / 2)
+#    for i = 1:mm
+#        r[i+mm] = (1.0 + ri[i]) * 0.5
+#        w[i+mm] = wi[i] * 0.5
+#        r[i] = -r[i+mm]
+#        w[i] = wi[i] * 0.5
+#    end
+#    return (r, w)
+#end
 
 
 """
-sn_angles(na2=20)
+sn_angles(na2=40)
 
 Get double Gauss nodes and weights for SN
 This function uses FastGaussQuadrature
 """
-#function sn_angles(na2 = 20)
-#    na = floor(Int, na2 / 2)
-#    2 * na == na2 || error("odd number of angles")
-#    baseangles, baseweights = gausslegendre(na)
-#    posweights = baseweights * 0.5
-#    negweights = copy(posweights)
-#    posangles = (baseangles .+ 1.0) * 0.5
-#    negangles = -copy(posangles)
-#    weights = [negweights; posweights]
-#    angles = [negangles; posangles]
-#    angles, weights
-#end
+function sn_angles(na2 = 40)
+    na = floor(Int, na2 / 2)
+    2 * na == na2 || error("odd number of angles")
+    baseangles, baseweights = gauss(na)
+    posweights = baseweights * 0.5
+    negweights = copy(posweights)
+    posangles = (baseangles .+ 1.0) * 0.5
+    negangles = -copy(posangles)
+    weights = [negweights; posweights]
+    angles = [negangles; posangles]
+    angles, weights
+end
 
 
 """

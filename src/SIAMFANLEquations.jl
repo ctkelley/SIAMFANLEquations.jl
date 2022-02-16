@@ -4,6 +4,7 @@ using LinearAlgebra.BLAS
 using SparseArrays
 using SuiteSparse
 using BandedMatrices
+using QuadGK
 using Printf
 
 export nsolsc
@@ -56,6 +57,7 @@ using BandedMatrices
 using AbstractFFTs
 using FFTW
 using Printf
+using QuadGK
 
 export
     #Functions
