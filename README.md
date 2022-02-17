@@ -88,7 +88,7 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.5.0: Chapter 5: Case studies
+This is version v0.5.1: Chapter 5: Case studies
 
 The plan is, for version 5
 - v0.5.0 goes live when the codes when the first case study is in the printbook, mapped to the notebook, and the codes are done
@@ -194,7 +194,7 @@ The algorithms, listed by book chapter will be
        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 4: Anderson acceleration: aasol.jl 
         - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 5: Case studies: __Conductive-Radiative heat transfer close to done. When done, it's time for 0.5.0.__
+   - Chapter 5: Case studies: __Conductive-Radiative heat transfer done.__ Next and final case study underway. When done I'll push 0.5.1.
    
    
 ## Test Problems
@@ -248,9 +248,7 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.4.3
 
-- v0.5.0: (This release) Conductive-Radiative case study done.
-
-### Chapter 5 will be short
+- v0.5.1: (This release) Chapter 5 case studeies done. Some writing, code reorgs, and tuning left before 0.5.2 and 0.5.3
       
 
 ### What's after 0.5.x?
