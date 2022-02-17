@@ -93,19 +93,19 @@ This is version v0.5.0: Chapter 5: Case studies
 The plan is, for version 5
 - v0.5.0 goes live when the codes when the first case study is in the printbook, mapped to the notebook, and the codes are done
 
-- Version v.0.5.1 means that at least one case study is completly done and I have solid drafts of the print book and notebook parts of the chapter. 
+- Version v.0.5.1 Released when the second and final case study is done.
 
-- Version v0.5.2 goes out when the codes and notebook for Chapter 5 are finished.
+- Version v0.5.2 Codes/Book done and repo reorg mostly done. Notebook --> Printbook done and indexing the Notebook part is underway. 
 
 - v0.5.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I will post the package announcements for v0.5.3 on Discourse when 0.5.3 is done. __I will make no more announcemnts on Discourse after this until 1.0 comes out.__
 
-- 0.5.z for z > 3 are preparatory releases for the announcement to NA-Digest.
+- 0.5.z for z > 3 are preparatory releases for the announcement to NA-Digest. There may not be any of these. 
 
 - 0.6.0 is the NA-Digest release. At that point the text should be in final(?) draft form, the solvers and examples should be done, and the writing should be in the final proofreading stage. 0.6.y for y>0 will be bug fixes, typo management, response to community complaints ...
 
 - 0.7.0 is the version that goes to the copy editor. At this point interfaces, docstrings, and any codes copied into the book are frozen unless I find bugs.
 
-- 0.8.0 is my respose to the copy editor's complaings. The book goes to the printer at this stage and nothing I say in the book about the orginization of the repos ... will change after this.
+- 0.8.0 is my respose to the copy editor's complaints. The book goes to the printer at this stage and nothing I say in the book about the orginization of the repos ... will change after this.
 
 - 0.9.0 is a clean up release where I give the comment lines in the codes a last tweak.
 
