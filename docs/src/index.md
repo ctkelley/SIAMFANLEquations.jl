@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.5.0
+# SIAMFANLEquations.jl v0.5.1
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
@@ -10,7 +10,7 @@ __Solvers and Examples in Julia__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-Version 0.5.0: New stuff = First case study mostly done 
+Version 0.5.1: New stuff = Second case study done
 
 ## Scalar Equations: Chapter 1
 
@@ -355,3 +355,6 @@ or BandedMatrices. The solvers
 The solver is aasol.jl. Keep in mind that you are solving fixed point 
 problems ``x = G(x)`` so you send the solver the fixed point map ``G``.
 
+### Case Studies: Chapter 4
+
+This chapter has two case studies. Please look at the notebook.
