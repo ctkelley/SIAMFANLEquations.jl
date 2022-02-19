@@ -75,6 +75,7 @@ heqinit(x0::Array{T,1}, c) where T :< Real
 Initialize H-equation precomputed data.
 """
 function heqinit(x0::Array{T,1}, c) where {T<:Real}
+    (c > 0) || error("You can't set c to zero.")
     n = length(x0)
     cval = ones(1)
     cval[1] = c
@@ -118,9 +119,12 @@ end
 setc!(pdata, cin)
 
 If you are varying c in a computation, this function
-lets you set it.
+lets you set it. 
+
+But! You can't set c to zero.
 """
 function setc!(pdata, cin)
+    (cin > 0) || error("You can't set c to zero")
     c = pdata.cval[1]
     cfix = cin / c
     pdata.pmu .*= cfix
