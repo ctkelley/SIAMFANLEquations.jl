@@ -117,11 +117,21 @@ function Newton_Krylov_Init(
     #
     eta > 0 || error("eta must be positive")
     n = length(x0)
-    x = copy(x0)
-    tmp1 = zeros(n)
-    tmp2 = zeros(n)
-    tmp3 = zeros(n)
-    tmp4 = zeros(n)
+#if true
+    P=zeros(n,5)
+    @views x = P[:,1]
+    x .= x0
+    @views tmp1 = P[:,2]
+    @views tmp2 = P[:,3]
+    @views tmp3 = P[:,4]
+    @views tmp4 = P[:,5]
+#else
+#    x = copy(x0)
+#    tmp1 = zeros(n)
+#    tmp2 = zeros(n)
+#    tmp3 = zeros(n)
+#    tmp4 = zeros(n)
+#end
     kl_store = (tmp1, tmp2, tmp3, tmp4)
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     ((lmaxit == -1) && (lsolver=="bicgstab") ) && (lmaxit = 5)
