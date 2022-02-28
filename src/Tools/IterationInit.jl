@@ -90,7 +90,8 @@ end
 
 """
 Newton_Krylov_Init( x0, dx, F!, Jvec, Pvec, pside, lsolver, eta,
-    fixedeta, armmax, armfix, maxit, lmaxit, printerr, pdata, keepsolhist)
+    fixedeta, armmax, armfix, maxit, lmaxit, printerr, pdata, u
+    Krylov_Data, keepsolhist)
 
 Newton_Krylov_Init: set up nsoli
 """
@@ -110,6 +111,7 @@ function Newton_Krylov_Init(
     lmaxit,
     printerr,
     pdata,
+    Krylov_Data,
     keepsolhist,
 )
     #
@@ -117,22 +119,21 @@ function Newton_Krylov_Init(
     #
     eta > 0 || error("eta must be positive")
     n = length(x0)
-#if true
-    P=zeros(n,5)
-    @views x = P[:,1]
+#
+# Not for tourists! You have the opportunity, which you should decline,
+# to allocate the internal space for gmres in the call to nsoli. Only
+# do this for continuation or IVP integration, if at all. You can break
+# stuff with this.
+#
+    if Krylov_Data == Nothing
+    kl_store = kstore(n,lsolver)
+    knl_store = knlstore(n)
+    else
+    kl_store = Krylov_Data.kl_store
+    knl_store = Krylov_Data.knl_store
+    end
+    x = knl_store.xval
     x .= x0
-    @views tmp1 = P[:,2]
-    @views tmp2 = P[:,3]
-    @views tmp3 = P[:,4]
-    @views tmp4 = P[:,5]
-#else
-#    x = copy(x0)
-#    tmp1 = zeros(n)
-#    tmp2 = zeros(n)
-#    tmp3 = zeros(n)
-#    tmp4 = zeros(n)
-#end
-    kl_store = (tmp1, tmp2, tmp3, tmp4)
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
     ((lmaxit == -1) && (lsolver=="bicgstab") ) && (lmaxit = 5)
     ItRules = (
@@ -143,6 +144,7 @@ function Newton_Krylov_Init(
         pside = pside,
         lsolver = lsolver,
         kl_store = kl_store,
+        knl_store = knl_store,
         eta = eta,
         fixedeta = fixedeta,
         lmaxit = lmaxit,

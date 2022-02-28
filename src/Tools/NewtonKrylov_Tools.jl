@@ -17,13 +17,10 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
     lmaxit = ItRules.lmaxit
     T = eltype(FPS)
     kstep_test(FPS, step, lsolver)
-#    (nk, mk) = size(FPS)
-#    n = length(step)
-#    n == nk || error("Krylov vectors wrong length")
-#    (lsolver == "gmres") || error(lsolver, " ", "not supported")
     Jvec = ItRules.Jvec
     Pvec = ItRules.Pvec
     kl_store = ItRules.kl_store
+    knl_store = ItRules.knl_store
     pdata = ItRules.pdata
     dx = ItRules.dx
     f = ItRules.f
@@ -48,6 +45,7 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
         Jvec = Jvec,
         Pvec = Pvec,
         delta = delta,
+        knl_store = knl_store,
     )
     Pvecg = Pvec2
     Jvecg = Jvec2
@@ -124,22 +122,27 @@ end
 function dirder(v, kdata)
     pdata = kdata.pdata
     dx = kdata.dx/norm(v)
+    dxm1=1.0/dx
     F = kdata.f
     FS = kdata.FS
     xc = kdata.xc
+    delx = kdata.knl_store.delx
+    delx .= xc
     delta = kdata.delta
-    delx = copy(xc)
+#    delx = copy(xc)
 #    delx .= xc + dx * v
 #    delx .+= dx*v
     axpy!(dx, v, delx)
-    FPP = copy(xc)
+    FPP = kdata.knl_store.FPP
+    FPP .= xc
+#    FPP = copy(xc)
     EvalF!(F, FPP, delx, pdata)
-    atv = (FPP - FS) / dx
-    ptcmv!(atv, v, delta)
-    #    if delta > 0
-    #        atv .= atv + (1.0 / delta) * v
-    #    end
-    return atv
+    axpby!(-dxm1, FS, dxm1, FPP)
+    ptcmv!(FPP, v, delta)
+#    atv = (FPP - FS) / dx
+#    ptcmv!(atv, v, delta)
+#    return atv
+     return FPP
 end
 
 function ptcmv!(atv, v, delta)
@@ -170,6 +173,34 @@ function forcing(itc, residratio, etag, ItRules, tol, resnorm)
         etag = min(etamax, max(etasafe, etaflim))
     end
     return etag
+end
+
+"""
+nkl_init(n, lsolver)
+Preallocates data for internal stuff in nsoli. 
+You do not want to mess with this unless you are doing
+IVP integration or continuation.
+"""
+function nkl_init(n, lsolver)
+kl_store = kstore(n, lsolver)
+knl_store = knlstore(n)
+return (kl_store=kl_store, knl_store=knl_store);
+end
+
+"""
+knlstore(n)
+
+Preallocates the vectors Newton-Krylov uses internally. 
+"""
+
+function knlstore(n)
+xval=zeros(n)
+step=zeros(n)
+xt=zeros(n)
+FT=zeros(n)
+delx=zeros(n)
+FPP=zeros(n)
+return (step=step, xt=xt, FT=FT, delx=delx, FPP=FPP,xval=xval)
 end
 
 """

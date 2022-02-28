@@ -3,7 +3,8 @@
                maxit=20, lmaxit=-1, lsolver="gmres", eta=.1,
                fixedeta=true, Pvec=nothing, pside="right",
                armmax=10, dx = 1.e-7, armfix=false, pdata = nothing,
-               printerr = true, keepsolhist = false, stagnationok=false)
+               printerr = true, keepsolhist = false, 
+               Krylov_Data = Nothing, stagnationok=false)
 )
 
 C. T. Kelley, 2021
@@ -256,6 +257,7 @@ function nsoli(
     pdata = nothing,
     printerr = true,
     keepsolhist = false,
+    Krylov_Data = Nothing,
     stagnationok = false,
 )
     itc = 0
@@ -286,6 +288,7 @@ function nsoli(
         lmaxit,
         printerr,
         pdata,
+        Krylov_Data,
         keepsolhist,
     )
     #    keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
@@ -308,11 +311,12 @@ function nsoli(
     armstop = true
     etag = eta
     #
-    # Preallocate a few vectors for the step, trial step, trial function
+    # Get the preallocatred vectors for the step, trial step, trial function
     #
-    step = copy(x)
-    xt = copy(x)
-    FT = copy(x)
+    knl_store=ItRules.knl_store
+    step = knl_store.step
+    xt = knl_store.xt
+    FT = knl_store.FT
     #
     # If the initial iterate satisfies the termination criteria, tell me.
     #

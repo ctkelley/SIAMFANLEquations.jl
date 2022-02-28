@@ -26,6 +26,7 @@ function PTCKrylovinit(
 #    tmp4 = zeros(n)
 #    kl_store = (tmp1, tmp2, tmp3, tmp4)
     kl_store = kstore(n, lsolver)
+    knl_store = knlstore(n)
     ItRules = (
         dx = dx,
         f = F!,
@@ -36,6 +37,7 @@ function PTCKrylovinit(
         pside = pside,
         lsolver = lsolver,
         kl_store = kl_store,
+        knl_store = knl_store,
         eta = eta,
         fixedeta = fixedeta,
         lmaxit = lmaxit,

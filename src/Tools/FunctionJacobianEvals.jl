@@ -205,7 +205,8 @@ docstrings to nsold to see more details.
 
 Nothing much to see here. Move along.
 """
-function diffjac!(FPS::Array{T,2}, FS, F!, x, dx, pdata) where {T<:Real}
+#function diffjac!(FPS::Array{T,2}, FS, F!, x, dx, pdata) where {T<:Real}
+function diffjac!(FPS, FS, F!, x, dx, pdata) 
     h = dx * norm(x, Inf) + 1.e-8
     n = length(x)
     y = ones(size(x))

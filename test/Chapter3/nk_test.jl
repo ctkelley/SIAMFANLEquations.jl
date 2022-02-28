@@ -34,6 +34,7 @@ function nksimple()
         FPS;
         eta = 1.e-10,
         keepsolhist = true,
+#        Krylov_Data = zeros(2,5),
         fixedeta = false,
     )
     dsolhist = norm(kout.solhist - dout.solhist, Inf)

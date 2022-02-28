@@ -21,6 +21,8 @@ export kl_gmres
 export kl_bicgstab
 export Katv
 export kstore
+export knlstore
+export nkl_init
 export Orthogonalize!
 export EvalF!
 export solhistinit
