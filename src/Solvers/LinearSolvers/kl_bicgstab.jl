@@ -150,18 +150,28 @@ julia> norm(gout.sol-ue,Inf)
 ```
 
 """
-function kl_bicgstab( x0, b, atv, V, eta, ptv = nothing; 
-      kl_store=nothing, side = "right", lmaxit = 10, pdata = nothing) 
-#
-# If you give me too much storage, I will fix it for you.
-#
-    isa(V,Vector) ? rhs = V : rhs = @view V[:,1]
+function kl_bicgstab(
+    x0,
+    b,
+    atv,
+    V,
+    eta,
+    ptv = nothing;
+    kl_store = nothing,
+    side = "right",
+    lmaxit = 10,
+    pdata = nothing,
+)
+    #
+    # If you give me too much storage, I will fix it for you.
+    #
+    isa(V, Vector) ? rhs = V : rhs = @view V[:, 1]
     rhs .= b
-    n=length(b)
-#
-# If you're playing with both gmres and bicgstab you might have
-# lmaxit set to -1. That will break things to I fixed that.
-#
+    n = length(b)
+    #
+    # If you're playing with both gmres and bicgstab you might have
+    # lmaxit set to -1. That will break things to I fixed that.
+    #
     (lmaxit == -1) && (lmaxit = 10)
     if side == "right" || ptv == nothing
         itsleft = false
@@ -169,25 +179,29 @@ function kl_bicgstab( x0, b, atv, V, eta, ptv = nothing;
         itsleft = true
         rhs .= ptv(rhs, pdata)
     end
-    n=length(x0)
-    kl_store=kstore(n,"bicgstab")
+    n = length(x0)
+    kl_store = kstore(n, "bicgstab")
     linsol = kl_store[1]
-#    linsol .= b
+    #    linsol .= b
     y0 = kl_store[2]
     y0 .= x0
-#    linsol = copy(b)
-#    y0 = copy(x0)
-    Kpdata = (pdata = pdata, side = side, ptv = ptv, 
-              atv = atv, linsol = linsol,kl_store=kl_store)
-    bout = bicgstab_base(y0, rhs, Katv, eta; 
-              lmaxit = lmaxit, pdata = Kpdata)
+    #    linsol = copy(b)
+    #    y0 = copy(x0)
+    Kpdata = (
+        pdata = pdata,
+        side = side,
+        ptv = ptv,
+        atv = atv,
+        linsol = linsol,
+        kl_store = kl_store,
+    )
+    bout = bicgstab_base(y0, rhs, Katv, eta; lmaxit = lmaxit, pdata = Kpdata)
     if side == "left" || ptv == nothing
         return bout
     else
         sol = y0
         sol .= ptv(sol, pdata)
-        return (sol = sol, reshist = bout.reshist, lits=bout.lits, 
-             idid=bout.idid)
+        return (sol = sol, reshist = bout.reshist, lits = bout.lits, idid = bout.idid)
     end
 end
 
@@ -214,15 +228,15 @@ function bicgstab_base(x0, rhs, atv, eta; lmaxit = 10, pdata = nothing)
     p = kl_store[4]
     s = kl_store[5]
     t = kl_store[6]
-#    v = zeros(size(x0))
-#    p = zeros(size(x0))
-#    s = zeros(size(x0))
-#    t = zeros(size(x0))
+    #    v = zeros(size(x0))
+    #    p = zeros(size(x0))
+    #    s = zeros(size(x0))
+    #    t = zeros(size(x0))
     tol = eta * norm(rhs)
     k = 0
     reshist = []
     push!(reshist, rnorm)
-    idid=true
+    idid = true
     while rnorm > tol && k < lmaxit
         k += 1
         abs(omega) > 0 || (println("Breakdown omega = 0"); break)
@@ -232,7 +246,7 @@ function bicgstab_base(x0, rhs, atv, eta; lmaxit = 10, pdata = nothing)
         #        p .= r + beta * p
         axpby!(1.0, r, beta, p)
         v .= atv(p, pdata)
-        tau=r0'*v
+        tau = r0' * v
         abs(tau) > 0 || (println("Breakdown r0'*v = 0 "); break)
         alpha = rho[k+1] / tau
         #        s .= r - alpha * v
@@ -253,6 +267,6 @@ function bicgstab_base(x0, rhs, atv, eta; lmaxit = 10, pdata = nothing)
         rnorm = norm(r)
         push!(reshist, rnorm)
     end
-    (rnorm <= tol) || (idid=false)
-    return (sol = x, reshist = reshist, lits=k, idid=idid)
+    (rnorm <= tol) || (idid = false)
+    return (sol = x, reshist = reshist, lits = k, idid = idid)
 end

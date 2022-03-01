@@ -193,14 +193,14 @@ function kl_gmres(
     n = length(x0)
     # Get the vectors GMRES needs internally and make room to
     # copy the initial iterate and right side
-    (kl_store !== nothing) || (kl_store=kstore(n,"gmres"))
-        y0 = kl_store[1]
-        y0 .= x0
-        rhs = kl_store[2]
-        rhs .= b
+    (kl_store !== nothing) || (kl_store = kstore(n, "gmres"))
+    y0 = kl_store[1]
+    y0 .= x0
+    rhs = kl_store[2]
+    rhs .= b
     # Two vectors for internals
-        linsol = kl_store[3]
-        restmp = kl_store[4]
+    linsol = kl_store[3]
+    restmp = kl_store[4]
     #
     if side == "right" || ptv == nothing
         itsleft = false
@@ -318,7 +318,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
     #
     g = zeros(size(c))
     g[1] = rho
-    errtol = eta*norm(b)
+    errtol = eta * norm(b)
     reshist = []
     #
     # Initialize
@@ -329,12 +329,12 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
     #
     # Showtime!
     #
-#    @views V[:, 1] .= r / rho
-    @views v1 = V[:,1]
-    copy!(v1,r)
-    rhoinv = 1.0/rho
+    #    @views V[:, 1] .= r / rho
+    @views v1 = V[:, 1]
+    copy!(v1, r)
+    rhoinv = 1.0 / rho
     v1 .*= rhoinv
-#    @views V[:,1] ./= rho
+    #    @views V[:,1] ./= rho
     beta = rho
     while (rho > errtol) && (k < kmax)
         k += 1
@@ -366,7 +366,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
         # Update the residual norm.
         #
         rho = abs(g[k+1])
-        (nu > 0.0) || (println("near breakdown"); rho=0.0;)
+        (nu > 0.0) || (println("near breakdown"); rho = 0.0)
         push!(reshist, rho)
     end
     #
@@ -374,7 +374,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
     # It's time to compute x and check out.
     #
     y = h[1:k, 1:k] \ g[1:k]
-#    qmf = view(V, 1:n, 1:k)
+    #    qmf = view(V, 1:n, 1:k)
     @views qmf = V[:, 1:k]
     #    mul!(r, qmf, y)
     #    r .= qmf*y    

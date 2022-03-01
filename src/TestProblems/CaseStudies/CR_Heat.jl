@@ -4,10 +4,10 @@ FCR_heat!(FS, x, hdata)
 Nonlinear equation form of conductive-radiative heat transfer problem.
 """
 function FCR_heat!(FS, x, hdata)
-FS = heat_fixed!(FS,x,hdata)
-FS .= x - FS
-#axpy!(-1.0, x, FS)
-return FS
+    FS = heat_fixed!(FS, x, hdata)
+    FS .= x - FS
+    #axpy!(-1.0, x, FS)
+    return FS
 end
 
 """
@@ -84,7 +84,7 @@ function heat_init(nx, na, thetal, thetar, omega, tau, Nc)
         Nc = Nc,
         kl_store = kl_store,
         thetal = thetal,
-        thetar = thetar
+        thetar = thetar,
     )
     return hn_data
 end
@@ -123,10 +123,10 @@ function sn_init(nx, na2, fs, tau, vleft, vright; siewert = false)
         #
         angles = [-0.05; collect(-0.1:-0.1:-1.0); 0.05; collect(0.1:0.1:1.0)]
         weights = angles
-    # the real deal
+        # the real deal
     else
-#        (angles, weights) = hard_gauss()
-         (angles, weights) = sn_angles(na2)
+        #        (angles, weights) = hard_gauss()
+        (angles, weights) = sn_angles(na2)
     end
     na = floor(Int, na2 / 2)
     #
@@ -184,15 +184,15 @@ end
 
 
 #function hard_gauss()
-    #
-    # Return the weights/nodes for double 20 pt gauss
-    # I could use FastGaussQuadrature.jl for this but am
-    # trying to avoid dependencies, especially for big things
-    # like StaticArrays.jl
-    #
-    # If you want to try FastGaussQuadrature.jl, see the function below,
-    # which I have commented out.
-    #
+#
+# Return the weights/nodes for double 20 pt gauss
+# I could use FastGaussQuadrature.jl for this but am
+# trying to avoid dependencies, especially for big things
+# like StaticArrays.jl
+#
+# If you want to try FastGaussQuadrature.jl, see the function below,
+# which I have commented out.
+#
 #    m = 40
 #    ri = zeros(40)
 #    wi = zeros(40)

@@ -36,6 +36,6 @@ end
 
 function BVP_U0!(U0, n, bdata)
     tv = bdata.tv
-    view(U0, 1:2:2n-1) .= exp.(-.1 .* tv .* tv)
-    view(U0, 2:2:2n) .= -.2 .* view(U0, 1:2:2n-1) .* tv
+    view(U0, 1:2:2n-1) .= exp.(-0.1 .* tv .* tv)
+    view(U0, 2:2:2n) .= -0.2 .* view(U0, 1:2:2n-1) .* tv
 end

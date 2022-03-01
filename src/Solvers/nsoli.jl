@@ -4,7 +4,7 @@
                fixedeta=true, Pvec=nothing, pside="right",
                armmax=10, dx = 1.e-7, armfix=false, pdata = nothing,
                printerr = true, keepsolhist = false, 
-               Krylov_Data = Nothing, stagnationok=false)
+               Krylov_Data = nothing, stagnationok=false)
 )
 
 C. T. Kelley, 2021
@@ -119,6 +119,25 @@ keepsolhist: default = false\n
 Set this to true to get the history of the iteration in the output
 tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
+
+Krylov_Data: default = nothing\n
+This is a structure where I put the internal storage for the solvers.
+You can (but probably should not) preallocate this your self with the
+nkl_init function.\n
+
+Krylov_Data 
+
+= nkl_init(n,lsolver)
+
+This is a dangerous thing to mess with and I only recommend it if 
+the allocations in nsoli become a problem in continuation or IVP
+integration. Krylov_Data is where I store the solution at the end
+of the iteration and if you reuse it without copying the solution
+to somewhere else, you'll lose it and it will be overwritten wiht
+the new solution. 
+
+The continuation case study does this and you should look at that to
+see what I did.
 
 stagnationok: default = false\n
 Set this to true if you want to disable the line search and either
@@ -257,7 +276,7 @@ function nsoli(
     pdata = nothing,
     printerr = true,
     keepsolhist = false,
-    Krylov_Data = Nothing,
+    Krylov_Data = nothing,
     stagnationok = false,
 )
     itc = 0
@@ -313,7 +332,7 @@ function nsoli(
     #
     # Get the preallocatred vectors for the step, trial step, trial function
     #
-    knl_store=ItRules.knl_store
+    knl_store = ItRules.knl_store
     step = knl_store.step
     xt = knl_store.xt
     FT = knl_store.FT

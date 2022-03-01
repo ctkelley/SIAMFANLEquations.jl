@@ -99,12 +99,12 @@ Convection-diffusion equation with left preconditioning hard-wired in
 
 """
 function hardleft!(FV, u, pdata)
-fdata=pdata.fdata
-# Call the nonlinear function
-FV = pdeF!(FV,u,pdata)
-# and apply the preconditioner.
-FV .= Pfish2d(FV,fdata)
-return FV
+    fdata = pdata.fdata
+    # Call the nonlinear function
+    FV = pdeF!(FV, u, pdata)
+    # and apply the preconditioner.
+    FV .= Pfish2d(FV, fdata)
+    return FV
 end
 
 """
@@ -113,10 +113,10 @@ Fixed point form of the left preconditioned nonlinear
 convection-diffusion equation
 """
 function hardleftFix!(FV, u, pdata)
-FV = hardleft!(FV, u, pdata)
-# G(u) = u - FV
-axpby!(1.0, u, -1.0, FV)
-return FV
+    FV = hardleft!(FV, u, pdata)
+    # G(u) = u - FV
+    axpby!(1.0, u, -1.0, FV)
+    return FV
 end
 
 

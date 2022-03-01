@@ -13,7 +13,7 @@ function NsoliPDE(
     Pvec = Pvec2d,
     pside = "right",
     lsolver = "gmres",
-    restarts = 99
+    restarts = 99,
 )
     # Get some room for the residual
     u0 = zeros(n * n)
@@ -21,7 +21,7 @@ function NsoliPDE(
     # Get the precomputed data from pdeinit
     pdata = pdeinit(n)
     # Storage for the Krylov basis
-    (lsolver == "gmres") ? (JV = zeros(n * n, restarts+1)) : JV = zeros(n*n)
+    (lsolver == "gmres") ? (JV = zeros(n * n, restarts + 1)) : JV = zeros(n * n)
     pout = nsoli(
         pdeF!,
         u0,

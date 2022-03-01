@@ -78,7 +78,8 @@ function beaminit(n, dt, lambda = 20.0)
     dx = 1.0 / (n + 1)
     x = collect(dx:dx:1.0-dx)
     UN = zeros(size(x))
-    bdata = (D2 = D2, x = x, dx = dx, dt = dt, lambda = lambda, UN = UN, deltaval = deltaval)
+    bdata =
+        (D2 = D2, x = x, dx = dx, dt = dt, lambda = lambda, UN = UN, deltaval = deltaval)
 end
 
 """
@@ -90,8 +91,8 @@ function Lap1d(n)
     dx = 1 / (n + 1)
     d = 2.0 * ones(n)
     sup = -ones(n - 1)
-#    slo = -ones(n - 1)
-#    D2 = Tridiagonal(slo, d, sup)
+    #    slo = -ones(n - 1)
+    #    D2 = Tridiagonal(slo, d, sup)
     D2 = SymTridiagonal(d, sup)
     D2 = D2 / (dx * dx)
     return D2

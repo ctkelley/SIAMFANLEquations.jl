@@ -110,12 +110,12 @@ you are using precomputed data or not. No reason to get excited
 about this.
 """
 function EvalF!(F!, FS, x, q::Nothing)
-    FS=F!(FS, x)
+    FS = F!(FS, x)
     return FS
 end
 
 function EvalF!(F!, FS, x, pdata)
-    FS=F!(FS, x, pdata)
+    FS = F!(FS, x, pdata)
     return FS
 end
 
@@ -206,7 +206,7 @@ docstrings to nsold to see more details.
 Nothing much to see here. Move along.
 """
 #function diffjac!(FPS::Array{T,2}, FS, F!, x, dx, pdata) where {T<:Real}
-function diffjac!(FPS, FS, F!, x, dx, pdata) 
+function diffjac!(FPS, FS, F!, x, dx, pdata)
     h = dx * norm(x, Inf) + 1.e-8
     n = length(x)
     y = ones(size(x))

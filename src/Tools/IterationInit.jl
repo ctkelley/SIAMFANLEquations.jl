@@ -119,23 +119,23 @@ function Newton_Krylov_Init(
     #
     eta > 0 || error("eta must be positive")
     n = length(x0)
-#
-# Not for tourists! You have the opportunity, which you should decline,
-# to allocate the internal space for gmres in the call to nsoli. Only
-# do this for continuation or IVP integration, if at all. You can break
-# stuff with this.
-#
-    if Krylov_Data == Nothing
-    kl_store = kstore(n,lsolver)
-    knl_store = knlstore(n)
-    else
+    #
+    # Not for tourists! You have the opportunity, which you should decline,
+    # to allocate the internal space for gmres in the call to nsoli. Only
+    # do this for continuation or IVP integration, if at all. You can break
+    # stuff with this.
+    #
+    if Krylov_Data == nothing
+        Krylov_Data = nkl_init(n, lsolver)
+        #    kl_store = kstore(n,lsolver)
+        #    knl_store = knlstore(n)
+    end
     kl_store = Krylov_Data.kl_store
     knl_store = Krylov_Data.knl_store
-    end
     x = knl_store.xval
     x .= x0
     keepsolhist ? (solhist = solhistinit(n, maxit, x)) : (solhist = [])
-    ((lmaxit == -1) && (lsolver=="bicgstab") ) && (lmaxit = 5)
+    ((lmaxit == -1) && (lsolver == "bicgstab")) && (lmaxit = 5)
     ItRules = (
         dx = dx,
         f = F!,

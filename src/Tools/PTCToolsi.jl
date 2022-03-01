@@ -20,13 +20,9 @@ function PTCKrylovinit(
     #
     n = length(x0)
     x = copy(x0)
-#    tmp1 = zeros(n)
-#    tmp2 = zeros(n)
-#    tmp3 = zeros(n)
-#    tmp4 = zeros(n)
-#    kl_store = (tmp1, tmp2, tmp3, tmp4)
-    kl_store = kstore(n, lsolver)
-    knl_store = knlstore(n)
+    Krylov_Data = nkl_init(n, lsolver)
+    kl_store = Krylov_Data.kl_store
+    knl_store = Krylov_Data.knl_store
     ItRules = (
         dx = dx,
         f = F!,
@@ -108,8 +104,6 @@ function delta2pdata(PvecKnowsdelta, delta, pdata)
         valok = valok || :deltaval == ip
     end
     valok ? (pdata.deltaval[1] = delta) :
-    error(
-        "PvecKnowsdelta is set to true, but there the array 
-         deltaval is not a field of pdata. Check the docstrings.",
-    )
+    error("PvecKnowsdelta is set to true, but there the array 
+           deltaval is not a field of pdata. Check the docstrings.")
 end

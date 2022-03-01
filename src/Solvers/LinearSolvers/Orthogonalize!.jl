@@ -8,24 +8,24 @@ than cgs2 are mostly for CI for the linear solver.
 
 DO NOT use anything other than "cgs2" with Anderson acceleration.
 """
-function Orthogonalize!(V, hv, vv, orth = "cgs2"; verbose=false)
+function Orthogonalize!(V, hv, vv, orth = "cgs2"; verbose = false)
     orthopts = ["mgs1", "mgs2", "cgs1", "cgs2"]
     orth in orthopts || error("Impossible orth spec in Orthogonalize!")
     if orth == "mgs1"
-        mgs!(V, hv, vv; verbose=verbose)
+        mgs!(V, hv, vv; verbose = verbose)
     elseif orth == "mgs2"
-        mgs!(V, hv, vv, "twice"; verbose=verbose)
+        mgs!(V, hv, vv, "twice"; verbose = verbose)
     elseif orth == "cgs1"
-        cgs!(V, hv, vv, "once"; verbose=verbose)
+        cgs!(V, hv, vv, "once"; verbose = verbose)
     else
-        cgs!(V, hv, vv, "twice"; verbose=verbose)
+        cgs!(V, hv, vv, "twice"; verbose = verbose)
     end
 end
 
 """
 mgs!(V, hv, vv, orth; verbose=false)
 """
-function mgs!(V, hv, vv, orth = "once"; verbose=false)
+function mgs!(V, hv, vv, orth = "once"; verbose = false)
     k = length(hv) - 1
     normin = norm(vv)
     #p=copy(vv)
@@ -61,7 +61,7 @@ cgs!(V, hv, vv, orth="twice"; verbose=false)
 
 Classical Gram-Schmidt.
 """
-function cgs!(V, hv, vv, orth="twice"; verbose=false)
+function cgs!(V, hv, vv, orth = "twice"; verbose = false)
     #
     #   no BLAS. Seems faster than BLAS since 1.6 and allocates
     #   far less memory.
@@ -75,19 +75,19 @@ function cgs!(V, hv, vv, orth="twice"; verbose=false)
     qk = vv
     Qkm = V
     # Orthogonalize
-# New low allocation stuff
+    # New low allocation stuff
     mul!(rk, Qkm', qk, 1.0, 1.0)
-###    mul!(pk, Qkm', qk)
-###    rk .+= pk
-##    rk .+= Qkm' * qk
-#    qk .-= Qkm * rk
+    ###    mul!(pk, Qkm', qk)
+    ###    rk .+= pk
+    ##    rk .+= Qkm' * qk
+    #    qk .-= Qkm * rk
     mul!(qk, Qkm, rk, -1.0, 1.0)
     if orth == "twice"
         # Orthogonalize again
-# New low allocation stuff
-    mul!(pk, Qkm', qk)
-##        pk .= Qkm' * qk
-#        qk .-= Qkm * pk
+        # New low allocation stuff
+        mul!(pk, Qkm', qk)
+        ##        pk .= Qkm' * qk
+        #        qk .-= Qkm * pk
         mul!(qk, Qkm, pk, -1.0, 1.0)
         rk .+= pk
     end
@@ -97,4 +97,3 @@ function cgs!(V, hv, vv, orth="twice"; verbose=false)
     (nqk > 0.0) && (qk ./= nqk)
     hv[k] = nqk
 end
-

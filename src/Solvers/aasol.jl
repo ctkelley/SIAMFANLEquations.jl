@@ -219,72 +219,69 @@ function aasol(
     # Set up the storage
     #
     (sol, gx, df, dg, res, DG, QP, Qd, solhist) =
-           Anderson_Init(x0, Vstore, m, maxit, beta, keepsolhist)
+        Anderson_Init(x0, Vstore, m, maxit, beta, keepsolhist)
     #
     #   Iteration 1
     #
     k = 0
     ~keepsolhist || (@views solhist[:, k+1] .= sol)
     gx = EvalF!(GFix!, gx, sol, pdata)
-    (beta == 1.0) || (gx=betafix!(gx, sol, beta))
-    copy!(res,gx)
-    axpy!(-1.0,sol,res)
-#    res .= gx - sol
+    (beta == 1.0) || (gx = betafix!(gx, sol, beta))
+    copy!(res, gx)
+    axpy!(-1.0, sol, res)
+    #    res .= gx - sol
     resnorm = norm(res)
-    resnorm_up_bd = 1.e4*resnorm
+    resnorm_up_bd = 1.e4 * resnorm
     tol = rtol * resnorm + atol
     ItData = ItStatsA(resnorm)
     toosoon = (resnorm <= tol)
     if ~toosoon
-    #
-    #   If we need more iterations, get organized.
-    #
-#    sol .= gx
-    copy!(sol, gx)
-    alpha = zeros(m + 1)
-    k = k + 1
-    ~keepsolhist || (@views solhist[:, k+1] .= sol)
-    (gx, dg, df, res, resnorm) =
-        aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
-    updateHist!(ItData, resnorm)
+        #
+        #   If we need more iterations, get organized.
+        #
+        #    sol .= gx
+        copy!(sol, gx)
+        alpha = zeros(m + 1)
+        k = k + 1
+        ~keepsolhist || (@views solhist[:, k+1] .= sol)
+        (gx, dg, df, res, resnorm) = aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
+        updateHist!(ItData, resnorm)
     end
-    n=length(x0)
-    RF=zeros(m,m)
-    RP=zeros(m,m)
-    ThetA=zeros(m)
-    TmPReS=zeros(m)
-    while ((k < maxit) && (resnorm > tol) && ~toosoon 
-                      && (resnorm < resnorm_up_bd))
+    n = length(x0)
+    RF = zeros(m, m)
+    RP = zeros(m, m)
+    ThetA = zeros(m)
+    TmPReS = zeros(m)
+    while ((k < maxit) && (resnorm > tol) && ~toosoon && (resnorm < resnorm_up_bd))
         if m == 0
             alphanrm = 1.0
             condit = 1.0
             copy!(sol, gx)
- #           sol .= gx
+            #           sol .= gx
         else
-            BuildDG!(DG,m,k+1,dg)
-            (QP, RP) = aa_qr_update!(QP, RP, df, m, k-1, Qd)
+            BuildDG!(DG, m, k + 1, dg)
+            (QP, RP) = aa_qr_update!(QP, RP, df, m, k - 1, Qd)
             mk = min(m, k)
-            @views QA=QP[:,1:mk]
-            @views RA=RP[1:mk,1:mk]
-            @views theta=ThetA[1:mk]
-            @views tres=TmPReS[1:mk]
-            mul!(tres,QA',res)
-            theta .= RA\tres
+            @views QA = QP[:, 1:mk]
+            @views RA = RP[1:mk, 1:mk]
+            @views theta = ThetA[1:mk]
+            @views tres = TmPReS[1:mk]
+            mul!(tres, QA', res)
+            theta .= RA \ tres
             condit = cond(RA)
             alphanrm = falpha(alpha, theta, min(m, k))
             copy!(sol, gx)
-#            @views sol .-= DG[:, 1:mk] * theta
-            @views mul!(sol, DG[:,1:mk], theta, -1.0, 1.0)
+            #            @views sol .-= DG[:, 1:mk] * theta
+            @views mul!(sol, DG[:, 1:mk], theta, -1.0, 1.0)
         end
         updateStats!(ItData, condit, alphanrm)
         k += 1
         ~keepsolhist || (@views solhist[:, k+1] .= sol)
-        (gx, dg, df, res, resnorm) =
-            aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
+        (gx, dg, df, res, resnorm) = aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
         updateHist!(ItData, resnorm)
     end
     (idid, errcode) = AndersonOK(resnorm, tol, k, m, toosoon, resnorm_up_bd)
-    aaout=CloseIteration(sol, gx, ItData, idid, errcode, keepsolhist, solhist)
+    aaout = CloseIteration(sol, gx, ItData, idid, errcode, keepsolhist, solhist)
     return aaout
 end
 
@@ -293,13 +290,13 @@ BuildDG!(DG,m,k,dg)
 
 Keeps the history of the fixed point map differences
 """
-function BuildDG!(DG,m,k,dg)
+function BuildDG!(DG, m, k, dg)
     if m == 1
         @views copy!(DG[:, 1], dg)
     elseif k > m + 1
         for ic = 1:m-1
-#            @views DG[:, ic] .= DG[:, ic+1]
-            @views copy!(DG[:,ic], DG[:, ic+1])
+            #            @views DG[:, ic] .= DG[:, ic+1]
+            @views copy!(DG[:, ic], DG[:, ic+1])
         end
         @views copy!(DG[:, m], dg)
     else
@@ -315,21 +312,21 @@ Keep the books to get ready to update the coefficient matrix
 for the optimization problem.
 """
 function aa_point!(gx, gfix, sol, res, dg, df, beta, pdata)
-#    dg .= -gx
+    #    dg .= -gx
     copy!(dg, -gx)
     gx = EvalF!(gfix, gx, sol, pdata)
-    (beta == 1.0) || (gx=betafix!(gx, sol, beta))
-#    dg .+= gx
+    (beta == 1.0) || (gx = betafix!(gx, sol, beta))
+    #    dg .+= gx
     axpy!(1.0, gx, dg)
-#    df .= -res
-    copy!(df,-res)
-#    res .= gx - sol
-#    res .= gx
-#    res .-= sol
-    copy!(res,gx)
-    axpy!(-1.0,sol,res)
+    #    df .= -res
+    copy!(df, -res)
+    #    res .= gx - sol
+    #    res .= gx
+    #    res .-= sol
+    copy!(res, gx)
+    axpy!(-1.0, sol, res)
     axpy!(1.0, res, df)
-#    df .+= res
+    #    df .+= res
     resnorm = norm(res)
     return (gx, dg, df, res, resnorm)
 end
@@ -340,8 +337,8 @@ betafix(gx, sol, dg, beta)
 Put the mixing parameter beta in the right place.
 """
 function betafix!(gx, sol, beta)
-gx=axpby!((1.0-beta),sol,beta,gx)
-return gx
+    gx = axpby!((1.0 - beta), sol, beta, gx)
+    return gx
 end
 
 """
@@ -353,7 +350,7 @@ problem.
 Still need to make the allocation for Qd go away.
 """
 function aa_qr_update!(Q, R, vnew, m, k, Qd)
-(n,m)=size(Q)
+    (n, m) = size(Q)
     aaqr_dim_check(Q, R, vnew, m, k)
     if k == 0
         R[1, 1] = norm(vnew)
@@ -371,39 +368,39 @@ end
 function update_aaqr!(Q, R, vnew, m, k)
     (nq, mq) = size(Q)
     (k > m - 1) && error("Dimension error in Anderson QR")
-    @views Qkm=Q[:,1:k]
+    @views Qkm = Q[:, 1:k]
     @views hv = vec(R[1:k+1, k+1])
     Orthogonalize!(Qkm, hv, vnew, "cgs2")
     @views R[1:k+1, k+1] .= hv
     @views Q[:, k+1] .= vnew
-#    return (Q = Q, R = R)
+    #    return (Q = Q, R = R)
 end
 
 function downdate_aaqr!(Q, R, m, Qd)
-(nq,mq)=size(Q)
-(pd,md)=size(Qd)
-(md == m-1) || @error("dimension error in downdate")
+    (nq, mq) = size(Q)
+    (pd, md) = size(Qd)
+    (md == m - 1) || @error("dimension error in downdate")
     @views Rp = R[:, 2:m]
     G = qr!(Rp)
     Rd = Matrix(G.R)
     Qx = Matrix(G.Q)
     @views R[1:m-1, 1:m-1] .= Rd
-    @views R[:,m].=0.0
-if (pd==nq)
-    mul!(Qd,Q,Qx)
-    @views Q[:,1:m-1] .= Qd
-else
-    blocksize=pd
-    (dlow,dhigh)=blockdim(nq,blocksize)
-    blen=length(dlow)
-    for il=1:blen
-    asize=dhigh[il]-dlow[il]+1
-    @views QZ=Qd[1:asize,:]
-    @views Qsec=Q[dlow[il]:dhigh[il],:]
-    @views mul!(QZ,Qsec,Qx)
-    @views Qsec[:,1:m-1] .= QZ
+    @views R[:, m] .= 0.0
+    if (pd == nq)
+        mul!(Qd, Q, Qx)
+        @views Q[:, 1:m-1] .= Qd
+    else
+        blocksize = pd
+        (dlow, dhigh) = blockdim(nq, blocksize)
+        blen = length(dlow)
+        for il = 1:blen
+            asize = dhigh[il] - dlow[il] + 1
+            @views QZ = Qd[1:asize, :]
+            @views Qsec = Q[dlow[il]:dhigh[il], :]
+            @views mul!(QZ, Qsec, Qx)
+            @views Qsec[:, 1:m-1] .= QZ
+        end
     end
-end
     @views Q[:, m] .= 0.0
     return (Q, R)
 end

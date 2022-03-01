@@ -55,11 +55,31 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
     #RHS=FS
     #T == Float64 || (RHS=T.(FS))
     if lsolver == "gmres"
-    kout = kl_gmres( s0, FS, Jvecg, FPS, etag, Pvecg;
-        kl_store = kl_store, pdata = kdata, side = side, lmaxit = lmaxit,)
+        kout = kl_gmres(
+            s0,
+            FS,
+            Jvecg,
+            FPS,
+            etag,
+            Pvecg;
+            kl_store = kl_store,
+            pdata = kdata,
+            side = side,
+            lmaxit = lmaxit,
+        )
     else
-    kout = kl_bicgstab( s0, FS, Jvecg, FPS, etag, Pvecg;
-        kl_store = kl_store, pdata = kdata, side = side, lmaxit = lmaxit,)
+        kout = kl_bicgstab(
+            s0,
+            FS,
+            Jvecg,
+            FPS,
+            etag,
+            Pvecg;
+            kl_store = kl_store,
+            pdata = kdata,
+            side = side,
+            lmaxit = lmaxit,
+        )
     end
     step .= -kout.sol
     reshist = kout.reshist
@@ -121,28 +141,28 @@ end
 
 function dirder(v, kdata)
     pdata = kdata.pdata
-    dx = kdata.dx/norm(v)
-    dxm1=1.0/dx
+    dx = kdata.dx / norm(v)
+    dxm1 = 1.0 / dx
     F = kdata.f
     FS = kdata.FS
     xc = kdata.xc
     delx = kdata.knl_store.delx
     delx .= xc
     delta = kdata.delta
-#    delx = copy(xc)
-#    delx .= xc + dx * v
-#    delx .+= dx*v
+    #    delx = copy(xc)
+    #    delx .= xc + dx * v
+    #    delx .+= dx*v
     axpy!(dx, v, delx)
     FPP = kdata.knl_store.FPP
     FPP .= xc
-#    FPP = copy(xc)
+    #    FPP = copy(xc)
     EvalF!(F, FPP, delx, pdata)
     axpby!(-dxm1, FS, dxm1, FPP)
     ptcmv!(FPP, v, delta)
-#    atv = (FPP - FS) / dx
-#    ptcmv!(atv, v, delta)
-#    return atv
-     return FPP
+    #    atv = (FPP - FS) / dx
+    #    ptcmv!(atv, v, delta)
+    #    return atv
+    return FPP
 end
 
 function ptcmv!(atv, v, delta)
@@ -182,9 +202,9 @@ You do not want to mess with this unless you are doing
 IVP integration or continuation.
 """
 function nkl_init(n, lsolver)
-kl_store = kstore(n, lsolver)
-knl_store = knlstore(n)
-return (kl_store=kl_store, knl_store=knl_store);
+    kl_store = kstore(n, lsolver)
+    knl_store = knlstore(n)
+    return (kl_store = kl_store, knl_store = knl_store)
 end
 
 """
@@ -194,13 +214,13 @@ Preallocates the vectors Newton-Krylov uses internally.
 """
 
 function knlstore(n)
-xval=zeros(n)
-step=zeros(n)
-xt=zeros(n)
-FT=zeros(n)
-delx=zeros(n)
-FPP=zeros(n)
-return (step=step, xt=xt, FT=FT, delx=delx, FPP=FPP,xval=xval)
+    xval = zeros(n)
+    step = zeros(n)
+    xt = zeros(n)
+    FT = zeros(n)
+    delx = zeros(n)
+    FPP = zeros(n)
+    return (step = step, xt = xt, FT = FT, delx = delx, FPP = FPP, xval = xval)
 end
 
 """
@@ -209,26 +229,25 @@ kstore(n, lsolver)
 Preallocates the vectors a Krylov method uses internally. 
 """
 function kstore(n, lsolver)
-tmp1 = zeros(n)
-tmp2 = zeros(n)
-tmp3 = zeros(n)
-tmp4 = zeros(n)
-if lsolver=="gmres"
-return (tmp1, tmp2, tmp3, tmp4)
-else
-tmp5 = zeros(n)
-tmp6 = zeros(n)
-tmp7 = zeros(n)
-return (tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7)
-end
+    tmp1 = zeros(n)
+    tmp2 = zeros(n)
+    tmp3 = zeros(n)
+    tmp4 = zeros(n)
+    if lsolver == "gmres"
+        return (tmp1, tmp2, tmp3, tmp4)
+    else
+        tmp5 = zeros(n)
+        tmp6 = zeros(n)
+        tmp7 = zeros(n)
+        return (tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7)
+    end
 end
 
 function kstep_test(FPS, step, lsolver)
-solver_ok = (lsolver == "gmres") || (lsolver == "bicgstab")
-solver_ok || error(lsolver, " ", "not supported")
-# Do a bit of management
-(nk, ) = size(FPS)
-n = length(step)
-n == nk || error("Krylov storage vectors wrong length")
+    solver_ok = (lsolver == "gmres") || (lsolver == "bicgstab")
+    solver_ok || error(lsolver, " ", "not supported")
+    # Do a bit of management
+    (nk,) = size(FPS)
+    n = length(step)
+    n == nk || error("Krylov storage vectors wrong length")
 end
-
