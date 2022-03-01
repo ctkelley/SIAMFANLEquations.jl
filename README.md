@@ -248,7 +248,8 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.4.3
 
-- v0.5.1: (This release) Chapter 5 case studeies done. Some writing, code reorgs, and tuning left before 0.5.2 and 0.5.3
+- v0.5.1: (This release) One case study done; fix for excessive allocation bug in nsoli.
+- v0.5.2: case studies done. Some writing, code reorgs, and tuning left before 0.5.3
       
 
 ### What's after 0.5.x?
