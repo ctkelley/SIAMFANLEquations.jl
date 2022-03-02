@@ -93,7 +93,7 @@ This is version v0.5.1: Chapter 5: Case studies
 The plan is, for version 5
 - v0.5.0 goes live when the codes when the first case study is in the printbook, mapped to the notebook, and the codes are done
 
-- Version v.0.5.1 Released when the second and final case study is done.
+- Version v.0.5.1 (Latest tagged version) __fix for excessive allocation bug in nsoli and ptcsoli__
 
 - Version v0.5.2 Codes/Book done and repo reorg mostly done. Notebook --> Printbook done and indexing the Notebook part is underway. 
 
