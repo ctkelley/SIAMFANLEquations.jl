@@ -134,10 +134,8 @@ the allocations in nsoli become a problem in continuation or IVP
 integration. Krylov_Data is where I store the solution at the end
 of the iteration and if you reuse it without copying the solution
 to somewhere else, you'll lose it and it will be overwritten wiht
-the new solution. 
-
-The continuation case study does this and you should look at that to
-see what I did.
+the new solution. The continuation case study uses this and you 
+should look at that to see what I did.
 
 stagnationok: default = false\n
 Set this to true if you want to disable the line search and either
