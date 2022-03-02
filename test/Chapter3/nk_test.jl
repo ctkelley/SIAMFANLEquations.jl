@@ -27,49 +27,56 @@ function nksimple()
     # Newton and forward difference directional derivatives for Newton-GMRES
     #
     dout = nsol(simple!, x0, FS, FPJ, jsimple!; sham = 1, keepsolhist = true)
-    kout = nsoli(
+    koutx = nsoli(
         simple!,
         x0,
         FS,
         FPS;
         eta = 1.e-10,
         keepsolhist = true,
-#        Krylov_Data = zeros(2,5),
         fixedeta = false,
     )
-    dsolhist = norm(kout.solhist - dout.solhist, Inf)
+    dsolhist = norm(koutx.solhist - dout.solhist, Inf)
     shpass = (dsolhist < 1.e-7)
     shpass || println("solhist compare fails in easy nksimple", dsolhist)
-    vconverge = krstest(dout, kout)
+    vconverge = krstest(dout, koutx,"nksimple")
     #
     # For the stagnating problem we will do analytic Jacobians for
     # Newton and analytic Jacobian-vector products for Newton-GMRES
     #
+    KData = nkl_init(2,"gmres")
     x0 = [3.0; 5.0]
     dout = nsol(simple!, x0, FS, FPJ, jsimple!; sham = 1)
     kout = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, 
                 eta = 1.e-10)
-    vdiverge = krstest(dout, kout)
+    kout2 = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, 
+                Krylov_Data = KData,eta = 1.e-10)
+    KD_ok = krstest(kout2,kout,"KDtest")
+    KD_ok || println("Krylov_Data test fails")
+    vdiverge = krstest(dout, kout, "hard nksimple problem")
     vdiverge || println("failure hard nksimple problem")
-    return vconverge && vdiverge && shpass
+#
+#   Now 
+#
+    return vconverge && vdiverge && shpass && KD_ok
 end
 
-function krstest(dout, kout)
+function krstest(dout, kout, tname)
     hdiff = norm(kout.history - dout.history, Inf)
     hpass = (hdiff < 5.e-7)
-    hpass || println("history compare fails in nksimple")
+    hpass || println("history compare fails in $tname")
     #
     adiff = kout.stats.iarm - dout.stats.iarm
     apass = (sum(adiff) == 0)
-    apass || println("line search compare fails in nksimple")
+    apass || println("line search compare fails in $tname")
     #
     fdiff = kout.stats.ifun - dout.stats.ifun
     fpass = (sum(fdiff) == 0)
-    fpass || println("function value compare fails in nksimple")
+    fpass || println("function value compare fails in $tname")
     #
     soldiff = kout.solution - dout.solution
     solpass = (norm(soldiff, Inf) < 1.e-9)
-    solpass || println("solution compare fails in nksimple  ", norm(soldiff, Inf))
+    solpass || println("solution compare fails in $tname", norm(soldiff, Inf))
     krpass = (fpass && apass && hpass && solpass)
 end
 
