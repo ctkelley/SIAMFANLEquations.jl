@@ -53,7 +53,7 @@ This package is designed and built to support a book project. So the solvers and
 ## Installation: 
 
 - Use Julia 1.7.1 (or LTS 1.6.5) and up with this thing!!!
-- This package has been tested on Julia 1.6.5 and 1.7.1. __The package no longer works on 1.5 or earlier!__ 
+- This package has been tested on Julia 1.6.5 and 1.7.2. __The package no longer works on 1.5 or earlier!__ 
 - __Versions 1.7.0 and 1.6.4 break the notebooks. This is a known bug and got fixed with 1.7.1 and 1.6.5.__
 
 Type this 
@@ -194,7 +194,7 @@ The algorithms, listed by book chapter will be
        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 4: Anderson acceleration: aasol.jl 
         - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 5: Case studies: __Conductive-Radiative heat transfer done.__ Next and final case study underway. When done I'll push 0.5.1.
+   - Chapter 5: Case studies: __Conductive-Radiative heat transfer done.__ Next and final case study underway. When done I'll push 0.5.2.
    
    
 ## Test Problems
