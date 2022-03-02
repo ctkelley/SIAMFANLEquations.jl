@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.5.1
+# SIAMFANLEquations version 0.5.2
 
 [changelog](#Changes)
 
@@ -88,7 +88,7 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.5.1: Chapter 5: Case studies
+This is version v0.5.2: Chapter 5: Case studies
 
 The plan is, for version 5
 - v0.5.0 goes live when the codes when the first case study is in the printbook, mapped to the notebook, and the codes are done
