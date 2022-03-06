@@ -1,25 +1,23 @@
 function heq_continue(n=100;version=3)
     #
     # Original form: heqfv1!. c is the parameter
-    # PitCon form: heqfv2!. x[n] is the parameter
+    # PAC form: heqfv3!. arclength is the parameter
     #
     FPS = zeros(n, 20);
     FS = zeros(n);
-    initname="solutionv"*string(version)*"_init"
-    initarray=[solutionv1_init, solutionv2_init, 
-               solutionv3_init]
+    v1 = (version == 1) || (version == "orig")
+    v3 = (version ==3 ) || (version == "pac")
+    (v1 || v3) || error("incorrect version in heq_continue")
+    v1 && (initfun = solutionv1_init)
+    v3 && (initfun= solutionv3_init)
     (FFUN, fdata, pval, nval, xin, x, x0, xold, xdot, 
-     bif_update, setlam,lambda, dlam, lambdamax) = initarray[version](n,FPS,FS);
+     bif_update, setlam,lambda, dlam, lambdamax) = initfun(n,FPS,FS);
     qdata = (fdata = fdata, FS = FS, FPS = FPS, dlam = dlam, xix=xin, 
       xold=xold, xdot=xdot, lambdamax = lambdamax, bif_update=bif_update, 
       setlam=setlam);
     (pval, nval, x, lambdaz) = knl_continue(FFUN, qdata, pval, 
                 nval, x, x0, lambda)
     return (pval=pval, nval=nval, x=x, lambdaz=lambdaz)
-end
-
-function solutionv2_init(n,FPS=[],FS=[])
-return nothing
 end
 
 function solutionv1_init(n,FPS=[],FS=[])
