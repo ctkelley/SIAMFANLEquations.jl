@@ -71,4 +71,5 @@ end
     @test transport_test()
     @test heat_test()
     @test heat_test2()
+    @test continue_test()
 end

@@ -40,7 +40,6 @@ function knl_continue(FFUN, qdata, pval, nval, x, x0, lambda)
 # deal that is not for general use.
 #
         setlam(qdata, lambda, xdot, xold)
-        debug && println("lambda = $lambda")
 #
 # When I send fdata to FFUN I tell it about xdot and xold so it can
 # compute the normalization.

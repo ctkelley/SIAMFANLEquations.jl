@@ -17,6 +17,11 @@ function heq_continue(n=100;version=3)
                 nval, x, x0, lambda)
     return (pval=pval, nval=nval, x=x, lambdaz=lambdaz)
 end
+
+function solutionv2_init(n,FPS=[],FS=[])
+return nothing
+end
+
 function solutionv1_init(n,FPS=[],FS=[])
     x0 = ones(n)
     x = copy(x0)

@@ -1,6 +1,6 @@
 function continue_test()
 v1ok = test_v1()
-v2ok = test_v2()
+v2ok = test_PAC()
 continueok= v1ok && v2ok
 end
 
