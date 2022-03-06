@@ -264,7 +264,8 @@ function flux_solve(source, hn_data, tol)
     b = getrhs(source, sn_data)
     kl_store = hn_data.kl_store
     kout =
-        kl_gmres(sn_data.phi0, b, AxB, sn_data.V, tol; pdata = sn_data, kl_store = kl_store)
+        kl_gmres(sn_data.phi0, b, AxB, sn_data.V, tol; 
+                 pdata = sn_data, kl_store = kl_store)
     return kout.sol
 end
 

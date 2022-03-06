@@ -117,14 +117,13 @@ export
     FCR_heat!,
     getrhs,
     AxB,
-    transport_sweep!
+    transport_sweep!,
+    heq_continue,
+    knl_continue
+
   
 
-#include("TestProblems/Scalars/fcos.jl")
-#include("TestProblems/Scalars/fpatan.jl")
 include("TestProblems/Scalars/spitchfork.jl")
-#include("TestProblems/Scalars/linatan.jl")
-#include("TestProblems/Scalars/ftanx.jl")
 include("TestProblems/Systems/simple!.jl")
 include("TestProblems/Systems/Fbvp!.jl")
 include("TestProblems/Systems/FBeam!.jl")
@@ -132,6 +131,8 @@ include("TestProblems/Systems/Hequation.jl")
 include("TestProblems/Systems/EllipticPDE.jl")
 include("TestProblems/Systems/PDE_Tools.jl")
 include("TestProblems/CaseStudies/CR_Heat.jl")
+include("TestProblems/CaseStudies/knl_continue.jl")
+include("TestProblems/CaseStudies/heq_continue.jl")
 end
 
 module Examples

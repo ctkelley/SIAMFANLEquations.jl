@@ -30,6 +30,8 @@ include("Chapter4/linear_aa.jl")
 include("Chapter5/transport_test.jl")
 include("Chapter5/heat_test.jl")
 include("Chapter5/heat_test2.jl")
+include("Chapter5/continue_test.jl")
+
 
 @testset "Scalar Equations: Chapter 1" begin
     @test nsolsc_solution_test()
