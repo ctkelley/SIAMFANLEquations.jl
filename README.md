@@ -5,7 +5,7 @@
 
 # SIAMFANLEquations version 0.5.2
 
-![logo](https://user-images.githubusercontent.com/10243067/158274165-3ed9aa65-357e-4d23-80c0-cda13c158aba.png)
+<img width = 200, src = "https://user-images.githubusercontent.com/10243067/158274165-3ed9aa65-357e-4d23-80c0-cda13c158aba.png">
 
 [changelog](#Changes)
 
