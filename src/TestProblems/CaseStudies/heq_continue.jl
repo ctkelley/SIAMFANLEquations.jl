@@ -5,11 +5,11 @@ function heq_continue(n=100;version=3)
     #
     FPS = zeros(n, 20);
     FS = zeros(n);
-    v1 = (version == 1) || (version == "orig")
-    v3 = (version ==3 ) || (version == "pac")
-    (v1 || v3) || error("incorrect version in heq_continue")
-    v1 && (initfun = solutionv1_init)
-    v3 && (initfun= solutionv3_init)
+    vorig = (version == "orig")
+    vpac = (version == "pac")
+    (vorig || vpac) || error("incorrect version in heq_continue")
+    vorig && (initfun = solutionv1_init)
+    vpac && (initfun= solutionv3_init)
     (FFUN, fdata, pval, nval, xin, x, x0, xold, xdot, 
      bif_update, setlam,lambda, dlam, lambdamax) = initfun(n,FPS,FS);
     qdata = (fdata = fdata, FS = FS, FPS = FPS, dlam = dlam, xix=xin, 

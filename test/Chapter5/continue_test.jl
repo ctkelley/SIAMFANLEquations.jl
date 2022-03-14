@@ -5,7 +5,7 @@ continueok= v1ok && v2ok
 end
 
 function test_v1()
-n=100; version= 1
+n=100; version= "orig"
 (pval, nval, x, lambda) = heq_continue(n; version=version);
 dpath = path_test.(pval,nval);
 del1 = dpath[1:end-1];
@@ -14,7 +14,7 @@ v1_pass = (norm(del1, Inf) < 4.e-9) && (del2 < 1.5e-4)
 end
 
 function test_PAC()
-n=100; version = 3;
+n=100; version = "pac";
 (pval, nval, x, lambda) = heq_continue(n; version=version);
 dpath = path_test.(pval,nval);
 nsingular=argmax(dpath);
