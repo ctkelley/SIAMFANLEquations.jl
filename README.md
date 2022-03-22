@@ -95,9 +95,7 @@ This is version v0.5.2: Chapter 5: Case studies
 The plan is, for version 5
 - v0.5.0 goes live when the codes when the first case study is in the printbook, mapped to the notebook, and the codes are done
 
-- Version v.0.5.1 (Latest tagged version) __fix for excessive allocation bug in nsoli and ptcsoli__
-
-- Version v0.5.2 Codes/Book done and repo reorg mostly done. Notebook --> Printbook done and indexing the Notebook part is underway. 
+- Version v.0.5.2 (Latest tagged version) __Software done__. Books 95% done and final tuning in progress for 5.3. Case studies done. Modest repo reorg in progress (__/src/Tools__)
 
 - v0.5.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I will post the package announcements for v0.5.3 on Discourse when 0.5.3 is done. __I will make no more announcemnts on Discourse after this until 1.0 comes out.__
 
@@ -186,7 +184,7 @@ The solvers are designed to be stand-alone codes. The reason for this is the edu
 
 The linear solvers are tuned to communicate well with nonlinear solvers. My old Matlab codes are a good illustration of this idea. My [new Mablab codes](https://ctk.math.ncsu.edu/knl.html) were designed in response to the need to do this better than I had been. In particular, the linear solver and the matrix-vector/preconditioner-vector product function need information on the nonlinear iteration and any precomputed data. While I could use global variables (and did in Kel95) and put these things in a module to simplify the interface, I won't do that anymore. Global varaibles make debugging harder and break parallelism. I like to avoid them. 
 
-The algorithms, listed by book chapter will be
+The algorithms, listed by book chapter __are__
 
    - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsolsc.jl
         - Codes: __Done!__, Notebook: __Done!__
@@ -196,7 +194,7 @@ The algorithms, listed by book chapter will be
        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 4: Anderson acceleration: aasol.jl 
         - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 5: Case studies: __Conductive-Radiative heat transfer done.__ Next and final case study underway. When done I'll push 0.5.2.
+   - Chapter 5: Case studies: __Conductive-Radiative heat transfer and continuation for H-equation done.__ 
    
    
 ## Test Problems
