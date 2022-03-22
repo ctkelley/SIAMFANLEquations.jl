@@ -248,14 +248,14 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.4.3
 
-- v0.5.1: (This release) One case study done; fix for excessive allocation bug in nsoli.
-- v0.5.2: case studies done. Some writing, code reorgs, and tuning left before 0.5.3
+- v0.5.2: (This release) Case studies done. Some writing, code reorgs, and tuning left before 0.5.3
+- v0.5.3: Last realease before announcment to NA-Digest. 
       
 
-### What's after 0.5.x?
+### What's after 0.5.3?
 
-- 0.6.0 is the version I'll announce on NA-Digest, expect 0.5.x for x=0, ..., before this happens.
-- 0.7.0 is the version that goes to the publisher.
+- 0.6.0 is the version I'll announce on NA-Digest. This will happen in late April.
+- 0.7.0 is the version that goes to the publisher. Target = June.
 - 0.8.0 is the version where I fix the problems the copy editors find. __This is the version that goes to the printer.__
 - 0.9.0 is the final tweaking of the codes, test problems, and examples. Nothing visible can change at this point. I can cleanup internal documentation for the codes, fix bugs, and tune the README.md files for repositories. 
 - 1.0.0 is the end. 
