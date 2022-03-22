@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.5.2
+# SIAMFANLEquations version 0.5.3
 
 <img width = 200, src = "https://user-images.githubusercontent.com/10243067/158274165-3ed9aa65-357e-4d23-80c0-cda13c158aba.png">
 
@@ -25,8 +25,8 @@ Hence the notebook and this package all have SIAMFANL in their names.
 The new book with have a different algorithm mix and the solvers and examples will be in Juila. The project will have three parts.
 
    1. A print book: __Under contract with SIAM for manuscript delivery in mid-2022 and publication in late 2022__. 
-   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL/releases/tag/v0.5.2) (open source, MIT License, Creative Commons License)
-      Versons __0.5.2__ of the notebook and package run correctly and the tagged version of the package should run v0.5.2 of the notebook.
+   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
+      Versons __0.5.3__ of the notebook and package run correctly and the tagged version of the package should run v0.5.3 of the notebook.
    3. This package (MIT License)<br>
 
 Content changes from (Kel03):
@@ -194,7 +194,8 @@ The algorithms, listed by book chapter __are__
        - Codes: __Done!__, Notebook: __Done!__
    - Chapter 4: Anderson acceleration: aasol.jl 
         - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 5: Case studies: __Conductive-Radiative heat transfer and continuation for H-equation done.__ 
+   - Chapter 5: Case studies: 
+       - Codes: __Conductive-Radiative heat transfer and continuation for H-equation done.__ 
    
    
 ## Test Problems
@@ -248,7 +249,6 @@ doi="10.5281/zenodo.4284687"
 
 ### Updates since 0.4.3
 
-- v0.5.2: (This release) Case studies done. Some writing, code reorgs, and tuning left before 0.5.3
 - v0.5.3: Last realease before announcment to NA-Digest. 
       
 
