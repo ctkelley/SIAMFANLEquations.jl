@@ -90,7 +90,8 @@ for the unit tests, the examples in the book, and the notebook.
 
 If __log(version_number) < 0__ there's trouble!
 
-This is version v0.5.2: Chapter 5: Case studies
+This is version v0.5.3: I'm almost done and will spend the time between 0.5.3 and 0.6.0 fine tuning the notebook --> printbook map and fixing any bugs
+I find.
 
 The plan is, for version 5
 - v0.5.0 goes live when the codes when the first case study is in the printbook, mapped to the notebook, and the codes are done
@@ -107,7 +108,7 @@ The plan is, for version 5
 
 - 0.8.0 is my respose to the copy editor's complaints. The book goes to the printer at this stage and nothing I say in the book about the orginization of the repos ... will change after this.
 
-- 0.9.0 is a clean up release where I give the comment lines in the codes a last tweak.
+- 0.9.0 is a cleanup release where I give the comment lines in the codes a last tweak.
 
 v1.0.0 goes out __when the print book is published__. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
@@ -184,18 +185,17 @@ The solvers are designed to be stand-alone codes. The reason for this is the edu
 
 The linear solvers are tuned to communicate well with nonlinear solvers. My old Matlab codes are a good illustration of this idea. My [new Mablab codes](https://ctk.math.ncsu.edu/knl.html) were designed in response to the need to do this better than I had been. In particular, the linear solver and the matrix-vector/preconditioner-vector product function need information on the nonlinear iteration and any precomputed data. While I could use global variables (and did in Kel95) and put these things in a module to simplify the interface, I won't do that anymore. Global varaibles make debugging harder and break parallelism. I like to avoid them. 
 
-The algorithms, listed by book chapter __are__
+The algorithms, listed by book chapter are
 
-   - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: nsolsc.jl and ptcsolsc.jl
-        - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: nsol.jl and ptcsol.jl
-        - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: nsoli.jl and ptcsoli.jl
-       - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 4: Anderson acceleration: aasol.jl 
-        - Codes: __Done!__, Notebook: __Done!__
-   - Chapter 5: Case studies: 
-       - Codes: __Conductive-Radiative heat transfer and continuation for H-equation done.__ 
+   - Chapter 1: Newton-Armijo and Pseudo-transient continuation for scalar equations: __nsolsc.jl__ and __ptcsolsc.jl__
+       
+   - Chapter 2: Newton-Armijo and Pseudo-transient continuation for systems with direct linear solvers: __nsol.jl__ and __ptcsol.jl__
+       
+   - Chapter 3: Newton-Armijo and Pseudo-transient continuation for systems with iterative linear solvers: __nsoli.jl__ and __ptcsoli.jl__
+       
+   - Chapter 4: Anderson acceleration: __aasol.jl__ 
+        
+   - Chapter 5: Case studies:  __Conductive-Radiative heat transfer and continuation for H-equation.__ 
    
    
 ## Test Problems
@@ -247,7 +247,7 @@ doi="10.5281/zenodo.4284687"
 
 ## Changes
 
-### Updates since 0.4.3
+### Updates since 0.4.3: Case studies
 
 - v0.5.3: Last realease before announcment to NA-Digest. 
       
