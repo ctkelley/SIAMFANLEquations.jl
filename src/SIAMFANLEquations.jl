@@ -63,14 +63,14 @@ using QuadGK
 
 export
     #Functions
-#    fcos,
-#    fpatan,
+    #    fcos,
+    #    fpatan,
     spitchfork,
-#    linatan,
+    #    linatan,
     sptestp,
     sptest,
-#    ftanx,
-#    ftanxp,
+    #    ftanx,
+    #    ftanxp,
     heqinit,
     heqf!,
     heqJ!,
@@ -121,7 +121,7 @@ export
     heq_continue,
     knl_continue
 
-  
+
 
 include("TestProblems/Scalars/spitchfork.jl")
 include("TestProblems/Systems/simple!.jl")
