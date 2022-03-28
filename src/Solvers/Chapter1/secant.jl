@@ -56,7 +56,7 @@ For the secant method, ijac = 0.
 idid=true if the iteration succeeded and false if not.
 
 errcode = 0 if if the iteration succeeded
-        = -1 if the initial iterate satisifies the termination criteria
+        = -1 if the initial iterate satisfies the termination criteria
         = 10 if no convergence after maxit iterations
         = 1  if the line search failed
 

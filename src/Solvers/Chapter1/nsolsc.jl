@@ -149,7 +149,8 @@ julia> [nsolout.solhist'.-2 nsolout.history]
 # You can also use anonymous functions
 
 ```jldoctest
-julia> nsolout=nsolsc(atan,10.0,x -> 1.0/(1.0+x^2); atol=1.e-9,rtol=1.e-9);
+julia> nsolout=nsolsc(atan,10.0,x -> 1.0/(1.0+x^2); 
+atol=1.e-9,rtol=1.e-9);
 
 julia> nsolout.history
 8-element Vector{Float64}:
