@@ -7,7 +7,7 @@
 
 <img width = 200, src = "https://user-images.githubusercontent.com/10243067/158274165-3ed9aa65-357e-4d23-80c0-cda13c158aba.png">
 
-[changelog](#Changes)
+[Future releases until 1.0](#Future)
 
 
 This is the package with the solvers and test problems for 
@@ -245,7 +245,7 @@ doi="10.5281/zenodo.4284687"
 }
 ```
 
-## Changes
+## Future
 
 ### Updates since 0.4.3: Case studies
 
