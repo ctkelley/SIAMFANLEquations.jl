@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations version 0.5.3
+# SIAMFANLEquations
 
 <img width = 200, src = "https://user-images.githubusercontent.com/10243067/158274165-3ed9aa65-357e-4d23-80c0-cda13c158aba.png">
 
@@ -26,7 +26,8 @@ The new book with have a different algorithm mix and the solvers and examples wi
 
    1. A print book: __Under contract with SIAM for manuscript delivery in mid-2022 and publication in late 2022__. 
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
-      Versons __0.5.3__ of the notebook and package run correctly and the tagged version of the package should run v0.5.3 of the notebook.
+      The latest releases of the notebook and package run correctly. The notebook and package from the master branches also run correctly
+      together. Bug fixes prior to 1.0 may, with a low probablilty, break things in older releases. 
    3. This package (MIT License)<br>
 
 Content changes from (Kel03):
@@ -54,7 +55,7 @@ This package is designed and built to support a book project. So the solvers and
 
 ## Installation: 
 
-- Use Julia 1.7.1 (or LTS 1.6.5) and up with this thing!!!
+- Use Julia 1.7.2 (or LTS 1.6.5) and up with this thing!!!
 - This package has been tested on Julia 1.6.5 and 1.7.2. __The package no longer works on 1.5 or earlier!__ 
 - __Versions 1.7.0 and 1.6.4 break the notebooks. This is a known bug and got fixed with 1.7.1 and 1.6.5.__
 
@@ -88,29 +89,8 @@ for the unit tests, the examples in the book, and the notebook.
 
 ## Meaning of version numbers
 
-If __log(version_number) < 0__ there's trouble!
+If __log(version_number of latest release) < 0__ there's trouble!
 
-This is version v0.5.3: I'm almost done and will spend the time between 0.5.3 and 0.6.0 fine tuning the notebook --> printbook map and fixing any bugs
-I find.
-
-The plan is, for version 5
-- v0.5.0 goes live when the codes when the first case study is in the printbook, mapped to the notebook, and the codes are done
-
-- Version v.0.5.2 (Latest tagged version) __Software done__. Books 95% done and final tuning in progress for 5.3. Case studies done. Modest repo reorg in progress (__/src/Tools__)
-
-- v0.5.3 is reserved for finalizing the print book <--> notebook mappings, cleaing up the docs, and fixing inconsitencies. I will post the package announcements for v0.5.3 on Discourse when 0.5.3 is done. __I will make no more announcemnts on Discourse after this until 1.0 comes out.__
-
-- 0.5.z for z > 3 are preparatory releases for the announcement to NA-Digest. There may not be any of these. 
-
-- 0.6.0 is the NA-Digest release. At that point the text should be in final(?) draft form, the solvers and examples should be done, and the writing should be in the final proofreading stage. 0.6.y for y>0 will be bug fixes, typo management, response to community complaints ...
-
-- 0.7.0 is the version that goes to the copy editor. At this point interfaces, docstrings, and any codes copied into the book are frozen unless I find bugs.
-
-- 0.8.0 is my respose to the copy editor's complaints. The book goes to the printer at this stage and nothing I say in the book about the orginization of the repos ... will change after this.
-
-- 0.9.0 is a cleanup release where I give the comment lines in the codes a last tweak.
-
-v1.0.0 goes out __when the print book is published__. This means that after v1.0.0 the interface to the codes will always be consistent with the book. My readers get my __solemn word__ on that.
 
 ## Pull Requests
 
@@ -247,7 +227,7 @@ doi="10.5281/zenodo.4284687"
 
 ## Future
 
-- v0.5.3: __Final Draft!!!__ Last realease before announcment to NA-Digest. New since 0.4.3 = Chapter 5: Case Studies
+- v0.5.3: __Final Draft!!!__ Last realease before announcment to NA-Digest. New since 0.4.3 = Chapter 5: Case Studies and Appendix: repo org.
 - 0.6.0 is the version I'll announce on NA-Digest. This will happen in late April.
 - 0.7.0 is the version that goes to the publisher. Target = June.
 - 0.8.0 is the version where I fix the problems the copy editors find. __This is the version that goes to the printer.__
