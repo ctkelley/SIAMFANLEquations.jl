@@ -16,13 +16,13 @@ This is the package with the solvers and test problems for
 
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
 
-This will be a sequel to my book 
+This is a sequel to my book 
 
 (Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003.
 
 Hence the notebook and this package all have SIAMFANL in their names.
 
-The new book with have a different algorithm mix and the solvers and examples will be in Juila. The project will have three parts.
+The new book has a different algorithm mix and the solvers and examples are in Juila. The project has three parts.
 
    1. A print book: __Under contract with SIAM for manuscript delivery in mid-2022 and publication in late 2022__. 
    2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
