@@ -10,7 +10,7 @@ __Solvers and Examples in Julia__
 
 This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
 
-Version 0.5.3: New stuff = Repo reorganization, changes in README, perparing
+Version 0.5.3: New stuff = Repo reorganization, changes in README, preparing
 for NA-Digest
 
 ## Scalar Equations: Chapter 1
