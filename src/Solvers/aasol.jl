@@ -2,7 +2,7 @@
 aasol(GFix!, x0, m, Vstore; maxit=20,
       rtol=1.e-10, atol=1.e-10, beta=1.0, pdata=nothing, keepsolhist = false)
 
-C. T. Kelley, 2021
+C. T. Kelley, 2022
 
 Julia code for Anderson acceleration. Nothing fancy.
 
@@ -37,7 +37,7 @@ Inputs:\n
   than zeros(N,8) with zeros(N,11) a better choice. Vstore needs to
   allocate for the history of differences of the residuals and fixed
   point maps. The extra m-1 columns are for storing intermediate results
-  in the downdating phase of the QR factorization for the coefficeint 
+  in the downdating phase of the QR factorization for the coefficient 
   matrix of the optimization problem. See the notebook or the print book 
   for the details of this mess. 
 
@@ -84,7 +84,8 @@ where
    -- stats = named tuple (condhist, alphanorm) of the history of the
               condition numbers of the optimization problem
               and l1 norm of the coefficients. 
-This is only for diagosing
+
+This is only for diagnosing
 problems and research. Condihist[k] and alphanorm[k] are
 the condition number and coefficient norm for the optimization
 problem that computes iteration k+1 from iteration k. 

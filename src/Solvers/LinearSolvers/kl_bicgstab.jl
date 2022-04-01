@@ -2,6 +2,8 @@
 kl\\_bicgstab( x0, b, atv, V, eta, ptv = nothing;
       kl_store=nothing, side = "right", lmaxit = 10, pdata = nothing) 
 
+C. T. Kelley, 2022
+
 BiCGSTAB linear solver. Deals with preconditioning. 
 Uses bicgstab\\_base with is oblivious to that.
 

@@ -2,6 +2,8 @@
 kl\\_gmres(x0, b, atv, V, eta, ptv=nothing; kl_store=nothing; 
              orth = "cgs2", side="right", lmaxit=-1, pdata=nothing)
 
+C. T. Kelley, 2022
+
 Gmres linear solver. Handles preconditioning and restarts. 
 Uses gmres_base which is completely oblivious to these things.
 

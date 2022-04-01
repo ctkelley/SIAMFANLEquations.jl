@@ -5,7 +5,7 @@ function ptcsoli( F!, x0, FS, FPS, Jvec = dirder; rtol = 1.e-6, atol = 1.e-12,
     dx = 1.e-7, pdata = nothing, printerr = true, keepsolhist = false,
 )
 
-C. T. Kelley, 2021
+C. T. Kelley, 2022
 
 Julia versions of the nonlinear solvers from my SIAM books. 
 New for this book ==> ptcsoli

@@ -4,7 +4,7 @@ nsolsc(f,x0, fp=difffp; rtol=1.e-6, atol=1.e-12, maxit=10,
         armfix=false, pdata=nothing,
         printerr=true, keepsolhist=true, stagnationok=false)
 
-C. T. Kelley, 2021
+C. T. Kelley, 2022
 
 Newton's method for scalar equations. Has most of the features a
 code for systems of equations needs. This is a wrapper for a call

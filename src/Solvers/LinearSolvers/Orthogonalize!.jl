@@ -1,6 +1,8 @@
 """
 Orthogonalize!(V, hv, vv, orth; verbose=false)
 
+C. T. Kelley, 2022
+
 Orthogonalize the Krylov vectors using your (my) choice of
 methods. Anything other than classical Gram-Schmidt twice (cgs2) is
 likely to become an undocumented and UNSUPPORTED option. Methods other 

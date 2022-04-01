@@ -30,6 +30,7 @@ function heqJ!(FP::Array{T,2}, F, x, pdata) where {T<:Real}
         FP[:, jfp] .= Gfix[:, 1] .* pseed[jfp:jfp+n-1]
         FP[jfp, jfp] = 1.0 + FP[jfp, jfp]
     end
+    return FP
 end
 
 """
