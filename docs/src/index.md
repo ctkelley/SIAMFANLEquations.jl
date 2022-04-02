@@ -1,4 +1,4 @@
-# SIAMFANLEquations.jl v0.5.3
+# SIAMFANLEquations.jl 
 
 [C. T. Kelley](https://ctk.math.ncsu.edu)
 
