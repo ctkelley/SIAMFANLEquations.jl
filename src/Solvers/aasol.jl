@@ -17,10 +17,12 @@ V must have at least 4 columns.
 
 Inputs:\n
 
-- GFix!: fixed-point map, the ! indicates that GFix! overwrites xout, your
-    preallocated storage for the function value xout=G(xin).\n
-    So xout=GFix!(xout,xin) or xout=GFix!(xout,xin,pdata) returns
-    xout=G(xin)
+- GFix!: fixed-point map, the ! indicates that GFix! overwrites G, your
+    preallocated storage for the function value G=G(xin).\n
+    So G=GFix!(G,xin) or G=GFix!(G,xin,pdata) returns
+    G=G(xin).\n
+    Your GFix function MUST end with --> return G <--. See the example
+    in the docstrings.
 
 - x0: Initial iterate. It is a vector of size N\n
   You should store it as (N,) and design G! to use vectors of size (N,).

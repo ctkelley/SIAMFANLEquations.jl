@@ -50,6 +50,7 @@ function heqf!(F, x, pdata)
     # Using any variation of F.=x-F really hurts
     #
     axpby!(1.0, x, -1.0, F)
+    return F
 end
 
 
