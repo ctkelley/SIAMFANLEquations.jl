@@ -227,7 +227,6 @@ doi="10.5281/zenodo.4284687"
 
 ## Future
 
-- v0.5.3: __Final Draft!!!__ Last realease before announcment to NA-Digest. New since 0.4.3 = Chapter 5: Case Studies and Appendix: repo org.
 - 0.6.0 is the version I'll announce on NA-Digest. This will happen in late April.
 - 0.7.0 is the version that goes to the publisher. Target = June.
 - 0.8.0 is the version where I fix the problems the copy editors find. __This is the version that goes to the printer.__
