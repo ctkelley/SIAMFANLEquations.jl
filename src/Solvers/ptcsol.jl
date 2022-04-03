@@ -17,7 +17,9 @@ You must allocate storage for the function and Jacobian in advance
 Inputs:\n
 - F!: function evaluation, the ! indicates that F! overwrites FS, your
     preallocated storage for the function.\n
-    So, FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
+    So, FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)\n
+    Your function MUST have --> return FV <-- at the end.
+    See the examples in the TestProblems/Systems/FBeam!.jl
     
 
 - x0: initial iterate\n
@@ -37,7 +39,9 @@ Inputs:\n
     So, FP=J!(FP,FV,x) or FP=J!(FP,FV,x,pdata) returns FP=F'(x);
     (FP,FV, x) must be the argument list, even if FP does not need FV.
     One reason for this is that the finite-difference Jacobian
-    does and that is the default in the solver.
+    does and that is the default in the solver.\n
+    Your Jacobian function MUST have --> return FP <-- at the end. 
+    See the examples in the TestProblems/Systems/FBeam!.jl
 
     You may have a better way to add (1/dt) I to your Jacobian. If you
     want to do this yourself then your Jacobian function should be

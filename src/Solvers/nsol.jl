@@ -17,8 +17,9 @@ You must allocate storage for the function and Jacobian in advance
 Inputs:\n
 - F!: function evaluation, the ! indicates that F! overwrites FS, your
     preallocated storage for the function.\n
-    So FS=F!(FS,x) or FS=F!(FS,x,pdata) returns FS=F(x)
-
+    So FS=F!(FS,x) or FS=F!(FS,x,pdata) returns FS=F(x)\n
+    Your function MUST have --> return FS <-- at the end.
+    See the examples in the docstrings and in TestProbems/Systems/simple.jl
 
 - x0: initial iterate\n
 
@@ -35,7 +36,10 @@ Inputs:\n
     So, FP=J!(FP,FS,x) or FP=J!(FP,FS,x,pdata) returns FP=F'(x). \n
     (FP,FS, x) must be the argument list, even if FP does not need FS.
     One reason for this is that the finite-difference Jacobian
-    does and that is the default in the solver.
+    does and that is the default in the solver.\n
+    Your Jacobian function MUST have --> return FP <-- at the end.
+    See the examples in the docstrings and in TestProbems/Systems/simple.jl
+
 
 - Precision: Lemme tell ya 'bout precision. I designed this code for 
     full precision functions and linear algebra in any precision you want. 
@@ -199,6 +203,9 @@ iterations + 1. So, for scalar equations, it's a row vector.
  julia> function f!(fv,x)
        fv[1]=x[1] + sin(x[2])
        fv[2]=cos(x[1]+x[2])
+#
+# The return fv part is important even though f! overwrites fv.
+#
        return fv
        end
 f (generic function with 1 method)
