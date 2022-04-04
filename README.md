@@ -46,7 +46,6 @@ Content changes from (Kel03):
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
 - [How to cite this stuff](#Citations)
-- [What's new in this version since 0.4.3](#Changes)
 - [Funding](#Funding) 
 
 ## Package Mission
