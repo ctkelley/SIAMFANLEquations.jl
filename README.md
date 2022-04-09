@@ -88,7 +88,7 @@ for the unit tests, the examples in the book, and the notebook.
 
 ## Meaning of version numbers
 
-If __log(version_number of latest release) < 0__ there's trouble!
+If __log(version number of latest release) < 0__ there's trouble!
 
 
 ## Pull Requests
@@ -177,7 +177,7 @@ The algorithms, listed by book chapter are
    - Chapter 5: Case studies:  __Conductive-Radiative heat transfer and continuation for H-equation.__ 
    
    
-## Test Problems
+## Test Problems and the notebook
 
 You'll need the TestProblems and examples submodules to run the notebook. To get those type 
 
@@ -210,6 +210,10 @@ author="C. T. Kelley",
 title="{Solving Nonlinear Equations with Iterative Methods:
 Solvers and Examples in Julia}",
 year=2022,
+publisher="SIAM",
+address="Philadelphia",
+series="Fundamentals of Algorithms",
+number=X,
 note="Unpublished book ms, under contract with SIAM"
 }
 
