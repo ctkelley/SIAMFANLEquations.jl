@@ -41,7 +41,7 @@ Content changes from (Kel03):
 - [Mission](#Package-Mission)
 - [Installation](#Installation)
 - [Meaning of Version Numbers](#Meaning-of-version-numbers)
-- [__Please__ No Pull Requests](#Pull-Requests)
+- [Reporting bugs: __Please__ No Pull Requests](#Pull-Requests)
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
