@@ -97,17 +97,14 @@ __I like bug reports; I need bug reports__, but ...
 
 __Please, please__, do not send me PRs. If you find 
    1.  a bug (programming or performance) in the codes,
-   2.  errors and/or typos in the notebooks,
+   2.  errors and/or typos in the notebooks/docstrings/readme
    3. confusion, lack of clarity, or __errors in the installation instructions__,
        1. I would __really like__ some Windows users to try this stuff, especially the notebooks.
-   4. something I could do in the user interface to help you do your work ...
-       1. that won't break other stuff, 
-       2. make the code or __user interface__ opaque to a novice,
-       3. or eat up lots of time,
-   5. a factual error in the documentation/notebook, or 
-   6. an error/inconsistency in the docstrings, please ...
+   4. something I could do in the codes to help you do your work ...
+       1. that won't break other stuff
+       2. or eat up lots of time,
   
- Do your choice of ... 
+ Please  ... 
 
 - tell me the old fashioned way with email to tim_kelley@ncsu.edu 
 - or open an issue.
