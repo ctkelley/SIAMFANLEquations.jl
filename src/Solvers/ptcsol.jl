@@ -17,15 +17,15 @@ You must allocate storage for the function and Jacobian in advance
 Inputs:\n
 - F!: function evaluation, the ! indicates that F! overwrites FS, your
     preallocated storage for the function.\n
-    So, FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)\n
-    Your function MUST have --> return FV <-- at the end.
+    So, FS=F!(FS,x) or FS=F!(FS,x,pdata) returns FS=F(x)\n
+    Your function MUST have --> return FS <-- at the end.
     See the examples in the TestProblems/Systems/FBeam!.jl
     
 
 - x0: initial iterate\n
 
 - FS: Preallocated storage for function. It is a vector of size N\n
-  You should store it as (N,) and design F! to use vectors of size (N,).
+  You should store it as (N) and design F! to use vectors of size (N).
   If you use (N,1) consistently instead, the solvers may work, but I make
   no guarantees.
 
@@ -36,8 +36,8 @@ Inputs:\n
 - J!: Jacobian evaluation, the ! indicates that J! overwrites FPS, your
     preallocated storage for the Jacobian. If you leave this out the
     default is a finite difference Jacobian.\n
-    So, FP=J!(FP,FV,x) or FP=J!(FP,FV,x,pdata) returns FP=F'(x);
-    (FP,FV, x) must be the argument list, even if FP does not need FV.
+    So, FP=J!(FP,FS,x) or FP=J!(FP,FS,x,pdata) returns FP=F'(x);
+    (FP,FS, x) must be the argument list, even if FP does not need FS.
     One reason for this is that the finite-difference Jacobian
     does and that is the default in the solver.\n
     Your Jacobian function MUST have --> return FP <-- at the end. 
@@ -45,7 +45,7 @@ Inputs:\n
 
     You may have a better way to add (1/dt) I to your Jacobian. If you
     want to do this yourself then your Jacobian function should be
-    FP=J!(FP,FV,x,dt) or FP=J!(FP,FV,x,dt,pdata) and return
+    FP=J!(FP,FS,x,dt) or FP=J!(FP,FS,x,dt,pdata) and return
     F'(x) + (1.0/dt)*I. \n
     You will also have to set the kwarg __jknowsdt__ to true.
 
