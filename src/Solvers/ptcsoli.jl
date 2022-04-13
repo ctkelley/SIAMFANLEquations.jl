@@ -19,7 +19,10 @@ You must allocate storage for the function and Krylov basis in advance
 Inputs:\n
 - F!: function evaluation, the ! indicates that F! overwrites FS, your
     preallocated storage for the function.\n
-    So, FV=F!(FV,x) or FV=F!(FV,x,pdata) returns FV=F(x)
+    So, FS=F!(FS,x) or FS=F!(FS,x,pdata) returns FS=F(x)
+
+    Your function MUST have --> return FS <-- at the end.
+    See the example in TestProbems/Systems/FBeam!.jl
 
 - x0: initial iterate\n
 

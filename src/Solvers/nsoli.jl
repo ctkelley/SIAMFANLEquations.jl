@@ -20,6 +20,9 @@ Inputs:\n
     preallocated storage for the function.\n
     So FS=F!(FS,x) or FS=F!(FS,x,pdata) returns FS=F(x)
 
+    Your function MUST have --> return FS <-- at the end.
+    See the examples in the docstrings
+
 
 - x0: initial iterate\n
 

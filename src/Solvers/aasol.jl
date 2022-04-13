@@ -25,7 +25,7 @@ Inputs:\n
     in the docstrings.
 
 - x0: Initial iterate. It is a vector of size N\n
-  You should store it as (N,) and design G! to use vectors of size (N,).
+  You should store it as (N) and design G! to use vectors of size (N).
   If you use (N,1) consistently instead, the solvers may work, but I make
   no guarantees.
 
