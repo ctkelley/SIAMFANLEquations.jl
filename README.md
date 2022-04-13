@@ -237,12 +237,13 @@ doi="10.5281/zenodo.4284687"
 ## Funding
 
 This project was partially supported by
-1. Army Research Office grant W911NF-16-1-0504
-2. National Science Foundation Grants
+
+1. National Science Foundation Grants
    1. OAC-1740309
    2. DMS-1745654
    3. DMS-1906446
-3. Department of Energy grant DE-NA003967
+2. Department of Energy grant DE-NA003967
+3. Army Research Office grant W911NF-16-1-0504
    
 Any opinions, findings, and conclusions or
 recommendations expressed in this material are those of the author and
