@@ -210,7 +210,7 @@ year=2022,
 publisher="SIAM",
 address="Philadelphia",
 series="Fundamentals of Algorithms",
-number=X,
+number=20,
 note="Unpublished book ms, under contract with SIAM"
 }
 
