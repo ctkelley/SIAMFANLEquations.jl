@@ -24,8 +24,9 @@ Hence the notebook and this package all have SIAMFANL in their names.
 
 The new book has a different algorithm mix and the solvers and examples are in Juila. The project has three parts.
 
-   1. A print book: __Under contract with SIAM for manuscript delivery in mid-2022 and publication in late 2022__. 
-   2. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
+   1. A print book: __Under contract with SIAM for manuscript delivery by June 2022 and publication in late 2022__.
+      - __The book is finished.__ The manuscript will go to the publisher after a few more rounds of proofreading.     
+   3. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
       The latest releases of the notebook and package run correctly. The notebook and package from the master branches also run correctly
       together. Bug fixes prior to 1.0 may, with a low probablilty, break things in older releases. 
    3. This package (MIT License)<br>
@@ -227,7 +228,6 @@ doi="10.5281/zenodo.4284687"
 
 ## Future
 
-- 0.6.0 is the version I'll announce on NA-Digest. This will happen in late April.
 - 0.7.0 is the version that goes to the publisher. Target = June.
 - 0.8.0 is the version where I fix the problems the copy editors find. __This is the version that goes to the printer.__
 - 0.9.0 is the final tweaking of the codes, test problems, and examples. Nothing visible can change at this point. I can cleanup internal documentation for the codes, fix bugs, and tune the README.md files for repositories. 
