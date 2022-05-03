@@ -123,7 +123,7 @@ I have limited bandwidth, __so please do not send me email or open issues about_
       2. this project has a different mission, and 
       3. __I am working hard to limit depencencies__. 
    5. Philosophy, politics, opinions, invitations to debates, ...
-   6. Organization of the repo. I'm still thinking this through. The important thing is that it make sense for the print book. I must do this work with the publisher.
+   6. Organization of the repo, names of functions, or anything else that is now __frozen for the book__.
  
 
 
@@ -172,7 +172,7 @@ The algorithms, listed by book chapter are
        
    - Chapter 4: Anderson acceleration: __aasol.jl__ 
         
-   - Chapter 5: Case studies:  __Conductive-Radiative heat transfer and continuation for H-equation.__ 
+   - Chapter 5: Case studies:  __Conductive-Radiative heat transfer__ and __Continuation for H-equation.__ 
    
    
 ## Test Problems and the notebook
