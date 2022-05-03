@@ -4,6 +4,7 @@ using LinearAlgebra.BLAS
 using SparseArrays
 using SuiteSparse
 using BandedMatrices
+using LaTeXStrings
 using QuadGK
 using Printf
 
