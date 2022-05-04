@@ -100,13 +100,15 @@ to the correct choice for a factorization.
 I use jfact when I call PTCUpdate to evaluate the
 Jacobian (using your J!) and factor it. The default is to use
 klfact (an internal function) to do something reasonable.
-For general matrices, klfact picks lu! to compute an LU factorization
+For general dense matrices, klfact picks lu! to compute an LU factorization
 and share storage with the Jacobian.  You may change LU to something else by,
 for example, setting jfact = cholseky! if your Jacobian is spd.
 
 klfact knows about banded matrices and picks qr. You should,
 however RTFM, allocate the extra two upper bands, and use jfact=qr!
 to override klfact.
+
+klfact uses lu for general sparse matrices.
 
 If you give me something that klfact does not know how to dispatch on,
 then nothing happens. I just return the original Jacobian matrix and 
@@ -125,7 +127,7 @@ tuple. This is on by default for scalar equations and off for systems.
 Only turn it on if you have use for the data, which can get REALLY LARGE.
 
 jknowsdt: default = false\n
-Set this to true if your Jacobian evaluation function retursn
+Set this to true if your Jacobian evaluation function returns
 F'(x) + (1/dt) I. You'll also need to follow the rules above for
 the Jacobian evaluation function. I do not recommend this and if
 your Jacobian is anything other than a matrix I can't promise
@@ -189,7 +191,7 @@ julia> [pout.history[1:5] pout.history[21:25]]
  3.15455e+01  4.12697e-08
  3.66566e+01  6.29295e-12
 
-julia> # We get the nonnegative stedy state.
+julia> # We get the nonnegative steady state.
        maximum(pout.solution)
 2.19086e+00
 ```

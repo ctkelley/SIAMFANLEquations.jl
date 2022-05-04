@@ -4,7 +4,6 @@
                dx = 1.e-7, armfix=false, 
                pdata = nothing, jfact = klfact,
                printerr = true, keepsolhist = false, stagnationok=false)
-)
 
 C. T. Kelley, 2022
 
@@ -19,7 +18,7 @@ Inputs:\n
     preallocated storage for the function.\n
     So FS=F!(FS,x) or FS=F!(FS,x,pdata) returns FS=F(x)\n
     Your function MUST have --> return FS <-- at the end.
-    See the examples in the docstrings and in TestProbems/Systems/simple.jl
+    See the examples in the docstrings and in TestProblems/Systems/simple.jl
 
 - x0: initial iterate\n
 
@@ -38,7 +37,7 @@ Inputs:\n
     One reason for this is that the finite-difference Jacobian
     does and that is the default in the solver.\n
     Your Jacobian function MUST have --> return FP <-- at the end.
-    See the examples in the docstrings and in TestProbems/Systems/simple.jl
+    See the examples in the docstrings and in TestProblems/Systems/simple.jl
 
 
 - Precision: Lemme tell ya 'bout precision. I designed this code for 
@@ -116,13 +115,15 @@ to the correct choice for a factorization.
 I use jfact when I call PrepareJac! to evaluate the
 Jacobian (using your J!) and factor it. The default is to use
 klfact (an internal function) to do something reasonable.
-For general matrices, klfact picks lu! to compute an LU factorization
+For general dense matrices, klfact picks lu! to compute an LU factorization
 and share storage with the Jacobian.  You may change LU to something else by,
 for example, setting jfact = cholseky! if your Jacobian is spd.
 
 klfact knows about banded matrices and picks qr. You should,
 however RTFM, allocate the extra two upper bands, and use jfact=qr!
 to override klfact.
+
+klfact uses lu for general sparse matrices.
 
 If you give me something that klfact does not know how to dispatch on,
 then nothing happens. I just return the original Jacobian matrix and 
