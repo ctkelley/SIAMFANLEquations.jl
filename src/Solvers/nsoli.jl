@@ -50,12 +50,12 @@ Inputs:\n
     If the Jacobian is reasonably well conditioned, you can cut the cost
     of orthogonalization and storage (for GMRES) in half with no loss. 
     There is no benefit if your linear solver is not GMRES or if 
-    othogonalization and storage of the Krylov vectors is only a
+    orthogonalization and storage of the Krylov vectors is only a
     small part of the cost of the computation. So if your preconditioner
     is good and you only need a few Krylovs/Newton, reduced precision won't
     help you much.
 
-    BiCGSTAB does not benefit from reduced precsion. 
+    BiCGSTAB does not benefit from reduced precision. 
 
 ----------------------
 
@@ -136,7 +136,7 @@ This is a dangerous thing to mess with and I only recommend it if
 the allocations in nsoli become a problem in continuation or IVP
 integration. Krylov_Data is where I store the solution at the end
 of the iteration and if you reuse it without copying the solution
-to somewhere else, you'll lose it and it will be overwritten wiht
+to somewhere else, you'll lose it and it will be overwritten with
 the new solution. The continuation case study uses this and you 
 should look at that to see what I did.
 
@@ -193,7 +193,7 @@ GMRES will solve the equation for the step exactly in two iterations. Finite
 difference Jacobians and analytic Jacobian-vector products for full precision
 and finite difference Jacobian-vector products for single precision.
 
-BiCGSTAB converges in 5 itertions and each nonlinear iteration costs
+BiCGSTAB converges in 5 iterations and each nonlinear iteration costs
 two Jacobian-vector products. Note that the storage for the Krylov
 space in GMRES (jvs) is replace by a single vector (fpv) when BiCGSTAB
 is the linear solver.

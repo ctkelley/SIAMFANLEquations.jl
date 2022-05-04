@@ -22,7 +22,7 @@ Inputs:\n
     So, FS=F!(FS,x) or FS=F!(FS,x,pdata) returns FS=F(x)
 
     Your function MUST have --> return FS <-- at the end.
-    See the example in TestProbems/Systems/FBeam!.jl
+    See the example in TestProblems/Systems/FBeam!.jl
 
 - x0: initial iterate\n
 
@@ -50,12 +50,12 @@ Inputs:\n
     If the Jacobian is reasonably well conditioned, you can cut the cost
     of orthogonalization and storage (for GMRES) in half with no loss.
     There is no benefit if your linear solver is not GMRES or if
-    othogonalization and storage of the Krylov vectors is only a
+    orthogonalization and storage of the Krylov vectors is only a
     small part of the cost of the computation. So if your preconditioner
     is good and you only need a few Krylovs/Newton, reduced precision won't
     help you much.
 
-    BiCGSTAB does not benefit from reduced precsion.
+    BiCGSTAB does not benefit from reduced precision.
 
 ----------------------
 
@@ -156,7 +156,7 @@ solution = converged result
 functionval = F(solution)
 history = the vector of residual norms (||F(x)||) for the iteration
 stats = named tuple of the history of (ifun, ijac, ikfail), the number
-of functions/jacobian-vector prodcuts/linear solver filures at each iteration.
+of functions/jacobian-vector products/linear solver failures at each iteration.
 
 I do not count the function values for a finite-difference derivative
 because they count toward a Jacobian-vector product.
