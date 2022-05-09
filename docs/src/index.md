@@ -353,6 +353,6 @@ or BandedMatrices. The solvers
 The solver is aasol.jl. Keep in mind that you are solving fixed point 
 problems ``x = G(x)`` so you send the solver the fixed point map ``G``.
 
-### Case Studies: Chapter 4
+### Case Studies: Chapter 5
 
 This chapter has two case studies. Please look at the notebook.
