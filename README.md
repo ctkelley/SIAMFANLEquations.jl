@@ -3,7 +3,7 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations v0.8: manuscript is in preproductioin. 
+# SIAMFANLEquations v0.8: manuscript is in preproduction. 
 # I tag this version when it goes to the printer.
 
 <img width = 200, src = "https://user-images.githubusercontent.com/10243067/158274165-3ed9aa65-357e-4d23-80c0-cda13c158aba.png">
