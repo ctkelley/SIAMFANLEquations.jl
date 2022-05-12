@@ -3,7 +3,8 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations v0.7: final draft that goes to the publisher
+# SIAMFANLEquations v0.8: manuscript is in preproductioin. 
+# I tag this version when it goes to the printer.
 
 <img width = 200, src = "https://user-images.githubusercontent.com/10243067/158274165-3ed9aa65-357e-4d23-80c0-cda13c158aba.png">
 
@@ -228,7 +229,6 @@ doi="10.5281/zenodo.4284687"
 
 ## Future
 
-- 0.7.0 is the version that goes to the publisher. Target = June.
 - 0.8.0 is the version where I fix the problems the copy editors find. __This is the version that goes to the printer.__
 - 0.9.0 is the final tweaking of the codes, test problems, and examples. Nothing visible can change at this point. I can cleanup internal documentation for the codes, fix bugs, and tune the README.md files for repositories. 
 - 1.0.0 is the end. 
