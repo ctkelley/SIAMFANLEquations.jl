@@ -29,7 +29,7 @@ The new book has a different algorithm mix and the solvers and examples are in J
       - __The book is finished.__ The manuscript will go to the publisher after a few more rounds of proofreading.     
    3. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
       The latest releases of the notebook and package run correctly. The notebook and package from the master branches also run correctly
-      together. Bug fixes prior to 1.0 may, with a low probablilty, break things in older releases. 
+      together. Bug fixes prior to 1.0 may, with an absurdly low probablilty, break things in older releases. 
    3. This package (MIT License)<br>
 
 Content changes from (Kel03):
