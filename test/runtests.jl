@@ -66,7 +66,6 @@ end
     @test linear_aa()
     @test alex_test()
 end
-
 @testset "Case Studies: Chapter 5" begin
     @test transport_test()
     @test heat_test()
