@@ -204,7 +204,7 @@ doi="10.5281/zenodo.4284807",
 url="https://github.com/ctkelley/SIAMFANLEquations.jl"
 }
 
-@misc{ctk:fajulia,
+@book{ctk:fajulia,
 author="C. T. Kelley",
 title="{Solving Nonlinear Equations with Iterative Methods:
 Solvers and Examples in Julia}",
@@ -212,8 +212,7 @@ year=2022,
 publisher="SIAM",
 address="Philadelphia",
 series="Fundamentals of Algorithms",
-number=20,
-note="Unpublished book ms, under contract with SIAM"
+number=20
 }
 
 @misc{ctk:notebooknl,
