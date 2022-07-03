@@ -4,7 +4,7 @@
 
 
 # SIAMFANLEquations v0.8: manuscript is in preproduction (aka copyediting).
-# I tag this version when it goes to the printer.
+# I tag this version when it goes to the printer. Going to the printer is final produciton. So changes after that are impossible.
 
 <img width = 200, src = "https://user-images.githubusercontent.com/10243067/158274165-3ed9aa65-357e-4d23-80c0-cda13c158aba.png">
 
@@ -95,7 +95,7 @@ If __log(version number of latest release) < 0__ there's trouble!
 
 ## Pull Requests
 
-__I like bug reports; I need bug reports__, but ...
+__Even after publication, I like bug reports; I need bug reports__, but ...
 
 __Please, please__, do not send me PRs. If you find 
    1.  a bug (programming or performance) in the codes,
@@ -111,7 +111,7 @@ __Please, please__, do not send me PRs. If you find
 - tell me the old fashioned way with email to tim_kelley@ncsu.edu 
 - or open an issue.
 
-This is a book project and I need to put all changes in by hand so I'll have muscle memory about what's going on.
+This is a book project and I need to put all changes in by hand so I'll have muscle memory about what's going on. If there is a second printing I can fix things in the print/pdf books and will fix things in real time (more or less) in the codes and notebooks.
 
 I have limited bandwidth, __so please do not send me email or open issues about__ ...
 
