@@ -4,9 +4,10 @@
 
 
 # SIAMFANLEquations v0.8: manuscript is in preproduction (aka copyediting).
-# I tag this version when it goes to the printer. Going to the printer is final produciton. So changes after that are impossible.
+# I tag this version when it goes to the printer. Going to the printer is final production. So changes after that are impossible.
 
-<img width = 200, src = "https://user-images.githubusercontent.com/10243067/158274165-3ed9aa65-357e-4d23-80c0-cda13c158aba.png">
+
+<img width = 400, src="https://user-images.githubusercontent.com/10243067/177564677-21c22513-ef0d-407e-89bc-52f45bd64fdd.png">
 
 [Future releases until 1.0](#Future)
 
