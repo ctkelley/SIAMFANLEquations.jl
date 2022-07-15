@@ -13,6 +13,8 @@ v0.7 of the manuscript is in preproduction (aka copyediting).
 
 I tag this version as 0.8 when it goes to the printer. Going to the printer is final production. So changes after that are impossible.
 
+Version 0.9 will be following shortly after 0.8. I'll make one last pass through the test directory and the docstrings.
+
 [Future releases until 1.0](#Future)
 
 
