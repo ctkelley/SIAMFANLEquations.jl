@@ -5,7 +5,7 @@ using SparseArrays
 using SuiteSparse
 using BandedMatrices
 using LaTeXStrings
-using QuadGK
+#using QuadGK
 using Printf
 
 export nsolsc

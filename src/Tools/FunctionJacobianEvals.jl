@@ -84,7 +84,7 @@ end
 
 
 # The default for banded matrices is qr, because I do not trust 
-# you to allocate the extra two upper bands so I can use qr!.
+# you to allocate the extra two upper bands so I cannot use qr!.
 # I'm using qr! in the example in Chapter 2. Look at the source
 # to see how I did that.
 #
