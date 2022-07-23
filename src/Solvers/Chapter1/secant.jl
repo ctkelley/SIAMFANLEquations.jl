@@ -28,7 +28,7 @@ the stepsize will be fixed at .5. Don't do this unless you are doing
 experiments for research.
 
 printerr:\n
-I print a helpful message when the solver fails. To supress that
+I print a helpful message when the solver fails. To suppress that
 message set printerr to false.
 
 keepsolhist:\n

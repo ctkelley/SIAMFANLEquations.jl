@@ -26,7 +26,7 @@ maxit: upper bound on number of nonlinear iterations\n
 
 solver:\n
 Your choices are "newton"(default) or "chord". However, 
-you have sham at your disposal only if you chose newton. "chord"
+you have sham at your disposal only if you choose newton. "chord"
 will keep using the initial derivative until the iterate converges,
 uses the iteration budget, or the line search fails. It is not the
 same as sham=Inf, which is smarter.\n
@@ -69,7 +69,7 @@ If you use this option your function and derivative must take pdata
 as a second argument. eg f(x,pdata) and fp(x,pdata)
 
 printerr:\n
-I print a helpful message when the solver fails. To supress that
+I print a helpful message when the solver fails. To suppress that
 message set printerr to false.
 
 keepsolhist:\n

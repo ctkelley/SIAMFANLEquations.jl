@@ -46,7 +46,7 @@ If you use this option your function and derivative must take pdata
 as a second argument. eg f(x,pdata) and fp(x,pdata)
 
 printerr: default = true\n
-I print a helpful message when the solver fails. To supress that
+I print a helpful message when the solver fails. To suppress that
 message set printerr to false.
 
 keepsolhist: if true you get the history of the iteration in the output 
