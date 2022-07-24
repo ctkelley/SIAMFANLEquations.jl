@@ -162,7 +162,7 @@ julia> [aout.stats.condhist aout.stats.alphanorm]
 ```
 
 Now we put a mixing or damping parameter in there with beta = .5. This
-example is nasty enough to make mixing do ok. Keep in mind
+example is nasty enough to make mixing do well. Keep in mind
 that the history is for the damped residual, not the original one.
 
 ```
