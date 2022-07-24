@@ -166,7 +166,7 @@ You get a warning and that is all. \n
 
 idid=true if the iteration succeeded and false if not. \n
 
-errcode = 0 if if the iteration succeeded \n
+errcode = 0 if the iteration succeeded \n
         = -1 if the initial iterate satisfies the termination criteria
         = 10 if no convergence after maxit iterations \n
 

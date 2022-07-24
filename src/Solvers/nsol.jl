@@ -117,7 +117,7 @@ Jacobian (using your J!) and factor it. The default is to use
 klfact (an internal function) to do something reasonable.
 For general dense matrices, klfact picks lu! to compute an LU factorization
 and share storage with the Jacobian.  You may change LU to something else by,
-for example, setting jfact = cholseky! if your Jacobian is spd.
+for example, setting jfact = cholesky! if your Jacobian is spd.
 
 klfact knows about banded matrices and picks qr. You should,
 however RTFM, allocate the extra two upper bands, and use jfact=qr!
@@ -179,7 +179,7 @@ because they count toward a Jacobian evaluation.
 
    -- idid=true if the iteration succeeded and false if not.
 
-   -- errcode = 0 if if the iteration succeeded
+   -- errcode = 0 if the iteration succeeded
 
         = -1 if the initial iterate satisfies the termination criteria
 

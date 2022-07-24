@@ -148,7 +148,7 @@ iteration statistics are not interesting and not in the output.
 
 idid=true if the iteration succeeded and false if not.
 
-errcode = 0 if if the iteration succeeded
+errcode = 0 if the iteration succeeded
         = -1 if the initial iterate satisfies the termination criteria
         = 10 if no convergence after maxit iterations
 
