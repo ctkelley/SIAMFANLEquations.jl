@@ -9,14 +9,11 @@
 
 <img width = 400, src="https://user-images.githubusercontent.com/10243067/177564677-21c22513-ef0d-407e-89bc-52f45bd64fdd.png">
 
-v0.7 of the manuscript is in preproduction (aka copyediting).
-
-I tag this version as 0.8 when it goes to the printer. Going to the printer is final production. So changes after that are impossible.
+This is version 0.8. Copyediting is done and the book is going to the printer. This is final production. So changes after that are impossible.
 
 Version 0.9 will be following shortly after 0.8. I'll make one last pass through the test directory and the docstrings.
 
 [Future releases until 1.0](#Future)
-
 
 This is the package with the solvers and test problems for 
 
@@ -235,7 +232,7 @@ doi="10.5281/zenodo.4284687"
 
 ## Future
 
-- 0.8.0 is the version where I fix the problems the copy editors find. __This is the version that goes to the printer.__
+- 0.8.0 is this version. I fixed the problems the copy editors foundnd. __This is the version that goes to the printer.__
 - 0.9.0 is the final tweaking of the codes, test problems, and examples. Nothing visible can change at this point. I can cleanup internal documentation for the codes, fix bugs, and tune the README.md files for repositories. 
 - 1.0.0 is the end. 
 
