@@ -49,6 +49,7 @@ Content changes from (Kel03):
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems)
 - [How to cite this stuff](#Citations)
+- [Book FAQs](#FAQs)
 - [Funding](#Funding) 
 
 ## Package Mission
@@ -226,6 +227,16 @@ url="https://github.com/ctkelley/NotebookSIAMFANL",
 doi="10.5281/zenodo.4284687"
 }
 ```
+
+## FAQs
+
+1. What kind of book is this?
+
+It's an orange book.
+
+2. What is this book about?
+
+It's about 200 pages.
 
 
    
