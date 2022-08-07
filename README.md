@@ -21,14 +21,13 @@ This is the package with the solvers and test problems for
 
 This is a sequel to my book 
 
-(Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003.
+(Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Iterative Methods: ***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003.
 
 Hence the notebook and this package all have SIAMFANL in their names.
 
 The new book has a different algorithm mix and the solvers and examples are in Juila. The project has three parts.
 
-   1. A print book: __Under contract with SIAM for manuscript delivery by June 2022 and publication in late 2022__.
-      - __The book is finished.__ The manuscript will go to the publisher after a few more rounds of proofreading.     
+   1. A print book: (Kel22) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method: Solvers and Examples in Julia***](https:https://ctk.math.ncsu.edu) , Fundamentals of Algorithms 20, SIAM 2022.    
    3. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
       The latest releases of the notebook and package run correctly. The notebook and package from the master branches also run correctly
       together. Bug fixes prior to 1.0 may, with an absurdly low probablilty, break things in older releases. 
