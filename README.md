@@ -229,7 +229,6 @@ doi="10.5281/zenodo.4284687"
 ```
 
 ## FAQs
-
 1. What kind of book is this?
 
 It's an orange book.
