@@ -15,7 +15,7 @@ After this, v1.0 will be the end.
 
 This is the package with the solvers and test problems for 
 
-# Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia
+# [Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia}(https://ctk.math.ncsu.edu/fa20.html)
 
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
 
