@@ -21,7 +21,7 @@ This is the package with the solvers and test problems for
 
 This is a sequel to my book 
 
-(Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Iterative Methods: ***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003.
+(Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Iterative Methods:***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003.
 
 Hence the notebook and this package all have SIAMFANL in their names.
 
