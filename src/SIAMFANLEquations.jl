@@ -20,13 +20,15 @@ export secant
 export kl_gmres
 export kl_bicgstab
 export nkl_init
-#export kstore
-#export knlstore
-#export EvalF!
-#export solhistinit
-#export armijosc
-#export Katv
-#export Orthogonalize!
+#
+#
+export kstore
+export knlstore
+export EvalF!
+export solhistinit
+export armijosc
+export Katv
+export Orthogonalize!
 
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
