@@ -22,7 +22,7 @@ export kl_bicgstab
 export nkl_init
 #
 #
-#export kstore
+export kstore
 #export knlstore
 #export EvalF!
 #export solhistinit
