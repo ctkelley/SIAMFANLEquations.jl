@@ -13,6 +13,7 @@ export ptcsolsc
 export ptcsol
 export ptcsoli
 export nsol
+export nofact
 export nsoli
 export aasol
 export secant
@@ -23,7 +24,6 @@ export kl_bicgstab
 #export nkl_init
 #export EvalF!
 #export solhistinit
-#export nofact
 #export armijosc
 #export Katv
 #export Orthogonalize!
