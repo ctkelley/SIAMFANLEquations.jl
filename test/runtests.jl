@@ -3,6 +3,7 @@ using SIAMFANLEquations.TestProblems
 using SIAMFANLEquations.Examples
 using Test
 using LinearAlgebra
+import SIAMFANLEquations.Orthogonalize!
 
 include("Chapter1/nsolsc_solution_test.jl")
 include("Chapter1/ptcsolsc_test.jl")

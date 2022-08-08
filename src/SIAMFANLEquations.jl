@@ -15,18 +15,18 @@ export ptcsoli
 export nsol
 export nsoli
 export aasol
-export nofact
 export secant
-export armijosc
 export kl_gmres
 export kl_bicgstab
-export Katv
-export kstore
-export knlstore
-export nkl_init
-export Orthogonalize!
-export EvalF!
-export solhistinit
+#export kstore
+#export knlstore
+#export nkl_init
+#export EvalF!
+#export solhistinit
+#export nofact
+#export armijosc
+#export Katv
+#export Orthogonalize!
 
 include("Tools/armijo.jl")
 include("Tools/PrintError.jl")
