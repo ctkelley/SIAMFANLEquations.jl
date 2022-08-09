@@ -43,6 +43,7 @@ function nksimple()
     #
     # For the stagnating problem we will do analytic Jacobians for
     # Newton and analytic Jacobian-vector products for Newton-GMRES
+    # This is also a test of the internal function nkl_init
     #
     KData = nkl_init(2,"gmres")
     x0 = [3.0; 5.0]

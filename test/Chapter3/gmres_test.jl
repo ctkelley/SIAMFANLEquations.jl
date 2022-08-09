@@ -21,7 +21,8 @@ end
 test3x3()
 
 Do the nasty problem in Float64 or Float32. When you orthogonalize in Float32,
-the iteration thinks it's ok and is wrong. 
+the iteration thinks it's ok and is wrong. This also tests the internal 
+function kstore.
 """
 function test3x3()
     A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4];

@@ -8,21 +8,36 @@ using LaTeXStrings
 #using QuadGK
 using Printf
 
+# Export the nonlinear solvers
 export nsolsc
 export ptcsolsc
 export ptcsol
 export ptcsoli
 export nsol
-export nofact
 export nsoli
 export aasol
 export secant
+# nofact is the factorization that does nothing. It is
+# a legal option for nsol and ptcsol and I must export it.
+export nofact
+# Export the linear solvers
 export kl_gmres
 export kl_bicgstab
+# A couple functions the solvers need to manage storage. These are
+# from src/Tools/NewtonKrylov_Tools.jl
+#
+# kstore gets the vectors GMRES needs internally and makes room to
+# copy the initial iterate and right side. I use this in the heat
+# transfer problem in Chapter 5.
+#
+export kstore
+#
+# knl_init preallocates the vectores nsoli and ptcsoli use internally.
+# I need to export this for the continuation code in Chapter 5.
+#
 export nkl_init
 #
 #
-export kstore
 #export knlstore
 #export EvalF!
 #export solhistinit
@@ -55,6 +70,7 @@ include("Solvers/LinearSolvers/Orthogonalize!.jl")
 module TestProblems
 using SIAMFANLEquations
 using LinearAlgebra
+using LinearAlgebra.BLAS
 using SparseArrays
 using SuiteSparse
 using BandedMatrices
@@ -141,6 +157,7 @@ module Examples
 using SIAMFANLEquations
 using SIAMFANLEquations.TestProblems
 using LinearAlgebra
+using LinearAlgebra.BLAS
 using BandedMatrices
 
 export ptciBeam
