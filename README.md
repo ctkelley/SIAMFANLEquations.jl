@@ -9,9 +9,9 @@
 
 <img width = 400, src="https://user-images.githubusercontent.com/10243067/177564677-21c22513-ef0d-407e-89bc-52f45bd64fdd.png">
 
-This is version 0.9. There is very little left for the book. I will get one last chance from the copyeditors for last-minute stuff.
+This is version 0.9. I have finished the second round of proofs and the book is headed to the printer. The writing is done.
 
-After this, v1.0 will be the end.
+After this, v1.0 will be the end. I have a few tweaks for the repo and will continue to add to the internal documentation. 
 
 This is the package with the solvers and test problems for 
 
