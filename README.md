@@ -7,7 +7,7 @@
 
 
 
-<img width = 400, src="https://user-images.githubusercontent.com/10243067/177564677-21c22513-ef0d-407e-89bc-52f45bd64fdd.png">
+<img width = 400, src="(https://user-images.githubusercontent.com/10243067/184647769-d9d51ee9-79f0-48ba-96a4-b9ed2a66cdfa.jpg)">
 
 This is version 0.9. I have finished the second round of proofs and the book is headed to the printer. The writing is done.
 
