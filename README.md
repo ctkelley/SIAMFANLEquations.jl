@@ -237,6 +237,9 @@ It's an orange book.
 
 It's about 200 pages.
 
+3. Have you written any other books?
+
+[You bet!](https://ctk.math.ncsu.edu/lv/books.html)
 
    
 ## Funding
