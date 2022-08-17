@@ -59,8 +59,8 @@ This package is designed and built to support a book project. So the solvers and
 ## Installation: 
 
 - Use Julia 1.7.2 (or LTS 1.6.5) and up with this thing!!!
-- This package has been tested on Julia 1.6.5 and 1.7.2. __The package no longer works on 1.5 or earlier!__ 
-- __Versions 1.7.0 and 1.6.4 break the notebooks. This is a known bug and got fixed with 1.7.1 and 1.6.5.__
+- This package has been tested on Julia 1.6.5, 1.7.2, and 1.8.0. __The package no longer works on 1.5 or earlier!__ 
+- __Versions 1.7.0 and 1.6.4 break the notebooks. This is a known bug in Julia and got fixed with 1.7.1 and 1.6.5.__
 
 Type this 
 
