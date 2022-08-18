@@ -180,7 +180,7 @@ The algorithms, listed by book chapter are
    
 ## Test Problems and the notebook
 
-You'll need the TestProblems and examples submodules to run the notebook. To get those type 
+You'll need the TestProblems and Examples submodules to run the notebook. To get those type 
 
 ```using SIAMFANLEquations.TestProblems```
 
