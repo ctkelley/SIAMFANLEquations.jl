@@ -43,7 +43,6 @@ Content changes from (Kel03):
 ## Readme Contents:
 - [Mission](#Package-Mission)
 - [Installation](#Installation)
-- [Meaning of Version Numbers](#Meaning-of-version-numbers)
 - [Reporting bugs: __Please__ No Pull Requests](#Pull-Requests)
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
@@ -88,11 +87,6 @@ to run the test problems. Then there are the examples you get with
 using SIAMFANLEquations.Examples
 ```
 for the unit tests, the examples in the book, and the notebook.
-
-
-## Meaning of version numbers
-
-If __log(version number of latest release) < 0__ there's trouble!
 
 
 ## Pull Requests
