@@ -57,8 +57,9 @@ This package is designed and built to support a book project. So the solvers and
 
 ## Installation: 
 
-- Use Julia 1.7.2 (or LTS 1.6.5) and up with this thing!!!
-- This package has been tested on Julia 1.6.5, 1.7.2, and 1.8.0. __The package no longer works on 1.5 or earlier!__ 
+
+- Your best bet is to __use the latest version of Julia__ with the notebooks and the package.
+- If you must use old stuff, use Julia 1.7.2 (or LTS 1.6.5) and up with this thing!!!
 - __Versions 1.7.0 and 1.6.4 break the notebooks. This is a known bug in Julia and got fixed with 1.7.1 and 1.6.5.__
 
 Type this 
@@ -231,9 +232,9 @@ It's an orange book.
 
 It's about 200 pages.
 
-3. Have you written any other books?
+3. Have you written any other amazing books?
 
-[You bet!](https://ctk.math.ncsu.edu/lv/books.html)
+[Yes.](https://ctk.math.ncsu.edu/lv/books.html)
 
    
 ## Funding
