@@ -3,17 +3,11 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
 
-# SIAMFANLEquations v0.9: 
-
-
+# SIAMFANLEquations v1.0: Archival version in the FA20 branch.
 
 <img width = 400, src="https://user-images.githubusercontent.com/10243067/184647769-d9d51ee9-79f0-48ba-96a4-b9ed2a66cdfa.jpg">
 
-This is version 0.9. I have finished the second round of proofs and the book is headed to the printer. The writing is done.
-
-After this, v1.0 will be the end. I have a few tweaks for the repo and will continue to add to the internal documentation. 
-
-This is the package with the solvers and test problems for 
+This is version 1.0. This is the publication version for my shiny new orange book
 
 # [Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia](https://ctk.math.ncsu.edu/fa20.html)
 
@@ -122,7 +116,6 @@ I have limited bandwidth, __so please do not send me email or open issues about_
       3. __I am working hard to limit depencencies__. 
    5. Philosophy, politics, opinions, invitations to debates, ...
    6. Organization of the repo, names of functions, or anything else that is now __frozen for the book__.
- 
 
 
 ## Core References and Documentation
