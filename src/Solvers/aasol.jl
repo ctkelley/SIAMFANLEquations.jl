@@ -180,7 +180,8 @@ julia> bout.history
 ```
 
 
-#### H-equation example with m=2. This takes more iterations than
+#### H-equation example with m=2. 
+This takes more iterations than
 Newton, which should surprise no one.
 
 ```jldoctest
