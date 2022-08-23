@@ -4,7 +4,7 @@
 
 
 # SIAMFANLEquations v1.0
-## The archival version 1.0 from the date of publication in the FA20 branch.
+## The archival version 1.0 from the date of publication is in the FA20 branch.
 
 <img width = 400, src="https://user-images.githubusercontent.com/10243067/184647769-d9d51ee9-79f0-48ba-96a4-b9ed2a66cdfa.jpg">
 
