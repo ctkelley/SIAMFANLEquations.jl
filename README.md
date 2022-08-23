@@ -16,13 +16,13 @@ This is version 1.0. This is the publication version for my shiny new orange boo
 
 This is a sequel to my book 
 
-(Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Iterative Methods:***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003.
+(Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Iterative Methods:***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM, Philadelphia, 2003.
 
 Hence the notebook and this package all have SIAMFANL in their names.
 
 The new book has a different algorithm mix and the solvers and examples are in Juila. The project has three parts.
 
-   1. A print book: (Kel22) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method: Solvers and Examples in Julia***](https://ctk.math.ncsu.edu/fa20.html) , Fundamentals of Algorithms 20, SIAM 2022.    
+   1. A print book: (Kel22) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method: Solvers and Examples in Julia***](https://ctk.math.ncsu.edu/fa20.html) , Fundamentals of Algorithms 20, SIAM, Philadelphia, 2022.    
    3. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
       The latest releases of the notebook and package run correctly. The notebook and package from the master branches also run correctly
       together. Bug fixes prior to 1.0 may, with an absurdly low probablilty, break things in older releases. 
@@ -129,11 +129,11 @@ to get the documentation from the latest release. The documenter files have the 
 
 This book will not cover theory in detail (ie no proofs). My two books on nonlinear equations
 
-(Kel95) C. T. Kelley, [***Iterative Methods for Linear and Nonlinear Equations***](https://my.siam.org/Store/Product/viewproduct/?ProductId=862) , Frontiers in Applied Mathematics 16,  SIAM 1995
+(Kel95) C. T. Kelley, [***Iterative Methods for Linear and Nonlinear Equations***](https://my.siam.org/Store/Product/viewproduct/?ProductId=862) , Frontiers in Applied Mathematics 16,  SIAM, Philadelphia, 1995
 
 and
 
-(Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM 2003
+(Kel03) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method***](https://my.siam.org/Store/Product/viewproduct/?ProductId=841) , Fundamentals of Algorithms 1, SIAM, Philadelphia, 2003
 
 describe the classic Newton and Newton-Krylov algorithms. Kel95 has the theory. This project is a sequel to Kel03. Kel03 is Matlab-centric
 and will remain in print.
