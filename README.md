@@ -10,7 +10,7 @@
 
 This is version 1.0. This is the publication version for my shiny new orange book
 
-# [Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia](https://ctk.math.ncsu.edu/fa20.html)
+# [Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia](https://my.siam.org/Store/Product/viewproduct/?ProductId=44313635)
 
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
 
