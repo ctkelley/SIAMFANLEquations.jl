@@ -4,6 +4,7 @@
 
 
 # SIAMFANLEquations v1.0
+
 ## The archival version 1.0 from the date of publication is in the FA20 branch.
 
 <img width = 400, src="https://user-images.githubusercontent.com/10243067/184647769-d9d51ee9-79f0-48ba-96a4-b9ed2a66cdfa.jpg">
@@ -13,6 +14,10 @@ This is version 1.0. This is the publication version for my shiny new orange boo
 # [Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia](https://my.siam.org/Store/Product/viewproduct/?ProductId=44313635)
 
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
+
+This project is now __finished__ and SIAM published the final product in October 2022. So ...
+  - I will only make updates to the package and notebooks to fix bugs or typos. 
+  - I will not be adding new functionality to this package or new material to the notebooks. 
 
 This is a sequel to my book 
 
@@ -48,7 +53,7 @@ Content changes from (Kel03):
 
 ## Package Mission
 
-This package is designed and built to support a book project. So the solvers and examples reinforce the algorithmic discussion in the book. General purpose packages have a different mission.
+This package is designed and built to support a book project. So the solvers and examples reinforce the algorithmic discussion in the book. General purpose packages have a different mission. 
 
 ## Installation: 
 
@@ -87,6 +92,9 @@ for the unit tests, the examples in the book, and the notebook.
 
 ## Pull Requests
 
+My favorite thing about book projects is that they are not open-ended. They get finished. For example, take 
+[this book](https://my.siam.org/Store/Product/viewproduct/?ProductId=44313635) ... please.
+
 __Even after publication, I like bug reports; I need bug reports__, but ...
 
 __Please, please__, do not send me PRs. If you find 
@@ -95,7 +103,7 @@ __Please, please__, do not send me PRs. If you find
    3. confusion, lack of clarity, or __errors in the installation instructions__,
        1. I would __really like__ some Windows users to try this stuff, especially the notebooks.
    4. something I could do in the codes to help you do your work ...
-       1. that won't break other stuff
+       1. that won't break other stuff, which includes the connection between the book and the package,
        2. or eat up lots of time,
   
  Please  ... 
@@ -116,7 +124,7 @@ I have limited bandwidth, __so please do not send me email or open issues about_
       2. this project has a different mission, and 
       3. __I am working hard to limit depencencies__. 
    5. Philosophy, politics, opinions, invitations to debates, ...
-   6. Organization of the repo, names of functions, or anything else that is now __frozen for the book__.
+   6. Organization of the repo, names of functions, API, or anything else that is now __frozen for the book__.
 
 
 ## Core References and Documentation
