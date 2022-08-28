@@ -228,15 +228,15 @@ doi="10.5281/zenodo.4284687"
 ## FAQs
 1. What kind of book is this?
 
-It's an orange book.
+    - It's an orange book.
 
 2. What is this book about?
 
-It's about 200 pages.
+     - It's about 200 pages.
 
 3. Have you written any other amazing books?
 
-[Yes.](https://ctk.math.ncsu.edu/lv/books.html)
+     - [Yes.](https://ctk.math.ncsu.edu/lv/books.html)
 
    
 ## Funding
