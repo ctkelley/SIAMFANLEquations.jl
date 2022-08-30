@@ -115,21 +115,21 @@ This is a book project and I need to put all changes in by hand so I'll have mus
 
 I have limited bandwidth, __so please do not send me email or open issues about__ ...
 
-   1. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia, am working on it, and getting better. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. 
+   1. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia. I got somewhat better as the project progressed. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. 
       1. I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. 
            1.  Fortran + Julia = __Foolia__
-   3. Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I have thought about the algorithm mix pretty carefully, have a clear vision for this project, and understand this field fairly well. 
+   3. Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I thought about the algorithm mix pretty carefully, had a clear vision for this project, and understand this field fairly well. 
    4. Questions like "Why doesn't SIAMFANLEquations.jl look/work/smell like and/or use DasKapital.jl?" The reasons are that
       1. I am neither Karl nor Groucho,
       2. this project has a different mission, and 
-      3. __I am working hard to limit depencencies__. 
+      3. __I worked hard to limit depencencies__. 
    5. Philosophy, politics, opinions, invitations to debates, ...
    6. Organization of the repo, names of functions, API, or anything else that is now __frozen for the book__.
 
 
 ## Core References and Documentation
 
-The best documentation for this package will be the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and the print book. They will have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook will be built in parallel with the print book and the content will be __roughly__ the same. The differences will be to accommodate the two formats. For example, docstrings need some work after the map from notebook to print and notebook has to make sense as an interactive resource.
+The best documentation for this package lives in the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and the print book. They have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook was built in parallel with the print book and the content is __roughly__ the same. The differences are mostly to accommodate the two formats. For example, docstrings need some work after the map from notebook to print and notebook has to make sense as an interactive resource.
 
 I've also used [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl) with this package. Click the badge
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/stable)
