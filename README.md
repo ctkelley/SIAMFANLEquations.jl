@@ -15,7 +15,7 @@ This is version 1.0. This is the publication version for my shiny new orange boo
 
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
 
-This project is now __finished__ and SIAM published the final product in October 2022. So ...
+This project is __DONE__ and SIAM published the final product in October 2022. So ...
   - I will only make updates to the package and notebooks to fix bugs or typos. 
   - I will not be adding new functionality to this package or new material to the notebooks. 
 
