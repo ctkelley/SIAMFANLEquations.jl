@@ -46,7 +46,7 @@ Content changes from (Kel03):
 - [Reporting bugs: __Please__ No Pull Requests](#Pull-Requests)
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
-- [About the test problems](#Test-Problems)
+- [About the test problems](#Test-Problems-and-the-notebook)
 - [How to cite this stuff](#Citations)
 - [Book FAQs](#FAQs)
 - [Funding](#Funding) 
