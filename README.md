@@ -28,8 +28,8 @@ Hence the notebook and this package all have SIAMFANL in their names.
 The new book has a different algorithm mix and the solvers and examples are in Juila. The project has three parts.
 
    1. A print book: (Kel22) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method: Solvers and Examples in Julia***](https://ctk.math.ncsu.edu/fa20.html) , Fundamentals of Algorithms 20, SIAM, Philadelphia, 2022.    
-   3. [An IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
-      The latest releases of the notebook and package run correctly. The notebook and package from the master branches also run correctly
+   3. [A suite of IJulia notebooks](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
+      The latest releases of the notebook suite and package run correctly. The notebooks and package from the master branches also run correctly
       together. Bug fixes prior to 1.0 may, with an absurdly low probablilty, break things in older releases. 
    3. This package (MIT License)<br>
 
