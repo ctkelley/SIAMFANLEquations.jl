@@ -17,9 +17,10 @@
 
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
 
-This project is __DONE__ and SIAM published the final product in October 2022. So ...
+This project is __DONE__ and SIAM published the final product in October 2022. So I take the sacred book author oath ...
   - I will only make updates to the package and notebooks to fix bugs or typos. 
   - I will not be adding new functionality to this package or new material to the notebooks. 
+  - I will make no changes to the user interface for the codes in the package.
 
 This is a sequel to my book 
 
@@ -62,7 +63,7 @@ This package is designed and built to support a book project. So the solvers and
 
 - Your best bet is to __use the latest version of Julia__  (currently 1.8.0) with the notebooks and the package.
 - If you must use old stuff, use Julia 1.7.2 (or LTS 1.6.5) and up with this thing!!!
-- __Versions 1.7.0 and 1.6.4 break the notebooks. This is a known bug in Julia and got fixed with 1.7.1 and 1.6.5.__
+- __Versions 1.7.0 and 1.6.4 break the notebooks. This is a known bug with OPEN BLAS in Julia and got fixed with 1.7.1 and 1.6.5.__
 
 Type this 
 
