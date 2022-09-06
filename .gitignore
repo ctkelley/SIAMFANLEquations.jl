@@ -13,6 +13,4 @@
 *.swp
 docs/build/
 Manifest.toml
-src/Archive
-src/FALocalTesting
-GoAway
+Private
