@@ -17,7 +17,7 @@
 
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
 
-This project is __DONE__ and SIAM published the final product in October 2022. So I take the sacred book author oath ...
+This project is __DONE__ and SIAM sent the final manuscript to the printer on Sept 8. Target date for publication is October 2022. So I take the sacred book author oath ...
   - I will only make updates to the package and notebooks to fix bugs or typos. 
   - I will not be adding new functionality to this package or new material to the notebooks. 
   - I will make no changes to the user interface for the codes in the package.
