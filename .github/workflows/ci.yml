@@ -20,11 +20,11 @@ jobs:
       fail-fast: false
       matrix:
         version:
-         - '1.6'
-         - '1.8'
-         - 'nightly'
+          - '1.6'
+          - '1.8'
+          - 'nightly'
         os:
-         - ubuntu-latest
+          - ubuntu-latest
           - macOS-latest
           - windows-latest
         arch:
