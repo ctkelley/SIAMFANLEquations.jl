@@ -22,7 +22,7 @@ jobs:
         version:
 #          - '1.6'
           - '1.8'
-          - '^1.9.0-alpha1'
+          - '^1.9.0-0'
 #          - 'nightly'
         os:
 #          - ubuntu-latest
