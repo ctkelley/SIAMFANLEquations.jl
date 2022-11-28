@@ -65,8 +65,8 @@ Classical Gram-Schmidt.
 """
 function cgs!(V, hv, vv, orth = "twice"; verbose = false)
     #
-    #   no BLAS. Seems faster than BLAS since 1.6 and allocates
-    #   far less memory.
+    #   no explicit BLAS calls. mul! seems faster than BLAS 
+    #   since 1.6 and allocates far less memory.
     #
     k = length(hv)
     T = eltype(V)
