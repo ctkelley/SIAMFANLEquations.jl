@@ -173,6 +173,6 @@ function nsolsc_solution_test()
            afok &&
            resok &&
            p3pok &&
-           chordok && false &&
+           chordok && 
            lotok
 end
