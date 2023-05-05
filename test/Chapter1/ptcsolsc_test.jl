@@ -47,5 +47,5 @@ function ptcsolsc_test()
         println("Failure in Scalar PTC")
         println(ptcdata1)
     end
-    return ptcok
+    return ptcok && false
 end
