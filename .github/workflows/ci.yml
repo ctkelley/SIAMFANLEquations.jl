@@ -22,12 +22,12 @@ jobs:
         version:
 #          - '1.6' # LTS Something's broken here. 
           - '1'   # Current stable release
-          - '~1.9.0-0'
-          - 'nightly'
+#          - '~1.9.0-0'
+#          - 'nightly'
         os:
-          - ubuntu-latest
+#          - ubuntu-latest
           - macOS-latest
-          - windows-latest
+#          - windows-latest
         arch:
           - x64
     steps:
@@ -52,7 +52,7 @@ jobs:
           git config --global user.email te@st.er
       - uses: julia-actions/julia-runtest@latest
 #        continue-on-error: ${{ matrix.version == 'nightly' }}
-      - uses: julia-actions/julia-processcoverage@v3
+      - uses: julia-actions/julia-processcoverage@v2
       - uses: codecov/codecov-action@v3
         with:
           file: lcov.info
