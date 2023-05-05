@@ -21,10 +21,9 @@ jobs:
       matrix:
         version:
 #          - '1.6' # LTS Something's broken here. 
-#          - '1'   # Current stable release
-#          - '1.8'
+          - '1'   # Current stable release
           - '~1.9.0-0'
-#          - 'nightly'
+          - 'nightly'
         os:
 #          - ubuntu-latest
           - macOS-latest
