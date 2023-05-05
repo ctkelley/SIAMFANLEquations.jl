@@ -5,10 +5,10 @@ on:
       - 'LICENSE.md'
       - 'README.md'
    branches:
-      - main
+      - master
   pull_request:
    branches:
-      - main
+      - master
    tags: '*'
 
 jobs:
