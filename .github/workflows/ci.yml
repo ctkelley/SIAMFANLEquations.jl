@@ -31,8 +31,8 @@ jobs:
         arch:
           - x64
     steps:
-      - uses: actions/checkout@v2
-      - uses: julia-actions/setup-julia@v2
+      - uses: actions/checkout@v3
+      - uses: julia-actions/setup-julia@v3
         with:
           version: ${{ matrix.version }}
           arch: ${{ matrix.arch }}
@@ -52,7 +52,7 @@ jobs:
           git config --global user.email te@st.er
       - uses: julia-actions/julia-runtest@latest
 #        continue-on-error: ${{ matrix.version == 'nightly' }}
-      - uses: julia-actions/julia-processcoverage@v1
+      - uses: julia-actions/julia-processcoverage@v3
       - uses: codecov/codecov-action@v3
         with:
           file: lcov.info
