@@ -61,7 +61,7 @@ This package is designed and built to support a book project. So the solvers and
 ## Installation: 
 
 
-- Your best bet is to __use the latest version of Julia__  (currently 1.9.0) with the notebooks and the package.
+- Your best bet is to __use the latest version of Julia__  (currently 1.9.1) with the notebooks and the package.
 - If you must use old stuff, use LTS 1.6.7 and up with this thing!!!
 - __Versions 1.7.0 and 1.6.4 break the notebooks. This is a known bug with OPEN BLAS in Julia and got fixed with 1.7.1 and 1.6.5.__
 
