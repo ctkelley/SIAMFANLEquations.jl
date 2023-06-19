@@ -132,7 +132,7 @@ I have limited bandwidth, __so please do not send me email or open issues about_
 
 ## Core References and Documentation
 
-The best documentation for this package lives in the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and the print book. They have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook was built in parallel with the print book and the content is __roughly__ the same. The differences are mostly to accommodate the two formats. For example, docstrings need some work after the map from notebook to print and notebook has to make sense as an interactive resource.
+The best documentation for this package lives in the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and the print book. They have detailed algorithmic descriptions, examples for you to play with, and guidance on tweaking the algorithmic paramenters to solve your problems. The notebook was built in parallel with the print book and the content is __roughly__ the same. The differences are mostly to accommodate the two formats. For example, docstrings need some work after the map from notebook to print and the notebook has to make sense as an interactive resource.
 
 I've also used [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl) with this package. Click the badge
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://ctkelley.github.io/SIAMFANLEquations.jl/stable)
