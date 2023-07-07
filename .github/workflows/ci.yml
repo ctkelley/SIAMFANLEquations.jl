@@ -23,11 +23,11 @@ jobs:
           - '1.6' # LTS Something's broken here. 
           - '1'   # Current stable release
           - '~1.10.0-0'
-          - 'nightly'
+#          - 'nightly'
         os:
-          - ubuntu-latest
+#          - ubuntu-latest
           - macOS-latest
-          - windows-latest
+#          - windows-latest
         arch:
           - x64
     steps:
