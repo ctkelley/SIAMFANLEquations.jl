@@ -13,9 +13,9 @@
 #
 #
 function heat_test()
-P1ok = heat_test_examples(2, 1.0, 0.0)
-P2ok = heat_test_examples(2, 1.0, 0.5)
-return P1ok && P2ok
+    P1ok = heat_test_examples(2, 1.0, 0.0)
+    P2ok = heat_test_examples(2, 1.0, 0.5)
+    return P1ok && P2ok
 end
 #
 function heat_test_examples(p = 2, thetal = 1.0, thetar = 0.0)
@@ -24,7 +24,7 @@ function heat_test_examples(p = 2, thetal = 1.0, thetar = 0.0)
     na = 40
     #    thetal = 1.0
     #    thetar = 0.5
-    aa_it_len= [7, 7, 7, 7, 7]
+    aa_it_len = [7, 7, 7, 7, 7]
     (thetar == 0.0) || (aa_it_len = [10, 8, 7, 8, 8])
     omega = 0.9
     tau = 1.0
@@ -58,7 +58,7 @@ function heat_test_examples(p = 2, thetal = 1.0, thetar = 0.0)
             aasol(heat_fixed!, theta0, m, Vstore; rtol = tol, atol = tol, pdata = hn_data)
         delsol = norm(aout.solution - thetabase, Inf)
         lhist = length(aout.history)
-        heatmok = (delsol < 1.e-6) && (lhist == aa_it_len[m] )
+        heatmok = (delsol < 1.e-6) && (lhist == aa_it_len[m])
         heatmok || println("xferheat: aa fails for m=$m and thetar=$thetar")
         heatmok || println("lhist for AA($m) = $lhist")
         heatokaa = heatokaa && heatmok

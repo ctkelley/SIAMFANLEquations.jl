@@ -10,19 +10,24 @@ function bicgstab_test()
     pass3 = test3x3()
     passint = test_integop()
     passr1 = testR1()
-    passbicgs = pass3 && passint && passr1 
+    passbicgs = pass3 && passint && passr1
     return passbicgs
 end
 
 function test3x3()
-    A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4];
-    V = zeros(3); b = [1.0; 1.0; 1.0]; x0 = zeros(3);
+    A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4]
+    V = zeros(3)
+    b = [1.0; 1.0; 1.0]
+    x0 = zeros(3)
     eta = 1.e-10
     gout = kl_bicgstab(x0, b, atv, V, 1.e-10; pdata = A)
-    pass = (length(gout.reshist)== 5) && 
-            (norm(A*gout.sol - b,Inf) < 1.e-12) && gout.idid && (gout.lits==4)
-#    return (gout=gout, pass=pass)
-pass || println("3x3 test fails")
+    pass =
+        (length(gout.reshist) == 5) &&
+        (norm(A * gout.sol - b, Inf) < 1.e-12) &&
+        gout.idid &&
+        (gout.lits == 4)
+    #    return (gout=gout, pass=pass)
+    pass || println("3x3 test fails")
     return pass
 end
 
@@ -34,23 +39,24 @@ function testR1()
     x0 = zeros(5)
     V = zeros(5)
     gout = kl_bicgstab(x0, b, atv, V, 1.e-7; pdata = A)
-    pass = (length(gout.reshist)== 3) && (norm(A*gout.sol - b,Inf) < 1.e-12)
-#    return (gout=gout, pass=pass)
-pass || println("R1 test fails")
+    pass = (length(gout.reshist) == 3) && (norm(A * gout.sol - b, Inf) < 1.e-12)
+    #    return (gout=gout, pass=pass)
+    pass || println("R1 test fails")
     return pass
 end
 
-function test_integop(n=100)
+function test_integop(n = 100)
     pdata = integopinit(n)
     f = pdata.f
     ue = pdata.xe
-    u0 = zeros(size(f)); V = zeros(size(f))
+    u0 = zeros(size(f))
+    V = zeros(size(f))
     gout = kl_bicgstab(u0, f, integop, V, 1.e-10; pdata = pdata)
-    realres = (I - pdata.K)*gout.sol - f
-pass = ( (norm(realres,Inf) < 1.e-12) && (length(gout.reshist)==4))
-#    return (gout=gout, pass=pass)
-pass || println("integop test fails")
-     return pass
+    realres = (I - pdata.K) * gout.sol - f
+    pass = ((norm(realres, Inf) < 1.e-12) && (length(gout.reshist) == 4))
+    #    return (gout=gout, pass=pass)
+    pass || println("integop test fails")
+    return pass
 end
 
 
@@ -61,7 +67,7 @@ end
 
 function integop(u, pdata)
     K = pdata.K
-#    f = pdata.f
+    #    f = pdata.f
     return u - K * u
 end
 

@@ -25,11 +25,11 @@ the iteration thinks it's ok and is wrong. This also tests the internal
 function kstore.
 """
 function test3x3()
-    A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4];
-    V = zeros(3, 10);
-    V32= zeros(Float32,3, 10);
-    b = [1.0; 1.0; 1.0];
-    x0 = zeros(3);
+    A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4]
+    V = zeros(3, 10)
+    V32 = zeros(Float32, 3, 10)
+    b = [1.0; 1.0; 1.0]
+    x0 = zeros(3)
     eta = 1.e-10
     passgm = true
     rightsize = [10, 6, 5, 4]
@@ -37,22 +37,21 @@ function test3x3()
     Methods = ("cgs1", "mgs1", "mgs2", "cgs2")
     TestC = (false, true, true, true)
     i = 1
-    kl_store=kstore(3,"gmres")
-    kl_store32=kstore(3,"gmres")
-    tol=1.e-10
-    tol32=1.e-7
-    lhistpass=true
-    ididpass=true
-    locpass=true
+    kl_store = kstore(3, "gmres")
+    kl_store32 = kstore(3, "gmres")
+    tol = 1.e-10
+    tol32 = 1.e-7
+    lhistpass = true
+    ididpass = true
+    locpass = true
     for orth in Methods
-        gout = kl_gmres(x0, b, atv, V, tol; pdata = A, orth = orth,
-                       kl_store=kl_store)
+        gout = kl_gmres(x0, b, atv, V, tol; pdata = A, orth = orth, kl_store = kl_store)
         resnorm = norm(A * gout.sol - b)
-# If I don't have separate kl_stores then the gout.sol is overwritten.
-# I will fix this at some point. For now, only the nonlinear solvers really
-# use kl_store.
-        gout32 = kl_gmres(x0, b, atv, V32, tol32; pdata = A, orth = orth,
-                       kl_store=kl_store32)
+        # If I don't have separate kl_stores then the gout.sol is overwritten.
+        # I will fix this at some point. For now, only the nonlinear solvers really
+        # use kl_store.
+        gout32 =
+            kl_gmres(x0, b, atv, V32, tol32; pdata = A, orth = orth, kl_store = kl_store32)
         ithist = gout.reshist
         ithist32 = gout32.reshist
         lhist = length(ithist)
@@ -63,13 +62,13 @@ function test3x3()
         ididpass = ididpass && (gout32.idid == TestC[i])
         resnormx = norm(A * gout.sol - b)
         resnorm32 = norm(A * gout32.sol - b)
-        locpass = (resnorm < 1.e-8) && (resnorm32 > .1)
-c=A\b
-println(lhistpass,"  ",ididpass,"  ",locpass)
-println(resnorm,"  ",resnorm32,"  ",resnormx,"  ",norm(c-gout.sol))
-# For the Float32 computation, the iteration terminates with success, but
-# the real residual is bad. 
-println(lhistpass,"  ",ididpass,"  ",locpass)
+        locpass = (resnorm < 1.e-8) && (resnorm32 > 0.1)
+        c = A \ b
+        println(lhistpass, "  ", ididpass, "  ", locpass)
+        println(resnorm, "  ", resnorm32, "  ", resnormx, "  ", norm(c - gout.sol))
+        # For the Float32 computation, the iteration terminates with success, but
+        # the real residual is bad. 
+        println(lhistpass, "  ", ididpass, "  ", locpass)
         locpass || println(
             "failure at orth = ",
             orth,
@@ -108,9 +107,9 @@ function test_integop(n)
     V = zeros(n, 20)
     Methods = ("cgs1", "mgs1", "mgs2", "cgs2")
     pass = true
-#
-# run through the orthogonalizers
-#
+    #
+    # run through the orthogonalizers
+    #
     for orth in Methods
         goutinteg = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, orth = orth)
         errn = norm(goutinteg.sol - ue, Inf)
@@ -121,10 +120,10 @@ function test_integop(n)
         lpass || println("Failure with orth = ", orth)
         pass = pass && lpass
     end
-#
-#  force a failure
-#
-    failout=kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, lmaxit=2);
+    #
+    #  force a failure
+    #
+    failout = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, lmaxit = 2)
     pass = pass && ~failout.idid
     pass || println("Integral operator test fails.")
     return pass
@@ -139,15 +138,16 @@ function test_integop_restart(n)
     f = pdata.f
     ue = pdata.xe
     u0 = zeros(size(f))
-    V = zeros(n, 3); V32 = zeros(Float32, n, 3)
-    gout = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, lmaxit=20);
-    gout32 = kl_gmres(u0, f, integop, V32, 1.e-10; pdata = pdata, lmaxit=20);
-    dhist=norm(gout.reshist-gout32.reshist,Inf);
-    lhist=length(gout.reshist)
-    gerr=norm(gout.sol-pdata.xe,Inf)
-    g32err=norm(gout32.sol-pdata.xe,Inf)
+    V = zeros(n, 3)
+    V32 = zeros(Float32, n, 3)
+    gout = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, lmaxit = 20)
+    gout32 = kl_gmres(u0, f, integop, V32, 1.e-10; pdata = pdata, lmaxit = 20)
+    dhist = norm(gout.reshist - gout32.reshist, Inf)
+    lhist = length(gout.reshist)
+    gerr = norm(gout.sol - pdata.xe, Inf)
+    g32err = norm(gout32.sol - pdata.xe, Inf)
     histpass = dhist < 3.e-7
-    histpass || println("restart history wrong size = ",dhist)
+    histpass || println("restart history wrong size = ", dhist)
     errpass = (gerr < 1.e-10) && (g32err < 1.e-10)
     errpass || println("restart error too large")
     lenpass = (lhist == 6)
@@ -155,7 +155,7 @@ function test_integop_restart(n)
     return histpass && errpass && lenpass
 end
 
-    
+
 
 
 function atv(x, A)
@@ -165,7 +165,7 @@ end
 
 function integop(u, pdata)
     K = pdata.K
-#    f = pdata.f
+    #    f = pdata.f
     return u - K * u
 end
 

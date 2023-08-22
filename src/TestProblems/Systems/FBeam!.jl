@@ -8,9 +8,9 @@ function FBeam!(FV, U, bdata)
     lambda = bdata.lambda
     su = lambda * sin.(U)
     FV .= (D2 * U - su)
-#
-# The return FV is important.
-#
+    #
+    # The return FV is important.
+    #
     return FV
 end
 
@@ -29,9 +29,9 @@ function BeamJ!(FP, FV, U, bdata)
     n = length(U)
     zr = zeros(n - 1)
     FP .= D2 - Tridiagonal(zr, cu, zr)
-#
-# The return FP is important.
-#
+    #
+    # The return FP is important.
+    #
     return FP
 end
 

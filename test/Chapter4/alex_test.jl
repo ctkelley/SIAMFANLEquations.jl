@@ -10,7 +10,7 @@ function alex_test()
     maxm = 2
     vdim = 3 * maxm + 3
     Vstore = zeros(2, vdim)
-    VstoreS = zeros(2, 2*maxm + 4)
+    VstoreS = zeros(2, 2 * maxm + 4)
     m = 2
     aout = aasol(alexfp!, u0, m, Vstore; rtol = 1.e-10)
     alexerr = (
@@ -24,23 +24,23 @@ function alex_test()
         reldiff(aoutS.stats.condhist, aout.stats.condhist) +
         reldiff(aoutS.stats.alphanorm, aout.stats.alphanorm)
     )
-#
-# Something funny about these tests with 1.7.0 and MKL. 
-#
-    alexok2=(alexerrS < 1.e-15)
-    lenh=length(aout.history)
+    #
+    # Something funny about these tests with 1.7.0 and MKL. 
+    #
+    alexok2 = (alexerrS < 1.e-15)
+    lenh = length(aout.history)
     solerr = reldiff(aout.history[1:lenh-2], historye[1:lenh-2])
-#   put this back to reldiff and solerr < 1.e-5  once 1.7 is fixed
-#    solerr = norm(aout.history-historye)
+    #   put this back to reldiff and solerr < 1.e-5  once 1.7 is fixed
+    #    solerr = norm(aout.history-historye)
     solok = (solerr < 1.e-5)
-    solok || println("alex solution error","  ",solerr)
+    solok || println("alex solution error", "  ", solerr)
     conderr = reldiff(aout.stats.condhist[1:lenh-2], condhiste[1:lenh-2])
-#   Something's broken with 1.7 in windoze/linux
-#   put this back to reldiff and conderr < 1.e-5  once 1.7 is fixed
+    #   Something's broken with 1.7 in windoze/linux
+    #   put this back to reldiff and conderr < 1.e-5  once 1.7 is fixed
     condok = (conderr < 1.e-1)
-    condok || println("alex condition error","  ",conderr)
+    condok || println("alex condition error", "  ", conderr)
     aerr = reldiff(aout.stats.alphanorm[1:lenh-2], alphanorme[1:lenh-2])
-#   put this back to aerr < 1.e-5  once 1.7 is fixed
+    #   put this back to aerr < 1.e-5  once 1.7 is fixed
     aok = (aerr < 1.e-2)
     aok || println("alex coefficient error $aerr")
     aout.idid || println("idid is wrong for m=2")
@@ -84,7 +84,7 @@ function vtst()
 end
 
 function alexfp!(G, u)
-G[1]=cos(.5*(u[1]+u[2]))
-G[2]=G[1]+ 1.e-8 * sin(u[1]*u[1])
-return G
+    G[1] = cos(0.5 * (u[1] + u[2]))
+    G[2] = G[1] + 1.e-8 * sin(u[1] * u[1])
+    return G
 end

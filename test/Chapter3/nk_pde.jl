@@ -3,7 +3,7 @@ nk_pde(n)
 
 Solve the Elliptic PDE using nsoli.jl on an n x n grid. 
 """
-function nk_pde(n=15)
+function nk_pde(n = 15)
     # Get some room for the residual
     rtol = 1.e-7
     atol = 1.e-10
@@ -23,11 +23,11 @@ function nk_pde(n=15)
         rtol = rtol,
         atol = atol,
         pdata = pdata,
-        eta = .1,
+        eta = 0.1,
         fixedeta = false,
         maxit = 20,
     )
-houtb = nsoli(
+    houtb = nsoli(
         pdeF!,
         u0,
         FV,
@@ -35,17 +35,17 @@ houtb = nsoli(
         rtol = rtol,
         atol = atol,
         pdata = pdata,
-        eta = .1,
+        eta = 0.1,
         fixedeta = false,
         maxit = 20,
         lmaxit = 20,
-        lsolver="bicgstab"
+        lsolver = "bicgstab",
     )
 
     # Call the solver a few times with an analytic Jac-Vec
-    hout2 = NsoliPDE(n; fixedeta=false)
-    hout3 = NsoliPDE(n; fixedeta=true)
-    hout4 = NsoliPDE(n; fixedeta=false, lsolver="bicgstab")
+    hout2 = NsoliPDE(n; fixedeta = false)
+    hout3 = NsoliPDE(n; fixedeta = true)
+    hout4 = NsoliPDE(n; fixedeta = false, lsolver = "bicgstab")
     soldiff = (
         norm(hout3.solution - hout.solution, Inf) +
         norm(hout3.solution - hout.solution, Inf) +
@@ -53,15 +53,15 @@ houtb = nsoli(
         norm(hout4.solution - hout.solution, Inf)
     )
     solpass = (soldiff < 1.e-6)
-    solpass || println("solution compare fails in nk_pde, ",soldiff)
+    solpass || println("solution compare fails in nk_pde, ", soldiff)
     histdiffv = (hout.history - hout2.history) ./ hout.history[1]
-    histdiff = norm(histdiffv, Inf) 
-    histpass = (histdiff < .1)
-    histpass || println("history compare fails in nk_pde, ",histdiff)
+    histdiff = norm(histdiffv, Inf)
+    histpass = (histdiff < 0.1)
+    histpass || println("history compare fails in nk_pde, ", histdiff)
     cost1 = sum(hout.stats.ijac)
     cost2 = sum(hout2.stats.ijac)
     cost3 = sum(hout3.stats.ijac)
     costpass = (cost1 > 80) && (cost2 > 30) && (cost3 > cost2)
-    costpass || println(cost1," ", cost2, "  ", cost3)
+    costpass || println(cost1, " ", cost2, "  ", cost3)
     return costpass
 end

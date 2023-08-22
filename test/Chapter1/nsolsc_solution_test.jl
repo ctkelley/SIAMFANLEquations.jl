@@ -19,7 +19,7 @@ function nsolsc_solution_test()
     #
     # Local convergence with analytic derivative
     #
-    sdataa = nsolsc(atan, 1.0, x -> 1.0/(1.0+x*x))
+    sdataa = nsolsc(atan, 1.0, x -> 1.0 / (1.0 + x * x))
     solok = (abs(sdataa.solution) < 1.e-8)
     funok = (abs(sdataa.functionval) < 1.e-8)
     hs = size(sdataa.history)
@@ -87,7 +87,7 @@ function nsolsc_solution_test()
     # and demand a recompute of the derivative.
     #
     sdatal = nsolsc(
-        x -> (1.0 + .01*x)*atan(x),
+        x -> (1.0 + 0.01 * x) * atan(x),
         200.0;
         sham = 5,
         maxit = 20,
@@ -127,9 +127,15 @@ function nsolsc_solution_test()
     #
     # Test stagnation mode
     #
-    stagdatan =
-        nsolsc(x -> tan(x)-x, 4.5, x -> sec(x)^2 - 1.0; 
-              rtol = 1.e-17, atol = 1.e-17, armfix = true, maxit = 14)
+    stagdatan = nsolsc(
+        x -> tan(x) - x,
+        4.5,
+        x -> sec(x)^2 - 1.0;
+        rtol = 1.e-17,
+        atol = 1.e-17,
+        armfix = true,
+        maxit = 14,
+    )
     fvals = stagdatan.history
     avals = stagdatan.stats.iarm
     ifvals = stagdatan.stats.ifun
@@ -173,6 +179,6 @@ function nsolsc_solution_test()
            afok &&
            resok &&
            p3pok &&
-           chordok && 
+           chordok &&
            lotok
 end

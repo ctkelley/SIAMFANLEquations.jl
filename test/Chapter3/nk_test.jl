@@ -27,38 +27,37 @@ function nksimple()
     # Newton and forward difference directional derivatives for Newton-GMRES
     #
     dout = nsol(simple!, x0, FS, FPJ, jsimple!; sham = 1, keepsolhist = true)
-    koutx = nsoli(
-        simple!,
-        x0,
-        FS,
-        FPS;
-        eta = 1.e-10,
-        keepsolhist = true,
-        fixedeta = false,
-    )
+    koutx = nsoli(simple!, x0, FS, FPS; eta = 1.e-10, keepsolhist = true, fixedeta = false)
     dsolhist = norm(koutx.solhist - dout.solhist, Inf)
     shpass = (dsolhist < 1.e-7)
     shpass || println("solhist compare fails in easy nksimple", dsolhist)
-    vconverge = krstest(dout, koutx,"nksimple")
+    vconverge = krstest(dout, koutx, "nksimple")
     #
     # For the stagnating problem we will do analytic Jacobians for
     # Newton and analytic Jacobian-vector products for Newton-GMRES
     # This is also a test of the internal function nkl_init
     #
-    KData = nkl_init(2,"gmres")
+    KData = nkl_init(2, "gmres")
     x0 = [3.0; 5.0]
     dout = nsol(simple!, x0, FS, FPJ, jsimple!; sham = 1)
-    kout = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, 
-                eta = 1.e-10)
-    kout2 = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, 
-                Krylov_Data = KData,eta = 1.e-10)
-    KD_ok = krstest(kout2,kout,"KDtest")
+    kout = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, eta = 1.e-10)
+    kout2 = nsoli(
+        simple!,
+        x0,
+        FS,
+        FPS,
+        JVsimple;
+        fixedeta = true,
+        Krylov_Data = KData,
+        eta = 1.e-10,
+    )
+    KD_ok = krstest(kout2, kout, "KDtest")
     KD_ok || println("Krylov_Data test fails")
     vdiverge = krstest(dout, kout, "hard nksimple problem")
     vdiverge || println("failure hard nksimple problem")
-#
-#   Now 
-#
+    #
+    #   Now 
+    #
     return vconverge && vdiverge && shpass && KD_ok
 end
 
@@ -94,9 +93,19 @@ function jacvec2d()
     jvs = zeros(2, 3)
     pdata = zeros(2)
     nout = nsol(f!, x0, fv, jv; sham = 1, pdata = pdata)
-    kout = nsoli(f!, x0, fv, jvs, JVec; fixedeta = false, eta = 0.9, lmaxit = 2, pdata = pdata)
-    kout2 = nsoli(fv2!, x0, fv, jvs, JVecv2; fixedeta = true, eta = 0.1, 
-                 lmaxit = 2, Pvec=PVecv2)
+    kout =
+        nsoli(f!, x0, fv, jvs, JVec; fixedeta = false, eta = 0.9, lmaxit = 2, pdata = pdata)
+    kout2 = nsoli(
+        fv2!,
+        x0,
+        fv,
+        jvs,
+        JVecv2;
+        fixedeta = true,
+        eta = 0.1,
+        lmaxit = 2,
+        Pvec = PVecv2,
+    )
     histdiff = norm(nout.history - kout2.history)
     histpass = (histdiff < 1.e-5)
     histpass || println("hist test fails in jacvec2d")
@@ -108,7 +117,7 @@ function jacvec2d()
     kplot2 = acost(kout2)
     costpass = (ncost == 10) && (kcost == 15) && (kcost2 == 14)
     costpass || println("cost compare fails in jacvec2d")
-    costpass || println(ncost,"  ", kcost, "  ", kcost2)
+    costpass || println(ncost, "  ", kcost, "  ", kcost2)
     soldiff = (
         norm(kout.solution - nout.solution, Inf) +
         norm(kout2.solution - nout.solution, Inf)
@@ -145,7 +154,7 @@ Here's a preconditioner that does not need procomputed data and
 does not do anything.
 """
 function PVecv2(v, x)
-return v
+    return v
 end
 
 """
