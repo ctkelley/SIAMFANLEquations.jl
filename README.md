@@ -48,12 +48,12 @@ Content changes from (Kel03):
 - [Mission](#package-Mission)
 - [Installation](#installation)
 - [Reporting bugs: __Please__ No Pull Requests](#pull-Requests)
-- [Core References and Documentation](#Core-References-and-Documentation)
-- [Algorithms and Solvers](#Algorithms-and-Solvers)
-- [About the test problems](#Test-Problems-and-the-notebook)
-- [How to cite this stuff](#Citations)
-- [Book FAQs](#FAQs)
-- [Funding](#Funding) 
+- [Core References and Documentation](#core-References-and-Documentation)
+- [Algorithms and Solvers](#algorithms-and-Solvers)
+- [About the test problems](#test-Problems-and-the-notebook)
+- [How to cite this stuff](#citations)
+- [Book FAQs](#fAQs)
+- [Funding](#funding) 
 
 ## Package Mission
 
