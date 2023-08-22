@@ -45,9 +45,9 @@ Content changes from (Kel03):
 - New Case Studies chapter
    
 ## Readme Contents:
-- [Mission](#Package-Mission)
-- [Installation](#Installation)
-- [Reporting bugs: __Please__ No Pull Requests](#Pull-Requests)
+- [Mission](#package-Mission)
+- [Installation](#installation)
+- [Reporting bugs: __Please__ No Pull Requests](#pull-Requests)
 - [Core References and Documentation](#Core-References-and-Documentation)
 - [Algorithms and Solvers](#Algorithms-and-Solvers)
 - [About the test problems](#Test-Problems-and-the-notebook)
