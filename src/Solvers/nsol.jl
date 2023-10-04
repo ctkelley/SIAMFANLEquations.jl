@@ -360,6 +360,7 @@ function nsol(
             T == Float64 ? (step .= -(FPF \ FS)) :
             (ns = norm(FS, Inf); step .= -ns * (FPF \ T.(FS / ns)))
         else
+            # scalar equation
             step = -FS / FPF
         end
         #
@@ -373,6 +374,7 @@ function nsol(
             x .= AOUT.ax
             FS .= AOUT.afc
         else
+            # scalar equation
             x = AOUT.ax
             FS = AOUT.afc
         end
