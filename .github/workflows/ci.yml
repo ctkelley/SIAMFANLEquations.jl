@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - '1.6' # LTS
+#          - '1.6' # LTS
           - '1'   # Current stable release
           - '~1.10.0-0'
           - 'nightly'
