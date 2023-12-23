@@ -6,10 +6,9 @@
 
 # SIAMFANLEquations 
 
-## I am about to release v1.0.1. The only difference is the Project.toml, which I updated for compats etc.
-
 ## The archival version 1.0 from the date of publication is in the [FA20 branch](https://github.com/ctkelley/SIAMFANLEquations.jl/tree/FA20).
 
+## Curent version is 1.0.1: minor Project.toml updates
 
 ## This is the Julia package for my shiny new orange book
 
