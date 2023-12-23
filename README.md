@@ -6,6 +6,7 @@
 
 # SIAMFANLEquations 
 
+## I am about to release v1.0.1. The only difference is the Project.toml, which I updated for compats etc.
 
 ## The archival version 1.0 from the date of publication is in the [FA20 branch](https://github.com/ctkelley/SIAMFANLEquations.jl/tree/FA20).
 
