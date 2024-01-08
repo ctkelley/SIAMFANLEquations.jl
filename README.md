@@ -16,6 +16,12 @@
 
 # [Solving Nonlinear Equations with Iterative Methods: <br> Solvers and Examples in Julia](https://my.siam.org/Store/Product/viewproduct/?ProductId=44313635)
 
+# NEW: the print book is now a [SIAM e-book](https://epubs.siam.org/action/showPublications?pubType=book&notConceptID=115968&startPage=&ContribAuthorFirstLetter=k)
+
+This means that if your organization is subscribes to the SIAM E-Book 
+series, you can download the pdf for free. Ask your librarian about this.
+
+
 ## [C. T. Kelley](https://ctk.math.ncsu.edu)
 
 The book is finished and this project is __DONE__. So I take the sacred book author oath ...
@@ -31,7 +37,9 @@ Hence the notebook and this package all have SIAMFANL in their names.
 
 The new book has a different algorithm mix and the solvers and examples are in Juila. The project has three parts.
 
-   1. A print book: (Kel22) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method: Solvers and Examples in Julia***](https://my.siam.org/Store/Product/viewproduct/?ProductId=44313635), Fundamentals of Algorithms 20, SIAM, Philadelphia, 2022.    
+   1. A print book: (Kel22) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method: Solvers and Examples in Julia***](https://my.siam.org/Store/Product/viewproduct/?ProductId=44313635), Fundamentals of Algorithms 20, SIAM, Philadelphia, 2022.
+      __NEW: the print book is now a [SIAM e-book](https://epubs.siam.org/action/showPublications?pubType=book&notConceptID=115968&startPage=&ContribAuthorFirstLetter=k)__ This means that if your organization is subscribes to the SIAM E-Book series, you can download the pdf for free. Ask your librarian about this.
+   
    3. [A suite of IJulia notebooks](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
       The latest releases of the notebook suite and package run correctly. The notebooks and package from the master branches also run correctly
       together. Bug fixes prior to 1.0 may, with an absurdly low probablilty, break things in older releases. 
