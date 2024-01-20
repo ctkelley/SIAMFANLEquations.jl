@@ -10,8 +10,6 @@
 
 ## Curent version is 1.0.1: minor Project.toml updates
 
-I am trying to fix the docs problem
-
 ## This is the Julia package for my shiny new orange book
 
 <img width = 400, src="https://user-images.githubusercontent.com/10243067/184647769-d9d51ee9-79f0-48ba-96a4-b9ed2a66cdfa.jpg">
