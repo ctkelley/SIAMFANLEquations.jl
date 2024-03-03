@@ -2,8 +2,8 @@ using SIAMFANLEquations
 using SIAMFANLEquations.TestProblems
 using SIAMFANLEquations.Examples
 using Test
-using LinearAlgebra
-using LinearAlgebra.BLAS
+using LinearAlgebra: LinearAlgebra, Diagonal, I, diagm, mul!, norm, qr, qr!
+#using LinearAlgebra.BLAS
 import SIAMFANLEquations.Orthogonalize!
 
 include("Chapter1/nsolsc_solution_test.jl")
