@@ -1,5 +1,6 @@
 module SIAMFANLEquations
 using LinearAlgebra: I, axpy!, axpby!, cond, lu, lu!, mul!, norm, qr, qr!
+using LinearAlgebra:LinearAlgebra, BLAS
 #using LinearAlgebra.BLAS
 using SparseArrays: SparseArrays, SparseMatrixCSC
 using SuiteSparse: SuiteSparse
@@ -7,6 +8,16 @@ using BandedMatrices: BandedMatrices, BandedMatrix
 using LaTeXStrings: LaTeXStrings
 #using QuadGK
 using Printf: Printf
+###
+#using LinearAlgebra
+#using LinearAlgebra.BLAS
+#using SparseArrays
+#using SuiteSparse
+#using BandedMatrices
+#using LaTeXStrings
+#using QuadGK
+#using Printf
+
 
 # Export the nonlinear solvers
 export nsolsc
@@ -69,16 +80,16 @@ include("Solvers/LinearSolvers/Orthogonalize!.jl")
 
 module TestProblems
 using SIAMFANLEquations
-using LinearAlgebra: LinearAlgebra, Diagonal, I, SymTridiagonal, Tridiagonal
-using LinearAlgebra: axpby!, axpy!, diagind, dot, ldiv!, ldlt, lu!, mul!, norm
-#using LinearAlgebra.BLAS
+using LinearAlgebra
+using LinearAlgebra.BLAS
 using SparseArrays
 using SuiteSparse
 using BandedMatrices
-using AbstractFFTs: AbstractFFTs, plan_fft, plan_fft!
+using AbstractFFTs
 using FFTW
 using Printf
 using QuadGK
+
 
 export
     #Functions
@@ -157,9 +168,10 @@ end
 module Examples
 using SIAMFANLEquations
 using SIAMFANLEquations.TestProblems
-using LinearAlgebra: LinearAlgebra, I, Tridiagonal, norm, qr!
+using LinearAlgebra: LinearAlgebra, BLAS, Tridiagonal, norm, qr!, I
+#using LinearAlgebra
 #using LinearAlgebra.BLAS
-using BandedMatrices: BandedMatrices, BandedMatrix
+using BandedMatrices
 
 export ptciBeam
 export ptcBeam

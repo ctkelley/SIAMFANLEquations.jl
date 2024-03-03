@@ -2,9 +2,7 @@ using SIAMFANLEquations
 using SIAMFANLEquations.TestProblems
 using SIAMFANLEquations.Examples
 using Test
-#using LinearAlgebra
-using LinearAlgebra: Diagonal, I, SymTridiagonal, Tridiagonal, axpby!, axpy!
-using LinearAlgebra: LinearAlgebra, diagind, dot, ldiv!, ldlt, lu!, mul!, norm
+using LinearAlgebra
 using LinearAlgebra.BLAS
 import SIAMFANLEquations.Orthogonalize!
 
