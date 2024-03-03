@@ -1,4 +1,5 @@
 module SIAMFANLEquations
+# Avoiding most implicit imports 
 using LinearAlgebra: I, axpy!, axpby!, cond, lu, lu!, mul!, norm, qr, qr!
 using LinearAlgebra: LinearAlgebra, BLAS
 using SparseArrays: SparseArrays, SparseMatrixCSC
