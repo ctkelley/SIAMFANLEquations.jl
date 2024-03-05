@@ -187,7 +187,7 @@ julia> using SIAMFANLEquations.TestProblems
 
 julia> function PreCondBeam(v, x, bdata)
           J = bdata.D2
-          ptv = J\v
+          ptv = J\\v
        end
 PreCondBeam (generic function with 1 method)
 
