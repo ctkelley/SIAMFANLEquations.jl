@@ -8,9 +8,7 @@
 
 ## The archival version 1.0 from the date of publication is in the [FA20 branch](https://github.com/ctkelley/SIAMFANLEquations.jl/tree/FA20).
 
-## Curent version is 1.0.1: minor Project.toml updates
-
-## Version 1.0.2 will eliminate most implicit imports. Look at [this](/Users/ctk/tex/Active_Papers/MPArray/MultiPrecisionArrays.jl) to see what that's about.
+## Current version is 1.0.2. This eliminates most implicit imports. Look at [this](/Users/ctk/tex/Active_Papers/MPArray/MultiPrecisionArrays.jl) to see what that's about.
 
 ## This is the Julia package for my shiny new orange book
 
