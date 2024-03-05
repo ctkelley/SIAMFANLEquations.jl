@@ -82,7 +82,7 @@ function beaminit(n, dt, lambda = 20.0)
     # So it has to be there in exactly this way.
     #
     deltaval = zeros(1)
-    D2 = Lap1d(n)
+    D2 = Lap1d(n; beam=true)
     dx = 1.0 / (n + 1)
     x = collect(dx:dx:1.0-dx)
     UN = zeros(size(x))
@@ -95,13 +95,16 @@ Lap1d(n)
 
 returns -d^2/dx^2 on [0,1] zero BC
 """
-function Lap1d(n)
+function Lap1d(n; beam=false)
     dx = 1 / (n + 1)
     d = 2.0 * ones(n)
     sup = -ones(n - 1)
-    #    slo = -ones(n - 1)
-    #    D2 = Tridiagonal(slo, d, sup)
-    D2 = SymTridiagonal(d, sup)
+if beam
+    slo = -ones(n - 1)
+    D2 = Tridiagonal(slo, d, sup)
+else
+   D2 = SymTridiagonal(d, sup)
+end
     D2 = D2 / (dx * dx)
     return D2
 end
