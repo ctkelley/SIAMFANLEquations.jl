@@ -105,6 +105,7 @@ if beam
 else
    D2 = SymTridiagonal(d, sup)
 end
-    D2 = D2 / (dx * dx)
+#    D2 = D2 / (dx * dx)
+     D2 ./= (dx*dx)
     return D2
 end
