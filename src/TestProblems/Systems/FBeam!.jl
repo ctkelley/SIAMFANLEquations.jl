@@ -27,10 +27,9 @@ function BeamJ!(FP, FV, U, bdata)
     lambda = bdata.lambda
     cu = lambda * cos.(U)
     CU = Diagonal(cu)
-    n = length(U)
-    zr = zeros(n - 1)
+#    n = length(U)
+#    zr = zeros(n - 1)
     FP .= D2 - CU
-#    FP .= D2 - Tridiagonal(zr, cu, zr)
     #
     # The return FP is important.
     #
@@ -84,7 +83,7 @@ function beaminit(n, dt, lambda = 20.0)
     # So it has to be there in exactly this way.
     #
     deltaval = zeros(1)
-    D2 = Lap1d(n; beam=false)
+    D2 = Lap1d(n)
     dx = 1.0 / (n + 1)
     x = collect(dx:dx:1.0-dx)
     UN = zeros(size(x))
@@ -101,13 +100,7 @@ function Lap1d(n; beam=false)
     dx = 1 / (n + 1)
     d = 2.0 * ones(n)
     sup = -ones(n - 1)
-#if beam
-#    slo = -ones(n - 1)
-#    D2 = Tridiagonal(slo, d, sup)
-#else
-   D2 = SymTridiagonal(d, sup)
-#end
-#    D2 = D2 / (dx * dx)
-     D2 ./= (dx*dx)
+    D2 = SymTridiagonal(d, sup)
+    D2 ./= (dx*dx)
     return D2
 end

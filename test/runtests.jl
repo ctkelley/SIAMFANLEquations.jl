@@ -21,6 +21,7 @@ include("Chapter3/bicgstab_test.jl")
 include("Chapter3/Krylov_pde_test.jl")
 include("Chapter3/ptcKrylovTest.jl")
 include("Chapter3/ptcKrylovTestB.jl")
+include("Chapter3/ptcKrylovTestC.jl")
 include("Chapter3/nk_test.jl")
 include("Chapter3/nk_pde.jl")
 include("Chapter3/nk_heq.jl")
@@ -54,6 +55,7 @@ end
     @test nk_heq()
     @test ptcKrylovTest()
     @test ptcKrylovTestB()
+    @test ptcKrylovTestC()
 end
 @testset "Krylov solvers: Chapter 3" begin
     @test gmres_test()
