@@ -9,7 +9,7 @@
 ## The archival version 1.0 from the date of publication is in the [FA20 branch](https://github.com/ctkelley/SIAMFANLEquations.jl/tree/FA20).
 
 ## The current version is 1.0.2. 
-  - This version eliminates most implicit imports. Look at [this](/Users/ctk/tex/Active_Papers/MPArray/MultiPrecisionArrays.jl) to see what that's about.
+  - This version eliminates most implicit imports. Look at [this](/Users/ctk/tex/Active_Papers/MPArray/MultiPrecisionArrays.jl) for the story on implicit imports.
   - I fixed a bug that, amazingly, it took 1.10.2 to find. I've put something in CI to make sure it's really fixed.
   - I've updated/corrected a few docstrings in the solvers.
 
