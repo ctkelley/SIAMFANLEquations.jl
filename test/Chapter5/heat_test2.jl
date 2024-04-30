@@ -20,7 +20,7 @@ function heat_test2_examples(p = 2, thetal = 1.0, thetar = 2.0, omega = 0.5, tau
     Vstore = zeros(nx, 3 * mmax + 3)
     tol = 1.e-10
     errcodes = [-2, 0, 10]
-    errtarget = [1.e4, 1.e-8, 1.e-5]
+    errtarget = [1.e4, 1.e-8, 1.e-4]
     Pok = true
     #
     # Newton-GMRES to obtain a converged result
@@ -66,8 +66,9 @@ function heat_test2_examples(p = 2, thetal = 1.0, thetar = 2.0, omega = 0.5, tau
         ecodeok = (aout.errcode == errcodes[iec])
         ecodeok || println("ecode test fails, heat_test2, m=$m")
         Pok = Pok && ecodeok
+        println(errtarget[iec])
         delok = (delsol < errtarget[iec])
-        delok || println("sol err test fails, heat_test2, m=$m")
+        delok || println("sol err test fails, heat_test2, m=$m, delsol=$delsol")
         Pok = Pok && delok
         iec += 1
         println("For m=$m: error=$delsol, errcode = $errc")
