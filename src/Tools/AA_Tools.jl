@@ -54,7 +54,7 @@ function Anderson_Init(x0, Vstore, m, maxit, beta, keepsolhist)
         DG = @views Vstore[:, m+1:2*m]
         if (nv >= 3 * m + 3)
             (Qd = @views Vstore[:, 2*m+1:3*m-1])
-            nvblock = 3 * m
+            nvblock=3*m
         else
             @warn "Low storage mode"
             Qd = zeros(blocksize, m - 1)
