@@ -108,7 +108,7 @@ for the unit tests, the examples in the book, and the notebook.
 ## Pull Requests
 
 My favorite thing about book projects is that they are not open-ended. They get finished. For example, take 
-[this book](https://my.siam.org/Store/Product/viewproduct/?ProductId=44313635) ... please.
+[this book](https://epubs.siam.org/doi/book/10.1137/1.9781611977271) ... please.
 
 __Even after publication, I like bug reports; I need bug reports__, but ...
 
