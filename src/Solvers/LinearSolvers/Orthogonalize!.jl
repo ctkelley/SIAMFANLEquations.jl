@@ -8,7 +8,15 @@ methods. Anything other than classical Gram-Schmidt twice (cgs2) is
 likely to become an undocumented and UNSUPPORTED option. Methods other 
 than cgs2 are mostly for CI for the linear solver.
 
+This orthogonalizes the vector vv against the columns of V
+and stores the coefficients in the vector hv. You preallocate
+hv. The length of hv is the number of columns of VV + 1. vv is 
+overwritten by the orthogonalized unit vector.
+
 DO NOT use anything other than "cgs2" with Anderson acceleration.
+
+I do not export this function, but use it in my own work and in 
+the new MultiPrecisionArrays package. 
 """
 function Orthogonalize!(V, hv, vv, orth = "cgs2"; verbose = false)
     orthopts = ["mgs1", "mgs2", "cgs1", "cgs2"]
