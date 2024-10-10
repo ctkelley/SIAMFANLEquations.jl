@@ -24,6 +24,7 @@ jobs:
           - '1'   # Current stable release
           - '~1.11.0-0'
           - 'nightly'
+# Trying to get aarch64 to work
         os:
 #          - ubuntu-latest
           - macOS-latest
