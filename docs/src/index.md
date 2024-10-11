@@ -8,7 +8,8 @@ for the book
 __Solving Nonlinear Equations with Iterative Methods:__
 __Solvers and Examples in Julia__
 
-This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL)
+This documentation is sketchy and designed to get you going, but the real deal is the [IJulia notebook](https://github.com/ctkelley/NotebookSIAMFANL) and
+the [Print book](https://epubs.siam.org/doi/book/10.1137/1.9781611977271).
 
 ## Scalar Equations: Chapter 1
 

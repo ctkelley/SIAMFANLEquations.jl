@@ -22,7 +22,7 @@ jobs:
         version:
           - '1.10' # LTS
           - '1'   # Current stable release
-          - '~1.11.0-0'
+#          - '~1.11.0-0'
           - 'nightly'
 # Trying to get aarch64 to work
         os:
@@ -32,11 +32,11 @@ jobs:
         arch:
           - x64
           - aarch64
-#    exclude: 
-#          - os: ubuntu-latest
-#            arch: aarch64
-#          - os: windows-latest
-#            arch: aarch64
+    exclude: 
+          - os: ubuntu-latest
+            arch: aarch64
+          - os: windows-latest
+            arch: aarch64
     steps:
       - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@latest
