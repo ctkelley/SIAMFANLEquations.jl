@@ -41,7 +41,7 @@ Hence the notebook and this package all have SIAMFANL in their names.
 The new book has a different algorithm mix and the solvers and examples are in Juila. The project has three parts.
 
    1. A print book: (Kel22) C. T. Kelley, [***Solving Nonlinear Equations with Newton's Method: Solvers and Examples in Julia***](https://epubs.siam.org/doi/book/10.1137/1.9781611977271), Fundamentals of Algorithms 20, SIAM, Philadelphia, 2022.
-      __NEW: the print book is now a [SIAM e-book](https://epubs.siam.org/action/showPublications?pubType=book&notConceptID=115968&startPage=&ContribAuthorFirstLetter=k)__ This means that if your organization is subscribes to the SIAM E-Book series, you can download the pdf for free. Ask your librarian about this.
+      __NEW: the print book is now a [SIAM e-book](https://epubs.siam.org/action/showPublications?pubType=book&notConceptID=115968&startPage=&ContribAuthorFirstLetter=k)__ This means that if your organization subscribes to the SIAM E-Book series, you can download the pdf for free. Ask your librarian about this.
    
    3. [A suite of IJulia notebooks](https://github.com/ctkelley/NotebookSIAMFANL) (open source, MIT License, Creative Commons License)
       The latest releases of the notebook suite and package run correctly. The notebooks and package from the master branches also run correctly
