@@ -21,7 +21,7 @@
 
 # NEW: the print book is now a [SIAM e-book](https://epubs.siam.org/action/showPublications?pubType=book&notConceptID=115968&startPage=&ContribAuthorFirstLetter=k)
 
-This means that if your organization is subscribes to the SIAM E-Book 
+This means that if your organization subscribes to the SIAM E-Book 
 series, you can download the pdf for free. Ask your librarian about this.
 
 
