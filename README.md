@@ -2,7 +2,9 @@
 |:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------- |
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
 
+<!---
 [![SIAMFANLEquaitons Downloads](https://shields.io/endpoint?url=https://pkgs.genieframework.com/api/v1/badge/SIAMFANLEquations)](https://pkgs.genieframework.com?packages=SIAMFANLEquations)
+--->
 
 # SIAMFANLEquations 
 
