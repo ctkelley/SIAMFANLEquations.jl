@@ -1,6 +1,6 @@
 # SIAMFANLEquations.jl
 
-[C. T. Kelley](https://ctk.math.ncsu.edu)
+[C. T. Kelley](https://ctkelley.github.io)
 
 [SIAMFANLEquations.jl](https://github.com/ctkelley/SIAMFANLEquations.jl) is the package of solvers and test problems
 for the book
