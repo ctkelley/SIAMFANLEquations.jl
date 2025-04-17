@@ -27,7 +27,7 @@ This means that if your organization subscribes to the SIAM E-Book
 series, you can download the pdf for free. Ask your librarian about this.
 
 
-## [C. T. Kelley](https://ctk.math.ncsu.edu)
+## [C. T. Kelley](https://ctkelley.github.io)
 
 The book is finished and this project is __DONE__. So I take the sacred book author oath ...
   - I will only make updates to the package and notebooks to fix bugs or typos. 
@@ -252,7 +252,7 @@ doi="10.5281/zenodo.4284687"
 
 3. Have you written any other amazing books?
 
-     - [Yes.](https://ctk.math.ncsu.edu/lv/books.html)
+     - [Yes.](https://ctkelley.github.io/lv/books.html)
 
    
 ## Funding
