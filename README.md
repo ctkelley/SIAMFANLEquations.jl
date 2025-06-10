@@ -122,10 +122,7 @@ __Please, please__, do not send me PRs. If you find
        1. that won't break other stuff, which includes the connection between the book and the package,
        2. or eat up lots of time,
   
- Please  ... 
-
-- tell me the old fashioned way with email to tim_kelley@ncsu.edu 
-- or open an issue.
+ __Please open an issue.__
 
 This is a book project and I need to put all changes in by hand so I'll have muscle memory about what's going on. If there is a second printing I can fix things in the print/pdf books and will fix things in real time (more or less) in the codes and notebooks.
 
