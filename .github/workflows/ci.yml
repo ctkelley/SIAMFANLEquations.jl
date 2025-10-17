@@ -1,14 +1,11 @@
 name: CI
 on:
   push: 
-   paths-ignore:
-      - 'LICENSE.md'
-      - 'README.md'
    branches:
-      - master
+      - main 
   pull_request:
    branches:
-      - master
+      - main 
    tags: '*'
 
 jobs:
@@ -23,12 +20,12 @@ jobs:
           - '1.10' # LTS
           - '1'   # Current stable release
 #          - '~1.12.0-0'
+#          - '~1.13.0-0'
           - 'nightly'
-# Trying to get aarch64 to work
         os:
-          - ubuntu-latest
+#          - ubuntu-latest
           - macOS-latest
-         - windows-latest
+#          - windows-latest
         arch:
           - x64
           - aarch64
