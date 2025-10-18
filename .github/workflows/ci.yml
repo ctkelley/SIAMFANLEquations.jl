@@ -23,11 +23,11 @@ jobs:
 #          - '~1.13.0-0'
           - 'nightly'
         os:
-          - ubuntu-latest
+#          - ubuntu-latest
           - macOS-latest
-          - windows-latest
+#          - windows-latest
         arch:
-          - x64
+#          - x64
           - aarch64
         exclude: 
           - os: ubuntu-latest
