@@ -1,10 +1,7 @@
 | **Documentation**                                                               | **Build Status**                                                                                | **DOI**                                                                                |
-|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------- |
-| [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) |
-
-<!---
-[![SIAMFANLEquaitons Downloads](https://shields.io/endpoint?url=https://pkgs.genieframework.com/api/v1/badge/SIAMFANLEquations)](https://pkgs.genieframework.com?packages=SIAMFANLEquations)
---->
+|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------- 
+| [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][build-status-img]][build-status-url] [![][codecov-img]][codecov-url] | [![DOI](https://zenodo.org/badge/256312455.svg)](https://zenodo.org/badge/latestdoi/256312455) | 
+[![SIAMFANLEquations Downloads](https://img.shields.io/badge/dynamic/json?url=http%3A%2F%2Fjuliapkgstats.com%2Fapi%2Fv1%2Ftotal_downloads%2FSIAMFANLEquations&query=total_requests&&label=Total%20Downloads)](https://juliapkgstats.com/pkg/SIAMFANLEquations)
 
 # SIAMFANLEquations 
 
