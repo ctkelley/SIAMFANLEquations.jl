@@ -72,9 +72,9 @@ This package is designed and built to support a book project. So the solvers and
 ## Installation: 
 
 
-- Your best bet is to __use the latest version of Julia__  (currently 1.11.0) with the notebooks and the package.
+- Your best bet is to __use the latest version of Julia__  (currently 1.12.4) with the notebooks and the package.
 - If you must use old stuff, use LTS 1.10.5 and up with this thing!!!
-- Please do not use any non-LTS version earlier than 1.10.5. The notebook kernel is now 1.11.0.
+- Please do not use any non-LTS version earlier than 1.10.5. The notebook kernel is now 1.12.0.
 Type this 
 
 ```
