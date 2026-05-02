@@ -6,7 +6,7 @@ C. T. Kelley, 2022
 
 Julia code for Anderson acceleration. Nothing fancy.
 
-Solvers fixed point problems x = G(x).
+Solves fixed point problems x = G(x).
 
 You must allocate storage for the function and fixed point map
 history --> in the calling program <-- in the array Vstore.
