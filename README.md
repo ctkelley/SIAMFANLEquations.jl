@@ -7,9 +7,9 @@
 
 ## The archival version 1.0 from the date of publication is in the [FA20 branch](https://github.com/ctkelley/SIAMFANLEquations.jl/tree/FA20).
 
-## The current version is 1.0.2. 
-  - This version eliminates most implicit imports. Look at [this](https://github.com/ericphanson/ExplicitImports.jl) for the story on implicit imports.
-  - I fixed a bug in one of the test problems. Amazingly, it took until Julia v1.10.2 showed up to find it. I've put something in CI to make sure it's really fixed.
+## The current version is 1.0.3. 
+  - This version changes the examples and test problems so that FFTs are only applied to vectors of size $2^p$. This makes AppleAccelerate happy and does no harm. If you want to use vectors of arbitrary size (say for the H-equation) do not use AppleAcclerate.
+  - I have made similar changes in the notebook and also addressed the problems with PyPlot.
   - I've updated/corrected a few docstrings in the solvers.
 
 ## This is the Julia package for my shiny new orange book
