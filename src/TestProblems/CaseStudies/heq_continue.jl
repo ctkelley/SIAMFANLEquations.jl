@@ -1,4 +1,4 @@
-function heq_continue(n = 128; version = "pac")
+function heq_continue(n = 129; version = "pac")
     #
     # Original form: heqfv1!. c is the parameter
     # PAC form: heqfv3!. arclength is the parameter
