@@ -11,7 +11,7 @@ function heq_aa()
     fcount = [11, 10, 10, 11, 12, 12]
     anormref = [4.0, 5.4, 5.4, 5.4, 5.4, 5.4]
     condref = [1.0, 2.e2, 1.9e5, 1.9e7, 5.5e9, 6.5e10]
-    n = 500
+    n = 512
     u0 = ones(n)
     hdata = heqinit(u0, c)
     FS = zeros(n)

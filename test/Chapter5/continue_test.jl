@@ -1,11 +1,12 @@
-function continue_test()
-    v1ok = test_v1()
-    v2ok = test_PAC()
+function continue_test(n=128)
+    v1ok = test_v1(n)
+    v1ok || println("test continue v1 fails")
+    v2ok = test_PAC(n+1)
+    v2ok || println("test continue v2fails")
     continueok = v1ok && v2ok
 end
 
-function test_v1()
-    n = 100
+function test_v1(n=129)
     version = "orig"
     (pval, nval, x, lambda) = heq_continue(n; version = version)
     dpath = path_test.(pval, nval)
@@ -15,8 +16,7 @@ function test_v1()
     return v1_pass
 end
 
-function test_PAC()
-    n = 100
+function test_PAC(n=128)
     version = "pac"
     (pval, nval, x, lambda) = heq_continue(n; version = version)
     dpath = path_test.(pval, nval)
