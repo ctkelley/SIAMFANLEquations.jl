@@ -26,7 +26,7 @@ series, you can download the pdf for free. Ask your librarian about this.
 
 ## [C. T. Kelley](https://ctkelley.github.io)
 
-The book is finished and this project is __DONE__. So I take the sacred book author oath ...
+The book is finished and this project is __DONE__. So I take the __sacred book author oath__ ...
   - I will only make updates to the package and notebooks to fix bugs or typos. 
   - I will not be adding new functionality to this package or new material to the notebooks. 
   - I will make no changes to the user interface for the codes in the package.
