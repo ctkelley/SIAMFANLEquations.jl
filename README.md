@@ -9,7 +9,7 @@
 
 ## The current version is 1.0.3. 
   - This version changes the examples and test problems so that FFTs are only applied to vectors of size $2^p$. This makes AppleAccelerate happy and does no harm. If you want to use vectors of arbitrary size (say for the H-equation) do not use AppleAccelerate.
-  - I have made similar changes in the notebook and also addressed the problems with PyPlot.
+  - I have made similar changes in the notebook and also addressed the problems with PyPlot by __switching to PythonPlot__. 
   - I've updated/corrected a few docstrings in the solvers.
 
 ## This is the Julia package for my shiny new orange book
