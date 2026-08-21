@@ -64,22 +64,22 @@ end
 
 
 function PTCKrylovinit(
-    x0,
-    dx,
-    F!,
-    Jvec,
-    delta0,
-    Pvec,
-    PvecKnowsdelta,
-    pside,
-    lsolver,
-    eta,
-    fixedeta,
-    lmaxit,
-    maxit,
-    printerr,
-    pdata,
-)
+        x0,
+        dx,
+        F!,
+        Jvec,
+        delta0,
+        Pvec,
+        PvecKnowsdelta,
+        pside,
+        lsolver,
+        eta,
+        fixedeta,
+        lmaxit,
+        maxit,
+        printerr,
+        pdata,
+    )
     #
     #   Initialize the PTC-Krylov iteration.
     #
@@ -168,7 +168,7 @@ function delta2pdata(PvecKnowsdelta, delta, pdata)
     for ip in Pnames
         valok = valok || :deltaval == ip
     end
-    valok ? (pdata.deltaval[1] = delta) :
-    error("PvecKnowsdelta is set to true, but there the array 
+    return valok ? (pdata.deltaval[1] = delta) :
+        error("PvecKnowsdelta is set to true, but there the array 
            deltaval is not a field of pdata. Check the docstrings.")
 end

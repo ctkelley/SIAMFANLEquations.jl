@@ -4,7 +4,7 @@ NsolPDE(n; sham=1, resdec=.5, rtol=1.e-7, atol=1.e-10)
 Solve the Elliptic PDE using nsol.jl on an n x n grid. You give me
 n and (optionally) sham and resdec and I return the output of nsol.
 """
-function NsolPDE(n; sham = 1, resdec = 0.5, rtol = 1.e-7, atol = 1.e-10)
+function NsolPDE(n; sham = 1, resdec = 0.5, rtol = 1.0e-7, atol = 1.0e-10)
     # Get some room for the residual
     u0 = zeros(n * n)
     FV = copy(u0)

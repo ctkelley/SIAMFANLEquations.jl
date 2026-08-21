@@ -15,7 +15,7 @@ function heqJ!(FP,F,x,pdata)
 The is the Jacobian evaluation playing by nsol rules. The
 precomputed data is a big deal for this one. 
 """
-function heqJ!(FP::Array{T,2}, F, x, pdata) where {T<:Real}
+function heqJ!(FP::Array{T, 2}, F, x, pdata) where {T <: Real}
     pseed = pdata.pseed
     mu = pdata.mu
     n = length(x)
@@ -26,8 +26,8 @@ function heqJ!(FP::Array{T,2}, F, x, pdata) where {T<:Real}
     Gfix = pdata.gtmp
     @views Gfix .= x - F
     @views Gfix .= -(Gfix .* Gfix .* pmu)
-    @views @inbounds for jfp = 1:n
-        FP[:, jfp] .= Gfix[:, 1] .* pseed[jfp:jfp+n-1]
+    @views @inbounds for jfp in 1:n
+        FP[:, jfp] .= Gfix[:, 1] .* pseed[jfp:(jfp + n - 1)]
         FP[jfp, jfp] = 1.0 + FP[jfp, jfp]
     end
     return FP
@@ -68,7 +68,7 @@ function HeqFix!(Gfix, x, pdata)
     Gfix .= x
     heq_hankel!(Gfix, pdata)
     Gfix .*= pdata.pmu
-    Gfix .= 1.0 ./ (1.0 .- Gfix)
+    return Gfix .= 1.0 ./ (1.0 .- Gfix)
 end
 
 """
@@ -76,7 +76,7 @@ heqinit(x0::Array{T,1}, c) where T :< Real
 
 Initialize H-equation precomputed data.
 """
-function heqinit(x0::Array{T,1}, c) where {T<:Real}
+function heqinit(x0::Array{T, 1}, c) where {T <: Real}
     (c > 0) || error("You can't set c to zero.")
     n = length(x0)
     cval = ones(1)
@@ -85,11 +85,11 @@ function heqinit(x0::Array{T,1}, c) where {T<:Real}
     bsize = (2 * n,)
     ssize = (2 * n - 1,)
     FFA = plan_fft(ones(bsize))
-    mu = collect(0.5:1:n-0.5)
+    mu = collect(0.5:1:(n - 0.5))
     pmu = mu * c
     mu = mu / n
     hseed = zeros(ssize)
-    for is = 1:2*n-1
+    for is in 1:(2 * n - 1)
         hseed[is] = 1.0 / is
     end
     hseed = (0.5 / n) * hseed
@@ -100,7 +100,7 @@ function heqinit(x0::Array{T,1}, c) where {T<:Real}
     hankel = zeros(bsize) * (1.0 + im)
     FFB = plan_fft!(zstore)
     bigseed = zeros(bsize)
-    @views bigseed .= [hseed[n:2*n-1]; 0; hseed[1:n-1]]
+    @views bigseed .= [hseed[n:(2 * n - 1)]; 0; hseed[1:(n - 1)]]
     @views hankel .= conj(FFA * bigseed)
     return (
         cval = cval,
@@ -130,7 +130,7 @@ function setc!(pdata, cin)
     c = pdata.cval[1]
     cfix = cin / c
     pdata.pmu .*= cfix
-    pdata.cval[1] = cin
+    return pdata.cval[1] = cin
 end
 
 
@@ -141,7 +141,7 @@ FFA is what you get with plan_fft before you start computing
 """
 function heq_hankel!(b, pdata)
     reverse!(b)
-    heq_toeplitz!(b, pdata)
+    return heq_toeplitz!(b, pdata)
 end
 
 
@@ -155,7 +155,7 @@ function heq_toeplitz!(b, pdata)
     y .*= 0.0
     @views y[1:n] = b
     heq_cprod!(y, pdata)
-    @views b .= y[1:n]
+    return @views b .= y[1:n]
 end
 
 """
@@ -174,7 +174,7 @@ function heq_cprod!(b, pdata)
     hankel = pdata.hankel
     xb .*= hankel
     pdata.FFB * xb
-    b .= real.(xb)
+    return b .= real.(xb)
 end
 
 """
@@ -191,20 +191,20 @@ pages=283
 function heqbos!(F, x, pdata)
     c = pdata
     n = length(x)
-    mu = 0.5:1:n-0.5
+    mu = 0.5:1:(n - 0.5)
     mu = mu / n
     h = 1.0 / n
     cval = sqrt(1.0 - c)
     A = zeros(n, n)
-    for j = 1:n
-        for i = 1:n
+    for j in 1:n
+        for i in 1:n
             A[i, j] = mu[j] / (mu[i] + mu[j])
         end
     end
     A = (c / 2) * h * A
     F .= (A * x)
-    for ig = 1:n
+    for ig in 1:n
         F[ig] = 1.0 / (cval + F[ig])
     end
-    F .= x - F
+    return F .= x - F
 end

@@ -206,17 +206,17 @@ julia> hout.history
 ```
 """
 function aasol(
-    GFix!,
-    x0,
-    m,
-    Vstore;
-    maxit = 20,
-    rtol = 1.e-10,
-    atol = 1.e-10,
-    beta = 1.0,
-    pdata = nothing,
-    keepsolhist = false,
-)
+        GFix!,
+        x0,
+        m,
+        Vstore;
+        maxit = 20,
+        rtol = 1.0e-10,
+        atol = 1.0e-10,
+        beta = 1.0,
+        pdata = nothing,
+        keepsolhist = false,
+    )
     #
     # Startup
     #
@@ -228,14 +228,14 @@ function aasol(
     #   Iteration 1
     #
     k = 0
-    ~keepsolhist || (@views solhist[:, k+1] .= sol)
+    ~keepsolhist || (@views solhist[:, k + 1] .= sol)
     gx = EvalF!(GFix!, gx, sol, pdata)
     (beta == 1.0) || (gx = betafix!(gx, sol, beta))
     copy!(res, gx)
     axpy!(-1.0, sol, res)
     #    res .= gx - sol
     resnorm = norm(res)
-    resnorm_up_bd = 1.e4 * resnorm
+    resnorm_up_bd = 1.0e4 * resnorm
     tol = rtol * resnorm + atol
     ItData = ItStatsA(resnorm)
     toosoon = (resnorm <= tol)
@@ -247,7 +247,7 @@ function aasol(
         copy!(sol, gx)
         alpha = zeros(m + 1)
         k = k + 1
-        ~keepsolhist || (@views solhist[:, k+1] .= sol)
+        ~keepsolhist || (@views solhist[:, k + 1] .= sol)
         (gx, dg, df, res, resnorm) = aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
         updateHist!(ItData, resnorm)
     end
@@ -280,7 +280,7 @@ function aasol(
         end
         updateStats!(ItData, condit, alphanrm)
         k += 1
-        ~keepsolhist || (@views solhist[:, k+1] .= sol)
+        ~keepsolhist || (@views solhist[:, k + 1] .= sol)
         (gx, dg, df, res, resnorm) = aa_point!(gx, GFix!, sol, res, dg, df, beta, pdata)
         updateHist!(ItData, resnorm)
     end
@@ -295,16 +295,16 @@ BuildDG!(DG,m,k,dg)
 Keeps the history of the fixed point map differences
 """
 function BuildDG!(DG, m, k, dg)
-    if m == 1
+    return if m == 1
         @views copy!(DG[:, 1], dg)
     elseif k > m + 1
-        for ic = 1:m-1
+        for ic in 1:(m - 1)
             #            @views DG[:, ic] .= DG[:, ic+1]
-            @views copy!(DG[:, ic], DG[:, ic+1])
+            @views copy!(DG[:, ic], DG[:, ic + 1])
         end
         @views copy!(DG[:, m], dg)
     else
-        @views copy!(DG[:, k-1], dg)
+        @views copy!(DG[:, k - 1], dg)
     end
 end
 
@@ -373,10 +373,10 @@ function update_aaqr!(Q, R, vnew, m, k)
     (nq, mq) = size(Q)
     (k > m - 1) && error("Dimension error in Anderson QR")
     @views Qkm = Q[:, 1:k]
-    @views hv = vec(R[1:k+1, k+1])
+    @views hv = vec(R[1:(k + 1), k + 1])
     Orthogonalize!(Qkm, hv, vnew, "cgs2")
-    @views R[1:k+1, k+1] .= hv
-    @views Q[:, k+1] .= vnew
+    @views R[1:(k + 1), k + 1] .= hv
+    return @views Q[:, k + 1] .= vnew
     #    return (Q = Q, R = R)
 end
 
@@ -388,21 +388,21 @@ function downdate_aaqr!(Q, R, m, Qd)
     G = qr!(Rp)
     Rd = Matrix(G.R)
     Qx = Matrix(G.Q)
-    @views R[1:m-1, 1:m-1] .= Rd
+    @views R[1:(m - 1), 1:(m - 1)] .= Rd
     @views R[:, m] .= 0.0
     if (pd == nq)
         mul!(Qd, Q, Qx)
-        @views Q[:, 1:m-1] .= Qd
+        @views Q[:, 1:(m - 1)] .= Qd
     else
         blocksize = pd
         (dlow, dhigh) = blockdim(nq, blocksize)
         blen = length(dlow)
-        for il = 1:blen
+        for il in 1:blen
             asize = dhigh[il] - dlow[il] + 1
             @views QZ = Qd[1:asize, :]
             @views Qsec = Q[dlow[il]:dhigh[il], :]
             @views mul!(QZ, Qsec, Qx)
-            @views Qsec[:, 1:m-1] .= QZ
+            @views Qsec[:, 1:(m - 1)] .= QZ
         end
     end
     @views Q[:, m] .= 0.0
@@ -416,7 +416,7 @@ function aaqr_dim_check(Q, R, vnew, m, k)
     dimqok = ((mq == n) && (nq == m))
     dimrok = ((mr == m) && (nr == m))
     dimok = (dimqok && dimrok)
-    dimok || error("array size error in AA update")
+    return dimok || error("array size error in AA update")
 end
 
 function blockdim(n, block)
@@ -424,7 +424,7 @@ function blockdim(n, block)
     res = n - p * block
     ilow = Int64[]
     ihigh = Int64[]
-    for jb = 1:p
+    for jb in 1:p
         lowval = (jb - 1) * block + 1
         push!(ilow, lowval)
         highval = ilow[jb] + block - 1

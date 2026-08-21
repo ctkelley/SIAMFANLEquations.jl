@@ -33,7 +33,7 @@ function pdeF!(FV, u, pdata)
     p1 .*= 20.0
     p1 .*= u
     FV .+= p1
-    FV .-= rhs
+    return FV .-= rhs
 end
 
 """
@@ -52,7 +52,7 @@ function pdeJ!(FP, F, u, pdata)
     DC = Diagonal(20 * cu)
     DU = Diagonal(20 * u)
     #
-    # The easy way to compute the Jacobian is 
+    # The easy way to compute the Jacobian is
     #FP .= D2 + DU*CV + DC
     # but you allocate yourself silly with that one.
     # So we preallocate room for DU*CV in CT and sum the terms for FP
@@ -62,8 +62,8 @@ function pdeJ!(FP, F, u, pdata)
     FP .= D2
     FP .+= DC
     mul!(CT, DU, CV)
-    #CT .= CV; lmul!(DU,CT); 
-    FP .+= CT
+    #CT .= CV; lmul!(DU,CT);
+    return FP .+= CT
     # I should be able to do mul!(FP,DU,CV), but it's 1000s of times slower.
 end
 
@@ -135,7 +135,7 @@ function pdeinit(n)
     # Make the grids
     n2 = n * n
     h = 1.0 / (n + 1.0)
-    x = collect(h:h:1.0-h)
+    x = collect(h:h:(1.0 - h))
     # collect the operators
     D2 = Lap2d(n)
     DX = Dx2d(n)
@@ -159,7 +159,7 @@ function pdeinit(n)
     jvec = zeros(n2)
     jvect1 = zeros(n2)
     # Pack it and ship it.
-    pdedata =
+    return pdedata =
         (D2 = D2, CV = CV, CT = CT, RHS = RHS, jvec, jvect1, fdata = fdata, uexact = uexact)
 end
 
@@ -173,15 +173,15 @@ which is the example from FA01.
 """
 
 function w(x)
-    w = 10.0 * x .* (1.0 .- x) .* exp.(x .^ (4.5))
+    return w = 10.0 * x .* (1.0 .- x) .* exp.(x .^ (4.5))
 end
 
 function wx(x)
-    wx = 4.5 * (x .^ (3.5)) .* w(x) + 10.0 * exp.(x .^ (4.5)) .* (1.0 .- 2.0 * x)
+    return wx = 4.5 * (x .^ (3.5)) .* w(x) + 10.0 * exp.(x .^ (4.5)) .* (1.0 .- 2.0 * x)
 end
 
 function wxx(x)
-    wxx =
+    return wxx =
         (4.5 * 3.5) * (x .^ (2.5)) .* w(x) +
         4.5 * (x .^ (3.5)) .* wx(x) +
         +10.0 * 4.5 * (x .^ (3.5)) .* exp.(x .^ (4.5)) .* (1.0 .- 2.0 * x) +
@@ -189,29 +189,29 @@ function wxx(x)
 end
 
 function v(x)
-    v = x .* (1.0 .- x)
+    return v = x .* (1.0 .- x)
 end
 
 function vx(x)
-    vx = 1.0 .- 2.0 * x
+    return vx = 1.0 .- 2.0 * x
 end
 
 function vxx(x)
-    vxx = -2.0 * ones(size(x))
+    return vxx = -2.0 * ones(size(x))
 end
 
 function solexact(x)
-    solexact = w(x) * v(x)'
+    return solexact = w(x) * v(x)'
 end
 
 function l2dexact(x)
-    l2dexact = -(w(x) * vxx(x)') - (wxx(x) * v(x)')
+    return l2dexact = -(w(x) * vxx(x)') - (wxx(x) * v(x)')
 end
 
 function dxexact(x)
-    dxexact = wx(x) * v(x)'
+    return dxexact = wx(x) * v(x)'
 end
 
 function dyexact(x)
-    dxexact = w(x) * vx(x)'
+    return dxexact = w(x) * vx(x)'
 end

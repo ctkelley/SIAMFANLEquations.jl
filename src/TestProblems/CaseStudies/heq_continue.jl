@@ -60,13 +60,13 @@ function solutionv1_init(n, FPS = [], FS = [])
         c = lambda
         n = length(x)
         push!(nval, norm(x, 1) / n)
-        push!(pval, c)
+        return push!(pval, c)
     end
     #
     function setlam_v1!(qdata, lambda, xdot = [], xold = [])
         hdata = qdata.fdata
         c = lambda
-        setc!(hdata, c)
+        return setc!(hdata, c)
     end
     #
     return (
@@ -105,11 +105,11 @@ function solutionv3_init(n, FPS = [], FS = [])
     x0 = ones(n)
     znew = ones(n)
     xin = ones(n - 1)
-    @views xin .= x0[1:n-1]
+    @views xin .= x0[1:(n - 1)]
     hdata = heqinit(xin, dlam)
     #
     # Now compute an honest solution to start the continuation
-    # we need at least two points on the path before we can come up 
+    # we need at least two points on the path before we can come up
     # with xdot. The plan is to solve the equation and then approximate
     # xdot vi xdot = (xc - xold)/ds
     #
@@ -117,10 +117,10 @@ function solutionv3_init(n, FPS = [], FS = [])
     FSTP = zeros(n - 1, 20)
     nout = nsoli(heqf!, xin, FST, FSTP; pdata = hdata)
     #
-    @views znew[1:n-1] .= nout.solution
+    @views znew[1:(n - 1)] .= nout.solution
     znew[n] = dlam
     push!(pval, dlam)
-    @views nrm = norm(znew[1:n-1], 1) / (n - 1)
+    @views nrm = norm(znew[1:(n - 1)], 1) / (n - 1)
     push!(nval, nrm)
     zold = ones(n)
     zold[n] = 0.0
@@ -150,15 +150,15 @@ end
 
 function setlam_v3!(qdata, lambda, xdot, xold)
     qdata.fdata.xdot .= xdot
-    qdata.fdata.xold .= xold
+    return qdata.fdata.xold .= xold
 end
 
 function bif_update_3!(pval, nval, x, lambda)
     n = length(x)
     c = x[n]
     push!(pval, c)
-    @views nrm = norm(x[1:n-1], 1) / (n - 1)
-    push!(nval, nrm)
+    @views nrm = norm(x[1:(n - 1)], 1) / (n - 1)
+    return push!(nval, nrm)
 end
 
 

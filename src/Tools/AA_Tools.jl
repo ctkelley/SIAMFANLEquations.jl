@@ -1,19 +1,19 @@
 #
 # Keep the books for aasol
 #
-mutable struct ItStatsA{T<:Real}
-    condhist::Array{T,1}
-    alphanorm::Array{T,1}
-    history::Array{T,1}
+mutable struct ItStatsA{T <: Real}
+    condhist::Array{T, 1}
+    alphanorm::Array{T, 1}
+    history::Array{T, 1}
 end
 
 function ItStatsA(rnorm)
-    ItStatsA([1.0], [1.0], [rnorm])
+    return ItStatsA([1.0], [1.0], [rnorm])
 end
 
 #
 # Collect the stats at the end of the iteration
-# 
+#
 function CollectStats(ItData::ItStatsA)
     stats = (condhist = ItData.condhist[2:end], alphanorm = ItData.alphanorm[2:end])
     return stats
@@ -21,11 +21,11 @@ end
 
 function updateStats!(ItData::ItStatsA, condhist, alphanorm)
     append!(ItData.condhist, condhist)
-    append!(ItData.alphanorm, alphanorm)
+    return append!(ItData.alphanorm, alphanorm)
 end
 
 function updateHist!(ItData::ItStatsA, rnorm)
-    append!(ItData.history, rnorm)
+    return append!(ItData.history, rnorm)
 end
 
 #
@@ -51,10 +51,10 @@ function Anderson_Init(x0, Vstore, m, maxit, beta, keepsolhist)
         nvblock = 1
     else
         QP = @views Vstore[:, 1:m]
-        DG = @views Vstore[:, m+1:2*m]
+        DG = @views Vstore[:, (m + 1):(2 * m)]
         if (nv >= 3 * m + 3)
-            (Qd = @views Vstore[:, 2*m+1:3*m-1])
-            nvblock=3*m
+            (Qd = @views Vstore[:, (2 * m + 1):(3 * m - 1)])
+            nvblock = 3 * m
         else
             @warn "Low storage mode"
             Qd = zeros(blocksize, m - 1)
@@ -98,9 +98,9 @@ Map thetas to alphas for stats
 """
 function falpha(alpha, theta, mk)
     alpha[1] = theta[1]
-    for ia = 2:mk
-        alpha[ia] = theta[ia] - theta[ia-1]
+    for ia in 2:mk
+        alpha[ia] = theta[ia] - theta[ia - 1]
     end
-    alpha[mk+1] = 1.0 - theta[mk]
+    alpha[mk + 1] = 1.0 - theta[mk]
     return norm(alpha, 1)
 end

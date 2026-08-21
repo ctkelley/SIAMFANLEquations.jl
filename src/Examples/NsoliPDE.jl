@@ -5,16 +5,16 @@ Solve the Elliptic PDE using nsoli.jl on an n x n grid. You give me
 n and (optionally) the iteration paramaters and I return the output of nsoli.
 """
 function NsoliPDE(
-    n;
-    eta = 0.1,
-    fixedeta = true,
-    rtol = 1.e-7,
-    atol = 1.e-10,
-    Pvec = Pvec2d,
-    pside = "right",
-    lsolver = "gmres",
-    restarts = 99,
-)
+        n;
+        eta = 0.1,
+        fixedeta = true,
+        rtol = 1.0e-7,
+        atol = 1.0e-10,
+        Pvec = Pvec2d,
+        pside = "right",
+        lsolver = "gmres",
+        restarts = 99,
+    )
     # Get some room for the residual
     u0 = zeros(n * n)
     FV = copy(u0)

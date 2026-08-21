@@ -199,28 +199,28 @@ julia> # We get the nonnegative steady state.
 
 """
 function ptcsol(
-    F!,
-    x0,
-    FS = [],
-    FPS = [],
-    J! = diffjac!;
-    rtol = 1.e-6,
-    atol = 1.e-12,
-    maxit = 20,
-    delta0 = 1.e-6,
-    dx = 1.e-7,
-    pdata = nothing,
-    jfact = klfact,
-    printerr = true,
-    keepsolhist = false,
-    jknowsdt = false,
-)
+        F!,
+        x0,
+        FS = [],
+        FPS = [],
+        J! = diffjac!;
+        rtol = 1.0e-6,
+        atol = 1.0e-12,
+        maxit = 20,
+        delta0 = 1.0e-6,
+        dx = 1.0e-7,
+        pdata = nothing,
+        jfact = klfact,
+        printerr = true,
+        keepsolhist = false,
+        jknowsdt = false,
+    )
     itc = 0
     idid = true
     #
     #   Initialize the iteration
     #   As with the other codes, ItRules packages all the details of
-    #   the problem so it's easy to pass them around. 
+    #   the problem so it's easy to pass them around.
     #
     (ItRules, x, n, solhist) =
         PTCinit(x0, dx, F!, J!, delta0, maxit, pdata, jfact, keepsolhist, jknowsdt)
@@ -228,7 +228,7 @@ function ptcsol(
     # First Evaluation of the function. Initialize the iteration history.
     # Fix the tolerances for convergence and define the derivative FPF
     # outside of the main loop for scoping.
-    #    
+    #
     FS = EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     tol = rtol * resnorm + atol
@@ -246,8 +246,8 @@ function ptcsol(
     #
     delta = delta0
     while resnorm > tol && itc < maxit
-        #   
-        # Evaluate and factor the Jacobian; update x, F(x), and delta.  
+        #
+        # Evaluate and factor the Jacobian; update x, F(x), and delta.
         #
         (x, delta, FS, resnorm) = PTCUpdate(FPS, FS, x, ItRules, step, resnorm, delta)
         #
@@ -255,7 +255,7 @@ function ptcsol(
         #
         updateStats!(ItData, resnorm)
         itc += 1
-        ~keepsolhist || (@views solhist[:, itc+1] .= x)
+        ~keepsolhist || (@views solhist[:, itc + 1] .= x)
     end
     (idid, errcode) = PTCOK(resnorm, tol, toosoon, ItRules, printerr)
     itout = CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist)

@@ -247,33 +247,33 @@ julia> [pout.history[1:5] pout.history[21:25]]
 
 """
 function ptcsoli(
-    F!,
-    x0,
-    FS,
-    FPS,
-    Jvec = dirder;
-    rtol = 1.e-6,
-    atol = 1.e-12,
-    maxit = 20,
-    lmaxit = -1,
-    lsolver = "gmres",
-    eta = 0.1,
-    fixedeta = true,
-    Pvec = nothing,
-    PvecKnowsdelta = false,
-    pside = "right",
-    delta0 = 1.e-6,
-    dx = 1.e-7,
-    pdata = nothing,
-    printerr = true,
-    keepsolhist = false,
-)
+        F!,
+        x0,
+        FS,
+        FPS,
+        Jvec = dirder;
+        rtol = 1.0e-6,
+        atol = 1.0e-12,
+        maxit = 20,
+        lmaxit = -1,
+        lsolver = "gmres",
+        eta = 0.1,
+        fixedeta = true,
+        Pvec = nothing,
+        PvecKnowsdelta = false,
+        pside = "right",
+        delta0 = 1.0e-6,
+        dx = 1.0e-7,
+        pdata = nothing,
+        printerr = true,
+        keepsolhist = false,
+    )
     itc = 0
     idid = true
     #
     #   Initialize the iteration
     #   As with the other codes, ItRules packages all the details of
-    #   the problem so it's easy to pass them around. 
+    #   the problem so it's easy to pass them around.
     #
     (ItRules, x, n) = PTCKrylovinit(
         x0,
@@ -297,7 +297,7 @@ function ptcsoli(
     # First Evaluation of the function. Initialize the iteration history.
     # Fix the tolerances for convergence and define the derivative FPF
     # outside of the main loop for scoping.
-    #    
+    #
     FS = EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     ItData = ItStatsPTCK(resnorm)
@@ -321,8 +321,8 @@ function ptcsoli(
         residm = resnorm
         newjac = 0
         newikfail = 0
-        #   
-        # Comppute the Jacobian-vector product; update x, F(x), and delta.  
+        #
+        # Comppute the Jacobian-vector product; update x, F(x), and delta.
         #
         etag = forcing(itc, residratio, etag, ItRules, tol, resnorm)
         (x, delta, FS, resnorm, Lstats) =
@@ -336,7 +336,7 @@ function ptcsoli(
         #
         updateStats!(ItData, resnorm, newjac, newikfail)
         itc += 1
-        ~keepsolhist || (@views solhist[:, itc+1] .= x)
+        ~keepsolhist || (@views solhist[:, itc + 1] .= x)
     end
     (idid, errcode) = PTCOK(resnorm, tol, toosoon, ItRules, printerr)
     itout = CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist)

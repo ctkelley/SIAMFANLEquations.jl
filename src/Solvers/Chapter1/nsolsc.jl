@@ -166,23 +166,23 @@ julia> nsolout.history
 
 """
 function nsolsc(
-    f,
-    x0,
-    fp = difffp;
-    rtol = 1.e-6,
-    atol = 1.e-12,
-    maxit = 10,
-    solver = "newton",
-    sham = 1,
-    armmax = 5,
-    resdec = 0.1,
-    dx = 1.e-7,
-    armfix = false,
-    pdata = nothing,
-    printerr = true,
-    keepsolhist = true,
-    stagnationok = false,
-)
+        f,
+        x0,
+        fp = difffp;
+        rtol = 1.0e-6,
+        atol = 1.0e-12,
+        maxit = 10,
+        solver = "newton",
+        sham = 1,
+        armmax = 5,
+        resdec = 0.1,
+        dx = 1.0e-7,
+        armfix = false,
+        pdata = nothing,
+        printerr = true,
+        keepsolhist = true,
+        stagnationok = false,
+    )
     #
     # The scalar code is a simple wrapper for the real code (nsol). The
     # wrapper puts placeholders for the memory allocations and the precomputed

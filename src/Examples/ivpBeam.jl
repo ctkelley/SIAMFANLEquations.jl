@@ -35,13 +35,13 @@ function ivpBeam(n, dt, stepnum)
     #
     # Take stepnum time steps and accumulate the data for the book.
     # The integration will terminate prematurely if the nonlinear solve fails.
-    # This can happen if your time step is too large and/or your 
+    # This can happen if your time step is too large and/or your
     # predictor is poor.
     #
-    # I have tuned the time step to make the solver happy and 
+    # I have tuned the time step to make the solver happy and
     # we are getting close to steady state.
     #
-    while idt <= stepnum && idid && fxn > 1.e-12
+    while idt <= stepnum && idid && fxn > 1.0e-12
         nout = nsol(
             FBeamtd!,
             un,
@@ -49,14 +49,14 @@ function ivpBeam(n, dt, stepnum)
             JB,
             BeamtdJ!;
             pdata = bdata,
-            atol = 1.e-10,
-            rtol = 1.e-6,
+            atol = 1.0e-10,
+            rtol = 1.0e-6,
             maxit = 3,
             solver = "chord",
         )
         idid = nout.idid
         un = nout.solution
-        solhist[:, idt+1] .= un
+        solhist[:, idt + 1] .= un
         bdata.UN .= un
         idt += 1
         fx = FBeam!(FR, un, bdata)

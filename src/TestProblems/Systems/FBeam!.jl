@@ -27,8 +27,8 @@ function BeamJ!(FP, FV, U, bdata)
     lambda = bdata.lambda
     cu = lambda * cos.(U)
     CU = Diagonal(cu)
-#    n = length(U)
-#    zr = zeros(n - 1)
+    #    n = length(U)
+    #    zr = zeros(n - 1)
     FP .= D2 - CU
     #
     # The return FP is important.
@@ -46,7 +46,7 @@ F^n(w)' = I + dt F'(w)
 function BeamtdJ!(FP, FV, U, bdata)
     FP .= BeamJ!(FP, FV, U, bdata)
     dt = bdata.dt
-    FP .= I + dt * FP
+    return FP .= I + dt * FP
 end
 
 """
@@ -63,7 +63,7 @@ function FBeamtd!(FV, U, bdata)
     dt = bdata.dt
     FV .= FBeam!(FV, U, bdata)
     dU = U - un
-    FV .= dU + dt * FV
+    return FV .= dU + dt * FV
     #axpby!(1.0,dU,dt,FV)
 end
 
@@ -85,9 +85,9 @@ function beaminit(n, dt, lambda = 20.0)
     deltaval = zeros(1)
     D2 = Lap1d(n)
     dx = 1.0 / (n + 1)
-    x = collect(dx:dx:1.0-dx)
+    x = collect(dx:dx:(1.0 - dx))
     UN = zeros(size(x))
-    bdata =
+    return bdata =
         (D2 = D2, x = x, dx = dx, dt = dt, lambda = lambda, UN = UN, deltaval = deltaval)
 end
 
@@ -96,11 +96,11 @@ Lap1d(n)
 
 returns -d^2/dx^2 on [0,1] zero BC
 """
-function Lap1d(n; beam=false)
+function Lap1d(n; beam = false)
     dx = 1 / (n + 1)
     d = 2.0 * ones(n)
     sup = -ones(n - 1)
     D2 = SymTridiagonal(d, sup)
-    D2 ./= (dx*dx)
+    D2 ./= (dx * dx)
     return D2
 end

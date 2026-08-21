@@ -6,7 +6,7 @@ design it to be hackable by the novice.
 """
 function armijosc(xt, xc, ft, fc, d, residm, ItRules, derivative_is_old)
     idid = true
-    alpha = 1.e-4
+    alpha = 1.0e-4
     iarm = -1
     lambda = 1.0
     lam0 = 0.0
@@ -38,7 +38,7 @@ function armijosc(xt, xc, ft, fc, d, residm, ItRules, derivative_is_old)
     ffm = ffc
     while armfail && iarm < armmax
         #
-        #   At this point the full step has failed. Now it's time to be 
+        #   At this point the full step has failed. Now it's time to be
         #   serious about the line search.
         #
         lambda = update_lambda(iarm, armfix, lambda, lamc, ff0, ffc, ffm)
@@ -117,7 +117,7 @@ function parab3p(lambdac, lambdam, ff0, ffc, ffm)
     sigma1 = 0.5
     #
     c2 = lambdam * (ffc - ff0) - lambdac * (ffm - ff0)
-    if c2 >= 0
+    return if c2 >= 0
         #
         # Sanity check for negative curvature
         #

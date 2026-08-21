@@ -14,7 +14,7 @@ Unit square, homogeneous Dirichlet BC
 function Dx2d(n)
     h = 1 / (n + 1)
     ssdiag = ones(n^2 - 1) / (2 * h)
-    for iz = n:n:n^2-1
+    for iz in n:n:(n^2 - 1)
         ssdiag[iz] = 0.0
     end
     updiag = Pair(1, ssdiag)
@@ -52,7 +52,7 @@ function Lap2d(n)
     maindiag = fill(4 * hm2, (n^2,))
     sxdiag = fill(-hm2, (n^2 - 1,))
     sydiag = fill(-hm2, (n^2 - n,))
-    for iz = n:n:n^2-1
+    for iz in n:n:(n^2 - 1)
         sxdiag[iz] = 0.0
     end
     D2 = spdiagm(-n => sydiag, -1 => sxdiag, 0 => maindiag, 1 => sxdiag, n => sydiag)
@@ -122,18 +122,18 @@ the 2D fast Poisson solver.
 function newT(n)
     N = n * n
     h = 1 / (n + 1)
-    x = h:h:1-h
+    x = h:h:(1 - h)
     h2 = 1 / (h * h)
     LE = 2 * (2 .- cos.(pi * x)) * h2
     fn = ones(N - 1) * h2
     gn = ones(N - 1) * h2
     dx = zeros(N)
-    for k = 1:n-1
-        fn[k*n] = 0.0
-        gn[k*n] = 0.0
-        dx[(k-1)*n+1:n*k] = LE[k] * ones(n)
+    for k in 1:(n - 1)
+        fn[k * n] = 0.0
+        gn[k * n] = 0.0
+        dx[((k - 1) * n + 1):(n * k)] = LE[k] * ones(n)
     end
-    dx[(n-1)*n+1:n*n] = LE[n] * ones(n)
+    dx[((n - 1) * n + 1):(n * n)] = LE[n] * ones(n)
     T = Tridiagonal(-fn, dx, -gn)
     return T
 end

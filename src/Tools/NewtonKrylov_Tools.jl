@@ -1,6 +1,6 @@
 #
 # The functions in this file manage the Newton-Krylov step and
-# the Jacobian/preconditioner - vector products. 
+# the Jacobian/preconditioner - vector products.
 #
 """
 Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
@@ -33,7 +33,7 @@ function Krylov_Step!(step, x, FS, FPS, ItRules, etag, delta = 0)
     s0 .*= 0.0
     side = ItRules.pside
     #
-    # map the Jacobian-vector and preconditioner-vector products 
+    # map the Jacobian-vector and preconditioner-vector products
     # from nsoli format to what the Krylov solvers want to see
     #
     kdata = (
@@ -166,7 +166,7 @@ function dirder(v, kdata)
 end
 
 function ptcmv!(atv, v, delta)
-    (delta == 0.0) || (atv .= atv + (1.0 / delta) * v)
+    return (delta == 0.0) || (atv .= atv + (1.0 / delta) * v)
     #return atv
 end
 
@@ -249,5 +249,5 @@ function kstep_test(FPS, step, lsolver)
     # Do a bit of management
     (nk,) = size(FPS)
     n = length(step)
-    n == nk || error("Krylov storage vectors wrong length")
+    return n == nk || error("Krylov storage vectors wrong length")
 end

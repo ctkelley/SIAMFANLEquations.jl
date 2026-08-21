@@ -176,20 +176,20 @@ julia> [gout.reshist gout32.reshist]
  
 """
 function kl_gmres(
-    x0,
-    b,
-    atv,
-    V,
-    eta,
-    ptv = nothing;
-    kl_store = nothing,
-    orth = "cgs2",
-    side = "right",
-    lmaxit = -1,
-    pdata = nothing,
-)
+        x0,
+        b,
+        atv,
+        V,
+        eta,
+        ptv = nothing;
+        kl_store = nothing,
+        orth = "cgs2",
+        side = "right",
+        lmaxit = -1,
+        pdata = nothing,
+    )
 
-    # Build some precomputed data to inform KL_atv about 
+    # Build some precomputed data to inform KL_atv about
     # preconditioning ...
     # Do not overwrite the initial iterate or the right hand side.
     n = length(x0)
@@ -223,7 +223,7 @@ function kl_gmres(
         (pdata = pdata, side = side, ptv = ptv, atv = atv, linsol = linsol, restmp = restmp)
     gout = []
     #
-    # Restarted GMRES loop. 
+    # Restarted GMRES loop.
     #
     while ip <= length(itvec) && idid == false
         localout =
@@ -340,9 +340,9 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
     beta = rho
     while (rho > errtol) && (k < kmax)
         k += 1
-        @views V[:, k+1] .= atv(V[:, k], pdata)
-        @views vv = vec(V[:, k+1])
-        @views hv = vec(h[1:k+1, k])
+        @views V[:, k + 1] .= atv(V[:, k], pdata)
+        @views vv = vec(V[:, k + 1])
+        @views hv = vec(h[1:(k + 1), k])
         @views Vkm = V[:, 1:k]
         #
         # Don't mourn. Orthogonalize!
@@ -350,24 +350,24 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
         Orthogonalize!(Vkm, hv, vv, orth)
         #
         # Build information for new Givens rotations.
-        #   
+        #
         if k > 1
             hv = @view h[1:k, k]
-            giveapp!(c[1:k-1], s[1:k-1], hv, k - 1)
+            giveapp!(c[1:(k - 1)], s[1:(k - 1)], hv, k - 1)
         end
-        nu = norm(h[k:k+1, k])
+        nu = norm(h[k:(k + 1), k])
         if nu != 0
             c[k] = conj(h[k, k] / nu)
-            s[k] = -h[k+1, k] / nu
-            h[k, k] = c[k] * h[k, k] - s[k] * h[k+1, k]
-            h[k+1, k] = 0.0
-            gv = @view g[k:k+1]
+            s[k] = -h[k + 1, k] / nu
+            h[k, k] = c[k] * h[k, k] - s[k] * h[k + 1, k]
+            h[k + 1, k] = 0.0
+            gv = @view g[k:(k + 1)]
             giveapp!(c[k], s[k], gv, 1)
         end
         #
         # Update the residual norm.
         #
-        rho = abs(g[k+1])
+        rho = abs(g[k + 1])
         (nu > 0.0) || (println("near breakdown"); rho = 0.0)
         push!(reshist, rho)
     end
@@ -379,7 +379,7 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
     #    qmf = view(V, 1:n, 1:k)
     @views qmf = V[:, 1:k]
     #    mul!(r, qmf, y)
-    #    r .= qmf*y    
+    #    r .= qmf*y
     #    x .+= r
     #    sol = x0
     #    mul!(sol, qmf, y, 1.0, 1.0)
@@ -390,10 +390,10 @@ function gmres_base(x0, b, atv, V, eta, pdata; orth = "cgs2", lmaxit = -1)
 end
 
 function giveapp!(c, s, vin, k)
-    for i = 1:k
-        w1 = c[i] * vin[i] - s[i] * vin[i+1]
-        w2 = s[i] * vin[i] + c[i] * vin[i+1]
-        vin[i:i+1] .= [w1, w2]
+    for i in 1:k
+        w1 = c[i] * vin[i] - s[i] * vin[i + 1]
+        w2 = s[i] * vin[i] + c[i] * vin[i + 1]
+        vin[i:(i + 1)] .= [w1, w2]
     end
     return vin
 end
@@ -406,7 +406,7 @@ end
 function maxitvec(K, lmaxit)
     levels = Int.(ceil(lmaxit / (K - 1)))
     itvec = ones(Int, levels)
-    itvec[1:levels-1] .= K - 1
+    itvec[1:(levels - 1)] .= K - 1
     remainder = lmaxit - (levels - 1) * (K - 1)
     itvec[levels] = remainder
     return itvec
@@ -423,7 +423,7 @@ function outup(gout, localout, ip, klmaxit)
         lreshist = localout.reshist
     else
         lk = length(localout.reshist)
-        lreshist = localout.reshist[1:lk-1]
+        lreshist = localout.reshist[1:(lk - 1)]
     end
     if ip == 1
         reshist = lreshist

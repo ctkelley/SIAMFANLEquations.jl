@@ -153,17 +153,17 @@ julia> norm(gout.sol-ue,Inf)
 
 """
 function kl_bicgstab(
-    x0,
-    b,
-    atv,
-    V,
-    eta,
-    ptv = nothing;
-    kl_store = nothing,
-    side = "right",
-    lmaxit = 10,
-    pdata = nothing,
-)
+        x0,
+        b,
+        atv,
+        V,
+        eta,
+        ptv = nothing;
+        kl_store = nothing,
+        side = "right",
+        lmaxit = 10,
+        pdata = nothing,
+    )
     #
     # If you give me too much storage, I will fix it for you.
     #
@@ -242,7 +242,7 @@ function bicgstab_base(x0, rhs, atv, eta; lmaxit = 10, pdata = nothing)
     while rnorm > tol && k < lmaxit
         k += 1
         abs(omega) > 0 || (println("Breakdown omega = 0"); break)
-        beta = (rho[k+1] / rho[k]) * (alpha / omega)
+        beta = (rho[k + 1] / rho[k]) * (alpha / omega)
         axpy!(-omega, v, p)
         #        p .= r + beta * (p - omega * v)
         #        p .= r + beta * p
@@ -250,14 +250,14 @@ function bicgstab_base(x0, rhs, atv, eta; lmaxit = 10, pdata = nothing)
         v .= atv(p, pdata)
         tau = r0' * v
         abs(tau) > 0 || (println("Breakdown r0'*v = 0 "); break)
-        alpha = rho[k+1] / tau
+        alpha = rho[k + 1] / tau
         #        s .= r - alpha * v
         copy!(s, r)
         axpy!(-alpha, v, s)
         t .= atv(s, pdata)
         norm(t) > 0 || (println("Breakdown t = 0"); break)
         omega = (t' * s) / (t' * t)
-        rho[k+2] = -omega * (r0' * t)
+        rho[k + 2] = -omega * (r0' * t)
         #        r .= s - omega * t
         copy!(r, s)
         axpy!(-omega, t, r)

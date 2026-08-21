@@ -22,8 +22,8 @@ function PDE_aa(n = 31, m = 3; Vstore = Float64[], pdata = nothing, beta = 1.0, 
     # Call aasol and return the results.
     #
     u0 = zeros(n * n)
-    rtol = 1.e-8
-    atol = 1.e-8
+    rtol = 1.0e-8
+    atol = 1.0e-8
     aout = aasol(
         hardleftFix!,
         u0,

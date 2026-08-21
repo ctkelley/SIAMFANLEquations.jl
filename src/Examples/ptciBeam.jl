@@ -8,12 +8,12 @@ Solves the buckling beam problem with ptcsoli. You can play
 - relationship of delta0 to n (hint, it's not mesh-independent)
 """
 function ptciBeam(
-    n = 63,
-    delta0 = 1.e-2,
-    PvecKnowsdelta = true,
-    pside = "right";
-    lsolver = "gmres",
-)
+        n = 63,
+        delta0 = 1.0e-2,
+        PvecKnowsdelta = true,
+        pside = "right";
+        lsolver = "gmres",
+    )
     lambda = 20.0
     maxit = 1000
     delta0 = 0.01
@@ -33,8 +33,8 @@ function ptciBeam(
         delta0 = delta0,
         pdata = bdata,
         lmaxit = 19,
-        eta = 1.e-2,
-        rtol = 1.e-10,
+        eta = 1.0e-2,
+        rtol = 1.0e-10,
         maxit = maxit,
         Pvec = Pvec,
         PvecKnowsdelta = PvecKnowsdelta,
@@ -42,7 +42,6 @@ function ptciBeam(
     )
     return pout
 end
-
 
 
 """
@@ -53,7 +52,7 @@ Precondition buckling beam problem with delta-aware preconditioner.
 function ptvbeamdelta(v, x, bdata)
     delta = bdata.deltaval[1]
     J = bdata.D2 + (1.0 / delta) * I
-    ptv = J \ v
+    return ptv = J \ v
 end
 
 """
@@ -63,5 +62,5 @@ Precondition buckling beam problem with inverse of high-order term.
 """
 function ptvbeam(v, x, bdata)
     J = bdata.D2
-    ptv = J \ v
+    return ptv = J \ v
 end

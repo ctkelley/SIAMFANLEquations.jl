@@ -88,20 +88,20 @@ julia> secout.history
 ```
 """
 function secant(
-    f,
-    x0;
-    rtol = 1.e-6,
-    atol = 1.e-12,
-    maxit = 10,
-    solver = "secant",
-    armmax = 5,
-    armfix = false,
-    dx = 1.e-7,
-    pdata = nothing,
-    printerr = true,
-    keepsolhist = true,
-    stagnationok = false,
-)
+        f,
+        x0;
+        rtol = 1.0e-6,
+        atol = 1.0e-12,
+        maxit = 10,
+        solver = "secant",
+        armmax = 5,
+        armfix = false,
+        dx = 1.0e-7,
+        pdata = nothing,
+        printerr = true,
+        keepsolhist = true,
+        stagnationok = false,
+    )
     itc = 0
     idid = true
     errcode = 0
@@ -180,7 +180,7 @@ function secant(
         fm = fc
         fc = AOUT.afc
         #
-        # If the line search fails and the derivative is current, 
+        # If the line search fails and the derivative is current,
         # stop the iteration.
         #
         armstop = AOUT.idid || derivative_is_old
@@ -195,7 +195,7 @@ function secant(
         updateStats!(ItData, newfun, newjac, AOUT)
         #
         itc += 1
-        ~keepsolhist || (@views solhist[:, itc+1] .= x)
+        ~keepsolhist || (@views solhist[:, itc + 1] .= x)
     end
     (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
     newtonout = CloseIteration(x, fc, ItData, idid, errcode, keepsolhist, solhist)

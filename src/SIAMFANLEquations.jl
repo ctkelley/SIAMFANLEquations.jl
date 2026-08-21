@@ -1,5 +1,5 @@
 module SIAMFANLEquations
-# Avoiding most implicit imports 
+# Avoiding most implicit imports
 using LinearAlgebra: I, axpy!, axpby!, cond, lu, lu!, mul!, norm, qr, qr!
 using LinearAlgebra: LinearAlgebra, BLAS
 using SparseArrays: SparseArrays, SparseMatrixCSC
@@ -68,121 +68,120 @@ include("Solvers/LinearSolvers/Orthogonalize!.jl")
 #include("PlotsTables/printhist.jl")
 
 module TestProblems
-using SIAMFANLEquations
-#using LinearAlgebra: LinearAlgebra, BLAS, Diagonal
-using LinearAlgebra: LinearAlgebra, Diagonal
-using LinearAlgebra: I, SymTridiagonal, Tridiagonal, axpby!, axpy!
-using LinearAlgebra: diagind, dot, ldiv!, ldlt, lu!, mul!, norm
-#using LinearAlgebra
-#using LinearAlgebra.BLAS
-using SparseArrays: SparseArrays, spdiagm
-using SuiteSparse: SuiteSparse
-using BandedMatrices
-using AbstractFFTs: AbstractFFTs, plan_fft, plan_fft!
-using FFTW: FFTW
-using Printf: Printf
-using QuadGK: QuadGK, gauss
+    using SIAMFANLEquations
+    #using LinearAlgebra: LinearAlgebra, BLAS, Diagonal
+    using LinearAlgebra: LinearAlgebra, Diagonal
+    using LinearAlgebra: I, SymTridiagonal, Tridiagonal, axpby!, axpy!
+    using LinearAlgebra: diagind, dot, ldiv!, ldlt, lu!, mul!, norm
+    #using LinearAlgebra
+    #using LinearAlgebra.BLAS
+    using SparseArrays: SparseArrays, spdiagm
+    using SuiteSparse: SuiteSparse
+    using BandedMatrices
+    using AbstractFFTs: AbstractFFTs, plan_fft, plan_fft!
+    using FFTW: FFTW
+    using Printf: Printf
+    using QuadGK: QuadGK, gauss
 
 
-export
-    #Functions
-    #    fcos,
-    #    fpatan,
-    spitchfork,
-    #    linatan,
-    sptestp,
-    sptest,
-    #    ftanx,
-    #    ftanxp,
-    heqinit,
-    heqf!,
-    heqJ!,
-    HeqFix!,
-    simple!,
-    jsimple!,
-    JVsimple,
-    heqbos!,
-    setc!,
-    chandprint,
-    bvpinit,
-    Fbvp!,
-    Jbvp!,
-    FBeam!,
-    FBeamtd!,
-    BeamJ!,
-    BeamtdJ!,
-    beaminit,
-    ptctest,
-    pdeF!,
-    pdeJ!,
-    Jvec2d,
-    pdeinit,
-    pdegminit,
-    fishinit,
-    fish2d,
-    sintv,
-    isintv,
-    Pfish2d,
-    Pvec2d,
-    Lap2d,
-    Lap1d,
-    Dx2d,
-    Dy2d,
-    solexact,
-    l2dexact,
-    dxexact,
-    dyexact,
-    hardleft!,
-    hardleftFix!,
-    heat_init,
-    sn_init,
-    heat_fixed!,
-    FCR_heat!,
-    getrhs,
-    AxB,
-    transport_sweep!,
-    heq_continue,
-    knl_continue
+    export
+        #Functions
+        #    fcos,
+        #    fpatan,
+        spitchfork,
+        #    linatan,
+        sptestp,
+        sptest,
+        #    ftanx,
+        #    ftanxp,
+        heqinit,
+        heqf!,
+        heqJ!,
+        HeqFix!,
+        simple!,
+        jsimple!,
+        JVsimple,
+        heqbos!,
+        setc!,
+        chandprint,
+        bvpinit,
+        Fbvp!,
+        Jbvp!,
+        FBeam!,
+        FBeamtd!,
+        BeamJ!,
+        BeamtdJ!,
+        beaminit,
+        ptctest,
+        pdeF!,
+        pdeJ!,
+        Jvec2d,
+        pdeinit,
+        pdegminit,
+        fishinit,
+        fish2d,
+        sintv,
+        isintv,
+        Pfish2d,
+        Pvec2d,
+        Lap2d,
+        Lap1d,
+        Dx2d,
+        Dy2d,
+        solexact,
+        l2dexact,
+        dxexact,
+        dyexact,
+        hardleft!,
+        hardleftFix!,
+        heat_init,
+        sn_init,
+        heat_fixed!,
+        FCR_heat!,
+        getrhs,
+        AxB,
+        transport_sweep!,
+        heq_continue,
+        knl_continue
 
 
-
-include("TestProblems/Scalars/spitchfork.jl")
-include("TestProblems/Systems/simple!.jl")
-include("TestProblems/Systems/Fbvp!.jl")
-include("TestProblems/Systems/FBeam!.jl")
-include("TestProblems/Systems/Hequation.jl")
-include("TestProblems/Systems/EllipticPDE.jl")
-include("TestProblems/Systems/PDE_Tools.jl")
-include("TestProblems/CaseStudies/CR_Heat.jl")
-include("TestProblems/CaseStudies/knl_continue.jl")
-include("TestProblems/CaseStudies/heq_continue.jl")
+    include("TestProblems/Scalars/spitchfork.jl")
+    include("TestProblems/Systems/simple!.jl")
+    include("TestProblems/Systems/Fbvp!.jl")
+    include("TestProblems/Systems/FBeam!.jl")
+    include("TestProblems/Systems/Hequation.jl")
+    include("TestProblems/Systems/EllipticPDE.jl")
+    include("TestProblems/Systems/PDE_Tools.jl")
+    include("TestProblems/CaseStudies/CR_Heat.jl")
+    include("TestProblems/CaseStudies/knl_continue.jl")
+    include("TestProblems/CaseStudies/heq_continue.jl")
 end
 
 module Examples
-using SIAMFANLEquations
-using SIAMFANLEquations.TestProblems
-using LinearAlgebra: LinearAlgebra, I, Tridiagonal, norm, qr!
-#using LinearAlgebra: LinearAlgebra, BLAS, I, Tridiagonal, norm, qr!
-#using LinearAlgebra.BLAS
-using BandedMatrices
+    using SIAMFANLEquations
+    using SIAMFANLEquations.TestProblems
+    using LinearAlgebra: LinearAlgebra, I, Tridiagonal, norm, qr!
+    #using LinearAlgebra: LinearAlgebra, BLAS, I, Tridiagonal, norm, qr!
+    #using LinearAlgebra.BLAS
+    using BandedMatrices
 
-export ptciBeam
-export ptcBeam
-export ivpBeam
-export BVP_solve
-export nsolheq
-export NsolPDE
-export NsoliPDE
-export PDE_aa
+    export ptciBeam
+    export ptcBeam
+    export ivpBeam
+    export BVP_solve
+    export nsolheq
+    export NsolPDE
+    export NsoliPDE
+    export PDE_aa
 
-include("Examples/ptciBeam.jl")
-include("Examples/ptcBeam.jl")
-include("Examples/ivpBeam.jl")
-include("Examples/BVP_solve.jl")
-include("Examples/NsolPDE.jl")
-include("Examples/NsoliPDE.jl")
-include("Examples/PDE_aa.jl")
-include("Examples/Internal/nsolheq.jl")
+    include("Examples/ptciBeam.jl")
+    include("Examples/ptcBeam.jl")
+    include("Examples/ivpBeam.jl")
+    include("Examples/BVP_solve.jl")
+    include("Examples/NsolPDE.jl")
+    include("Examples/NsoliPDE.jl")
+    include("Examples/PDE_aa.jl")
+    include("Examples/Internal/nsolheq.jl")
 end
 
 end # module

@@ -7,13 +7,12 @@
 #
 # Keep the books for nsol and secant
 #
-mutable struct ItStats{T<:Real}
-    ifun::Array{Int64,1}
-    ijac::Array{Int64,1}
-    iarm::Array{Int64,1}
-    history::Array{T,1}
+mutable struct ItStats{T <: Real}
+    ifun::Array{Int64, 1}
+    ijac::Array{Int64, 1}
+    iarm::Array{Int64, 1}
+    history::Array{T, 1}
 end
-
 
 
 #
@@ -21,7 +20,7 @@ end
 #             then it's 2
 #
 function ItStats(hist, initfun = 1)
-    ItStats([initfun], [0], [0], [hist])
+    return ItStats([initfun], [0], [0], [hist])
 end
 
 function updateStats!(ItData::ItStats, newfun, newjac, AOUT)
@@ -31,7 +30,7 @@ function updateStats!(ItData::ItStats, newfun, newjac, AOUT)
     append!(ItData.ifun, newfun)
     append!(ItData.ijac, newjac)
     append!(ItData.iarm, newiarm)
-    append!(ItData.history, resnorm)
+    return append!(ItData.history, resnorm)
 end
 
 function CollectStats(ItData::ItStats)
@@ -42,16 +41,16 @@ end
 #
 # Keep the books for nsoli
 #
-mutable struct ItStatsK{T<:Real}
-    ifun::Array{Int64,1}
-    ijac::Array{Int64,1}
-    iarm::Array{Int64,1}
-    ikfail::Array{Int64,1}
-    history::Array{T,1}
+mutable struct ItStatsK{T <: Real}
+    ifun::Array{Int64, 1}
+    ijac::Array{Int64, 1}
+    iarm::Array{Int64, 1}
+    ikfail::Array{Int64, 1}
+    history::Array{T, 1}
 end
 
 function ItStatsK(hist)
-    ItStatsK([1], [0], [0], [0], [hist])
+    return ItStatsK([1], [0], [0], [0], [hist])
 end
 
 function updateStats!(ItData::ItStatsK, newfun, newjac, AOUT, newikfail)
@@ -62,7 +61,7 @@ function updateStats!(ItData::ItStatsK, newfun, newjac, AOUT, newikfail)
     append!(ItData.ijac, newjac)
     append!(ItData.iarm, newiarm)
     append!(ItData.ikfail, newikfail)
-    append!(ItData.history, resnorm)
+    return append!(ItData.history, resnorm)
 end
 
 function CollectStats(ItData::ItStatsK)
@@ -74,16 +73,16 @@ end
 #
 # Keep stats for PTC
 #
-mutable struct ItStatsPTC{T<:Real}
-    history::Array{T,1}
+mutable struct ItStatsPTC{T <: Real}
+    history::Array{T, 1}
 end
 
 function ItStatsPTC(hist)
-    ItStatsPTC([hist])
+    return ItStatsPTC([hist])
 end
 
 function updateStats!(ItData::ItStatsPTC, resnorm)
-    append!(ItData.history, resnorm)
+    return append!(ItData.history, resnorm)
 end
 
 function CollectStats(ItData::ItStatsPTC)
@@ -94,29 +93,28 @@ end
 #
 # Keep the books for PTC-Krylov
 #
-mutable struct ItStatsPTCK{T<:Real}
-    ifun::Array{Int64,1}
-    ijac::Array{Int64,1}
-    ikfail::Array{Int64,1}
-    history::Array{T,1}
+mutable struct ItStatsPTCK{T <: Real}
+    ifun::Array{Int64, 1}
+    ijac::Array{Int64, 1}
+    ikfail::Array{Int64, 1}
+    history::Array{T, 1}
 end
 
 function ItStatsPTCK(hist)
-    ItStatsPTCK([1], [0], [0], [hist])
+    return ItStatsPTCK([1], [0], [0], [hist])
 end
 
 function updateStats!(ItData::ItStatsPTCK, resnorm, newjac, newikfail)
     append!(ItData.history, resnorm)
     append!(ItData.ifun, 1)
     append!(ItData.ijac, newjac)
-    append!(ItData.ikfail, newikfail)
+    return append!(ItData.ikfail, newikfail)
 end
 
 function CollectStats(ItData::ItStatsPTCK)
     stats = (ifun = ItData.ifun, ijac = ItData.ijac, ikfail = ItData.ikfail)
     return stats
 end
-
 
 
 """

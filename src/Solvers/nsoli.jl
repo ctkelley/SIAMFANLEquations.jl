@@ -257,29 +257,29 @@ julia> koutb.history
 
 """
 function nsoli(
-    F!,
-    x0,
-    FS,
-    FPS,
-    Jvec = dirder;
-    rtol = 1.e-6,
-    atol = 1.e-12,
-    maxit = 20,
-    lmaxit = -1,
-    lsolver = "gmres",
-    eta = 0.1,
-    fixedeta = true,
-    Pvec = nothing,
-    pside = "right",
-    armmax = 10,
-    dx = 1.e-7,
-    armfix = false,
-    pdata = nothing,
-    printerr = true,
-    keepsolhist = false,
-    Krylov_Data = nothing,
-    stagnationok = false,
-)
+        F!,
+        x0,
+        FS,
+        FPS,
+        Jvec = dirder;
+        rtol = 1.0e-6,
+        atol = 1.0e-12,
+        maxit = 20,
+        lmaxit = -1,
+        lsolver = "gmres",
+        eta = 0.1,
+        fixedeta = true,
+        Pvec = nothing,
+        pside = "right",
+        armmax = 10,
+        dx = 1.0e-7,
+        armfix = false,
+        pdata = nothing,
+        printerr = true,
+        keepsolhist = false,
+        Krylov_Data = nothing,
+        stagnationok = false,
+    )
     itc = 0
     idid = true
     iline = false
@@ -316,7 +316,7 @@ function nsoli(
     # First Evaluation of the function. Initialize the iteration stats.
     # Fix the tolerances for convergence and define the derivative FPF
     # outside of the main loop for scoping.
-    #   
+    #
     FS = EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     tol = rtol * resnorm + atol
@@ -346,7 +346,7 @@ function nsoli(
     # line search failure after a derivative evaluation.
     #
     while resnorm > tol && itc < maxit && (armstop || stagnationok)
-        #   
+        #
         newfun = 0
         newjac = 0
         newikfail = 0
@@ -363,7 +363,7 @@ function nsoli(
         step .= kout.step
         #
         # For GMRES you get 1 jac-vec per iteration and there is no jac-vec
-        # for the initial inner iterate of zero. For BiCGSTAB it's two 
+        # for the initial inner iterate of zero. For BiCGSTAB it's two
         # jac-vecs per iteration.
         #
         newjac = kout.Lstats.lits
@@ -371,7 +371,7 @@ function nsoli(
         linok = kout.Lstats.idid
         linok || (ke_report = Krylov_Error(lmaxit, ke_report); newikfail = 1)
         #
-        # Compute the trial point, evaluate F and the residual norm.     
+        # Compute the trial point, evaluate F and the residual norm.
         # The derivative is never old for Newton-Krylov
         #
         AOUT = armijosc(xt, x, FT, FS, step, resnorm, ItRules, false)
@@ -381,7 +381,7 @@ function nsoli(
         x .= AOUT.ax
         FS .= AOUT.afc
         #
-        # If the line search fails 
+        # If the line search fails
         # stop the iteration. Print an error message unless
         # stagnationok == true
         #
@@ -396,7 +396,7 @@ function nsoli(
         updateStats!(ItData, newfun, newjac, AOUT, newikfail)
         newiarm = AOUT.aiarm
         itc += 1
-        keepsolhist && (@views solhist[:, itc+1] .= x)
+        keepsolhist && (@views solhist[:, itc + 1] .= x)
         #        ~keepsolhist || (@views solhist[:, itc+1] .= x)
     end
     #    solution = x

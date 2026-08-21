@@ -31,17 +31,17 @@ function heat_fixed!(theta, thetain, hn_data)
     source .= theta
     source .^= 4
     source .*= (1.0 - omega)
-    ltol = 1.e-12
+    ltol = 1.0e-12
     flux = flux_solve(source, hn_data, ltol)
-    @views copy!(rhsd2, flux[2:nx-1])
+    @views copy!(rhsd2, flux[2:(nx - 1)])
     rhsd2 .*= (1.0 - omega)
-    @views axpy!(-2.0, source[2:nx-1], rhsd2)
+    @views axpy!(-2.0, source[2:(nx - 1)], rhsd2)
     pn = 1.0 / (2.0 * Nc)
     rhsd2 .*= pn
     ldiv!(D2, rhsd2)
     theta[1] = 0.0
     theta[nx] = 0.0
-    @views theta[2:nx-1] .= rhsd2
+    @views theta[2:(nx - 1)] .= rhsd2
     axpy!(1.0, bcfix, theta)
     return theta
 end
@@ -248,7 +248,7 @@ function sn_angles(na2 = 40)
     negangles = -copy(posangles)
     weights = [negweights; posweights]
     angles = [negangles; posangles]
-    angles, weights
+    return angles, weights
 end
 
 
@@ -334,30 +334,30 @@ function transport_sweep!(psi, phi, psi_left, psi_right, source, sn_data)
     source_total .*= c
     axpy!(1.0, source, source_total)
     @views copy!(source_average, source_total[2:nx])
-    @views source_average .+= source_total[1:nx-1]
+    @views source_average .+= source_total[1:(nx - 1)]
     source_average .*= 0.5
-    @views forward_angles = angles[na+1:na2]
+    @views forward_angles = angles[(na + 1):na2]
     @views backward_angles = angles[1:na]
     vfl = (forward_angles / dx) .+ 0.5
     vfl = 1.0 ./ vfl
     vfr = (forward_angles / dx) .- 0.5
     psi .*= 0.0
     @views psi[1:na, nx] .= psi_right
-    @views psi[na+1:na2, 1] .= psi_left
+    @views psi[(na + 1):na2, 1] .= psi_left
     #
     # Forward sweep
     #
-    @views for ix = 2:nx
-        copy!(psi[na+1:na2, ix], psi[na+1:na2, ix-1])
-        psi[na+1:na2, ix] .*= vfr
-        psi[na+1:na2, ix] .+= source_average[ix-1]
-        psi[na+1:na2, ix] .*= vfl
+    @views for ix in 2:nx
+        copy!(psi[(na + 1):na2, ix], psi[(na + 1):na2, ix - 1])
+        psi[(na + 1):na2, ix] .*= vfr
+        psi[(na + 1):na2, ix] .+= source_average[ix - 1]
+        psi[(na + 1):na2, ix] .*= vfl
     end
     #
     # Backward sweep
     #
-    @views for ix = nx-1:-1:1
-        copy!(psi[1:na, ix], psi[1:na, ix+1])
+    @views for ix in (nx - 1):-1:1
+        copy!(psi[1:na, ix], psi[1:na, ix + 1])
         psi[1:na, ix] .*= vfr
         psi[1:na, ix] .+= source_average[ix]
         psi[1:na, ix] .*= vfl

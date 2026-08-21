@@ -1,6 +1,6 @@
 #
 # The functions in this file look at the status of the iteration at the
-# end and set idid and errcode. 
+# end and set idid and errcode.
 #
 # Nothing exciting in here, but it must be done.
 #

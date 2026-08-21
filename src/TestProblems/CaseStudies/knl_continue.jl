@@ -28,15 +28,15 @@ function knl_continue(FFUN, qdata, pval, nval, x, x0, lambda)
     setlam = qdata.setlam
     bif_update = qdata.bif_update
     #
-    # 
+    #
     #
     dlamm1 = 1.0 / dlam
     idid = true
     lambdaz = lambda
     while lambda <= lambdamax && idid
         #
-        # setlam informs FFUN about xold, xdot, and lambda by updating 
-        # qdata.fdata. This is the biggest, but not the only, part of this 
+        # setlam informs FFUN about xold, xdot, and lambda by updating
+        # qdata.fdata. This is the biggest, but not the only, part of this
         # deal that is not for general use.
         #
         setlam(qdata, lambda, xdot, xold)
@@ -53,7 +53,7 @@ function knl_continue(FFUN, qdata, pval, nval, x, x0, lambda)
             eta = 0.01,
             Krylov_Data = KDS,
             fixedeta = true,
-            atol = 1.e-8,
+            atol = 1.0e-8,
         )
         #
         #  Stop the continuation if nsoli fails. This will usually be
@@ -61,8 +61,8 @@ function knl_continue(FFUN, qdata, pval, nval, x, x0, lambda)
         #
         idid = nout.idid
         #
-        #  Record the solution and compute the derivative in lambda. 
-        #  xdot needs to go to the pseudo-arclength computation.  
+        #  Record the solution and compute the derivative in lambda.
+        #  xdot needs to go to the pseudo-arclength computation.
         #
         x = nout.solution
         xdot .= xold
@@ -83,7 +83,7 @@ function knl_continue(FFUN, qdata, pval, nval, x, x0, lambda)
         lambdaz = lambda
         lambda = lambda + dlam
         #
-        if abs(lambda - lambdamax) < 1.e-12
+        if abs(lambda - lambdamax) < 1.0e-12
             lambda = lambdamax
         end
         #

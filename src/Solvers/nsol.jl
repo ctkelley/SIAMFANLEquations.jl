@@ -245,26 +245,26 @@ julia> hout.history
 ```
 """
 function nsol(
-    F!,
-    x0,
-    FS,
-    FPS,
-    J! = diffjac!;
-    rtol = 1.e-6,
-    atol = 1.e-12,
-    maxit = 20,
-    solver = "newton",
-    sham = 5,
-    armmax = 10,
-    resdec = 0.1,
-    dx = 1.e-7,
-    armfix = false,
-    pdata = nothing,
-    jfact = klfact,
-    printerr = true,
-    keepsolhist = false,
-    stagnationok = false,
-)
+        F!,
+        x0,
+        FS,
+        FPS,
+        J! = diffjac!;
+        rtol = 1.0e-6,
+        atol = 1.0e-12,
+        maxit = 20,
+        solver = "newton",
+        sham = 5,
+        armmax = 10,
+        resdec = 0.1,
+        dx = 1.0e-7,
+        armfix = false,
+        pdata = nothing,
+        jfact = klfact,
+        printerr = true,
+        keepsolhist = false,
+        stagnationok = false,
+    )
 
     itc = 0
     idid = true
@@ -300,7 +300,7 @@ function nsol(
     # First Evaluation of the function. Initialize the iteration stats.
     # Fix the tolerances for convergence and define the derivative FPF
     # outside of the main loop for scoping.
-    #   
+    #
     FS = EvalF!(F!, FS, x, pdata)
     resnorm = norm(FS)
     tol = rtol * resnorm + atol
@@ -328,13 +328,13 @@ function nsol(
     #
     T = eltype(FPS)
     while resnorm > tol && itc < maxit && (armstop || stagnationok)
-        #   
-        # Evaluate and factor the Jacobian.   
+        #
+        # Evaluate and factor the Jacobian.
         #
         newfun = 0
         newjac = 0
         #
-        # Evaluate and factor the Jacobian if (1) you are using the chord 
+        # Evaluate and factor the Jacobian if (1) you are using the chord
         # method and it's the intial iterate, or
         # (2) it's Newton and you are on the right part of the Shamaskii loop,
         # or the line search failed with a stale deriviative, or the residual
@@ -358,13 +358,13 @@ function nsol(
             # the nonlinear iteration. So, I do it for anything worse that
             # Float64 to make the logic simple.
             T == Float64 ? (step .= -(FPF \ FS)) :
-            (ns = norm(FS, Inf); step .= -ns * (FPF \ T.(FS / ns)))
+                (ns = norm(FS, Inf); step .= -ns * (FPF \ T.(FS / ns)))
         else
             # scalar equation
             step = -FS / FPF
         end
         #
-        # Compute the trial point, evaluate F and the residual norm.     
+        # Compute the trial point, evaluate F and the residual norm.
         #
         AOUT = armijosc(xt, x, FT, FS, step, resnorm, ItRules, derivative_is_old)
         #
@@ -394,7 +394,7 @@ function nsol(
         updateStats!(ItData, newfun, newjac, AOUT)
         newiarm = AOUT.aiarm
         itc += 1
-        ~keepsolhist || (@views solhist[:, itc+1] .= x)
+        ~keepsolhist || (@views solhist[:, itc + 1] .= x)
     end
     (idid, errcode) = NewtonOK(resnorm, iline, tol, toosoon, itc, ItRules)
     newtonout = CloseIteration(x, FS, ItData, idid, errcode, keepsolhist, solhist)

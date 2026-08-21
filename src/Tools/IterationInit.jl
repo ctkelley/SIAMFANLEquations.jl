@@ -1,25 +1,25 @@
 #
-# The functions in this file initialize the iterations 
+# The functions in this file initialize the iterations
 #
 """
 Newtoninit: set up Newton's method
 """
 function Newtoninit(
-    x0,
-    dx,
-    F!,
-    J!,
-    solver,
-    sham,
-    armmax,
-    armfix,
-    resdec,
-    maxit,
-    printerr,
-    pdata,
-    jfact,
-    keepsolhist,
-)
+        x0,
+        dx,
+        F!,
+        J!,
+        solver,
+        sham,
+        armmax,
+        armfix,
+        resdec,
+        maxit,
+        printerr,
+        pdata,
+        jfact,
+        keepsolhist,
+    )
     #
     #   Initialize the iteration.
     #
@@ -96,24 +96,24 @@ Newton_Krylov_Init( x0, dx, F!, Jvec, Pvec, pside, lsolver, eta,
 Newton_Krylov_Init: set up nsoli
 """
 function Newton_Krylov_Init(
-    x0,
-    dx,
-    F!,
-    Jvec,
-    Pvec,
-    pside,
-    lsolver,
-    eta,
-    fixedeta,
-    armmax,
-    armfix,
-    maxit,
-    lmaxit,
-    printerr,
-    pdata,
-    Krylov_Data,
-    keepsolhist,
-)
+        x0,
+        dx,
+        F!,
+        Jvec,
+        Pvec,
+        pside,
+        lsolver,
+        eta,
+        fixedeta,
+        armmax,
+        armfix,
+        maxit,
+        lmaxit,
+        printerr,
+        pdata,
+        Krylov_Data,
+        keepsolhist,
+    )
     #
     #   Initialize the iteration.
     #
@@ -156,7 +156,6 @@ function Newton_Krylov_Init(
     )
     return (ItRules, x, n, solhist)
 end
-
 
 
 """

@@ -68,37 +68,37 @@ me to do something else. QR is the default choice for banded because
 that works properly with Float32.
 
 """
-function klfact(A::Array{T,2}) where {T<:Real}
-    TF = lu!(A)
+function klfact(A::Array{T, 2}) where {T <: Real}
+    return TF = lu!(A)
 end
 
-# The default for sparse is lu. lu! for sparse matrices is 
+# The default for sparse is lu. lu! for sparse matrices is
 # too complicated to put in here. You can use lu! if you
 # set fact = nofact and manage the factorization in your Jacobian
 # evaluation code. You'll also get to manage the storage. There's
 # a project in chapter 2 about that.
 #
-function klfact(A::SparseMatrixCSC{Float64,Int64})
-    TF = lu(A)
+function klfact(A::SparseMatrixCSC{Float64, Int64})
+    return TF = lu(A)
 end
 
 
-# The default for banded matrices is qr, because I do not trust 
+# The default for banded matrices is qr, because I do not trust
 # you to allocate the extra two upper bands so I cannot use qr!.
 # I'm using qr! in the example in Chapter 2. Look at the source
 # to see how I did that.
 #
 function klfact(A::BandedMatrix)
-    TF = qr(A)
+    return TF = qr(A)
 end
 
 # Default: do nothing.
 function klfact(A)
-    TF = nofact(A)
+    return TF = nofact(A)
 end
 
 function nofact(A)
-    TF = A
+    return TF = A
 end
 
 
@@ -143,19 +143,19 @@ you are using precomputed data or not. No reason to get excited
 about this.
 """
 function JV!(FPS, FS, x, J!, pdata)
-    J!(FPS, FS, x, pdata)
+    return J!(FPS, FS, x, pdata)
 end
 
 function JV!(FPS, FS, x, dt, J!, pdata)
-    J!(FPS, FS, x, dt, pdata)
+    return J!(FPS, FS, x, dt, pdata)
 end
 
 function JV!(FPS, FS, x, dt, J!, q::Nothing)
-    J!(FPS, FS, x, dt)
+    return J!(FPS, FS, x, dt)
 end
 
 function JV!(FPS, FS, x, J!, q::Nothing)
-    J!(FPS, FS, x)
+    return J!(FPS, FS, x)
 end
 
 
@@ -207,15 +207,15 @@ Nothing much to see here. Move along.
 """
 #function diffjac!(FPS::Array{T,2}, FS, F!, x, dx, pdata) where {T<:Real}
 function diffjac!(FPS, FS, F!, x, dx, pdata)
-    h = dx * norm(x, Inf) + 1.e-8
+    h = dx * norm(x, Inf) + 1.0e-8
     n = length(x)
     y = ones(size(x))
     FY = ones(size(x))
-    for ic = 1:n
+    for ic in 1:n
         y .= x
         y[ic] = y[ic] + h
         EvalF!(F!, FY, y, pdata)
-        for ir = 1:n
+        for ir in 1:n
             FPS[ir, ic] = (FY[ir] - FS[ir]) / h
         end
     end
@@ -227,7 +227,7 @@ UpdateIteration
 
 Take a trial step. Evaluate the function and the residual norm.
 """
-function UpdateIteration(xt::Array{T}, x, FS, lambda, step, ItRules) where {T<:Real}
+function UpdateIteration(xt::Array{T}, x, FS, lambda, step, ItRules) where {T <: Real}
     F! = ItRules.f
     pdata = ItRules.pdata
     copy!(xt, x)
@@ -238,7 +238,7 @@ function UpdateIteration(xt::Array{T}, x, FS, lambda, step, ItRules) where {T<:R
 end
 
 
-function UpdateIteration(xt::T, xm, ft, lambda, d, ItRules) where {T<:Real}
+function UpdateIteration(xt::T, xm, ft, lambda, d, ItRules) where {T <: Real}
     f = ItRules.f
     pdata = ItRules.pdata
     xt = xm + lambda * d
@@ -295,5 +295,5 @@ function test_evaljac(ItRules, itc, newiarm, residratio)
     resdec = ItRules.resdec
     evaljacit = (itc % sham == 0 || newiarm > 0 || residratio > resdec)
     chordinit = (solver == "chord") && itc == 0
-    evaljac = (evaljacit && solver == "newton") || chordinit || solver == "secant"
+    return evaljac = (evaljacit && solver == "newton") || chordinit || solver == "secant"
 end
