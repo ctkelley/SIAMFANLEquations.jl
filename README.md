@@ -12,6 +12,7 @@
   - This version changes the examples and test problems so that FFTs are only applied to vectors of size $2^p$. This makes AppleAccelerate happy and does no harm. If you want to use vectors of arbitrary size (say for the H-equation) do not use AppleAccelerate.
   - I have made similar changes in the notebook and also addressed the problems with PyPlot by __switching to PythonPlot__. 
   - I've updated/corrected a few docstrings in the solvers.
+  - You are looking at the repo for __v 1.04__, the latest dev version. I have done nothing so far except format all the .jl files with [https://github.com/fredrikekre/Runic.jl](runic), You should also sign up as a runicer. Consistent + no-think formatting is great. 
 
 ## This is the Julia package for my shiny new orange book
 
