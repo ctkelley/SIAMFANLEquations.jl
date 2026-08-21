@@ -27,9 +27,9 @@ function nksimple()
     # Newton and forward difference directional derivatives for Newton-GMRES
     #
     dout = nsol(simple!, x0, FS, FPJ, jsimple!; sham = 1, keepsolhist = true)
-    koutx = nsoli(simple!, x0, FS, FPS; eta = 1.e-10, keepsolhist = true, fixedeta = false)
+    koutx = nsoli(simple!, x0, FS, FPS; eta = 1.0e-10, keepsolhist = true, fixedeta = false)
     dsolhist = norm(koutx.solhist - dout.solhist, Inf)
-    shpass = (dsolhist < 1.e-7)
+    shpass = (dsolhist < 1.0e-7)
     shpass || println("solhist compare fails in easy nksimple", dsolhist)
     vconverge = krstest(dout, koutx, "nksimple")
     #
@@ -40,7 +40,7 @@ function nksimple()
     KData = nkl_init(2, "gmres")
     x0 = [3.0; 5.0]
     dout = nsol(simple!, x0, FS, FPJ, jsimple!; sham = 1)
-    kout = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, eta = 1.e-10)
+    kout = nsoli(simple!, x0, FS, FPS, JVsimple; fixedeta = true, eta = 1.0e-10)
     kout2 = nsoli(
         simple!,
         x0,
@@ -49,21 +49,21 @@ function nksimple()
         JVsimple;
         fixedeta = true,
         Krylov_Data = KData,
-        eta = 1.e-10,
+        eta = 1.0e-10,
     )
     KD_ok = krstest(kout2, kout, "KDtest")
     KD_ok || println("Krylov_Data test fails")
     vdiverge = krstest(dout, kout, "hard nksimple problem")
     vdiverge || println("failure hard nksimple problem")
     #
-    #   Now 
+    #   Now
     #
     return vconverge && vdiverge && shpass && KD_ok
 end
 
 function krstest(dout, kout, tname)
     hdiff = norm(kout.history - dout.history, Inf)
-    hpass = (hdiff < 5.e-7)
+    hpass = (hdiff < 5.0e-7)
     hpass || println("history compare fails in $tname")
     #
     adiff = kout.stats.iarm - dout.stats.iarm
@@ -75,9 +75,9 @@ function krstest(dout, kout, tname)
     fpass || println("function value compare fails in $tname")
     #
     soldiff = kout.solution - dout.solution
-    solpass = (norm(soldiff, Inf) < 1.e-9)
+    solpass = (norm(soldiff, Inf) < 1.0e-9)
     solpass || println("solution compare fails in $tname", norm(soldiff, Inf))
-    krpass = (fpass && apass && hpass && solpass)
+    return krpass = (fpass && apass && hpass && solpass)
 end
 
 """
@@ -107,7 +107,7 @@ function jacvec2d()
         Pvec = PVecv2,
     )
     histdiff = norm(nout.history - kout2.history)
-    histpass = (histdiff < 1.e-5)
+    histpass = (histdiff < 1.0e-5)
     histpass || println("hist test fails in jacvec2d")
     ncost = funcost(nout)
     nplot = acost(nout)
@@ -120,9 +120,9 @@ function jacvec2d()
     costpass || println(ncost, "  ", kcost, "  ", kcost2)
     soldiff = (
         norm(kout.solution - nout.solution, Inf) +
-        norm(kout2.solution - nout.solution, Inf)
+            norm(kout2.solution - nout.solution, Inf)
     )
-    solpass = (soldiff < 1.e-7)
+    solpass = (soldiff < 1.0e-7)
     solpass || println("solution compare fails in jacvec2d")
     jvpass = histpass && costpass && solpass
     return jvpass
@@ -186,10 +186,10 @@ end
 
 function funcost(itout)
     netcost = itout.stats.ifun + itout.stats.ijac
-    cost = sum(netcost)
+    return cost = sum(netcost)
 end
 
 function acost(itout)
     netcost = itout.stats.ifun + itout.stats.ijac
-    cost = cumsum(netcost)
+    return cost = cumsum(netcost)
 end

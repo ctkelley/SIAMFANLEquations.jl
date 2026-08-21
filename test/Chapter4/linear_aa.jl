@@ -24,7 +24,7 @@ function linear_aa()
         x0,
         m,
         Vstore;
-        rtol = 1.e-10,
+        rtol = 1.0e-10,
         pdata = pdata,
         maxit = maxit,
         keepsolhist = true,
@@ -35,17 +35,17 @@ function linear_aa()
         x0,
         m,
         VstoreS;
-        rtol = 1.e-10,
+        rtol = 1.0e-10,
         pdata = pdata,
         maxit = maxit,
         keepsolhist = true,
     )
     linerrS = (
         norm(aoutS.history - aout.history, Inf) +
-        norm(aoutS.stats.condhist - aout.stats.condhist, Inf) +
-        norm(aoutS.stats.alphanorm - aout.stats.alphanorm, Inf)
+            norm(aoutS.stats.condhist - aout.stats.condhist, Inf) +
+            norm(aoutS.stats.alphanorm - aout.stats.alphanorm, Inf)
     )
-    tflag = (aout.errcode === -1) && aout.idid && (linerrS < 1.e-15)
+    tflag = (aout.errcode === -1) && aout.idid && (linerrS < 1.0e-15)
     tflag || println("Failure in aasol terminate on entry test.")
     #
     # Test for failure to converge
@@ -58,7 +58,7 @@ function linear_aa()
         x0,
         m,
         Vstore;
-        rtol = 1.e-10,
+        rtol = 1.0e-10,
         pdata = pdata,
         maxit = maxit,
         keepsolhist = true,
@@ -74,12 +74,12 @@ function linear_aa()
         x0,
         m,
         Vstore;
-        rtol = 1.e-10,
+        rtol = 1.0e-10,
         pdata = pdata,
         maxit = maxit,
         keepsolhist = true,
     )
-    termflag = (length(aout.history) == 4) && (norm(aout.solution - xstar, Inf) < 1.e-14)
+    termflag = (length(aout.history) == 4) && (norm(aout.solution - xstar, Inf) < 1.0e-14)
     termflag || println("Terminate in two aa iterations test fails.")
     #
     # Now set the eigenvalues to [2.0, 10.0] and beta=-1/9
@@ -89,13 +89,13 @@ function linear_aa()
     beta = -1.0 / 9.0
     maxit = 10
     m = 1
-    aout1 = aasol(GLin!, x0, m, Vstore; rtol = 1.e-10, pdata = pdata, maxit = maxit)
+    aout1 = aasol(GLin!, x0, m, Vstore; rtol = 1.0e-10, pdata = pdata, maxit = maxit)
     aout2 = aasol(
         GLin!,
         x0,
         m,
         Vstore;
-        rtol = 1.e-10,
+        rtol = 1.0e-10,
         pdata = pdata,
         maxit = maxit,
         beta = beta,

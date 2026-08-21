@@ -1,7 +1,7 @@
 #
 # Test results and performance for the conductive-radiative heat
-# transfer problems. 
-# 
+# transfer problems.
+#
 # This test makes sure the traps and error codes for failure
 # do what I want.
 #
@@ -18,9 +18,9 @@ function heat_test2_examples(p = 2, thetal = 1.0, thetar = 2.0, omega = 0.5, tau
     theta0 = hn_data.bcfix
     mmax = 50
     Vstore = zeros(nx, 3 * mmax + 3)
-    tol = 1.e-10
+    tol = 1.0e-10
     errcodes = [-2, 0, 10]
-    errtarget = [1.e4, 1.e-8, 1.e-4]
+    errtarget = [1.0e4, 1.0e-8, 1.0e-4]
     Pok = true
     #
     # Newton-GMRES to obtain a converged result
@@ -34,7 +34,7 @@ function heat_test2_examples(p = 2, thetal = 1.0, thetar = 2.0, omega = 0.5, tau
         pdata = hn_data,
         rtol = tol,
         atol = tol,
-        dx = 1.e-5,
+        dx = 1.0e-5,
         eta = 0.1,
         fixedeta = false,
         lsolver = "gmres",

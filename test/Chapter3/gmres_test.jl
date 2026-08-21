@@ -25,12 +25,12 @@ the iteration thinks it's ok and is wrong. This also tests the internal
 function kstore.
 """
 function test3x3()
-    A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4]
+    A = [0.001 0 0; 0 0.0011 0; 0 0 1.0e4]
     V = zeros(3, 10)
     V32 = zeros(Float32, 3, 10)
     b = [1.0; 1.0; 1.0]
     x0 = zeros(3)
-    eta = 1.e-10
+    eta = 1.0e-10
     passgm = true
     rightsize = [10, 6, 5, 4]
     rightsize32 = [10, 7, 7, 3]
@@ -39,8 +39,8 @@ function test3x3()
     i = 1
     kl_store = kstore(3, "gmres")
     kl_store32 = kstore(3, "gmres")
-    tol = 1.e-10
-    tol32 = 1.e-7
+    tol = 1.0e-10
+    tol32 = 1.0e-7
     lhistpass = true
     ididpass = true
     locpass = true
@@ -62,12 +62,12 @@ function test3x3()
         ididpass = ididpass && (gout32.idid == TestC[i])
         resnormx = norm(A * gout.sol - b)
         resnorm32 = norm(A * gout32.sol - b)
-        locpass = (resnorm < 1.e-8) && (resnorm32 > 0.1)
+        locpass = (resnorm < 1.0e-8) && (resnorm32 > 0.1)
         c = A \ b
         println(lhistpass, "  ", ididpass, "  ", locpass)
         println(resnorm, "  ", resnorm32, "  ", resnormx, "  ", norm(c - gout.sol))
         # For the Float32 computation, the iteration terminates with success, but
-        # the real residual is bad. 
+        # the real residual is bad.
         println(lhistpass, "  ", ididpass, "  ", locpass)
         locpass || println(
             "failure at orth = ",
@@ -91,10 +91,10 @@ function testR1()
     b = ones(5)
     x0 = zeros(5)
     V = zeros(5, 4)
-    gout = kl_gmres(x0, b, atv, V, 1.e-7; pdata = A)
+    gout = kl_gmres(x0, b, atv, V, 1.0e-7; pdata = A)
     lhist = length(gout.reshist)
     nerr = norm(A * gout.sol - b, Inf)
-    pass = (lhist == 3) && (nerr < 1.e-14)
+    pass = (lhist == 3) && (nerr < 1.0e-14)
     pass || println("Rank one test fails")
     return pass
 end
@@ -111,19 +111,19 @@ function test_integop(n)
     # run through the orthogonalizers
     #
     for orth in Methods
-        goutinteg = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, orth = orth)
+        goutinteg = kl_gmres(u0, f, integop, V, 1.0e-10; pdata = pdata, orth = orth)
         errn = norm(goutinteg.sol - ue, Inf)
         rhist = goutinteg.reshist
         lhist = length(rhist)
         rred = rhist[4] ./ rhist[1]
-        lpass = (errn < 1.e-14) && (rred < 1.e-14) && (lhist == 4)
+        lpass = (errn < 1.0e-14) && (rred < 1.0e-14) && (lhist == 4)
         lpass || println("Failure with orth = ", orth)
         pass = pass && lpass
     end
     #
     #  force a failure
     #
-    failout = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, lmaxit = 2)
+    failout = kl_gmres(u0, f, integop, V, 1.0e-10; pdata = pdata, lmaxit = 2)
     pass = pass && ~failout.idid
     pass || println("Integral operator test fails.")
     return pass
@@ -140,22 +140,20 @@ function test_integop_restart(n)
     u0 = zeros(size(f))
     V = zeros(n, 3)
     V32 = zeros(Float32, n, 3)
-    gout = kl_gmres(u0, f, integop, V, 1.e-10; pdata = pdata, lmaxit = 20)
-    gout32 = kl_gmres(u0, f, integop, V32, 1.e-10; pdata = pdata, lmaxit = 20)
+    gout = kl_gmres(u0, f, integop, V, 1.0e-10; pdata = pdata, lmaxit = 20)
+    gout32 = kl_gmres(u0, f, integop, V32, 1.0e-10; pdata = pdata, lmaxit = 20)
     dhist = norm(gout.reshist - gout32.reshist, Inf)
     lhist = length(gout.reshist)
     gerr = norm(gout.sol - pdata.xe, Inf)
     g32err = norm(gout32.sol - pdata.xe, Inf)
-    histpass = dhist < 3.e-7
+    histpass = dhist < 3.0e-7
     histpass || println("restart history wrong size = ", dhist)
-    errpass = (gerr < 1.e-10) && (g32err < 1.e-10)
+    errpass = (gerr < 1.0e-10) && (g32err < 1.0e-10)
     errpass || println("restart error too large")
     lenpass = (lhist == 6)
     lenpass || println("restart history wrong length")
     return histpass && errpass && lenpass
 end
-
-
 
 
 function atv(x, A)
@@ -171,7 +169,7 @@ end
 
 function integopinit(n)
     h = 1 / n
-    X = collect(0.5*h:h:1.0-0.5*h)
+    X = collect((0.5 * h):h:(1.0 - 0.5 * h))
     K = [ker(x, y) for x in X, y in X]
     #    K = zeros(n, n)
     #    for j = 1:n
@@ -193,7 +191,7 @@ function usol(x)
 end
 
 function ker(x, y)
-    ker = 0.1 * sin(x + exp(y))
+    return ker = 0.1 * sin(x + exp(y))
 end
 
 
@@ -208,14 +206,14 @@ function orth_test()
     A = I - A
     B = Float32.(A)
     C = Float16.(A)
-    pass64 = qr_test(A, 4.e-16)
-    pass32 = qr_test(B, 2.e-7)
-    pass16 = qr_test(C, 2.e-3)
+    pass64 = qr_test(A, 4.0e-16)
+    pass32 = qr_test(B, 2.0e-7)
+    pass16 = qr_test(C, 2.0e-3)
     return pass64 && pass32 && pass16
 end
 
 
-function qr_test(A = rand(3, 3), tol = 1.e-13)
+function qr_test(A = rand(3, 3), tol = 1.0e-13)
     OM = ("mgs1", "mgs2", "cgs1", "cgs2")
     T = eltype(A)
     passqr = true
@@ -238,7 +236,7 @@ function qr_test(A = rand(3, 3), tol = 1.e-13)
         )
         passqr = passqr && pass
     end
-    passqr
+    return passqr
 end
 
 
@@ -248,9 +246,9 @@ function qrctk!(A, orth = "cgs2")
     R = zeros(T, n, n)
     @views R[1, 1] = norm(A[:, 1])
     @views A[:, 1] /= R[1, 1]
-    @views for k = 2:n
+    @views for k in 2:n
         hv = vec(R[1:k, k])
-        Qkm = view(A, :, 1:k-1)
+        Qkm = view(A, :, 1:(k - 1))
         vv = vec(A[:, k])
         Orthogonalize!(Qkm, hv, vv, orth)
     end

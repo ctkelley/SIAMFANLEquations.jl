@@ -4,12 +4,12 @@ nsolsc_solution_test
 Test nsolsc with the atan function. Check answers and iteration stats.
 """
 function nsolsc_solution_test()
-    # 
+    #
     # Local convergence with forward difference derivative
     #
     sdatal = nsolsc(atan, 1.0)
-    solok = (abs(sdatal.solution) < 1.e-8)
-    funok = (abs(sdatal.functionval) < 1.e-8)
+    solok = (abs(sdatal.solution) < 1.0e-8)
+    funok = (abs(sdatal.functionval) < 1.0e-8)
     hs = size(sdatal.history)
     histok = (hs[1] == 5)
     locok = funok && solok && histok
@@ -20,8 +20,8 @@ function nsolsc_solution_test()
     # Local convergence with analytic derivative
     #
     sdataa = nsolsc(atan, 1.0, x -> 1.0 / (1.0 + x * x))
-    solok = (abs(sdataa.solution) < 1.e-8)
-    funok = (abs(sdataa.functionval) < 1.e-8)
+    solok = (abs(sdataa.solution) < 1.0e-8)
+    funok = (abs(sdataa.functionval) < 1.0e-8)
     hs = size(sdataa.history)
     histok = (hs[1] == 5)
     analyticok = funok && solok && histok
@@ -33,8 +33,8 @@ function nsolsc_solution_test()
     # Global convergence
     #
     sdatag = nsolsc(atan, 10.0; maxit = 11, armfix = true)
-    solok = (abs(sdatag.solution) < 1.e-8)
-    funok = (abs(sdatag.functionval) < 1.e-8)
+    solok = (abs(sdatag.solution) < 1.0e-8)
+    funok = (abs(sdatag.functionval) < 1.0e-8)
     hs = size(sdatag.history)
     histok = (hs[1] == 12)
     globok = funok && solok && histok
@@ -44,9 +44,9 @@ function nsolsc_solution_test()
     #
     # Global convergence with parab3p
     #
-    sdatap3p = nsolsc(atan, 30.0; rtol = 1.e-10, maxit = 11)
-    solok = (abs(sdatap3p.solution) < 1.e-8)
-    funok = (abs(sdatap3p.functionval) < 1.e-8)
+    sdatap3p = nsolsc(atan, 30.0; rtol = 1.0e-10, maxit = 11)
+    solok = (abs(sdatap3p.solution) < 1.0e-8)
+    funok = (abs(sdatap3p.functionval) < 1.0e-8)
     hs = size(sdatap3p.history)
     histok = (hs[1] == 12)
     p3pok = funok && solok && histok
@@ -59,8 +59,8 @@ function nsolsc_solution_test()
     #
     #sdatas=nsolsc(atan,1.0; solver="secant")
     sdatas = secant(atan, 1.0)
-    solok = (abs(sdatas.solution) < 1.e-10)
-    funok = (abs(sdatas.functionval) < 1.e-10)
+    solok = (abs(sdatas.solution) < 1.0e-10)
+    funok = (abs(sdatas.functionval) < 1.0e-10)
     hs = size(sdatas.history)
     histok = (hs[1] == 6)
     secantok = funok && solok && histok
@@ -71,10 +71,10 @@ function nsolsc_solution_test()
     # Initialize secant method when x0=0
     #
     #zedata=nsolsc(x -> cos(x) - x, 0.0;solver="secant",rtol=1.e-9)
-    zedata = secant(x -> cos(x) - x, 0.0; solver = "secant", rtol = 1.e-9)
-    solution = 7.390851333858823e-01
-    solok = (abs(zedata.solution - solution) < 1.e-9)
-    funok = (abs(zedata.functionval) < 1.e-9)
+    zedata = secant(x -> cos(x) - x, 0.0; solver = "secant", rtol = 1.0e-9)
+    solution = 7.390851333858823e-1
+    solok = (abs(zedata.solution - solution) < 1.0e-9)
+    funok = (abs(zedata.functionval) < 1.0e-9)
     hs = size(zedata.history)
     histok = (hs[1] == 7)
     zecok = funok && solok && histok
@@ -93,11 +93,11 @@ function nsolsc_solution_test()
         maxit = 20,
         armmax = 10,
         armfix = true,
-        rtol = 1.e-10,
+        rtol = 1.0e-10,
     )
     solution = -100.0
-    solok = (abs(sdatal.solution - solution) < 1.e-8)
-    funok = (abs(sdatal.functionval) < 1.e-8)
+    solok = (abs(sdatal.solution - solution) < 1.0e-8)
+    funok = (abs(sdatal.functionval) < 1.0e-8)
     hs = size(sdatal.history)
     histok = (hs[1] == 6)
     shamfastok = funok && solok && histok
@@ -131,8 +131,8 @@ function nsolsc_solution_test()
         x -> tan(x) - x,
         4.5,
         x -> sec(x)^2 - 1.0;
-        rtol = 1.e-17,
-        atol = 1.e-17,
+        rtol = 1.0e-17,
+        atol = 1.0e-17,
         armfix = true,
         maxit = 14,
     )
@@ -141,7 +141,7 @@ function nsolsc_solution_test()
     ifvals = stagdatan.stats.ifun
     jvals = stagdatan.stats.ijac
     stagl = (length(fvals) == 6)
-    stagf = (fvals[5] < 1.e-15)
+    stagf = (fvals[5] < 1.0e-15)
     stags = (avals[6] == 5) && (ifvals[6] == 6) && (jvals[6] == 1)
     stagok = stagl && stags && stagf
     if ~stagok
@@ -155,8 +155,8 @@ function nsolsc_solution_test()
     fvals = lttest.history
     chordl = (length(fvals) == 11)
     ratl = fvals[11] / fvals[10]
-    chordr = (abs(ratl - 0.25) < 1.e-7)
-    solok = (fvals[11] < 1.e-6)
+    chordr = (abs(ratl - 0.25) < 1.0e-7)
+    solok = (fvals[11] < 1.0e-6)
     chordok = chordl && chordr && solok
     if ~chordok
         println("Chord test failed")
@@ -171,14 +171,14 @@ function nsolsc_solution_test()
         println("Lottery test failed")
     end
     return locok &&
-           globok &&
-           secantok &&
-           analyticok &&
-           zecok &&
-           shamfastok &&
-           afok &&
-           resok &&
-           p3pok &&
-           chordok &&
-           lotok
+        globok &&
+        secantok &&
+        analyticok &&
+        zecok &&
+        shamfastok &&
+        afok &&
+        resok &&
+        p3pok &&
+        chordok &&
+        lotok
 end

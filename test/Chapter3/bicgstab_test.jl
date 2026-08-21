@@ -15,15 +15,15 @@ function bicgstab_test()
 end
 
 function test3x3()
-    A = [0.001 0 0; 0 0.0011 0; 0 0 1.e4]
+    A = [0.001 0 0; 0 0.0011 0; 0 0 1.0e4]
     V = zeros(3)
     b = [1.0; 1.0; 1.0]
     x0 = zeros(3)
-    eta = 1.e-10
-    gout = kl_bicgstab(x0, b, atv, V, 1.e-10; pdata = A)
+    eta = 1.0e-10
+    gout = kl_bicgstab(x0, b, atv, V, 1.0e-10; pdata = A)
     pass =
         (length(gout.reshist) == 5) &&
-        (norm(A * gout.sol - b, Inf) < 1.e-12) &&
+        (norm(A * gout.sol - b, Inf) < 1.0e-12) &&
         gout.idid &&
         (gout.lits == 4)
     #    return (gout=gout, pass=pass)
@@ -38,8 +38,8 @@ function testR1()
     b = ones(5)
     x0 = zeros(5)
     V = zeros(5)
-    gout = kl_bicgstab(x0, b, atv, V, 1.e-7; pdata = A)
-    pass = (length(gout.reshist) == 3) && (norm(A * gout.sol - b, Inf) < 1.e-12)
+    gout = kl_bicgstab(x0, b, atv, V, 1.0e-7; pdata = A)
+    pass = (length(gout.reshist) == 3) && (norm(A * gout.sol - b, Inf) < 1.0e-12)
     #    return (gout=gout, pass=pass)
     pass || println("R1 test fails")
     return pass
@@ -51,9 +51,9 @@ function test_integop(n = 100)
     ue = pdata.xe
     u0 = zeros(size(f))
     V = zeros(size(f))
-    gout = kl_bicgstab(u0, f, integop, V, 1.e-10; pdata = pdata)
+    gout = kl_bicgstab(u0, f, integop, V, 1.0e-10; pdata = pdata)
     realres = (I - pdata.K) * gout.sol - f
-    pass = ((norm(realres, Inf) < 1.e-12) && (length(gout.reshist) == 4))
+    pass = ((norm(realres, Inf) < 1.0e-12) && (length(gout.reshist) == 4))
     #    return (gout=gout, pass=pass)
     pass || println("integop test fails")
     return pass
@@ -73,7 +73,7 @@ end
 
 function integopinit(n)
     h = 1 / n
-    X = collect(0.5*h:h:1.0-0.5*h)
+    X = collect((0.5 * h):h:(1.0 - 0.5 * h))
     K = [ker(x, y) for x in X, y in X]
     #    K = zeros(n, n)
     #    for j = 1:n
@@ -95,5 +95,5 @@ function usol(x)
 end
 
 function ker(x, y)
-    ker = 0.1 * sin(x + exp(y))
+    return ker = 0.1 * sin(x + exp(y))
 end

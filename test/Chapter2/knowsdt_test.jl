@@ -36,7 +36,7 @@ function knowsdt_test()
     soldiff = norm(sol - sol2, Inf)
     stardiff = norm(sol3 - ustar, Inf)
     hdiff = norm(hist - hist2, Inf)
-    dtpass = (soldiff < 1.e-9) && (hdiff < 1.e-6) && (dtdiff < 1.e-15)
+    dtpass = (soldiff < 1.0e-9) && (hdiff < 1.0e-6) && (dtdiff < 1.0e-15)
     dtpass || println("knowsdt_test fails")
     return dtpass
 end
@@ -53,7 +53,7 @@ end
 
 function Jval2!(JV, FU, x, dt)
     JV .= Jval!(JV, FU, x)
-    JV .= JV + (1.0 / dt) * I
+    return JV .= JV + (1.0 / dt) * I
 end
 
 function Jval!(JV, FU, x)

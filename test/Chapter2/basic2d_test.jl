@@ -14,11 +14,11 @@ function basic2d_test()
     # single vs double Jacobian
     # jfact=nofact should have no effect on the nonlinear iteration
     #
-    nout = nsol(basic2d!, x0, fv, jv; rtol = 1.e-10, sham = 1)
+    nout = nsol(basic2d!, x0, fv, jv; rtol = 1.0e-10, sham = 1)
     sout = nsol(basic2d!, x0, fv, jsv; sham = 1, jfact = nofact)
     dss = norm(nout.solution - sout.solution)
     hss = norm(nout.history - sout.history)
-    singleok = (norm(dss) < 1.e-7) && (norm(hss) < 1.e-7)
+    singleok = (norm(dss) < 1.0e-7) && (norm(hss) < 1.0e-7)
     if ~singleok
         println("Single/Double test fails.")
     end
@@ -30,7 +30,7 @@ function basic2d_test()
     lch = length(cout.history)
     lnh = length(nout.history)
     jevals = sum(cout.stats.ijac)
-    chordok = (dsc < 1.e-6) && (lch == 17) && (lnh == 5) && (jevals == 1)
+    chordok = (dsc < 1.0e-6) && (lch == 17) && (lnh == 5) && (jevals == 1)
     if ~chordok
         println("Chord/Newton test fails")
     end
@@ -39,21 +39,21 @@ function basic2d_test()
     #
     eout = nsol(basic2d!, x0, fv, jv, jbasic2d!; sham = 1)
     fdok =
-        (norm(eout.history - nout.history) < 1.e-6) &&
-        (norm(eout.solution - nout.solution) < 1.e-10)
+        (norm(eout.history - nout.history) < 1.0e-6) &&
+        (norm(eout.solution - nout.solution) < 1.0e-10)
     if ~fdok
         println("FD/Analytic test fails.")
     end
     #
     # Shamanskii
     #
-    s1out = nsol(basic2d!, x0, fv, jv; sham = 2, rtol = 1.e-10)
+    s1out = nsol(basic2d!, x0, fv, jv; sham = 2, rtol = 1.0e-10)
     dout1 = norm(s1out.solution - nout.solution)
     jevals1 = sum(s1out.stats.ijac)
-    s2out = nsol(basic2d!, x0, fv, jv; sham = 2, rtol = 1.e-10, resdec = 0.5)
+    s2out = nsol(basic2d!, x0, fv, jv; sham = 2, rtol = 1.0e-10, resdec = 0.5)
     jevals2 = sum(s2out.stats.ijac)
     dout2 = norm(s2out.solution - nout.solution)
-    shamok = (dout1 < 1.e-10) && (dout2 < 1.e-10) && (jevals1 == 4) && (jevals2 == 3)
+    shamok = (dout1 < 1.0e-10) && (dout2 < 1.0e-10) && (jevals1 == 4) && (jevals2 == 3)
     if ~shamok
         println("Shamanskii test fails.")
     end
@@ -70,8 +70,8 @@ function basic2d_test()
     iarm = nouta.stats.iarm
     iarm2 = noutc.idid
     armok = (iarm[2] == 2) && ~iarm2
-    preok = (norm(noutb.solhist - nouta.solhist, Inf) < 1.e-6)
-    solok = (norm(noutb.solution - nouta.solution, Inf) < 1.e-10)
+    preok = (norm(noutb.solhist - nouta.solhist, Inf) < 1.0e-6)
+    solok = (norm(noutb.solution - nouta.solution, Inf) < 1.0e-10)
     globok = armok && preok && solok
     if ~globok
         println("Global test fails.")

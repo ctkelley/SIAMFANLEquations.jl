@@ -3,7 +3,7 @@ gmres_test_pde(n)
 
 PDE test from FR16. Test of kl_gmres with all kinds of preconditioning.
 """
-function gmres_test_pde(n; orth = "cgs2", write = false, eta = 9.8 * 1.e-4)
+function gmres_test_pde(n; orth = "cgs2", write = false, eta = 9.8 * 1.0e-4)
     pdata = pdegminit(n)
     fdata = pdata.fdata
     RHS = pdata.RHS
@@ -48,11 +48,11 @@ function gmres_test_pde(n; orth = "cgs2", write = false, eta = 9.8 * 1.e-4)
     solerr2 = norm(solr - ue, Inf)
     passfull = (
         (soldel == 0) &&
-        (solrdel == 0) &&
-        (solerr < 1.e-2) &&
-        (solerr2 < 1.e-2) &&
-        (length(pcresr) == 12) &&
-        (length(pcres) == 9)
+            (solrdel == 0) &&
+            (solerr < 1.0e-2) &&
+            (solerr2 < 1.0e-2) &&
+            (length(pcresr) == 12) &&
+            (length(pcres) == 9)
     )
     if write
         println(soldel, "  ", solrdel, "  ", solerr, "   ", solerr2)
@@ -90,11 +90,11 @@ function gmres_test_pde(n; orth = "cgs2", write = false, eta = 9.8 * 1.e-4)
     numitsr = length(goutpr.reshist)
     numitsl = length(goutpl.reshist)
     pass_res = (
-        (soldelr < 1.e-3) &&
-        (solerr < 1.e-2) &&
-        (solerr2 < 1.e-2) &&
-        (numitsr == 16) &&
-        (numitsl == 13)
+        (soldelr < 1.0e-3) &&
+            (solerr < 1.0e-2) &&
+            (solerr2 < 1.0e-2) &&
+            (numitsr == 16) &&
+            (numitsl == 13)
     )
     pass_res || println("Linear pde test for GMRES(m) fails.")
     pass = passfull && pass_res
@@ -107,7 +107,7 @@ bicgstab_test_pde(n)
 
 PDE test from FR16. Test of kl_bicgstab with all kinds of preconditioning.
 """
-function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
+function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.0e-4)
     pdata = pdegminit(n)
     RHS = pdata.RHS
     ue = pdata.ue
@@ -132,7 +132,7 @@ function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
     solrhw .= pdeptv(goutrp.sol, pdata)
     solldiff = norm(solrhw - sollhw, Inf)
     #
-    # Solve with right preconditioning 
+    # Solve with right preconditioning
     #
     goutrp1 = kl_bicgstab(u0, RHS, pdeatv, V, eta, pdeptv; pdata = pdata, lmaxit = 200)
     pcresr1 = goutrp1.reshist
@@ -141,7 +141,7 @@ function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
     #    solldiff += norm(solr-sollhw,Inf)
     solldiff = max(solldiff, norm(solr - sollhw, Inf))
     #
-    # Solve with left preconditioning 
+    # Solve with left preconditioning
     #
     goutl1 = kl_bicgstab(
         u0,
@@ -163,9 +163,9 @@ function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
     # Hardwired and normal give same results?
     #
     leftdel = norm(soll - sollhw, Inf) + norm(pcres - pcresl1, Inf)
-    leftpass = (leftdel < 1.e-15)
+    leftpass = (leftdel < 1.0e-15)
     rightdel = norm(solr - solrhw, Inf) + norm(pcresr1 - pcresr, Inf)
-    rightpass = (rightdel < 1.e-15)
+    rightpass = (rightdel < 1.0e-15)
     #
     # Solve with no preconditioning to duplicate fig 3.4 in red book
     #
@@ -208,7 +208,7 @@ end
 
 function pdeptv(u, pdata)
     fdata = pdata.fdata
-    ptv = Pfish2d(u, fdata)
+    return ptv = Pfish2d(u, fdata)
 end
 
 function pdeatv(u, pdata)
@@ -237,7 +237,7 @@ function pdegminit(n)
     # Make the grids
     n2 = n * n
     h = 1.0 / (n + 1.0)
-    x = collect(h:h:1.0-h)
+    x = collect(h:h:(1.0 - h))
     o = ones(n)
     Y = o * x'
     y20 = 20.0 * reshape(Y, (n2,))
@@ -267,5 +267,5 @@ function pdegminit(n)
     # The right side of the equation
     RHS = d2v + dxv + y20 .* dyv + uv
     # Pack it and ship it.
-    pdedata = (L, RHS = RHS, ue = uv, xc = xc, fdata = fdata)
+    return pdedata = (L, RHS = RHS, ue = uv, xc = xc, fdata = fdata)
 end

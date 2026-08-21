@@ -9,14 +9,14 @@ function ptcKrylovTest(n = 63)
     #
     # sol3 is the wrong stable branch. Left preconditioning bites you!
     #
-    solpass1a = (norm(sol1 - sol2, Inf) < 1.e-9)
-    solpass1b = (norm(sol1 + sol3, Inf) < 1.e-9)
+    solpass1a = (norm(sol1 - sol2, Inf) < 1.0e-9)
+    solpass1b = (norm(sol1 + sol3, Inf) < 1.0e-9)
     solpass1 = solpass1a && solpass1b
     solpass1 || println("solpass1 fails for ptcsoli")
     histpass = (length(pout1.history) == 25)
     histpass || println("histpass fails for ptcsoli")
-    solpass2 = (abs(norm(sol1, Inf) - 2.191) < 1.e-3)
+    solpass2 = (abs(norm(sol1, Inf) - 2.191) < 1.0e-3)
     solpass2 || println("solpass2 fails for ptcsoli")
-    ptcipass = solpass1 && histpass && solpass2
+    return ptcipass = solpass1 && histpass && solpass2
 
 end

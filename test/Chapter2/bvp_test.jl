@@ -14,7 +14,7 @@ function bvp_test(nsmall = 101)
     statss = smallout.bvpout.stats
     hs = smallout.bvpout.history ./ sqrt(hsmall)
     hs2 = smallout2.bvpout.history ./ sqrt(hsmall)
-    smok = norm(hs - hs2, Inf) < 1.e-13
+    smok = norm(hs - hs2, Inf) < 1.0e-13
     #
     nbig = 2 * nsmall
     bigout = BVP_solve(nbig; bfact = qr!)
@@ -24,5 +24,5 @@ function bvp_test(nsmall = 101)
     #
     armok = norm(statss.iarm - statsb.iarm) == 0
     outok = norm(hs - bs, Inf) < 0.05
-    bvpok = outok && armok && smok
+    return bvpok = outok && armok && smok
 end

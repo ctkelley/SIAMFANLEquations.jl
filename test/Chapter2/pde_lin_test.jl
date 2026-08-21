@@ -5,7 +5,7 @@ Test the linear operators.
 """
 function pde_lin_test(n)
     h = 1.0 / (n + 1)
-    x = collect(h:h:1.0-h)
+    x = collect(h:h:(1.0 - h))
     fdata = fishinit(n)
     z = rand(n, n)
     L2d = Lap2d(n)
@@ -13,7 +13,7 @@ function pde_lin_test(n)
     DY = Dy2d(n)
     lapok = lap_test(n, x, z, L2d, fdata)
     discok = disc_test(n, x, L2d, DX, DY, fdata)
-    lapok && discok
+    return lapok && discok
 end
 
 """
@@ -39,7 +39,7 @@ function disc_test(n, x, L2d, DX, DY, fdata)
     # test Laplacian
     du21 = L2d * ue1
     d2err = norm(du21 - ued21, Inf)
-    pass = (d2err < 0.75) && (dxerr < 0.1) && (dyerr < 1.e-12)
+    pass = (d2err < 0.75) && (dxerr < 0.1) && (dyerr < 1.0e-12)
     pass || println("Discretization test fails")
     return pass
 end
@@ -65,7 +65,7 @@ function rand_test(z, n, L2d, fdata)
     y = reshape(y1, (n, n))
     mz = fish2d(y, fdata)
     q = reshape(mz, (n2,))
-    pass = (norm(q - z1, Inf) < 1.e-12)
+    pass = (norm(q - z1, Inf) < 1.0e-12)
     pass || println("rand_test fails, norm =", norm(q - z1))
     return pass
 end
@@ -76,7 +76,7 @@ function eig_test(n, x, fdata)
     efuny = sin.(2 * pi * x)
     efunu = efunx * efuny'
     vfun = fish2d(efunu, fdata)
-    pass = (norm(lambda * vfun - efunu, Inf) < 1.e-2)
+    pass = (norm(lambda * vfun - efunu, Inf) < 1.0e-2)
     pass || println("eig test fails")
     return pass
 end

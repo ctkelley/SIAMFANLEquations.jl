@@ -5,8 +5,8 @@ Solve the Elliptic PDE using nsoli.jl on an n x n grid.
 """
 function nk_pde(n = 15)
     # Get some room for the residual
-    rtol = 1.e-7
-    atol = 1.e-10
+    rtol = 1.0e-7
+    atol = 1.0e-10
     u0 = zeros(n * n)
     FV = copy(u0)
     FVS = copy(u0)
@@ -48,11 +48,11 @@ function nk_pde(n = 15)
     hout4 = NsoliPDE(n; fixedeta = false, lsolver = "bicgstab")
     soldiff = (
         norm(hout3.solution - hout.solution, Inf) +
-        norm(hout3.solution - hout.solution, Inf) +
-        norm(houtb.solution - hout.solution, Inf) +
-        norm(hout4.solution - hout.solution, Inf)
+            norm(hout3.solution - hout.solution, Inf) +
+            norm(houtb.solution - hout.solution, Inf) +
+            norm(hout4.solution - hout.solution, Inf)
     )
-    solpass = (soldiff < 1.e-6)
+    solpass = (soldiff < 1.0e-6)
     solpass || println("solution compare fails in nk_pde, ", soldiff)
     histdiffv = (hout.history - hout2.history) ./ hout.history[1]
     histdiff = norm(histdiffv, Inf)

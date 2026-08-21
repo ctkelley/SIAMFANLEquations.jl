@@ -3,7 +3,7 @@ bicgstab_test_pde(n)
 
 PDE test from FR16. Test of kl_bicgstab with all kinds of preconditioning.
 """
-function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
+function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.0e-4)
     pdata = pdegminit(n)
     RHS = pdata.RHS
     ue = pdata.ue
@@ -27,7 +27,7 @@ function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
     solrhw .= pdeptv(goutrp.sol, pdata)
     solldiff = norm(solrhw - sollhw, Inf)
     #
-    # Solve with right preconditioning 
+    # Solve with right preconditioning
     #
     goutrp1 = kl_bicgstab(u0, RHS, pdeatv, eta, pdeptv; pdata = pdata, lmaxit = 200)
     pcresr1 = goutrp1.reshist
@@ -36,7 +36,7 @@ function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
     #    solldiff += norm(solr-sollhw,Inf)
     solldiff = max(solldiff, norm(solr - sollhw, Inf))
     #
-    # Solve with left preconditioning 
+    # Solve with left preconditioning
     #
     goutl1 = kl_bicgstab(
         u0,
@@ -57,9 +57,9 @@ function bicgstab_test_pde(n; write = false, eta = 9.8 * 1.e-4)
     # Hardwired and normal give same results?
     #
     leftdel = norm(soll - sollhw, Inf) + norm(pcres - pcresl1, Inf)
-    leftpass = (leftdel < 1.e-15)
+    leftpass = (leftdel < 1.0e-15)
     rightdel = norm(solr - solrhw, Inf) + norm(pcresr1 - pcresr, Inf)
-    rightpass = (rightdel < 1.e-15)
+    rightpass = (rightdel < 1.0e-15)
     #
     # Solve with no preconditioning to duplicate fig 3.4 in red book
     #

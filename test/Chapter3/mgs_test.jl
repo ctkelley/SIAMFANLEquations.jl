@@ -2,13 +2,13 @@
 # Get into the MGS reorthogonalization loop and see if it
 # does its job.
 #
-function mgs_test(cond = 1.e6)
+function mgs_test(cond = 1.0e6)
     (A, x0, b) = data_cook(cond)
     V = zeros(3, 20)
-    gout = kl_gmres(x0, b, matvec, V, 1.e-9; orth = "mgs1", pdata = A)
-    gout2 = kl_gmres(x0, b, matvec, V, 1.e-9; orth = "mgs2", pdata = A)
+    gout = kl_gmres(x0, b, matvec, V, 1.0e-9; orth = "mgs1", pdata = A)
+    gout2 = kl_gmres(x0, b, matvec, V, 1.0e-9; orth = "mgs2", pdata = A)
     del = gout.reshist - gout2.reshist
-    mgs2ok = (norm(del, Inf) > 1.e-12) && gout.idid && gout2.idid
+    mgs2ok = (norm(del, Inf) > 1.0e-12) && gout.idid && gout2.idid
     mgs2ok || println("mgs_test fails")
     return mgs2ok
     #return(gout, gout2, mgs2ok)
