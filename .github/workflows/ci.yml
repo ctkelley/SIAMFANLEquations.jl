@@ -18,16 +18,16 @@ jobs:
       matrix:
         version:
           - '1.10' # LTS
-          - '1'   # Current stable release
-          - '~1.13.0-0'
+          - '1.13'   # Current stable release
+#          - '~1.13.0-0'
 #          - 'pre'
           - 'nightly'
         os:
-#          - ubuntu-latest
+          - ubuntu-latest
           - macOS-latest
-#          - windows-latest
+          - windows-latest
         arch:
-#          - x64
+          - x64
           - aarch64
         exclude: 
           - os: ubuntu-latest
