@@ -9,7 +9,7 @@
 ## The archival version 1.0 from the date of publication is in the [FA20 branch](https://github.com/ctkelley/SIAMFANLEquations.jl/tree/FA20).
 
 ## The current version is 1.0.3. 
-  - This version changes the examples and test problems so that FFTs are only applied to vectors of size $2^p$. This makes AppleAccelerate happy and does no harm. If you want to use vectors of arbitrary size (say for the H-equation) do not use AppleAccelerate.
+  - This version changes the examples and test problems so that FFTs are only applied to vectors of size $2^p$. This makes AppleAccelerate happy and does no harm. If you want to use vectors of arbitrary size (say for the H-equation or the fast Poisson solver) do not use AppleAccelerate.
   - I have made similar changes in the notebook and also addressed the problems with PyPlot by __switching to PythonPlot__. 
   - I've updated/corrected a few docstrings in the solvers.
   - You are looking at the repo for __v 1.04__, the latest dev version. I have done nothing so far except format all the .jl files with [Runic](https://github.com/fredrikekre/Runic.jl). You should also sign up as a runicer. Consistent + no-think formatting is great. 
