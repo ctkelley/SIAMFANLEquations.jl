@@ -128,7 +128,7 @@ This is a book project and I need to put all changes in by hand so I'll have mus
 
 I have limited bandwidth, __so please do not send me email or open issues about__ ...
 
-   1. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia. I got somewhat better as the project progressed. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. 
+   1. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia. I got somewhat better as the project progressed. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clarity for the novice. 
       1. I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. 
            1.  Fortran + Julia = __Foolia__
    3. Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I thought about the algorithm mix pretty carefully, had a clear vision for this project, and understand this field fairly well. 
