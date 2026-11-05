@@ -9,8 +9,9 @@
 ## The archival version 1.0 from the date of publication is in the [FA20 branch](https://github.com/ctkelley/SIAMFANLEquations.jl/tree/FA20).
 
 ## The current version is 1.0.3. 
-  - This version changes the examples and test problems so that FFTs are only applied to vectors of size $2^p$. This makes AppleAccelerate happy and does no harm. If you want to use vectors of arbitrary size (say for the H-equation) do not use AppleAccelerate.
-  - I have made similar changes in the notebook and also addressed the problems with PyPlot by __switching to PythonPlot__. 
+  - This version changes the examples and test problems so that FFTs are only applied to vectors of size $2^p$. This makes AppleAccelerate happy and does no harm. If you want to use vectors of arbitrary size (say for the H-equation or the fast Poisson solver) do not use AppleAccelerate.
+  - I have made similar changes in the [notebook](https://github.com/ctkelley/NotebookSIAMFANL) and also addressed
+    [the problems with PyPlot](https://discourse.julialang.org/t/jupyter-crashes-when-using-pyplot-and-julia-1-12/134684) by __switching to PythonPlot__. 
   - I've updated/corrected a few docstrings in the solvers.
   - You are looking at the repo for __v 1.04__, the latest dev version. I have done nothing so far except format all the .jl files with [Runic](https://github.com/fredrikekre/Runic.jl). You should also sign up as a runicer. Consistent + no-think formatting is great. 
 
@@ -74,9 +75,9 @@ This package is designed and built to support a book project. So the solvers and
 ## Installation: 
 
 
-- Your best bet is to __use the latest version of Julia__  (currently 1.12.4) with the notebooks and the package.
+- Your best bet is to __use the latest version of Julia__  (currently 1.13.3) with the notebooks and the package.
 - If you must use old stuff, use LTS 1.10.5 and up with this thing!!!
-- Please do not use any non-LTS version earlier than 1.10.5. The notebook kernel is now 1.12.0.
+- Please do not use any non-LTS version earlier than 1.10.5. The notebook kernel is now 1.13.0.
 Type this 
 
 ```
@@ -127,7 +128,7 @@ This is a book project and I need to put all changes in by hand so I'll have mus
 
 I have limited bandwidth, __so please do not send me email or open issues about__ ...
 
-   1. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia. I got somewhat better as the project progressed. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clairity for the novice. 
+   1. Julia programming style, with the exception of correctness and performance. I know this is not fully idiomatic Julia. I got somewhat better as the project progressed. As I said in the introduction, I have traded a lot of abstraction for clarity. That means clarity for the novice. 
       1. I am also an old guy and the final product will reflect the Fortran __66__ I was raised on. That's show biz. 
            1.  Fortran + Julia = __Foolia__
    3. Questions like "Why isn't Trotsky's method in here?" If you object to an algorithmic choice, you'll have to be content to know that I thought about the algorithm mix pretty carefully, had a clear vision for this project, and understand this field fairly well. 
